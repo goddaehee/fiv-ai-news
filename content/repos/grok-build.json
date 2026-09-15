@@ -1,0 +1,127 @@
+{
+  "slug": "grok-build",
+  "name": "Grok Build",
+  "repo": "xai-org/grok-build",
+  "category": "cli",
+  "subcategory": "터미널 코딩 에이전트",
+  "stars": "오픈 하네스",
+  "license": "Apache-2.0",
+  "lang": "TypeScript",
+  "updated": "2026-07-16",
+  "trendRank": 1,
+  "oneLiner": "xAI의 코딩 에이전트 하네스. TUI와 헤드리스 실행이 공개되어 있고, 슬래시 명령과 플랜 모드가 실무 축이다.",
+  "analogyTitle": "공개된 조종석, 모델은 갈아 끼우는 엔진",
+  "analogy": "에이전트의 ‘생각’은 모델이 하고, ‘도구를 언제 칠지’는 하네스가 한다. Grok Build는 그 하네스를 열어 둔 쪽에 가깝다.",
+  "why": "코딩 에이전트를 블랙박스가 아니라 고칠 수 있는 소프트웨어로 보고 싶은 팀에 맞다. AGENTS.md, /plan, /usage 같은 운영 면이 분명하다.",
+  "pain": "상용 에이전트는 내부 루프를 볼 수 없어 실패를 재현하기 어렵다.",
+  "fix": "오픈 하네스 + 헤드리스 모드로 로그와 정책을 팀에 맞게 남긴다.",
+  "compare": [
+    {
+      "vs": "Claude Code",
+      "point": "제품 완성도. Grok Build는 하네스 공개와 커스터마이즈."
+    },
+    {
+      "vs": "Codex CLI",
+      "point": "둘 다 CLI. 모델 백엔드와 라이선스가 다르다."
+    },
+    {
+      "vs": "OpenCode",
+      "point": "커뮤니티 에이전트. Grok Build는 xAI 공식 축."
+    }
+  ],
+  "stack": [
+    {
+      "name": "TypeScript",
+      "role": "TUI·에이전트",
+      "detail": "터미널 UI와 루프"
+    },
+    {
+      "name": "xAI API",
+      "role": "추론",
+      "detail": "Grok 모델"
+    },
+    {
+      "name": "Headless",
+      "role": "자동화",
+      "detail": "CI·스크립트에서 비대화 실행"
+    }
+  ],
+  "languages": [
+    {
+      "name": "TypeScript",
+      "pct": "88%",
+      "bar": 88,
+      "note": "핵심"
+    },
+    {
+      "name": "Other",
+      "pct": "12%",
+      "bar": 12,
+      "note": "스크립트"
+    }
+  ],
+  "architecture": "TUI ──┐\n        ├─ 에이전트 루프 ─ 도구 (fs, bash, git)\nHeadless┘              │\n                       └─ AGENTS.md / 스킬 / 슬래시 명령",
+  "patterns": [
+    {
+      "name": "플랜 모드",
+      "body": "바로 고치지 않고 계획을 먼저 보여 준다."
+    },
+    {
+      "name": "슬래시 명령",
+      "body": "/plan /usage /help 로 운영 상태를 연다."
+    },
+    {
+      "name": "AGENTS.md",
+      "body": "저장소가 에이전트에게 주는 작업 설명서."
+    }
+  ],
+  "tree": "xai-org/grok-build/\n├── harness/\n├── tui/\n└── skills/",
+  "learn": [
+    {
+      "title": "오픈 하네스",
+      "body": "루프와 도구 경계를 직접 읽을 수 있다."
+    },
+    {
+      "title": "헤드리스",
+      "body": "대화 UI 없이 같은 정책을 CI에 태운다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "런타임",
+      "min": "Node 20+",
+      "rec": "LTS"
+    },
+    {
+      "item": "키",
+      "min": "xAI API",
+      "rec": "팀 쿼터"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "AGENTS.md 초안",
+      "body": "빌드/테스트/금지 경로를 적고 같은 버그를 두 세션에서 고쳐 차이를 본다."
+    },
+    {
+      "title": "/usage 습관",
+      "body": "큰 작업 전후로 사용량을 기록해 세션 비용을 가늠한다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "Harness",
+      "meaning": "모델을 도구에 연결하는 실행 틀"
+    },
+    {
+      "word": "Headless",
+      "meaning": "UI 없는 자동화 실행"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/xai-org/grok-build"
+    }
+  ]
+}

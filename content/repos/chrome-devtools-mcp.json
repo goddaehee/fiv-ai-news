@@ -1,0 +1,96 @@
+{
+  "slug": "chrome-devtools-mcp",
+  "name": "chrome-devtools-mcp",
+  "repo": "ChromeDevTools/chrome-devtools-mcp",
+  "category": "mcp",
+  "subcategory": "도구 연결",
+  "stars": "공식 MCP",
+  "license": "Apache-2.0",
+  "lang": "TypeScript",
+  "updated": "2026-08-12",
+  "trendRank": 11,
+  "oneLiner": "크롬 개발자 도구를 MCP 서버로 열어, 에이전트가 네트워크·콘솔·DOM을 조사하게 한다.",
+  "analogyTitle": "에이전트에게 개발자 도구 패널을 쥐여 주는 어댑터",
+  "analogy": "‘버그 고쳐줘’만 하면 추측한다. 이 서버가 있으면 콘솔 에러와 네트워크 실패를 직접 본다.",
+  "why": "프론트 장애는 로그 파일보다 브라우저 안에 있다.",
+  "pain": "에이전트가 소스만 읽고 런타임 에러를 모른다.",
+  "fix": "DevTools 프로토콜을 MCP 도구로 노출한다.",
+  "compare": [
+    {
+      "vs": "Playwright MCP",
+      "point": "E2E 조작 vs 진단 패널."
+    },
+    {
+      "vs": "로그 파일",
+      "point": "서버 로그 vs 브라우저 런타임."
+    }
+  ],
+  "stack": [
+    {
+      "name": "TypeScript",
+      "role": "MCP 서버",
+      "detail": "도구 스키마"
+    },
+    {
+      "name": "CDP",
+      "role": "브라우저",
+      "detail": "Chrome DevTools Protocol"
+    }
+  ],
+  "languages": [
+    {
+      "name": "TypeScript",
+      "pct": "100%",
+      "bar": 100,
+      "note": "서버"
+    }
+  ],
+  "architecture": "에이전트 ─ MCP ─ chrome-devtools-mcp ─ Chrome CDP\n                                   │\n                            console / network / DOM",
+  "patterns": [
+    {
+      "name": "진단 도구",
+      "body": "수정 전에 증거를 모은다."
+    }
+  ],
+  "tree": "chrome-devtools-mcp/\n├── src/tools/\n└── README.md",
+  "learn": [
+    {
+      "title": "증거 우선",
+      "body": "콘솔·네트워크를 보기 전에 패치하지 않는다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "Chrome",
+      "min": "최신",
+      "rec": "안정 채널"
+    },
+    {
+      "item": "MCP 호스트",
+      "min": "Claude Code 등",
+      "rec": "최신"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "빨간 콘솔 하나",
+      "body": "일부러 에러를 만들고, 에이전트가 콘솔을 읽은 뒤에만 고치는지 확인한다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "CDP",
+      "meaning": "Chrome DevTools Protocol"
+    },
+    {
+      "word": "MCP server",
+      "meaning": "에이전트가 호출하는 도구 프로세스"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/ChromeDevTools/chrome-devtools-mcp"
+    }
+  ]
+}

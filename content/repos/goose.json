@@ -1,0 +1,97 @@
+{
+  "slug": "goose",
+  "name": "goose",
+  "repo": "block/goose",
+  "category": "agents",
+  "subcategory": "에이전트 플랫폼",
+  "stars": "AAIF",
+  "license": "Apache-2.0",
+  "lang": "Rust / TS",
+  "updated": "2026-05-01",
+  "trendRank": 9,
+  "oneLiner": "Block이 연 로컬 에이전트. 데스크톱에서 확장(MCP)을 붙여 업무를 수행한다.",
+  "analogyTitle": "로컬에서 도는 업무 에이전트 OS",
+  "analogy": "클라우드 봇이 아니라, 내 머신 권한으로 파일과 도구를 다루는 데스크톱 에이전트다.",
+  "why": "데이터가 기기 안에 남아야 하는 팀, MCP로 도구를 붙이고 싶은 팀에 맞다.",
+  "pain": "웹 에이전트는 사내 파일에 약하다.",
+  "fix": "로컬 런타임 + 확장 시스템.",
+  "compare": [
+    {
+      "vs": "Claude Desktop",
+      "point": "제품 vs 오픈 런타임."
+    },
+    {
+      "vs": "OpenHands",
+      "point": "컨테이너 플랫폼 vs 로컬 데스크톱."
+    }
+  ],
+  "stack": [
+    {
+      "name": "Rust",
+      "role": "런타임",
+      "detail": "로컬 실행"
+    },
+    {
+      "name": "MCP",
+      "role": "확장",
+      "detail": "도구 연결"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Rust",
+      "pct": "55%",
+      "bar": 55,
+      "note": "코어"
+    },
+    {
+      "name": "TypeScript",
+      "pct": "35%",
+      "bar": 35,
+      "note": "UI"
+    }
+  ],
+  "architecture": "Desktop UI ─ goose runtime ─ MCP servers\n                         │\n                    로컬 파일 / 셸",
+  "patterns": [
+    {
+      "name": "확장으로 도구",
+      "body": "코어를 두껍게 하지 않고 MCP로 붙인다."
+    }
+  ],
+  "tree": "goose/\n├── crates/\n└── ui/",
+  "learn": [
+    {
+      "title": "로컬 에이전트",
+      "body": "권한과 데이터가 기기 정책과 같아진다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "OS",
+      "min": "macOS / Linux / Windows",
+      "rec": "최신"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "MCP 하나 연결",
+      "body": "읽기 전용 파일 서버를 붙이고, 쓰기 도구는 빼 둔 채 질문만 시킨다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "MCP",
+      "meaning": "도구 서버 표준"
+    },
+    {
+      "word": "Local runtime",
+      "meaning": "클라우드가 아닌 기기에서 루프 실행"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/block/goose"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "slug": "openhands",
+  "name": "OpenHands",
+  "repo": "All-Hands-AI/OpenHands",
+  "category": "agents",
+  "subcategory": "에이전트 플랫폼",
+  "stars": "50k+",
+  "license": "MIT",
+  "lang": "Python",
+  "updated": "2026-06-01",
+  "trendRank": 8,
+  "oneLiner": "브라우저 UI와 샌드박스에서 소프트웨어 작업을 끝까지 수행하는 오픈소스 코딩 에이전트.",
+  "analogyTitle": "가상 개발자 한 명을 컨테이너에 넣는 플랫폼",
+  "analogy": "로컬 IDE 플러그인이 아니라, 에이전트에게 컴퓨터 한 대를 주고 이슈를 맡기는 쪽에 가깝다.",
+  "why": "셀프호스트가 되고, 이슈→PR 흐름을 제품으로 보여 준다.",
+  "pain": "로컬 에이전트는 내 파일을 직접 만져 사고면이 넓다.",
+  "fix": "컨테이너 샌드박스에서 작업하고, UI로 개입 지점을 둔다.",
+  "compare": [
+    {
+      "vs": "Claude Code",
+      "point": "로컬 터미널 vs 플랫폼/샌드박스."
+    },
+    {
+      "vs": "SWE-agent",
+      "point": "연구 에이전트. OpenHands는 제품 UI가 있다."
+    }
+  ],
+  "stack": [
+    {
+      "name": "Python",
+      "role": "에이전트",
+      "detail": "루프와 도구"
+    },
+    {
+      "name": "Docker",
+      "role": "샌드박스",
+      "detail": "실행 격리"
+    },
+    {
+      "name": "React",
+      "role": "UI",
+      "detail": "세션 관찰"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Python",
+      "pct": "70%",
+      "bar": 70,
+      "note": "코어"
+    },
+    {
+      "name": "TypeScript",
+      "pct": "25%",
+      "bar": 25,
+      "note": "UI"
+    }
+  ],
+  "architecture": "Web UI ─ 이벤트 스트림 ─ 에이전트\n                      │\n                 Docker 샌드박스 (에디터, 터미널, 브라우저)",
+  "patterns": [
+    {
+      "name": "이벤트 스트림",
+      "body": "생각/행동/관찰을 UI에 그대로 흘린다."
+    },
+    {
+      "name": "샌드박스 컴퓨터",
+      "body": "파일과 프로세스가 호스트와 분리된다."
+    }
+  ],
+  "tree": "OpenHands/\n├── openhands/   # 에이전트\n├── frontend/\n└── containers/",
+  "learn": [
+    {
+      "title": "관찰 가능한 에이전트",
+      "body": "숨은 호출 없이 스트림을 남긴다."
+    },
+    {
+      "title": "셀프호스트",
+      "body": "키와 코드가 회사 네트워크 안에 남는다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "Docker",
+      "min": "필수",
+      "rec": "최신"
+    },
+    {
+      "item": "RAM",
+      "min": "8GB",
+      "rec": "16GB"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "이슈 하나 맡기기",
+      "body": "테스트가 있는 작은 이슈를 샌드박스에 넣고 PR diff만 검토한다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "Sandbox",
+      "meaning": "호스트와 분리된 작업 컴퓨터"
+    },
+    {
+      "word": "Event stream",
+      "meaning": "에이전트 행동을 시간순으로 기록"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/All-Hands-AI/OpenHands"
+    }
+  ]
+}

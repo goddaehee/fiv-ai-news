@@ -1,0 +1,115 @@
+{
+  "slug": "openai-codex",
+  "name": "OpenAI Codex CLI",
+  "repo": "openai/codex",
+  "category": "cli",
+  "subcategory": "터미널 코딩 에이전트",
+  "stars": "공식 CLI",
+  "license": "Apache-2.0",
+  "lang": "Rust / TS",
+  "updated": "2026-07-10",
+  "trendRank": 3,
+  "oneLiner": "OpenAI의 터미널 코딩 에이전트. 저장소를 읽고 패치를 내며 샌드박스에서 명령을 실행한다.",
+  "analogyTitle": "PR을 먼저 생각하는 터미널 조수",
+  "analogy": "채팅창에 코드를 붙여 넣는 대신, 저장소 안에서 패치 단위로 일하게 하는 쪽에 가깝다.",
+  "why": "ChatGPT 계정과 이어지고, 샌드박스·승인 흐름이 기본값으로 들어 있다.",
+  "pain": "웹 챗은 레포를 모른다. 로컬 실행 권한이 없으면 추측만 한다.",
+  "fix": "로컬 샌드박스에서 명령을 실행하고, 변경은 diff로 검토한다.",
+  "compare": [
+    {
+      "vs": "Claude Code",
+      "point": "훅·플러그인 생태계는 Claude 쪽이 두껍다."
+    },
+    {
+      "vs": "Grok Build",
+      "point": "모델과 계정 축이 다르다. 하네스 공개 범위도 다르다."
+    }
+  ],
+  "stack": [
+    {
+      "name": "Rust",
+      "role": "실행기",
+      "detail": "샌드박스와 성능"
+    },
+    {
+      "name": "TypeScript",
+      "role": "인터페이스",
+      "detail": "CLI UX"
+    },
+    {
+      "name": "OpenAI API",
+      "role": "추론",
+      "detail": "Codex/GPT 계열"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Rust",
+      "pct": "60%",
+      "bar": 60,
+      "note": "코어"
+    },
+    {
+      "name": "TypeScript",
+      "pct": "30%",
+      "bar": 30,
+      "note": "CLI"
+    }
+  ],
+  "architecture": "CLI → 승인 게이트 → 샌드박스 명령\n                 │\n                 └─ 패치 / 테스트 / git",
+  "patterns": [
+    {
+      "name": "승인 게이트",
+      "body": "위험한 명령은 실행 전 확인."
+    },
+    {
+      "name": "패치 단위",
+      "body": "파일 전체를 덮지 않고 diff로 제안."
+    }
+  ],
+  "tree": "openai/codex/\n├── codex-cli/\n└── sandbox/",
+  "learn": [
+    {
+      "title": "샌드박스",
+      "body": "에이전트 명령을 호스트와 분리한다."
+    },
+    {
+      "title": "승인 UX",
+      "body": "allow 목록을 점점 늘리는 운영."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "계정",
+      "min": "ChatGPT / API",
+      "rec": "팀"
+    },
+    {
+      "item": "OS",
+      "min": "macOS / Linux",
+      "rec": "최신"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "작은 버그 하나",
+      "body": "테스트가 있는 버그를 주고, 패치만 승인하는지 본다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "Sandbox",
+      "meaning": "명령 실행 격리"
+    },
+    {
+      "word": "Approval",
+      "meaning": "도구 실행 전 확인"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/openai/codex"
+    }
+  ]
+}

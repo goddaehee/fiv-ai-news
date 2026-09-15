@@ -1,0 +1,110 @@
+{
+  "slug": "dify",
+  "name": "Dify",
+  "repo": "langgenius/dify",
+  "category": "web",
+  "subcategory": "앱 빌더",
+  "stars": "80k+",
+  "license": "Apache-2.0",
+  "lang": "Python / TS",
+  "updated": "2026-06-20",
+  "trendRank": 7,
+  "oneLiner": "RAG·에이전트·워크플로를 화면에서 조합해 LLM 앱을 만드는 오픈소스 플랫폼.",
+  "analogyTitle": "LLM 앱의 워드프레스",
+  "analogy": "파이썬을 몰라도 검색·프롬프트·도구를 블록으로 이어 내부용 챗봇을 내보낼 수 있다.",
+  "why": "기획·운영이 엔지니어 대기 없이 실험을 돌리고 싶을 때 출발점이 된다.",
+  "pain": "노트북 스크립트는 공유·권한·로그가 없다.",
+  "fix": "워크스페이스, 앱 버전, 지식 베이스, API 게이트웨이를 한 제품에 넣었다.",
+  "compare": [
+    {
+      "vs": "LangChain",
+      "point": "라이브러리 vs 운영 콘솔."
+    },
+    {
+      "vs": "Botpress",
+      "point": "대화 특화 vs RAG+에이전트 광폭."
+    }
+  ],
+  "stack": [
+    {
+      "name": "Flask / Python",
+      "role": "API",
+      "detail": "오케스트레이션"
+    },
+    {
+      "name": "Next.js",
+      "role": "콘솔",
+      "detail": "앱 편집"
+    },
+    {
+      "name": "Postgres + 벡터",
+      "role": "저장",
+      "detail": "지식·로그"
+    }
+  ],
+  "languages": [
+    {
+      "name": "TypeScript",
+      "pct": "45%",
+      "bar": 45,
+      "note": "웹"
+    },
+    {
+      "name": "Python",
+      "pct": "45%",
+      "bar": 45,
+      "note": "API"
+    }
+  ],
+  "architecture": "콘솔 ─ 앱 정의 ─ 런타임\n              │\n     지식베이스 / 도구 / 모델 프로바이더",
+  "patterns": [
+    {
+      "name": "모델 프로바이더 추상화",
+      "body": "키와 모델을 앱과 분리한다."
+    },
+    {
+      "name": "지식 파이프라인",
+      "body": "문서 → 청크 → 검색 → 프롬프트."
+    }
+  ],
+  "tree": "dify/\n├── api/\n├── web/\n└── docker/",
+  "learn": [
+    {
+      "title": "운영 콘솔",
+      "body": "프롬프트도 버전이 있어야 롤백이 된다."
+    },
+    {
+      "title": "RAG 기본",
+      "body": "청크 크기와 메타데이터가 품질을 가른다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "Docker",
+      "min": "compose",
+      "rec": "16GB RAM"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "사내 문서 봇",
+      "body": "공개 가능한 문서 20개를 넣고, 검색 실패 질문을 10개 만들어 빈칸을 메운다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "RAG",
+      "meaning": "검색한 문서를 답에 근거로 넣는 방식"
+    },
+    {
+      "word": "Workspace",
+      "meaning": "앱·키·문서를 팀 단위로 묶는 공간"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/langgenius/dify"
+    }
+  ]
+}

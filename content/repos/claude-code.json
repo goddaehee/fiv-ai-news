@@ -1,0 +1,169 @@
+{
+  "slug": "claude-code",
+  "name": "Claude Code",
+  "repo": "anthropics/claude-code",
+  "category": "cli",
+  "subcategory": "터미널 코딩 에이전트",
+  "stars": "140k+",
+  "license": "Proprietary",
+  "lang": "TypeScript",
+  "updated": "2026-04-02",
+  "trendRank": 2,
+  "oneLiner": "터미널에서 자연어로 코드베이스를 읽고, 고치고, 테스트하고, 커밋하는 AI 코딩 에이전트.",
+  "analogyTitle": "옆자리에 앉아 키보드도 잡는 짝 프로그래머",
+  "analogy": "Copilot이 다음 줄을 채워 주는 자동완성이라면, Claude Code는 프로젝트 구조를 파악한 뒤 기능 추가부터 테스트·커밋까지 직접 처리하는 에이전트다.",
+  "why": "터미널 네이티브라 CI와 스크립트에 붙기 쉽고, 훅·플러그인·서브에이전트 조합이 실무 파이프라인과 맞는다.",
+  "pain": "IDE 플러그인은 파일 하나씩, 대화 하나씩이다. 전체 기능 구현과 테스트 실행을 한 세션에서 끝내기 어렵다.",
+  "fix": "50개 넘는 도구로 코드베이스를 탐색하고, 권한 단계(allow/ask/deny)를 거쳐 명령을 실행한다.",
+  "compare": [
+    {
+      "vs": "GitHub Copilot",
+      "point": "자동완성 위주. Claude Code는 구현→테스트→커밋 루프."
+    },
+    {
+      "vs": "Cursor",
+      "point": "IDE 종속. Claude Code는 터미널·CI에 직접 붙는다."
+    },
+    {
+      "vs": "Codex CLI",
+      "point": "둘 다 터미널. Hooks·플러그인 성숙도에서 갈린다."
+    }
+  ],
+  "stack": [
+    {
+      "name": "TypeScript",
+      "role": "에이전트 루프",
+      "detail": "도구 디스패치와 권한 분류"
+    },
+    {
+      "name": "Node.js 18+",
+      "role": "런타임",
+      "detail": "npm 패키지 배포"
+    },
+    {
+      "name": "Claude API",
+      "role": "추론",
+      "detail": "모델 호출"
+    },
+    {
+      "name": "MCP",
+      "role": "외부 도구",
+      "detail": "표준 프로토콜로 서비스 연결"
+    },
+    {
+      "name": "JSONL",
+      "role": "세션 저장",
+      "detail": "~/.claude/projects 아래 대화 기록"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Python",
+      "pct": "79.6%",
+      "bar": 80,
+      "note": "예제·훅"
+    },
+    {
+      "name": "Shell",
+      "pct": "13.7%",
+      "bar": 14,
+      "note": "설치·실행"
+    },
+    {
+      "name": "TypeScript",
+      "pct": "5.0%",
+      "bar": 5,
+      "note": "핵심 런타임"
+    }
+  ],
+  "architecture": "사용자 UI (CLI / IDE / Desktop)\n        │\n   메인 에이전트 루프\n   입력 → 도구 선택 → allow/ask/deny\n        │\n   Bash · File · Task · MCP\n        │\n   OS 샌드박스 / git worktree 서브에이전트\n        │\n   플러그인 · Hooks · CLAUDE.md",
+  "patterns": [
+    {
+      "name": "ReAct 루프",
+      "body": "생각하고 도구를 고르고 결과를 다시 먹인다. while(생각→행동→관찰)."
+    },
+    {
+      "name": "설정 캐스케이드",
+      "body": "Managed → CLI → Local → Project → User. 조직 설정이 개인 설정을 덮는다."
+    },
+    {
+      "name": "Hooks",
+      "body": "SessionStart, PreToolUse, PostToolUse, Stop 등 이벤트에 스크립트·HTTP·에이전트를 붙인다."
+    }
+  ],
+  "tree": "anthropics/claude-code/\n├── plugins/          # 공식 플러그인\n├── examples/         # SDK·훅·Actions\n├── .github/workflows\n└── CHANGELOG.md",
+  "learn": [
+    {
+      "title": "에이전트 루프",
+      "body": "도구 등록, 선택, 권한 3단계."
+    },
+    {
+      "title": "CLAUDE.md",
+      "body": "글로벌 → 프로젝트 → 디렉터리 계층으로 컨텍스트를 준다."
+    },
+    {
+      "title": "MCP",
+      "body": "도구 설명을 짧게 유지해 컨텍스트 낭비를 막는다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "OS",
+      "min": "macOS / Ubuntu / WSL2",
+      "rec": "최신"
+    },
+    {
+      "item": "Node",
+      "min": "18+",
+      "rec": "20 LTS"
+    },
+    {
+      "item": "RAM",
+      "min": "4GB",
+      "rec": "8GB+"
+    },
+    {
+      "item": "계정",
+      "min": "Claude 구독 또는 API",
+      "rec": "팀 시트"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "CLAUDE.md 한 장 쓰기",
+      "body": "빌드 명령, 테스트 명령, 건드리지 말 디렉터리를 10줄로 적고 같은 버그를 두 번 고쳐 본다."
+    },
+    {
+      "title": "PreToolUse로 rm 막기",
+      "body": "위험한 배시 패턴을 거부하는 훅을 하나 붙인다."
+    },
+    {
+      "title": "서브에이전트 한 번",
+      "body": "탐색과 구현을 나눠 실행하고 worktree가 생기는지 확인한다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "ReAct",
+      "meaning": "Reason + Act 순환"
+    },
+    {
+      "word": "MCP",
+      "meaning": "모델과 외부 도구를 잇는 프로토콜"
+    },
+    {
+      "word": "Hook",
+      "meaning": "도구 실행 전후에 끼워 넣는 자동화"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/anthropics/claude-code"
+    },
+    {
+      "label": "문서",
+      "href": "https://docs.anthropic.com/en/docs/claude-code"
+    }
+  ]
+}

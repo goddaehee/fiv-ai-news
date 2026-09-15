@@ -1,0 +1,105 @@
+{
+  "slug": "anthropic-skills",
+  "name": "anthropics/skills",
+  "repo": "anthropics/skills",
+  "category": "skills",
+  "subcategory": "공식 스킬",
+  "stars": "공식",
+  "license": "Apache-2.0",
+  "lang": "Markdown",
+  "updated": "2026-08-01",
+  "trendRank": 4,
+  "oneLiner": "Claude 계열 에이전트가 필요할 때만 불러 쓰는 폴더 단위 스킬 모음.",
+  "analogyTitle": "매뉴얼을 필요할 때만 꺼내 주는 서랍",
+  "analogy": "시스템 프롬프트에 모든 규칙을 넣지 않고, 작업 종류가 맞을 때만 해당 폴더를 읽게 한다.",
+  "why": "컨텍스트를 아끼고, 팀 규칙을 코드 저장소처럼 버전 관리할 수 있다.",
+  "pain": "긴 시스템 프롬프트는 토큰을 태우고도 지켜지지 않는다.",
+  "fix": "스킬은 폴더(설명 + 스크립트 + 자원)이고, 트리거될 때만 로드된다.",
+  "compare": [
+    {
+      "vs": "CLAUDE.md",
+      "point": "항상 읽힘. 스킬은 조건부 로드."
+    },
+    {
+      "vs": "슬래시 명령",
+      "point": "사용자가 호출. 스킬은 모델이 고를 수 있다."
+    }
+  ],
+  "stack": [
+    {
+      "name": "Markdown",
+      "role": "설명",
+      "detail": "SKILL.md"
+    },
+    {
+      "name": "Scripts",
+      "role": "실행",
+      "detail": "결정적 작업은 코드로"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Markdown",
+      "pct": "70%",
+      "bar": 70,
+      "note": "스킬 정의"
+    },
+    {
+      "name": "Python/JS",
+      "pct": "30%",
+      "bar": 30,
+      "note": "헬퍼"
+    }
+  ],
+  "architecture": "에이전트\n  └─ 트리거 매칭 → skills/<name>/SKILL.md\n                         └─ scripts/ references/",
+  "patterns": [
+    {
+      "name": "점진적 공개",
+      "body": "한 줄 설명만 보다가, 필요할 때 본문을 읽는다."
+    },
+    {
+      "name": "결정적 스크립트",
+      "body": "포맷 변환처럼 실수하면 안 되는 일은 코드로 둔다."
+    }
+  ],
+  "tree": "skills/\n├── SKILL.md\n├── scripts/\n└── references/",
+  "learn": [
+    {
+      "title": "스킬 설계",
+      "body": "언제 쓰는지 한 문장, 하지 말 것 한 문장."
+    },
+    {
+      "title": "토큰 절약",
+      "body": "항상 넣는 규칙과 가끔 넣는 규칙을 나눈다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "에이전트",
+      "min": "Claude Code 등 스킬 로더",
+      "rec": "최신"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "팀 스킬 하나",
+      "body": "PR 체크리스트를 SKILL.md로 옮기고, 관련 없는 질문에서는 안 읽히는지 확인한다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "Skill",
+      "meaning": "조건부 로드되는 작업 설명서+스크립트"
+    },
+    {
+      "word": "Progressive disclosure",
+      "meaning": "요약 먼저, 본문은 필요할 때"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/anthropics/skills"
+    }
+  ]
+}

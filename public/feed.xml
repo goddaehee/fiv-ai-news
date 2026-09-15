@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>5분 AI 뉴스</title>
+    <link>https://fiv-ai-news.vercel.app/</link>
+    <description>매일 아침 AI·테크 트렌드를 5분 분량으로 큐레이션합니다.</description>
+    <language>ko-KR</language>
+    <atom:link href="https://fiv-ai-news.vercel.app/feed.xml" rel="self" type="application/rss+xml"/>
+    <lastBuildDate>Mon, 14 Sep 2026 22:20:00 GMT</lastBuildDate>
+    <item>
+      <title>온디바이스 AI PC · Claude 주간 한도 조정 · Anthropic 분기 흑자</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-15</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-15</guid>
+      <category>AI · 테크</category>
+      <pubDate>Mon, 14 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[Perplexity가 NVIDIA RTX PC에서 모델·에이전트를 기기 안에서 돌리는 구성을 열었고, Claude Code 주간 한도는 프로모션 종료 후 영구 +25%로 낮아졌습니다.]]></description>
+    </item>
+    <item>
+      <title>Trump AI 속도조절 거부 · Anthropic Nasdaq 상장 보도 · 안전표준 기구 논의</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-14</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-14</guid>
+      <category>AI · 테크</category>
+      <pubDate>Sun, 13 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[정상회담 의제로 올라온 AI 속도 조절안이 거부 쪽으로 기울었습니다. 같은 주, 안전 표준을 누가 쓰느냐는 별도 트랙으로 움직입니다.]]></description>
+    </item>
+    <item>
+      <title>Anthropic 속도 조절안 · OpenAI 공급망 공격 자인 · GPT-Rosalind 개방</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-13</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-13</guid>
+      <category>AI · 테크</category>
+      <pubDate>Sat, 12 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[공급망 사고를 자사가 인정하면 후속은 기능 추가가 아니라 권한·로그·잠금입니다. 같은 날 오픈 모델 개방 소식이 분위기를 갈랐습니다.]]></description>
+    </item>
+    <item>
+      <title>Anthropic 오용보고서 이란·증류 공개 · 필즈상 25인 선언 · Agents API 베타</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-12</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-12</guid>
+      <category>AI · 테크</category>
+      <pubDate>Fri, 11 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[누가 모델을 어떻게 증류하고 에이전트화했는지가 공개됐습니다. API 베타는 그 다음 문장입니다.]]></description>
+    </item>
+    <item>
+      <title>DeepSeek V4.1 Flash 공개 · SWE-2 벤치 1위 · Astra 수학 의혹 제기</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-11</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-11</guid>
+      <category>AI · 테크</category>
+      <pubDate>Thu, 10 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[저비용 속도와 벤치 1위가 같은 날 나왔습니다. 수학 의혹은 평가 세트부터 의심하라는 쪽입니다.]]></description>
+    </item>
+    <item>
+      <title>Anthropic 퇴사자의 초지능 경고 · DeepSeek 요금 인하 · GPT-6 Astra 품절</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-10</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-10</guid>
+      <category>AI · 테크</category>
+      <pubDate>Wed, 09 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[한쪽은 초지능 리스크를 말하고, 다른 쪽은 할당량을 다 써서 새 키를 못 받습니다. 실무는 후자부터 처리합니다.]]></description>
+    </item>
+    <item>
+      <title>OpenAI 특이점 증명 논란 · AlphaGenome Atlas · Mistral 30억 유로 투자</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-09</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-09</guid>
+      <category>AI · 테크</category>
+      <pubDate>Tue, 08 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[내부 모델로 난제 증명을 냈다는 발표에 데이터 출처 논란이 붙었고, 유전체 변이 지도와 유럽 대형 투자 소식이 같은 날에 겹쳤습니다.]]></description>
+    </item>
+    <item>
+      <title>ChatGPT Work 문체 학습 · GPT-6 Astra 학습비 논쟁 · 5시간 한도 부활</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-08</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-08</guid>
+      <category>AI · 테크</category>
+      <pubDate>Mon, 07 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[업무 문체를 학습하겠다는 기능과 5시간 한도 부활이 같은 주입니다. 편의의 대가는 로그와 한도입니다.]]></description>
+    </item>
+    <item>
+      <title>OpenAI 연구 인턴 자체 도달 · GPT-6 Astra 환각률 반토막 · 논문 재현 오류 적발</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-07</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-07</guid>
+      <category>AI · 테크</category>
+      <pubDate>Sun, 06 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[자동화된 연구 인턴 목표에 도달했다는 데이터와 함께, 환각률 하락·논문 재현 오류 적발 소식이 같은 날에 나왔습니다.]]></description>
+    </item>
+    <item>
+      <title>GPT-6 Astra 전면 개방 · Claude Max 한도 초기화 · 지능 지수 v4.2</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-06</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-06</guid>
+      <category>AI · 테크</category>
+      <pubDate>Sat, 05 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[Astra가 예상보다 빨리 Plus·Business까지 열렸고, Claude Max 주간 한도 초기화와 지능 지수 v4.2가 같은 날에 겹쳤습니다.]]></description>
+    </item>
+    <item>
+      <title>페르마 정리 Lean 4 · collusion.wiki · Astra 주당 200개 한도</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-05</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-05</guid>
+      <category>AI · 테크</category>
+      <pubDate>Fri, 04 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[Claude가 형식화한 페르마의 마지막 정리 증명이 Lean 4로 공개됐고, 에이전트가 외부 위키를 게시판처럼 쓴 사례와 Astra 한도 공개가 겹쳤습니다.]]></description>
+    </item>
+    <item>
+      <title>차세대 모델 공개 · Hugging Face 인수 관측 · ARC 점수</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-04</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-04</guid>
+      <category>AI · 테크</category>
+      <pubDate>Thu, 03 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[모델 이름 공개는 하루, 한도와 평가 논쟁은 한 주입니다. 인수 관측은 미확정으로 남깁니다.]]></description>
+    </item>
+    <item>
+      <title>Gemini 3.8 Flash · Muse Spark 1.3 · Code Arena</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-03</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-03</guid>
+      <category>AI · 테크</category>
+      <pubDate>Wed, 02 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[가격을 유지한 채 모델이 다시 올라왔고, 몇 시간 간격으로 코딩 리더보드 1위가 바뀌었습니다.]]></description>
+    </item>
+    <item>
+      <title>Fable 5.1 캐시 인하 · Astra Critical · Atlas 3D</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-02</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-02</guid>
+      <category>AI · 테크</category>
+      <pubDate>Tue, 01 Sep 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[캐시 읽기 가격을 4분의 1로 내린 모델과 검증 조직 전용 등급, 이미지 한 장으로 3D를 복원하는 모델이 같은 날에 나왔습니다.]]></description>
+    </item>
+    <item>
+      <title>EU ChatGPT 분류 · Claude Max 20배 환산 · 법률 모델</title>
+      <link>https://fiv-ai-news.vercel.app/news/2026-09-01</link>
+      <guid isPermaLink="true">https://fiv-ai-news.vercel.app/news/2026-09-01</guid>
+      <category>AI · 테크</category>
+      <pubDate>Mon, 31 Aug 2026 22:20:00 GMT</pubDate>
+      <description><![CDATA[EU가 ChatGPT를 초대형 검색엔진으로 분류하는 움직임과, 구독 배수 문구가 시간 단위로 환산된 표, 법률 특화 모델 소식이 겹쳤습니다.]]></description>
+    </item>
+  </channel>
+</rss>

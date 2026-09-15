@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="5분 AI 뉴스">
+  <rect width="32" height="32" fill="#F7F6F2"/>
+  <rect x="1.5" y="1.5" width="29" height="29" fill="none" stroke="#050505" stroke-width="3"/>
+  <!-- Chunky woodtype 5: five square bars, no curves -->
+  <rect x="6.5" y="5" width="15" height="5.2" fill="#050505"/>
+  <rect x="6.5" y="5" width="5.2" height="12.2" fill="#050505"/>
+  <rect x="6.5" y="12" width="15" height="5.2" fill="#050505"/>
+  <rect x="16.3" y="12" width="5.2" height="13.8" fill="#050505"/>
+  <rect x="6.5" y="20.6" width="15" height="5.2" fill="#050505"/>
+  <circle cx="25.4" cy="24.4" r="3.5" fill="#DF1F2D"/>
+</svg>

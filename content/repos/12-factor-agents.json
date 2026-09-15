@@ -1,0 +1,90 @@
+{
+  "slug": "12-factor-agents",
+  "name": "12-factor-agents",
+  "repo": "humanlayer/12-factor-agents",
+  "category": "agents",
+  "subcategory": "설계 원칙",
+  "stars": "가이드",
+  "license": "MIT",
+  "lang": "Markdown",
+  "updated": "2026-03-15",
+  "trendRank": 12,
+  "oneLiner": "에이전트를 데모가 아니라 운영 가능한 소프트웨어로 만들기 위한 12가지 원칙.",
+  "analogyTitle": "12-factor 앱을 에이전트에 다시 쓴 체크리스트",
+  "analogy": "상태, 소유권, 재시도, 사람 개입을 분위기 좋은 데모가 아니라 서비스 설계 문제로 본다.",
+  "why": "파일럿에서 프로덕션으로 넘어갈 때 터지는 항목이 거의 이 목록에 있다.",
+  "pain": "데모는 한 세션에서 잘 되고, 이틀 뒤 재실행은 실패한다.",
+  "fix": "상태 외부화, 작은 도구, 사람 게이트, 재개 가능한 워크플로를 원칙으로 고정한다.",
+  "compare": [
+    {
+      "vs": "프롬프트 모음",
+      "point": "문장이 아니라 아키텍처 제약."
+    },
+    {
+      "vs": "LangGraph 튜토리얼",
+      "point": "프레임워크 비의존 원칙서."
+    }
+  ],
+  "stack": [
+    {
+      "name": "문서",
+      "role": "원칙",
+      "detail": "구현은 독자 선택"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Markdown",
+      "pct": "100%",
+      "bar": 100,
+      "note": "가이드"
+    }
+  ],
+  "architecture": "작은 도구\n명시적 상태\n재개 가능한 턴\n사람 게이트\n소유권 있는 컨텍스트",
+  "patterns": [
+    {
+      "name": "소유권 있는 컨텍스트",
+      "body": "세션 메모리를 블랙홀로 두지 않는다."
+    },
+    {
+      "name": "사람 게이트",
+      "body": "되돌리기 어려운 행동 앞에 승인을 둔다."
+    }
+  ],
+  "tree": "12-factor-agents/\n└── content/   # 원칙별 에세이",
+  "learn": [
+    {
+      "title": "데모 ≠ 서비스",
+      "body": "재시도·관찰·권한이 없으면 제품이 아니다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "경험",
+      "min": "에이전트 파일럿 1회",
+      "rec": "장애 1회"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "우리 봇 채점",
+      "body": "12항목을 pass/fail로 매기고 fail 하나만이라도 이번 스프린트에 고친다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "Human gate",
+      "meaning": "되돌리기 어려운 행동 전 승인"
+    },
+    {
+      "word": "Stateless turn",
+      "meaning": "한 턴을 재개 가능하게 만드는 설계"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/humanlayer/12-factor-agents"
+    }
+  ]
+}

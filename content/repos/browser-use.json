@@ -1,0 +1,109 @@
+{
+  "slug": "browser-use",
+  "name": "browser-use",
+  "repo": "browser-use/browser-use",
+  "category": "agents",
+  "subcategory": "브라우저 에이전트",
+  "stars": "60k+",
+  "license": "MIT",
+  "lang": "Python",
+  "updated": "2026-05-20",
+  "trendRank": 5,
+  "oneLiner": "LLM이 실제 브라우저를 클릭·입력·탐색하게 하는 자동화 라이브러리.",
+  "analogyTitle": "RPA를 자연어로 다시 쓴 것",
+  "analogy": "셀레니움 스크립트를 사람이 짜는 대신, 목표를 말하면 모델이 DOM을 보고 다음 클릭을 고른다.",
+  "why": "내부 웹앱, 관리자 페이지, 로그인 이후 흐름처럼 API가 없는 구간에 필요하다.",
+  "pain": "API가 없으면 에이전트가 일을 못 끝낸다.",
+  "fix": "브라우저를 도구로 등록해 화면을 읽고 행동한다.",
+  "compare": [
+    {
+      "vs": "Playwright 스크립트",
+      "point": "고정 셀렉터 vs 매 스텝 판단."
+    },
+    {
+      "vs": "Computer Use",
+      "point": "스크린 픽셀 vs DOM/접근성 트리."
+    }
+  ],
+  "stack": [
+    {
+      "name": "Python",
+      "role": "에이전트",
+      "detail": "루프"
+    },
+    {
+      "name": "Playwright",
+      "role": "브라우저",
+      "detail": "실제 클릭"
+    },
+    {
+      "name": "LLM API",
+      "role": "판단",
+      "detail": "다음 액션 선택"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Python",
+      "pct": "95%",
+      "bar": 95,
+      "note": "핵심"
+    }
+  ],
+  "architecture": "목표 → LLM → 액션(클릭/입력/탐색)\n                ↑           │\n                └─ DOM 관찰 ←┘",
+  "patterns": [
+    {
+      "name": "액션 스키마",
+      "body": "모델이 자유 텍스트가 아니라 구조화된 행동을 낸다."
+    },
+    {
+      "name": "상태 관찰",
+      "body": "매 스텝 DOM 요약을 다시 넣는다."
+    }
+  ],
+  "tree": "browser-use/\n├── browser_use/\n└── examples/",
+  "learn": [
+    {
+      "title": "도구로서의 브라우저",
+      "body": "MCP·에이전트 도구 목록에 브라우저를 넣는 패턴."
+    },
+    {
+      "title": "실패 복구",
+      "body": "셀렉터가 바뀌면 모델이 다시 고른다. 무한 루프 가드가 필요하다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "Python",
+      "min": "3.11+",
+      "rec": "3.12"
+    },
+    {
+      "item": "브라우저",
+      "min": "Chromium",
+      "rec": "Playwright 설치"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "로그인 후 한 페이지",
+      "body": "테스트 계정의 대시보드에서 숫자 하나를 읽어 CSV로 저장한다. 자격 증명은 환경 변수."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "DOM observation",
+      "meaning": "화면 구조를 모델 입력으로 넣는 일"
+    },
+    {
+      "word": "Action schema",
+      "meaning": "클릭/입력 같은 행동을 타입으로 고정"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/browser-use/browser-use"
+    }
+  ]
+}
