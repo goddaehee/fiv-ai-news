@@ -6,7 +6,7 @@
 
 ## 스택
 
-- Next.js App Router (최신)
+- Next.js 15 App Router
 - 정적 JSON 콘텐츠 (`content/issues`, `content/repos`)
 - pnpm
 - Vercel 배포
@@ -17,6 +17,19 @@
 pnpm install
 pnpm dev
 ```
+
+## Vercel 연결
+
+GitHub 레포: [goddaehee/fiv-ai-news](https://github.com/goddaehee/fiv-ai-news)
+
+Vercel 대시보드에서 **Add New Project → Import Git Repository → `goddaehee/fiv-ai-news`**.
+
+- Framework Preset: Next.js
+- Install Command: `pnpm install`
+- Build Command: `pnpm build`
+- 팀: goddaehee's projects (hobby)
+
+GitHub App이 이 레포를 아직 못 보면, Vercel → Settings → Git → Connect GitHub 후 다시 Import 하면 됩니다.
 
 ## 콘텐츠 파이프라인 (운영 서버 크론)
 
