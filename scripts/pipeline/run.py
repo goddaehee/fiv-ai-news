@@ -25,6 +25,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date")
     ap.add_argument("--llm", action="store_true")
+    ap.add_argument("--provider", choices=["xai", "glm", "openai"])
     ap.add_argument("--allow-weekend", action="store_true")
     ap.add_argument("--collect-only", action="store_true")
     args = ap.parse_args()
@@ -51,6 +52,8 @@ def main() -> int:
     draft_cmd = [sys.executable, str(HERE / "draft.py"), "--collected", str(collected), "--out", str(issue)]
     if args.llm:
         draft_cmd.append("--llm")
+    if args.provider:
+        draft_cmd.extend(["--provider", args.provider])
     rc = sh(draft_cmd)
     if issue.exists():
         v = sh([sys.executable, str(HERE / "validate.py"), str(issue)])

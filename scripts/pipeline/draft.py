@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Turn a collected snapshot into an issue JSON.
 
-If XAI_API_KEY / GROK_API_KEY / OPENAI_API_KEY is set, ask the model to write
-the Korean issue in the house voice. Otherwise write a skeleton the editor fills.
+If XAI / GLM / OpenAI key is set, ask the model to write the Korean issue.
+Otherwise write a skeleton the editor fills.
 """
 
 from __future__ import annotations
@@ -42,12 +42,46 @@ method 고정문: "수치는 각 회사의 발표 화면과 공식 문서, 주�
 """
 
 
-def pick_key() -> tuple[str, str, str] | None:
-    if os.environ.get("XAI_API_KEY") or os.environ.get("GROK_API_KEY"):
-        key = os.environ.get("XAI_API_KEY") or os.environ.get("GROK_API_KEY")
-        return key, "https://api.x.ai/v1/chat/completions", os.environ.get("XAI_MODEL", "grok-4")
-    if os.environ.get("OPENAI_API_KEY"):
-        return os.environ["OPENAI_API_KEY"], "https://api.openai.com/v1/chat/completions", os.environ.get("OPENAI_MODEL", "gpt-4.1")
+PROVIDERS = {
+    "xai": {
+        "env": ("XAI_API_KEY", "GROK_API_KEY"),
+        "url_env": "XAI_BASE_URL",
+        "url": "https://api.x.ai/v1/chat/completions",
+        "model_env": "XAI_MODEL",
+        "model": "grok-4",
+    },
+    "glm": {
+        "env": ("GLM_API_KEY", "ZHIPU_API_KEY", "ZHIPUAI_API_KEY"),
+        "url_env": "GLM_BASE_URL",
+        "url": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+        "model_env": "GLM_MODEL",
+        "model": "glm-4.6",
+    },
+    "openai": {
+        "env": ("OPENAI_API_KEY",),
+        "url_env": "OPENAI_BASE_URL",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "model_env": "OPENAI_MODEL",
+        "model": "gpt-4.1",
+    },
+}
+
+
+def pick_key(prefer: str | None = None) -> tuple[str, str, str, str] | None:
+    order = ["xai", "glm", "openai"]
+    want = (prefer or os.environ.get("LLM_PROVIDER") or "").strip().lower()
+    if want in PROVIDERS:
+        order = [want] + [p for p in order if p != want]
+    for name in order:
+        spec = PROVIDERS[name]
+        key = next((os.environ[k] for k in spec["env"] if os.environ.get(k)), None)
+        if not key:
+            continue
+        url = os.environ.get(spec["url_env"]) or spec["url"]
+        if not url.endswith("/chat/completions"):
+            url = url.rstrip("/") + "/chat/completions"
+        model = os.environ.get(spec["model_env"]) or spec["model"]
+        return name, key, url, model
     return None
 
 
@@ -162,31 +196,32 @@ def main() -> int:
     ap.add_argument("--collected", type=Path, required=True)
     ap.add_argument("--out", type=Path)
     ap.add_argument("--llm", action="store_true")
+    ap.add_argument("--provider", choices=["xai", "glm", "openai"])
     ap.add_argument("--force-skeleton", action="store_true")
     args = ap.parse_args()
     snap = json.loads(args.collected.read_text(encoding="utf-8"))
     out = args.out or (ISSUES / f"{snap['date']}.json")
 
-    creds = None if args.force_skeleton else pick_key()
+    creds = None if args.force_skeleton else pick_key(args.provider)
     if args.llm and not creds:
-        print("no API key (XAI_API_KEY / GROK_API_KEY / OPENAI_API_KEY)", file=sys.stderr)
+        print("no API key (GLM_API_KEY / XAI_API_KEY / OPENAI_API_KEY)", file=sys.stderr)
         return 2
 
     if creds:
-        key, url, model = creds
+        name, key, url, model = creds
         buckets = rank_buckets(cluster(snap["items"]))
         payload = {
             "date": snap["date"],
             "buckets": [
                 {
-                    "topic": name,
+                    "topic": topic,
                     "n": len(items),
                     "items": [{"title": it["title"], "url": it.get("url"), "source": it["source"], "summary": it.get("summary"), "published": it.get("published")} for it in items[:6]],
                 }
-                for name, items in buckets[:10]
+                for topic, items in buckets[:10]
             ],
         }
-        print(f"drafting with {model}…")
+        print(f"drafting with {name}/{model}…")
         raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False))
         issue = extract_json(raw)
         issue["date"] = snap["date"]

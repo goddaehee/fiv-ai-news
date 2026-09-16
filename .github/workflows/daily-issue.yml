@@ -21,11 +21,16 @@ jobs:
         run: python3 scripts/pipeline/run.py --collect-only
       - name: Draft Korean issue when an API key is present
         env:
+          LLM_PROVIDER: ${{ secrets.LLM_PROVIDER }}
+          GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+          ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
+          GLM_BASE_URL: ${{ secrets.GLM_BASE_URL }}
+          GLM_MODEL: ${{ secrets.GLM_MODEL }}
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
           GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          if [ -n "$XAI_API_KEY$GROK_API_KEY$OPENAI_API_KEY" ]; then
+          if [ -n "$GLM_API_KEY$ZHIPU_API_KEY$XAI_API_KEY$GROK_API_KEY$OPENAI_API_KEY" ]; then
             python3 scripts/pipeline/run.py --llm
           else
             echo "no LLM key — leaving collected snapshot only"

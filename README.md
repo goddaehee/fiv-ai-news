@@ -40,12 +40,14 @@ python3 scripts/pipeline/run.py --collect-only
 python3 scripts/pipeline/validate.py content/issues/*.json
 ```
 
-1. 평일 05:30 KST — `.github/workflows/daily-issue.yml`이 수집 후, Secret `XAI_API_KEY`가 있으면 초안 PR
+1. 평일 05:30 KST — GitHub Action이 수집 후, Secret `GLM_API_KEY`(또는 xAI/OpenAI)가 있으면 초안 PR
 2. 편집자가 수치·출처를 공식 페이지와 맞춤
 3. 머지 후 Vercel이 `/news/YYYY-MM-DD` 재빌드
 4. 메일 발송은 이후 Resend
 
-키가 없으면 수집 JSON만 아티팩트로 남고, 스켈레톤 초안은 로컬에서 `run.py`로 만들 수 있습니다. 자세한 규칙은 `scripts/pipeline/README.md`.
+키가 없으면 수집 JSON만 아티팩트로 남습니다. GLM을 쓰려면 레포 Secrets에 `GLM_API_KEY`와 `LLM_PROVIDER=glm`을 넣으면 됩니다. 해외 엔드포인트는 `GLM_BASE_URL=https://api.z.ai/api/paas/v4`.
+
+글·레포·검색은 JSON 파일이라 **DB는 없습니다.** 구독은 브라우저 localStorage입니다. 메일 명단·조회수·여러 기기 저장을 붙일 때만 DB가 필요합니다.
 
 ## 하지 않는 것
 
