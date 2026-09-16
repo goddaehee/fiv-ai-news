@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, type KeyboardEvent } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { allTokensIn, highlightTerms, tokenize } from "@/lib/search";
 
 type Section = { id: string; title: string; text: string };
@@ -28,12 +28,11 @@ export function SearchBox({ newsIndex, repoIndex }: { newsIndex: NewsHit[]; repo
   const [chips, setChips] = useState<string[]>([]);
   const [active, setActive] = useState(-1);
   const router = useRouter();
-  const params = useSearchParams();
 
   useEffect(() => {
-    const fromUrl = params.get("q");
+    const fromUrl = new URLSearchParams(window.location.search).get("q");
     if (fromUrl && fromUrl.trim().length >= 2) setQ(fromUrl.trim());
-  }, [params]);
+  }, []);
 
   const query = [...chips, q.trim()].filter(Boolean).join(" ");
   const tokens = tokenize(query);

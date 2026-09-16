@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { Archive } from "@/components/home/Archive";
 import { FaqList } from "@/components/home/FaqList";
 import { Feed } from "@/components/home/Feed";
@@ -49,9 +48,7 @@ export default function HomePage() {
   ];
   return (
     <main className="main" id="main-content" tabIndex={-1}>
-      <Suspense fallback={null}>
-        <SearchBox newsIndex={newsIndex} repoIndex={repoIndex} />
-      </Suspense>
+      <SearchBox newsIndex={newsIndex} repoIndex={repoIndex} />
       <Hero
         date={latest.date}
         tag={latest.tag}
