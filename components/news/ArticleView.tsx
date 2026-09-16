@@ -22,8 +22,15 @@ const KIND_LABEL: Record<SourceKind, string> = {
 };
 
 function shortTitle(title: string) {
-  const t = title.replace(/^\d+\.\s*/, "");
+  const t = title.replace(/^\d+\.\s*/, "").replace(/^🆕\s*/, "");
   return t.length > 22 ? `${t.slice(0, 20)}…` : t;
+}
+
+function withCode(text: string) {
+  const parts = text.split(/(`[^`]+`)/g);
+  return parts.map((part, i) =>
+    part.startsWith("`") && part.endsWith("`") ? <code key={i}>{part.slice(1, -1)}</code> : <span key={i}>{part}</span>,
+  );
 }
 
 export function ArticleView({
@@ -197,15 +204,17 @@ export function ArticleView({
 
       <section className="article-sec" id="mood">
         <h2>오늘의 감정·온도</h2>
-        <div className="gauge-track" aria-hidden="true">
-          <span className="on" />
-          <span className="on" />
-          <span className="on" />
-          <span className="on" />
-        </div>
-        <div className="gauge-cap">
-          <span>차분</span>
-          <span>과열</span>
+        <div className="gauge-wrap">
+          <div className="gauge-bar" aria-hidden="true">
+            <span className="gpin g-blue">전환</span>
+            <span className="gpin g-green">성장</span>
+            <span className="gpin g-amber">주의</span>
+            <span className="gpin g-red">과열</span>
+          </div>
+          <div className="gauge-ends">
+            <span>차분</span>
+            <span>과열</span>
+          </div>
         </div>
         <div className="gauge-rows">
           <div className="grow">
@@ -245,18 +254,18 @@ export function ArticleView({
               {i + 1}. {tip.title}
             </strong>
             <br />
-            {tip.body} — ({tip.via})
+            {withCode(tip.body)} — ({tip.via})
           </p>
         ))}
       </section>
 
       <hr className="hr" />
       <p>
-        <strong>확인 방식</strong>
+        <strong>📦 확인 방식</strong>
       </p>
       <p>{issue.method}</p>
       <p>
-        <strong>라벨 가이드</strong> — 📄 공식 문서 · 🔥 널리 퍼진 글 · 💬 댓글이 많이 붙은 글 · 🔁 리트윗 비중이 높은 글
+        <strong>🏷 라벨 가이드</strong> — 🔥 널리 퍼진 글 · 💬 댓글이 많이 붙은 글 · 🔁 리트윗 비중이 높은 글
       </p>
 
       <aside className="reader-subscribe" id="subscribe">
