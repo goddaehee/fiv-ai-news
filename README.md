@@ -31,14 +31,21 @@ Vercel 대시보드에서 **Add New Project → Import Git Repository → `godda
 
 GitHub App이 이 레포를 아직 못 보면, Vercel → Settings → Git → Connect GitHub 후 다시 Import 하면 됩니다.
 
-## 콘텐츠 파이프라인 (운영 서버 크론)
+## 콘텐츠 파이프라인 (운영 서버·GitHub Actions)
 
-1. 23:00 KST — X·공식 블로그 수집
-2. 05:30 KST — 교차검증 후 이슈 JSON 초안 → PR
-3. 머지 후 Vercel 재빌드
-4. 평일 07:00 — 이메일 발송 (이후 Resend 등)
+원문 사이트를 긁지 않습니다. 공식 블로그 RSS·HN·Google News만 모은 뒤 한국어로 다시 씁니다.
 
-이 데모의 구독 폼은 브라우저에만 저장되며 메일을 보내지 않습니다.
+```bash
+python3 scripts/pipeline/run.py --collect-only
+python3 scripts/pipeline/validate.py content/issues/*.json
+```
+
+1. 평일 05:30 KST — `.github/workflows/daily-issue.yml`이 수집 후, Secret `XAI_API_KEY`가 있으면 초안 PR
+2. 편집자가 수치·출처를 공식 페이지와 맞춤
+3. 머지 후 Vercel이 `/news/YYYY-MM-DD` 재빌드
+4. 메일 발송은 이후 Resend
+
+키가 없으면 수집 JSON만 아티팩트로 남고, 스켈레톤 초안은 로컬에서 `run.py`로 만들 수 있습니다. 자세한 규칙은 `scripts/pipeline/README.md`.
 
 ## 하지 않는 것
 

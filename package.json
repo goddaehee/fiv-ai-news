@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "pipeline": "python3 scripts/pipeline/run.py",
+    "pipeline:collect": "python3 scripts/pipeline/run.py --collect-only",
+    "validate:issues": "python3 scripts/pipeline/validate.py content/issues/*.json"
   },
   "dependencies": {
     "lucide-react": "^0.510.0",
