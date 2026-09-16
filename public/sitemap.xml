@@ -21,13 +21,23 @@
   <url><loc>https://fiv-ai-news.vercel.app/news/2026-09-02</loc><changefreq>daily</changefreq></url>
   <url><loc>https://fiv-ai-news.vercel.app/news/2026-09-01</loc><changefreq>daily</changefreq></url>
   <url><loc>https://fiv-ai-news.vercel.app/repos/12-factor-agents</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://fiv-ai-news.vercel.app/repos/aider</loc><changefreq>daily</changefreq></url>
   <url><loc>https://fiv-ai-news.vercel.app/repos/anthropic-skills</loc><changefreq>daily</changefreq></url>
   <url><loc>https://fiv-ai-news.vercel.app/repos/browser-use</loc><changefreq>daily</changefreq></url>
   <url><loc>https://fiv-ai-news.vercel.app/repos/chrome-devtools-mcp</loc><changefreq>daily</changefreq></url>
   <url><loc>https://fiv-ai-news.vercel.app/repos/claude-code</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://fiv-ai-news.vercel.app/repos/copilotkit</loc><changefreq>daily</changefreq></url>
   <url><loc>https://fiv-ai-news.vercel.app/repos/dify</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://fiv-ai-news.vercel.app/repos/exo</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://fiv-ai-news.vercel.app/repos/firecrawl</loc><changefreq>daily</changefreq></url>
   <url><loc>https://fiv-ai-news.vercel.app/repos/goose</loc><changefreq>daily</changefreq></url>
   <url><loc>https://fiv-ai-news.vercel.app/repos/grok-build</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://fiv-ai-news.vercel.app/repos/langgraph</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://fiv-ai-news.vercel.app/repos/llama-cpp</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://fiv-ai-news.vercel.app/repos/n8n</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://fiv-ai-news.vercel.app/repos/ollama</loc><changefreq>daily</changefreq></url>
   <url><loc>https://fiv-ai-news.vercel.app/repos/openai-codex</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://fiv-ai-news.vercel.app/repos/opencode</loc><changefreq>daily</changefreq></url>
   <url><loc>https://fiv-ai-news.vercel.app/repos/openhands</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://fiv-ai-news.vercel.app/repos/spec-kit</loc><changefreq>daily</changefreq></url>
 </urlset>

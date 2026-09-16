@@ -1,0 +1,127 @@
+{
+  "slug": "copilotkit",
+  "name": "CopilotKit",
+  "repo": "CopilotKit/CopilotKit",
+  "category": "web",
+  "subcategory": "에이전트 UI 프레임워크",
+  "stars": "25k+",
+  "license": "MIT",
+  "lang": "TypeScript",
+  "updated": "2026-08-15",
+  "trendRank": 17,
+  "oneLiner": "리액트 앱에 코파일럿 사이드바·액션·상태 공유를 붙이는 UI 프레임워크.",
+  "analogyTitle": "에이전트를 제품 화면에 앉히는 좌석",
+  "analogy": "백엔드 에이전트가 있어도 사용자는 채팅 창이 필요하다. CopilotKit은 그 창과 버튼이다.",
+  "why": "사내 도구에 ‘물어보면 화면이 바뀌는’ 코파일럿을 넣을 때, 채팅 UX를 처음부터 짜지 않아도 된다.",
+  "pain": "모델 호출은 있는데 프론트 상태가 에이전트와 단절돼 있다.",
+  "fix": "프론트 상태 ↔ 액션 ↔ 에이전트 브리지.",
+  "compare": [
+    {
+      "vs": "Vercel AI SDK",
+      "point": "스트림·훅. CopilotKit은 코파일럿 UX 패턴."
+    },
+    {
+      "vs": "LangGraph",
+      "point": "그래프 오케스트레이션. CopilotKit은 UI."
+    },
+    {
+      "vs": "n8n",
+      "point": "백오피스 자동화. CopilotKit은 제품 화면."
+    }
+  ],
+  "stack": [
+    {
+      "name": "React",
+      "role": "UI",
+      "detail": "사이드바·인라인"
+    },
+    {
+      "name": "Actions",
+      "role": "도구",
+      "detail": "프론트 함수 노출"
+    },
+    {
+      "name": "AG-UI/에이전트",
+      "role": "프로토콜",
+      "detail": "상태 공유"
+    }
+  ],
+  "languages": [
+    {
+      "name": "TypeScript",
+      "pct": "88%",
+      "bar": 88,
+      "note": "핵심"
+    },
+    {
+      "name": "Other",
+      "pct": "12%",
+      "bar": 12,
+      "note": "예제"
+    }
+  ],
+  "architecture": "React 상태 ── actions ── agent runtime\n     UI 컴포넌트 ─┘",
+  "patterns": [
+    {
+      "name": "프론트 액션",
+      "body": "에이전트가 버튼을 대신 누른다."
+    },
+    {
+      "name": "공유 상태",
+      "body": "캔버스와 채팅이 같은 객체를 본다."
+    },
+    {
+      "name": "인간 승인",
+      "body": "위험한 액션은 확인 후 실행."
+    }
+  ],
+  "tree": "CopilotKit/\n├── packages/\n├── examples/\n└── docs/",
+  "learn": [
+    {
+      "title": "할 일 앱에 사이드바",
+      "body": "자연어로 항목을 추가한다."
+    },
+    {
+      "title": "삭제 액션에 승인",
+      "body": "에이전트가 바로 지우지 못하게 한다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "프론트",
+      "min": "React",
+      "rec": "Next 권장"
+    },
+    {
+      "item": "키",
+      "min": "모델 API",
+      "rec": "백엔드 프록시"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "읽기 액션만 열고 쓰기 액션은 승인",
+      "body": "권한 단계를 UI에서 확인한다."
+    },
+    {
+      "title": "에이전트 응답을 화면에 반영",
+      "body": "채팅과 캔버스가 같은 상태인지 본다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "Action",
+      "meaning": "에이전트가 호출하는 프론트 함수"
+    },
+    {
+      "word": "Human-in-the-loop",
+      "meaning": "실행 전 사람 승인"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/CopilotKit/CopilotKit"
+    }
+  ]
+}

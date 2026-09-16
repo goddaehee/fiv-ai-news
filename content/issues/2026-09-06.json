@@ -5,7 +5,7 @@
   "dek": "Astra가 예상보다 빨리 Plus·Business까지 열렸고, Claude Max 주간 한도 초기화와 지능 지수 v4.2가 같은 날에 겹쳤습니다.",
   "tag": "모델",
   "briefMin": 3,
-  "readMin": 11,
+  "readMin": 15,
   "keywords": [
     "GPT-6",
     "Astra",
@@ -49,6 +49,21 @@
       "id": "extras06",
       "headline": "그 밖의 신기능·신제품",
       "summary": "회로도·PCB 화면과 AI 튜터 시범 학교 소식이 올랐습니다."
+    },
+    {
+      "id": "plus",
+      "headline": "예상보다 빠른 Plus 개방은 품질 편차와 같이 온다",
+      "summary": "좌석이 늘면 실패 사례도 늘습니다."
+    },
+    {
+      "id": "note",
+      "headline": "문맥 압축을 노트+검색으로 바꾸면 비밀이 인덱스에 남는다",
+      "summary": "압축 전 마스킹을 먼저 겁니다."
+    },
+    {
+      "id": "split",
+      "headline": "컴퓨터 사용 벤치와 글쓰기 벤치가 갈리면 기본 모델을 하나로 두지 않는다",
+      "summary": "업무별로 핀을 나눕니다."
     }
   ],
   "keynums": [
@@ -71,6 +86,16 @@
       "val": "6개월",
       "lab": "일부 계획 앞당김",
       "sub": "사내 발언"
+    },
+    {
+      "val": "20개",
+      "lab": "개방 당일 회귀",
+      "sub": "실패 로그"
+    },
+    {
+      "val": "핀 3",
+      "lab": "업무별 모델",
+      "sub": "기본값 분리"
     }
   ],
   "timeline": [
@@ -89,6 +114,10 @@
     {
       "t": "09-06 07시",
       "d": "웹 발행"
+    },
+    {
+      "t": "09-06 16시",
+      "d": "개방과 한도 초기화가 같은 오후에 운영 채널을 채웠다"
     }
   ],
   "intro": "Astra가 예상보다 빨리 Plus·Business까지 열렸고, Claude Max 주간 한도 초기화와 지능 지수 v4.2가 같은 날에 겹쳤습니다.",
@@ -115,6 +144,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "OpenAI",
+          "url": "https://openai.com",
+          "kind": "doc"
         }
       ]
     },
@@ -140,6 +174,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "Anthropic",
+          "url": "https://www.anthropic.com",
+          "kind": "doc"
         }
       ]
     },
@@ -164,6 +203,11 @@
         {
           "handle": "공식 자료",
           "url": "https://x.com/",
+          "kind": "talk"
+        },
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
           "kind": "talk"
         }
       ]
@@ -190,6 +234,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "Artificial Analysis",
+          "url": "https://artificialanalysis.ai/",
+          "kind": "doc"
         }
       ]
     },
@@ -214,6 +263,101 @@
         {
           "handle": "공식 자료",
           "url": "https://x.com/",
+          "kind": "talk"
+        },
+        {
+          "handle": "Artificial Analysis",
+          "url": "https://artificialanalysis.ai/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "plus",
+      "title": "6. 빠른 개방은 실패 로그를 같이 연다",
+      "bullets": [
+        "Plus·Business에 열리면 지원 티켓이 먼저 옵니다.",
+        "실패 사례를 주간으로 모으십시오.",
+        "기본 모델을 하루 만에 올리지 않습니다."
+      ],
+      "body": [
+        "접근이 넓어지는 날의 본문은 데모가 아니라 회귀입니다. 사내 과제 20개를 같은 날 다시 돌리십시오.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "개방 당일 회귀 20개와 실패 로그 경로를 확인하십시오.",
+      "tags": [
+        "개방",
+        "회귀"
+      ],
+      "sources": [
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "OpenAI",
+          "url": "https://openai.com",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "note",
+      "title": "7. 노트+검색 압축은 인덱스 잔류 정책이 필요하다",
+      "bullets": [
+        "압축이 사라지는 것이 아니라 다른 곳에 쌓입니다.",
+        "비밀 마스킹을 압축 전에 겁니다.",
+        "프로젝트 단위로 인덱스를 나누십시오."
+      ],
+      "body": [
+        "긴 세션을 싸게 만드는 기술입니다. 싸진 만큼 검색에 걸리는 문장도 늘어납니다.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "압축을 켜기 전에 마스킹 규칙과 인덱스 보존 기간을 적으십시오.",
+      "tags": [
+        "압축",
+        "프라이버시"
+      ],
+      "sources": [
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "OpenAI",
+          "url": "https://openai.com",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "split",
+      "title": "8. 벤치가 갈리면 기본 모델도 갈린다",
+      "bullets": [
+        "컴퓨터 사용 1위가 글쓰기 1위가 아닙니다.",
+        "업무 유형별 핀을 유지합니다.",
+        "전사 기본값 하나에 베팅하지 마십시오."
+      ],
+      "body": [
+        "한 모델이 모든 칸에서 이길 것이라는 가정은 이번 주 표가 깨뜨렸습니다.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "코딩·글쓰기·컴퓨터 사용 핀을 세 줄로 나누십시오.",
+      "tags": [
+        "라우팅",
+        "평가"
+      ],
+      "sources": [
+        {
+          "handle": "Artificial Analysis",
+          "url": "https://artificialanalysis.ai/",
+          "kind": "doc"
+        },
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
           "kind": "talk"
         }
       ]
@@ -245,6 +389,16 @@
       "title": "데이터 잔류 위치를 조달 체크리스트 첫 칸에 둡니다",
       "body": "모델 카드보다 계약서의 보존 기간이 먼저입니다.",
       "via": "편집부"
+    },
+    {
+      "title": "Max 한도 초기화를 장애로 공지하지 않습니다",
+      "body": "한도 이벤트로 적습니다.",
+      "via": "운영"
+    },
+    {
+      "title": "압축 인덱스에 비밀이 검색되는지 10줄만 읽어 봅니다",
+      "body": "보이면 마스킹부터.",
+      "via": "보안"
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크는 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다."

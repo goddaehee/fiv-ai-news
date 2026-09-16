@@ -1,0 +1,127 @@
+{
+  "slug": "opencode",
+  "name": "OpenCode",
+  "repo": "sst/opencode",
+  "category": "cli",
+  "subcategory": "오픈 코딩 에이전트",
+  "stars": "커뮤니티",
+  "license": "MIT",
+  "lang": "TypeScript",
+  "updated": "2026-08-20",
+  "trendRank": 13,
+  "oneLiner": "터미널 코딩 에이전트를 특정 모델 벤더에 묶지 않고 돌리려는 오픈 하네스.",
+  "analogyTitle": "모델만 갈아 끼우는 정비소",
+  "analogy": "상용 CLI가 한 브랜드 공구 세트라면 OpenCode는 소켓만 같은 공구대에 가깝다.",
+  "why": "Claude Code·Codex·Grok Build를 비교하는 팀이, 같은 과제에 모델만 바꿔 보고 싶을 때.",
+  "pain": "제품 CLI는 루프가 닫혀 있어 실패를 재현하기 어렵다.",
+  "fix": "오픈 하네스 + 다중 제공자 + 세션 로그.",
+  "compare": [
+    {
+      "vs": "Claude Code",
+      "point": "제품 완성도. OpenCode는 교체 가능성."
+    },
+    {
+      "vs": "Grok Build",
+      "point": "둘 다 오픈 하네스. 기본 모델과 UX가 다르다."
+    },
+    {
+      "vs": "Aider",
+      "point": "git 중심 패치. OpenCode는 에이전트 루프."
+    }
+  ],
+  "stack": [
+    {
+      "name": "TypeScript",
+      "role": "에이전트",
+      "detail": "도구 디스패치"
+    },
+    {
+      "name": "여러 모델 API",
+      "role": "추론",
+      "detail": "제공자 교체"
+    },
+    {
+      "name": "TUI",
+      "role": "인터페이스",
+      "detail": "터미널 세션"
+    }
+  ],
+  "languages": [
+    {
+      "name": "TypeScript",
+      "pct": "85%",
+      "bar": 85,
+      "note": "핵심"
+    },
+    {
+      "name": "Other",
+      "pct": "15%",
+      "bar": 15,
+      "note": "설정"
+    }
+  ],
+  "architecture": "TUI ── 에이전트 루프 ── 도구 (fs, bash, git)\n                 └─ provider adapter",
+  "patterns": [
+    {
+      "name": "제공자 어댑터",
+      "body": "모델만 바꾸고 도구 정책은 유지한다."
+    },
+    {
+      "name": "세션 로그",
+      "body": "실패를 재현할 텍스트를 남긴다."
+    },
+    {
+      "name": "권한 단계",
+      "body": "위험한 명령은 ask."
+    }
+  ],
+  "tree": "opencode/\n├── packages/\n├── packages/opencode/\n└─ README.md",
+  "learn": [
+    {
+      "title": "같은 버그를 두 모델로",
+      "body": "하네스가 같은지 확인한다."
+    },
+    {
+      "title": "권한 기본값",
+      "body": "allow 목록을 저장소에 커밋한다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "런타임",
+      "min": "Node 20+",
+      "rec": "LTS"
+    },
+    {
+      "item": "키",
+      "min": "최소 1개 제공자",
+      "rec": "조직 시크릿"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "제공자 두 개로 같은 이슈",
+      "body": "패치 품질과 비용을 표로 남긴다."
+    },
+    {
+      "title": "위험한 git 명령을 ask로",
+      "body": "실수로 push되지 않는지 확인한다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "Harness",
+      "meaning": "모델을 도구에 연결하는 실행 틀"
+    },
+    {
+      "word": "Provider",
+      "meaning": "추론 API 공급자"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/sst/opencode"
+    }
+  ]
+}

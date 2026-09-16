@@ -1,0 +1,127 @@
+{
+  "slug": "aider",
+  "name": "Aider",
+  "repo": "Aider-AI/aider",
+  "category": "cli",
+  "subcategory": "Git 중심 코딩 에이전트",
+  "stars": "35k+",
+  "license": "Apache-2.0",
+  "lang": "Python",
+  "updated": "2026-08-01",
+  "trendRank": 14,
+  "oneLiner": "저장소를 컨텍스트로 보고 패치를 만들어 커밋하는 터미널 페어 프로그래머.",
+  "analogyTitle": "커밋 단위로 말하는 짝 프로그래머",
+  "analogy": "채팅 창에 코드를 붙여 넣는 대신, git diff가 대화의 단위가 된다.",
+  "why": "리뷰 문화가 있는 팀에 맞다. 변경이 커밋으로 남아 추적이 쉽다.",
+  "pain": "에이전트가 파일을 고치고도 무엇을 바꿨는지 한 눈에 안 보인다.",
+  "fix": "repo map + diff 적용 + 자동 커밋 루프.",
+  "compare": [
+    {
+      "vs": "Claude Code",
+      "point": "범용 에이전트. Aider는 git diff가 중심."
+    },
+    {
+      "vs": "Codex CLI",
+      "point": "제품 루프. Aider는 모델 교체가 쉽다."
+    },
+    {
+      "vs": "Continue",
+      "point": "IDE. Aider는 터미널."
+    }
+  ],
+  "stack": [
+    {
+      "name": "Python",
+      "role": "에이전트",
+      "detail": "패치 루프"
+    },
+    {
+      "name": "tree-sitter",
+      "role": "repo map",
+      "detail": "심볼 지도"
+    },
+    {
+      "name": "git",
+      "role": "기록",
+      "detail": "커밋 단위 변경"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Python",
+      "pct": "90%",
+      "bar": 90,
+      "note": "핵심"
+    },
+    {
+      "name": "Other",
+      "pct": "10%",
+      "bar": 10,
+      "note": "트리시터"
+    }
+  ],
+  "architecture": "repo map ── 프롬프트 ── 패치\n                └─ git commit",
+  "patterns": [
+    {
+      "name": "Repo map",
+      "body": "전체 파일을 넣지 않고 심볼 지도로 컨텍스트를 줄인다."
+    },
+    {
+      "name": "커밋 루프",
+      "body": "성공한 패치만 기록으로 남긴다."
+    },
+    {
+      "name": "아키텍트/에디터 모드",
+      "body": "계획과 편집을 나눈다."
+    }
+  ],
+  "tree": "aider/\n├── aider/\n├── aider/coders/\n└── tests/",
+  "learn": [
+    {
+      "title": "작은 이슈 하나",
+      "body": "커밋 메시지가 읽히는지 본다."
+    },
+    {
+      "title": "repo map 크기",
+      "body": "큰 모노레포에서 토큰을 줄인다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "git",
+      "min": "저장소",
+      "rec": "깨끗할 필요 없음"
+    },
+    {
+      "item": "키",
+      "min": "모델 API",
+      "rec": "로컬 모델도 가능"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "테스트 실패 하나를 커밋으로",
+      "body": "diff가 최소인지 리뷰한다."
+    },
+    {
+      "title": "로컬 모델과 클라우드 모델을 같은 과제에",
+      "body": "커밋 품질을 비교한다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "Repo map",
+      "meaning": "코드베이스 심볼 요약"
+    },
+    {
+      "word": "Diff",
+      "meaning": "변경의 단위"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/Aider-AI/aider"
+    }
+  ]
+}

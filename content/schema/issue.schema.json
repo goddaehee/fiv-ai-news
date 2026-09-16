@@ -80,7 +80,7 @@
     "analysis": {
       "type": "array",
       "minItems": 2,
-      "maxItems": 6,
+      "maxItems": 14,
       "items": {
         "type": "object",
         "additionalProperties": false,

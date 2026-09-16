@@ -5,7 +5,7 @@
   "dek": "캐시 읽기 가격을 4분의 1로 내린 모델과 검증 조직 전용 등급, 이미지 한 장으로 3D를 복원하는 모델이 같은 날에 나왔습니다.",
   "tag": "인프라",
   "briefMin": 3,
-  "readMin": 9,
+  "readMin": 14,
   "keywords": [
     "Fable",
     "5.1",
@@ -39,6 +39,21 @@
       "id": "extras02",
       "headline": "그 밖의 신기능·신제품",
       "summary": "가격표 소수점과 접근 권한 등급이 같은 날의 다른 축입니다."
+    },
+    {
+      "id": "loop",
+      "headline": "에이전트 루프의 반복 읽기가 캐시 인하의 실제 수혜 구간이다",
+      "summary": "파일을 한 번 읽고 끝나는 챗은 체감이 작습니다."
+    },
+    {
+      "id": "grade",
+      "headline": "검증 조직 전용 등급은 접근 제한이지 성능 등급이 아니다",
+      "summary": "권한 신청 대기열을 장애로 공지하지 마십시오."
+    },
+    {
+      "id": "recon",
+      "headline": "단일 이미지 3D 복원은 측량 대체가 아니다",
+      "summary": "치수 검수 없이 도면에 올리지 마십시오."
     }
   ],
   "keynums": [
@@ -61,6 +76,16 @@
       "val": "1장",
       "lab": "3D 복원 입력",
       "sub": "데모"
+    },
+    {
+      "val": "반복",
+      "lab": "캐시 수혜",
+      "sub": "루프 읽기"
+    },
+    {
+      "val": "대기",
+      "lab": "Critical",
+      "sub": "검증 조직"
     }
   ],
   "timeline": [
@@ -79,6 +104,10 @@
     {
       "t": "09-02 07시",
       "d": "웹 발행"
+    },
+    {
+      "t": "09-02 16시",
+      "d": "캐시 인하 체감이 에이전트 팀과 챗 팀으로 갈렸다"
     }
   ],
   "intro": "캐시 읽기 가격을 4분의 1로 내린 모델과 검증 조직 전용 등급, 이미지 한 장으로 3D를 복원하는 모델이 같은 날에 나왔습니다.",
@@ -105,6 +134,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "@AnthropicAI",
+          "url": "https://x.com/AnthropicAI",
+          "kind": "talk"
         }
       ]
     },
@@ -130,6 +164,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "Anthropic",
+          "url": "https://www.anthropic.com",
+          "kind": "doc"
         }
       ]
     },
@@ -154,6 +193,11 @@
         {
           "handle": "공식 자료",
           "url": "https://x.com/",
+          "kind": "talk"
+        },
+        {
+          "handle": "@GoogleDeepMind",
+          "url": "https://x.com/GoogleDeepMind",
           "kind": "talk"
         }
       ]
@@ -180,6 +224,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "Anthropic",
+          "url": "https://www.anthropic.com",
+          "kind": "doc"
         }
       ]
     },
@@ -204,6 +253,96 @@
         {
           "handle": "공식 자료",
           "url": "https://x.com/",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "loop",
+      "title": "6. 캐시 인하 효과를 보려면 트레이스의 반복 읽기를 센다",
+      "bullets": [
+        "같은 파일을 20번 읽는 루프가 수혜 구간입니다.",
+        "히트율을 재지 않으면 45%는 광고입니다.",
+        "프롬프트를 줄이는 것과 캐시 가격은 다른 축입니다."
+      ],
+      "body": [
+        "단가가 내려가도 루프가 길어지면 청구서는 그대로입니다. 오늘 트레이스 50건의 반복 읽기 횟수를 세십시오.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "인하 효과를 주장하려면 히트율을 같이 적으십시오.",
+      "tags": [
+        "캐시",
+        "에이전트"
+      ],
+      "sources": [
+        {
+          "handle": "@AnthropicAI",
+          "url": "https://x.com/AnthropicAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "Anthropic",
+          "url": "https://www.anthropic.com",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "grade",
+      "title": "7. Critical 등급은 대기열이다",
+      "bullets": [
+        "검증 조직만 들어가는 문은 성능이 아닙니다.",
+        "권한 신청 SLA를 적어두십시오.",
+        "데모 계정으로 우회하지 않습니다."
+      ],
+      "body": [
+        "제한 등급이 열리면 모두가 들어가야 할 것처럼 보입니다. 대부분은 평가 조직 이야기입니다.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "권한 대기열을 장애 공지에 넣지 마십시오.",
+      "tags": [
+        "접근",
+        "평가"
+      ],
+      "sources": [
+        {
+          "handle": "@AnthropicAI",
+          "url": "https://x.com/AnthropicAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "recon",
+      "title": "8. 한 장으로 만든 3D는 측량이 아니다",
+      "bullets": [
+        "공간 복원 데모는 인상적입니다.",
+        "공차·재질·숨은 면이 없습니다.",
+        "현장 치수를 대체한다고 적지 마십시오."
+      ],
+      "body": [
+        "멀티모달 복원은 프리비즈용입니다. 도면 커밋 게이트를 없애지 마십시오.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "3D 출력은 리뷰 대기열입니다.",
+      "tags": [
+        "3D",
+        "검수"
+      ],
+      "sources": [
+        {
+          "handle": "@GoogleDeepMind",
+          "url": "https://x.com/GoogleDeepMind",
+          "kind": "talk"
+        },
+        {
+          "handle": "@huggingface",
+          "url": "https://x.com/huggingface",
           "kind": "talk"
         }
       ]
@@ -235,6 +374,16 @@
       "title": "데이터 잔류 위치를 조달 체크리스트 첫 칸에 둡니다",
       "body": "모델 카드보다 계약서의 보존 기간이 먼저입니다.",
       "via": "편집부"
+    },
+    {
+      "title": "캐시 인하 전후 히트율을 재십시오",
+      "body": "45%를 그대로 예산에 넣지 않습니다.",
+      "via": "운영"
+    },
+    {
+      "title": "3D 복원 결과를 도면에 바로 올리지 않습니다",
+      "body": "치수 검수가 점수입니다.",
+      "via": "설계"
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크는 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다."

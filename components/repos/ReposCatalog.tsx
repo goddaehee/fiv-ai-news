@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { RepoCategory } from "@/data/types";
+import type { CatalogCat } from "@/data/catalog";
 
 type Cat = { id: RepoCategory | "all"; label: string };
 type Card = {
@@ -16,9 +17,22 @@ type Card = {
   license: string;
 };
 
-export function ReposCatalog({ categories, repos }: { categories: Cat[]; repos: Card[] }) {
+export function ReposCatalog({
+  categories,
+  repos,
+  catalog,
+  catalogCount,
+  deepMap,
+}: {
+  categories: Cat[];
+  repos: Card[];
+  catalog: CatalogCat[];
+  catalogCount: number;
+  deepMap: Record<string, string>;
+}) {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState<RepoCategory | "all">("all");
+
   const list = useMemo(() => {
     const terms = q.toLowerCase().trim();
     return repos.filter((r) => {
@@ -28,6 +42,24 @@ export function ReposCatalog({ categories, repos }: { categories: Cat[]; repos: 
       return blob.includes(terms);
     });
   }, [q, cat, repos]);
+
+  const filteredCatalog = useMemo(() => {
+    const terms = q.toLowerCase().trim();
+    if (!terms) return catalog;
+    return catalog
+      .map((c) => ({
+        ...c,
+        subs: c.subs
+          .map((s) => ({
+            ...s,
+            items: s.items.filter(
+              (i) => i.name.toLowerCase().includes(terms) || i.slug.toLowerCase().includes(terms),
+            ),
+          }))
+          .filter((s) => s.items.length),
+      }))
+      .filter((c) => c.subs.length);
+  }, [q, catalog]);
 
   return (
     <main id="main-content" tabIndex={-1}>
@@ -39,7 +71,8 @@ export function ReposCatalog({ categories, repos }: { categories: Cat[]; repos: 
         </p>
         <h1>유행레포 공부자료</h1>
         <p className="repo-stats">
-          <b>{repos.length}</b>개 레포 · <b>{categories.length - 1}</b>개 카테고리 · 같은 틀의 한국어 딥다이브
+          <b>{catalogCount}</b>개 레포 · <b>{catalog.length}</b>개 카테고리 · 한국어 딥다이브 <b>{repos.length}</b>편 ·
+          갱신 2026-09-16
         </p>
         <input
           type="search"
@@ -47,14 +80,7 @@ export function ReposCatalog({ categories, repos }: { categories: Cat[]; repos: 
           onChange={(e) => setQ(e.target.value)}
           placeholder="레포 이름·설명으로 검색…"
           autoComplete="off"
-          style={{
-            width: "100%",
-            font: "inherit",
-            padding: "12px 14px",
-            border: "1px solid var(--color-ink)",
-            background: "var(--color-surface)",
-            color: "var(--color-fg)",
-          }}
+          className="repo-search"
         />
         <div className="chips" role="tablist" aria-label="카테고리">
           {categories.map((c) => (
@@ -84,6 +110,41 @@ export function ReposCatalog({ categories, repos }: { categories: Cat[]; repos: 
       {list.length === 0 ? (
         <p style={{ textAlign: "center", color: "var(--color-muted)", padding: 40 }}>검색 결과 없음</p>
       ) : null}
+
+      <section className="repos-all" id="repos-all" aria-labelledby="repos-all-h">
+        <h2 id="repos-all-h">
+          전체 목록 <span>({catalogCount}편)</span>
+        </h2>
+        <p className="repos-all-note">
+          위 카드와 같은 자료를 분류별 글 목록으로 모았습니다. 굵은 항목은 이 클론에서 한국어 본문을 읽을 수 있습니다.
+        </p>
+        {filteredCatalog.map((c) => (
+          <details key={c.title} className="repos-all-cat">
+            <summary>
+              {c.title}
+              <span>{c.subs.reduce((n, s) => n + s.items.length, 0)}편</span>
+            </summary>
+            {c.subs.map((s) => (
+              <div key={s.title}>
+                <h3>{s.title}</h3>
+                <ul>
+                  {s.items.map((item) => {
+                    const deep = deepMap[item.slug];
+                    const href = `/repos/${deep ?? item.slug}`;
+                    return (
+                      <li key={item.slug}>
+                        <Link href={href} style={deep ? { fontWeight: 800 } : undefined}>
+                          {item.name}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </details>
+        ))}
+      </section>
     </main>
   );
 }

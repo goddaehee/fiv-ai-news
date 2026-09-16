@@ -5,7 +5,7 @@
   "dek": "가격을 유지한 채 모델이 다시 올라왔고, 몇 시간 간격으로 코딩 리더보드 1위가 바뀌었습니다.",
   "tag": "모델",
   "briefMin": 3,
-  "readMin": 9,
+  "readMin": 14,
   "keywords": [
     "Gemini",
     "3.8",
@@ -44,6 +44,21 @@
       "id": "extras03",
       "headline": "그 밖의 신기능·신제품",
       "summary": "가격표 유지와 리더보드 교체가 같은 브리핑의 두 축입니다."
+    },
+    {
+      "id": "board",
+      "headline": "리더보드가 하루 만에 바뀌면 조달 문서를 어제 날짜로 고정한다",
+      "summary": "실시간 1위는 계약 근거가 아닙니다."
+    },
+    {
+      "id": "token",
+      "headline": "값이 그대로인데 청구서가 커진 이유는 토큰 수다",
+      "summary": "평균 출력 길이와 재시도를 세십시오."
+    },
+    {
+      "id": "sec",
+      "headline": "보안 특화 변형은 도구 권한을 같이 줄여야 의미가 있다",
+      "summary": "모델만 바꾸면 공격면은 그대로입니다."
     }
   ],
   "keynums": [
@@ -66,6 +81,16 @@
       "val": "40%",
       "lab": "청구서 체감 증가",
       "sub": "사용자 보고"
+    },
+    {
+      "val": "길이",
+      "lab": "출력 토큰",
+      "sub": "청구서 원인"
+    },
+    {
+      "val": "날짜",
+      "lab": "조달 모델 ID",
+      "sub": "아레나 제외"
     }
   ],
   "timeline": [
@@ -84,6 +109,10 @@
     {
       "t": "09-03 07시",
       "d": "웹 발행"
+    },
+    {
+      "t": "09-03 19시",
+      "d": "값이 그대로인 청구서 논쟁이 운영 채널을 채웠다"
     }
   ],
   "intro": "가격을 유지한 채 모델이 다시 올라왔고, 몇 시간 간격으로 코딩 리더보드 1위가 바뀌었습니다.",
@@ -110,6 +139,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "Google",
+          "url": "https://ai.google.dev/",
+          "kind": "doc"
         }
       ]
     },
@@ -134,6 +168,11 @@
         {
           "handle": "공식 자료",
           "url": "https://x.com/",
+          "kind": "talk"
+        },
+        {
+          "handle": "@MetaAI",
+          "url": "https://x.com/MetaAI",
           "kind": "talk"
         }
       ]
@@ -160,6 +199,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "@huggingface",
+          "url": "https://x.com/huggingface",
+          "kind": "talk"
         }
       ]
     },
@@ -185,6 +229,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "@Google",
+          "url": "https://x.com/Google",
+          "kind": "talk"
         }
       ]
     },
@@ -209,6 +258,100 @@
         {
           "handle": "공식 자료",
           "url": "https://x.com/",
+          "kind": "talk"
+        },
+        {
+          "handle": "Google",
+          "url": "https://ai.google.dev/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "board",
+      "title": "6. 하루짜리 1위는 조달 근거가 아니다",
+      "bullets": [
+        "아레나 순위는 참가자와 문항이 매일 바뀝니다.",
+        "계약서에는 모델 ID와 날짜를 고정합니다.",
+        "어제 1위를 오늘 SLA에 쓰지 마십시오."
+      ],
+      "body": [
+        "Flash와 Spark가 같은 날 나오면 표가 흔들립니다. 흔들림을 기다리지 말고, 사내 세트 점수를 근거로 두십시오.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "조달 문서에 외부 아레나 순위를 넣지 마십시오.",
+      "tags": [
+        "조달",
+        "리더보드"
+      ],
+      "sources": [
+        {
+          "handle": "Artificial Analysis",
+          "url": "https://artificialanalysis.ai/",
+          "kind": "doc"
+        },
+        {
+          "handle": "@Google",
+          "url": "https://x.com/Google",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "token",
+      "title": "7. 가격표가 그대로면 사용량을 봅니다",
+      "bullets": [
+        "출력 길이·재시도·도구 호출이 청구서를 만듭니다.",
+        "값이 같다는 공지를 할인으로 읽지 마십시오.",
+        "워크플로별 토큰을 표로 남깁니다."
+      ],
+      "body": [
+        "더 유능한 모델은 더 길게 말합니다. 단가가 같아도 청구서는 오릅니다.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "이번 주 청구서에 평균 출력 길이를 한 칸 추가하십시오.",
+      "tags": [
+        "요금",
+        "토큰"
+      ],
+      "sources": [
+        {
+          "handle": "@Google",
+          "url": "https://x.com/Google",
+          "kind": "talk"
+        },
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "sec",
+      "title": "8. 보안 변형은 권한 축소와 한 세트다",
+      "bullets": [
+        "Cyber 라벨은 필터가 아닙니다.",
+        "도구 allow 목록을 같이 줄이지 않으면 의미가 없습니다.",
+        "로그 보존을 더 길게 잡으십시오."
+      ],
+      "body": [
+        "보안 특화 모델을 쓰면서 쉘을 allow로 두면 라벨만 바뀐 것입니다.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "보안 변형 파일럿의 도구 권한을 한 단계 내리십시오.",
+      "tags": [
+        "보안"
+      ],
+      "sources": [
+        {
+          "handle": "@Google",
+          "url": "https://x.com/Google",
+          "kind": "talk"
+        },
+        {
+          "handle": "@MicrosoftAI",
+          "url": "https://x.com/MicrosoftAI",
           "kind": "talk"
         }
       ]
@@ -240,6 +383,16 @@
       "title": "데이터 잔류 위치를 조달 체크리스트 첫 칸에 둡니다",
       "body": "모델 카드보다 계약서의 보존 기간이 먼저입니다.",
       "via": "편집부"
+    },
+    {
+      "title": "조달에 아레나 순위를 넣지 않습니다",
+      "body": "모델 ID와 평가 날짜를 고정합니다.",
+      "via": "조달"
+    },
+    {
+      "title": "청구서에 평균 출력 길이를 한 칸",
+      "body": "단가 공지를 할인으로 읽지 마십시오.",
+      "via": "재무"
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크는 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다."

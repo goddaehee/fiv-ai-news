@@ -1,4 +1,5 @@
 import { ReposCatalog } from "@/components/repos/ReposCatalog";
+import { CATALOG, CATALOG_COUNT, deepDiveSlug } from "@/data/catalog";
 import { CATEGORIES, REPOS } from "@/data/repos";
 import type { Metadata } from "next";
 
@@ -8,6 +9,16 @@ export const metadata: Metadata = {
 };
 
 export default function ReposPage() {
+  const deepMap: Record<string, string> = {};
+  for (const cat of CATALOG) {
+    for (const sub of cat.subs) {
+      for (const item of sub.items) {
+        const deep = deepDiveSlug(item.slug);
+        if (deep) deepMap[item.slug] = deep;
+      }
+    }
+  }
+
   return (
     <ReposCatalog
       categories={CATEGORIES}
@@ -21,6 +32,9 @@ export default function ReposPage() {
         stars: r.stars,
         license: r.license,
       }))}
+      catalog={CATALOG}
+      catalogCount={CATALOG_COUNT}
+      deepMap={deepMap}
     />
   );
 }

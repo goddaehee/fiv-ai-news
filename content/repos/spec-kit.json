@@ -1,0 +1,127 @@
+{
+  "slug": "spec-kit",
+  "name": "Spec Kit",
+  "repo": "github/spec-kit",
+  "category": "cli",
+  "subcategory": "스펙 주도 개발",
+  "stars": "GitHub 공식",
+  "license": "MIT",
+  "lang": "Markdown",
+  "updated": "2026-07-01",
+  "trendRank": 16,
+  "oneLiner": "에이전트에게 구현 전에 스펙을 쓰게 하는 워크플로 키트. 계획 문서를 코드보다 앞에 둔다.",
+  "analogyTitle": "티켓 대신 스펙 한 장",
+  "analogy": "‘알아서 짜줘’가 아니라, 먼저 합의된 문장을 주고 그 문장에 코드를 맞춘다.",
+  "why": "에이전트가 바로 파일을 고치면 리뷰가 커밋 뒤에 온다. 스펙을 앞에 두면 리뷰가 싸진다.",
+  "pain": "플랜 모드 없이 에이전트를 켜면 큰 diff가 먼저 생긴다.",
+  "fix": "스펙 템플릿 + 에이전트 지시 + 검증 체크리스트.",
+  "compare": [
+    {
+      "vs": "AGENTS.md",
+      "point": "저장소 규칙. Spec Kit는 기능 단위 스펙."
+    },
+    {
+      "vs": "Grok Build /plan",
+      "point": "대화형 계획. Spec Kit는 문서 산출물."
+    },
+    {
+      "vs": "ADR",
+      "point": "결정 기록. Spec Kit는 구현 전 명세."
+    }
+  ],
+  "stack": [
+    {
+      "name": "Markdown",
+      "role": "스펙",
+      "detail": "사람·에이전트 공통"
+    },
+    {
+      "name": "CLI/스킬",
+      "role": "워크플로",
+      "detail": "생성·검증"
+    },
+    {
+      "name": "체크리스트",
+      "role": "완료 정의",
+      "detail": "리뷰 항목"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Markdown",
+      "pct": "60%",
+      "bar": 60,
+      "note": "스펙"
+    },
+    {
+      "name": "TypeScript/Python",
+      "pct": "40%",
+      "bar": 40,
+      "note": "도구"
+    }
+  ],
+  "architecture": "스펙 초안 ── 합의 ── 에이전트 구현 ── 체크리스트",
+  "patterns": [
+    {
+      "name": "완료 정의",
+      "body": "테스트·금지 경로를 스펙에 적는다."
+    },
+    {
+      "name": "작은 단위",
+      "body": "스펙 하나가 하루를 넘기지 않게 자른다."
+    },
+    {
+      "name": "스펙을 커밋",
+      "body": "코드와 같이 리뷰한다."
+    }
+  ],
+  "tree": "spec-kit/\n├── templates/\n├── skills/\n└── README.md",
+  "learn": [
+    {
+      "title": "버그 하나 스펙",
+      "body": "재현·기대·비범위를 적는다."
+    },
+    {
+      "title": "에이전트에게 스펙만 주고 구현",
+      "body": "diff가 스펙 밖을 넘는지 본다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "문서",
+      "min": "저장소 쓰기",
+      "rec": "리뷰 문화"
+    },
+    {
+      "item": "에이전트",
+      "min": "아무 CLI",
+      "rec": "플랜 모드 권장"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "스펙 없이 고친 세션 vs 스펙 후 세션",
+      "body": "리뷰 시간과 diff 크기를 비교한다."
+    },
+    {
+      "title": "금지 경로를 스펙에 넣고 어기는지 확인",
+      "body": "에이전트 규칙을 시험한다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "Spec",
+      "meaning": "구현 전에 합의하는 문장"
+    },
+    {
+      "word": "DoD",
+      "meaning": "완료 정의"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/github/spec-kit"
+    }
+  ]
+}

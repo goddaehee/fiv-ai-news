@@ -1,0 +1,138 @@
+{
+  "slug": "llama-cpp",
+  "name": "llama.cpp",
+  "repo": "ggml-org/llama.cpp",
+  "category": "local",
+  "subcategory": "로컬 추론 엔진",
+  "stars": "80k+",
+  "license": "MIT",
+  "lang": "C++",
+  "updated": "2026-09-01",
+  "trendRank": 11,
+  "oneLiner": "CPU·GPU에서 GGUF 모델을 돌리는 사실상의 로컬 추론 엔진. 양자화와 서버 모드가 실무 축이다.",
+  "analogyTitle": "모델을 노트북에 심는 작은 엔진",
+  "analogy": "클라우드 API가 렌트카라면 llama.cpp는 내 차 키다. 모델 파일을 받아 로컬에서 돌리고, 나간 토큰이 네트워크를 타지 않는다.",
+  "why": "데이터 잔류가 싫은 팀, 오프라인 데모, 에이전트 루프의 보조 엔진으로 쓴다. GGUF 양자화 생태계의 기준점이다.",
+  "pain": "API 한도와 잔류 정책 때문에 실험이 자주 멈춘다. 작은 모델을 사무실 GPU에서 돌릴 표준 런타임이 필요하다.",
+  "fix": "GGUF 로더 + 백엔드(CUDA/Metal/Vulkan) + llama-server로 로컬 OpenAI 호환 엔드포인트를 연다.",
+  "compare": [
+    {
+      "vs": "Ollama",
+      "point": "사용성. llama.cpp는 엔진, Ollama는 그 위 패키지 매니저에 가깝다."
+    },
+    {
+      "vs": "vLLM",
+      "point": "클라우드 배치 추론. llama.cpp는 단일 머신·엣지."
+    },
+    {
+      "vs": "MLX",
+      "point": "Apple 실리콘 특화. llama.cpp는 백엔드가 넓다."
+    }
+  ],
+  "stack": [
+    {
+      "name": "C/C++",
+      "role": "엔진",
+      "detail": "토큰 생성 루프"
+    },
+    {
+      "name": "GGUF",
+      "role": "가중치",
+      "detail": "양자화 포맷"
+    },
+    {
+      "name": "llama-server",
+      "role": "HTTP",
+      "detail": "OpenAI 호환"
+    },
+    {
+      "name": "CUDA/Metal",
+      "role": "가속",
+      "detail": "백엔드 선택"
+    }
+  ],
+  "languages": [
+    {
+      "name": "C++",
+      "pct": "78%",
+      "bar": 78,
+      "note": "핵심"
+    },
+    {
+      "name": "C",
+      "pct": "12%",
+      "bar": 12,
+      "note": "ggml"
+    },
+    {
+      "name": "Other",
+      "pct": "10%",
+      "bar": 10,
+      "note": "바인딩"
+    }
+  ],
+  "architecture": "GGUF ── 로더 ── ggml 그래프\n              │\n              ├─ CPU / CUDA / Metal / Vulkan\n              └─ llama-server (HTTP)",
+  "patterns": [
+    {
+      "name": "양자화 단계",
+      "body": "Q4_K_M, Q5_K_S처럼 용량·품질 표를 먼저 고른다."
+    },
+    {
+      "name": "서버 모드",
+      "body": "로컬 8080에 OpenAI 호환 API를 연다."
+    },
+    {
+      "name": "문법 제약",
+      "body": "JSON 스키마로 출력을 고정한다."
+    }
+  ],
+  "tree": "llama.cpp/\n├── ggml/\n├── src/\n├── tools/server/\n└── gguf-py/",
+  "learn": [
+    {
+      "title": "GGUF를 고른다",
+      "body": "같은 모델도 양자화마다 품질이 갈린다. 표로 남긴다."
+    },
+    {
+      "title": "서버로 에이전트에 붙인다",
+      "body": "기존 OpenAI 클라이언트의 base URL만 바꾼다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "RAM",
+      "min": "모델+컨텍스트",
+      "rec": "32GB 권장"
+    },
+    {
+      "item": "GPU",
+      "min": "없어도 됨",
+      "rec": "CUDA/Metal"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "Q4와 Q8을 같은 질문 20개로 비교",
+      "body": "품질과 토큰/s를 한 표에 적는다."
+    },
+    {
+      "title": "llama-server에 사내 봇을 붙인다",
+      "body": "키가 나가지 않는지 프록시 로그를 확인한다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "GGUF",
+      "meaning": "로컬 추론용 가중치 포맷"
+    },
+    {
+      "word": "양자화",
+      "meaning": "가중치를 낮은 비트로 줄이기"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/ggml-org/llama.cpp"
+    }
+  ]
+}

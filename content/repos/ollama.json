@@ -1,0 +1,138 @@
+{
+  "slug": "ollama",
+  "name": "Ollama",
+  "repo": "ollama/ollama",
+  "category": "local",
+  "subcategory": "로컬 모델 런타임",
+  "stars": "150k+",
+  "license": "MIT",
+  "lang": "Go",
+  "updated": "2026-09-01",
+  "trendRank": 12,
+  "oneLiner": "모델 pull부터 로컬 API까지 한 명령으로 묶는 런타임. llama.cpp 생태계 위의 패키지 매니저에 가깝다.",
+  "analogyTitle": "로컬 모델의 brew",
+  "analogy": "가중치 경로와 양자화를 외우지 않아도 `ollama run` 한 줄로 대화가 시작된다. 엔진을 숨긴 상자다.",
+  "why": "개발자 노트북에 모델을 빨리 올려 에이전트·RAG를 시험할 때 마찰이 가장 적다.",
+  "pain": "llama.cpp 플래그와 GGUF 이름을 팀 전원이 외울 수 없다.",
+  "fix": "모델 라이브러리 + REST/OpenAI 호환 API + Modelfile로 시스템 프롬프트를 고정한다.",
+  "compare": [
+    {
+      "vs": "llama.cpp",
+      "point": "엔진. Ollama는 UX와 배포 단위."
+    },
+    {
+      "vs": "LM Studio",
+      "point": "GUI. Ollama는 CLI·서버."
+    },
+    {
+      "vs": "vLLM",
+      "point": "생산 배치. Ollama는 단일 머신."
+    }
+  ],
+  "stack": [
+    {
+      "name": "Go",
+      "role": "데몬",
+      "detail": "모델 관리"
+    },
+    {
+      "name": "llama.cpp",
+      "role": "추론",
+      "detail": "임베디드 엔진"
+    },
+    {
+      "name": "Modelfile",
+      "role": "설정",
+      "detail": "시스템 프롬프트·파라미터"
+    },
+    {
+      "name": "REST",
+      "role": "API",
+      "detail": "로컬 11434"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Go",
+      "pct": "70%",
+      "bar": 70,
+      "note": "데몬"
+    },
+    {
+      "name": "C++",
+      "pct": "20%",
+      "bar": 20,
+      "note": "엔진"
+    },
+    {
+      "name": "Other",
+      "pct": "10%",
+      "bar": 10,
+      "note": "스크립트"
+    }
+  ],
+  "architecture": "CLI ── 데몬 :11434\n         ├─ pull (라이브러리)\n         ├─ Modelfile\n         └─ llama.cpp 백엔드",
+  "patterns": [
+    {
+      "name": "Modelfile",
+      "body": "온도·시스템 프롬프트를 이미지처럼 핀한다."
+    },
+    {
+      "name": "OpenAI 호환",
+      "body": "기존 클라이언트의 base URL만 바꾼다."
+    },
+    {
+      "name": "한 머신 한 데몬",
+      "body": "여러 모델은 메모리 예산이 본문이다."
+    }
+  ],
+  "tree": "ollama/\n├── api/\n├── llm/\n└── cmd/",
+  "learn": [
+    {
+      "title": "Modelfile로 핀",
+      "body": "팀이 같은 시스템 프롬프트를 쓰게 한다."
+    },
+    {
+      "title": "에이전트 base URL",
+      "body": "클라우드 키 없이 루프를 재현한다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "디스크",
+      "min": "모델 용량",
+      "rec": "SSD 권장"
+    },
+    {
+      "item": "메모리",
+      "min": "모델+컨텍스트",
+      "rec": "16GB+"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "같은 질문을 클라우드와 Ollama에",
+      "body": "잔류 경로와 품질 차이를 적는다."
+    },
+    {
+      "title": "Modelfile 두 개로 톤을 고정",
+      "body": "코드 리뷰용과 문서용을 나눈다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "Modelfile",
+      "meaning": "로컬 모델의 Dockerfile"
+    },
+    {
+      "word": "pull",
+      "meaning": "모델 가중치 받기"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/ollama/ollama"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "slug": "langgraph",
+  "name": "LangGraph",
+  "repo": "langchain-ai/langgraph",
+  "category": "agents",
+  "subcategory": "에이전트 그래프 런타임",
+  "stars": "15k+",
+  "license": "MIT",
+  "lang": "Python",
+  "updated": "2026-09-01",
+  "trendRank": 19,
+  "oneLiner": "에이전트 루프를 상태 그래프(노드·엣지·체크포인트)로 짜는 런타임.",
+  "analogyTitle": "에이전트를 플로우차트로",
+  "analogy": "한 번의 ‘생각-도구-생각’ 루프가 아니라, 실패 시 되감기와 사람 승인이 있는 공정이다.",
+  "why": "멀티스텝 업무를 프롬프트 한 장에 넣으면 디버그가 안 된다. 노드로 쪼개야 로그가 남는다.",
+  "pain": "LangChain 체인만으로는 순환·재시도·인간 승인이 장황하다.",
+  "fix": "그래프 상태 + 리듀서 + 체크포인터 + 인터럽트.",
+  "compare": [
+    {
+      "vs": "LangChain",
+      "point": "컴포넌트. LangGraph는 순환 제어."
+    },
+    {
+      "vs": "n8n",
+      "point": "GUI 자동화. LangGraph는 코드 그래프."
+    },
+    {
+      "vs": "OpenAI Agents API",
+      "point": "호스티드 하네스. LangGraph는 자기 서버."
+    }
+  ],
+  "stack": [
+    {
+      "name": "Python/JS",
+      "role": "그래프",
+      "detail": "노드 정의"
+    },
+    {
+      "name": "Checkpointer",
+      "role": "상태",
+      "detail": "재개·감사"
+    },
+    {
+      "name": "Studio",
+      "role": "디버그",
+      "detail": "시각화"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Python",
+      "pct": "75%",
+      "bar": 75,
+      "note": "핵심"
+    },
+    {
+      "name": "TypeScript",
+      "pct": "20%",
+      "bar": 20,
+      "note": "JS"
+    },
+    {
+      "name": "Other",
+      "pct": "5%",
+      "bar": 5,
+      "note": "문서"
+    }
+  ],
+  "architecture": "State ── Node ── Edge\n   └─ checkpointer / interrupt",
+  "patterns": [
+    {
+      "name": "노드 단일 책임",
+      "body": "검색·초안·검토를 나눈다."
+    },
+    {
+      "name": "인터럽트",
+      "body": "배포 전에 사람이 본다."
+    },
+    {
+      "name": "체크포인트",
+      "body": "실패 지점부터 재개한다."
+    }
+  ],
+  "tree": "langgraph/\n├── libs/langgraph/\n├── libs/checkpoint/\n└── docs/",
+  "learn": [
+    {
+      "title": "두 노드 그래프",
+      "body": "검색 후 초안, 실패 시 되돌린다."
+    },
+    {
+      "title": "승인 인터럽트",
+      "body": "메일 발송 전 멈춘다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "언어",
+      "min": "Python 3.10+",
+      "rec": "JS도 가능"
+    },
+    {
+      "item": "저장",
+      "min": "체크포인터",
+      "rec": "메모리/ Postgres"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "무한 루프 가드",
+      "body": "노드 방문 횟수 제한을 넣는다."
+    },
+    {
+      "title": "체크포인트로 재개",
+      "body": "프로세스가 죽어도 상태가 남는지 본다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "State graph",
+      "meaning": "상태로 흐르는 에이전트"
+    },
+    {
+      "word": "Interrupt",
+      "meaning": "사람 승인 지점"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/langchain-ai/langgraph"
+    }
+  ]
+}

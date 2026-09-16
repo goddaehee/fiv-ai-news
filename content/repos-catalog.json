@@ -1,0 +1,3712 @@
+[
+  {
+    "title": "🤖 AI 에이전트 · 오케스트레이션",
+    "count": "98편",
+    "subs": [
+      {
+        "title": "프레임워크 · 설계 원칙",
+        "items": [
+          {
+            "slug": "12-factor-agents",
+            "name": "12-factor-agents",
+            "href": "12-factor-agents-deep-dive.html"
+          },
+          {
+            "slug": "browser-use",
+            "name": "browser-use",
+            "href": "browser-use-deep-dive.html"
+          },
+          {
+            "slug": "oh-my-openagent",
+            "name": "oh-my-openagent",
+            "href": "oh-my-openagent-deep-dive.html"
+          },
+          {
+            "slug": "WorldSeed",
+            "name": "WorldSeed",
+            "href": "WorldSeed-deep-dive.html"
+          },
+          {
+            "slug": "hermes-agent",
+            "name": "hermes-agent",
+            "href": "hermes-agent-deep-dive.html"
+          },
+          {
+            "slug": "harness",
+            "name": "harness",
+            "href": "harness-deep-dive.html"
+          },
+          {
+            "slug": "evolver",
+            "name": "evolver",
+            "href": "evolver-deep-dive.html"
+          },
+          {
+            "slug": "CopilotKit",
+            "name": "CopilotKit",
+            "href": "CopilotKit-deep-dive.html"
+          },
+          {
+            "slug": "foundry-security-spec",
+            "name": "foundry-security-spec",
+            "href": "foundry-security-spec-deep-dive.html"
+          },
+          {
+            "slug": "astrid-sdk-js",
+            "name": "sdk-js (Astrid)",
+            "href": "astrid-sdk-js-deep-dive.html"
+          },
+          {
+            "slug": "upsonic",
+            "name": "Upsonic/Upsonic",
+            "href": "upsonic-deep-dive.html"
+          },
+          {
+            "slug": "iFixAi",
+            "name": "iFixAi",
+            "href": "iFixAi-deep-dive.html"
+          },
+          {
+            "slug": "exo",
+            "name": "exo",
+            "href": "exo-deep-dive.html"
+          },
+          {
+            "slug": "deepseek-harness",
+            "name": "deepseek-harness",
+            "href": "deepseek-harness-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "에이전트 플랫폼 · OS",
+        "items": [
+          {
+            "slug": "aaif-goose-goose",
+            "name": "goose (AAIF)",
+            "href": "aaif-goose-goose-deep-dive.html"
+          },
+          {
+            "slug": "dify",
+            "name": "dify",
+            "href": "dify-deep-dive.html"
+          },
+          {
+            "slug": "lobehub",
+            "name": "lobehub",
+            "href": "lobehub-deep-dive.html"
+          },
+          {
+            "slug": "odysseus",
+            "name": "odysseus",
+            "href": "odysseus-deep-dive.html"
+          },
+          {
+            "slug": "openhuman",
+            "name": "openhuman",
+            "href": "openhuman-deep-dive.html"
+          },
+          {
+            "slug": "PilotDeck",
+            "name": "PilotDeck",
+            "href": "PilotDeck-deep-dive.html"
+          },
+          {
+            "slug": "dograh",
+            "name": "dograh",
+            "href": "dograh-deep-dive.html"
+          },
+          {
+            "slug": "multica",
+            "name": "multica",
+            "href": "multica-deep-dive.html"
+          },
+          {
+            "slug": "opensquilla",
+            "name": "opensquilla",
+            "href": "opensquilla-deep-dive.html"
+          },
+          {
+            "slug": "openhands",
+            "name": "openhands",
+            "href": "openhands-deep-dive.html"
+          },
+          {
+            "slug": "openclaw",
+            "name": "openclaw",
+            "href": "openclaw-deep-dive.html"
+          },
+          {
+            "slug": "anima",
+            "name": "anima",
+            "href": "anima-deep-dive.html"
+          },
+          {
+            "slug": "omnigent",
+            "name": "omnigent",
+            "href": "omnigent-deep-dive.html"
+          },
+          {
+            "slug": "qwenpaw",
+            "name": "QwenPaw",
+            "href": "qwenpaw-deep-dive.html"
+          },
+          {
+            "slug": "astrid-book",
+            "name": "astrid-book",
+            "href": "astrid-book-deep-dive.html"
+          },
+          {
+            "slug": "orca",
+            "name": "orca",
+            "href": "orca-deep-dive.html"
+          },
+          {
+            "slug": "openworker",
+            "name": "openworker",
+            "href": "openworker-deep-dive.html"
+          },
+          {
+            "slug": "tutti",
+            "name": "tutti",
+            "href": "tutti-deep-dive.html"
+          },
+          {
+            "slug": "qm",
+            "name": "qm",
+            "href": "qm-deep-dive.html"
+          },
+          {
+            "slug": "computer",
+            "name": "cloudflare/computer",
+            "href": "computer-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "도구 연결 · CLI · MCP",
+        "items": [
+          {
+            "slug": "Agent-Reach",
+            "name": "Agent-Reach",
+            "href": "Agent-Reach-deep-dive.html"
+          },
+          {
+            "slug": "CLI-Anything",
+            "name": "CLI-Anything",
+            "href": "CLI-Anything-deep-dive.html"
+          },
+          {
+            "slug": "cli-printing-press",
+            "name": "cli-printing-press",
+            "href": "cli-printing-press-deep-dive.html"
+          },
+          {
+            "slug": "chrome-devtools-mcp",
+            "name": "chrome-devtools-mcp",
+            "href": "chrome-devtools-mcp-deep-dive.html"
+          },
+          {
+            "slug": "deepseek-pp",
+            "name": "deepseek-pp",
+            "href": "deepseek-pp-deep-dive.html"
+          },
+          {
+            "slug": "copilot-sdk",
+            "name": "copilot-sdk",
+            "href": "copilot-sdk-deep-dive.html"
+          },
+          {
+            "slug": "lavish-axi",
+            "name": "lavish-axi",
+            "href": "lavish-axi-deep-dive.html"
+          },
+          {
+            "slug": "boss-agent-cli",
+            "name": "boss-agent-cli",
+            "href": "boss-agent-cli-deep-dive.html"
+          },
+          {
+            "slug": "windows-mcp",
+            "name": "Windows-MCP",
+            "href": "windows-mcp-deep-dive.html"
+          },
+          {
+            "slug": "aflock",
+            "name": "aflock",
+            "href": "aflock-deep-dive.html"
+          },
+          {
+            "slug": "googleworkspace-cli",
+            "name": "googleworkspace/cli",
+            "href": "googleworkspace-cli-deep-dive.html"
+          },
+          {
+            "slug": "repoprompt-ce",
+            "name": "repoprompt-ce",
+            "href": "repoprompt-ce-deep-dive.html"
+          },
+          {
+            "slug": "openwiki",
+            "name": "openwiki",
+            "href": "openwiki-deep-dive.html"
+          },
+          {
+            "slug": "DesktopCommanderMCP",
+            "name": "DesktopCommanderMCP",
+            "href": "DesktopCommanderMCP-deep-dive.html"
+          },
+          {
+            "slug": "OfficeCLI",
+            "name": "OfficeCLI",
+            "href": "OfficeCLI-deep-dive.html"
+          },
+          {
+            "slug": "waggle",
+            "name": "waggle",
+            "href": "waggle-deep-dive.html"
+          },
+          {
+            "slug": "coral",
+            "name": "coral",
+            "href": "coral-deep-dive.html"
+          },
+          {
+            "slug": "flint-chart",
+            "name": "microsoft/flint-chart",
+            "href": "flint-chart-deep-dive.html"
+          },
+          {
+            "slug": "nitrostack",
+            "name": "nitrostack",
+            "href": "nitrostack-deep-dive.html"
+          },
+          {
+            "slug": "open-connector",
+            "name": "open-connector",
+            "href": "open-connector-deep-dive.html"
+          },
+          {
+            "slug": "pi-computer-use",
+            "name": "pi-computer-use",
+            "href": "pi-computer-use-deep-dive.html"
+          },
+          {
+            "slug": "ego-lite",
+            "name": "ego-lite",
+            "href": "ego-lite-deep-dive.html"
+          },
+          {
+            "slug": "phone-harness",
+            "name": "phone-harness",
+            "href": "phone-harness-deep-dive.html"
+          },
+          {
+            "slug": "codex-with-chatgpt",
+            "name": "codex-with-chatgpt",
+            "href": "codex-with-chatgpt-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "오케스트레이션 · 페르소나",
+        "items": [
+          {
+            "slug": "agency-agents",
+            "name": "agency-agents",
+            "href": "agency-agents-deep-dive.html"
+          },
+          {
+            "slug": "agency-agents-zh",
+            "name": "agency-agents-zh",
+            "href": "agency-agents-zh-deep-dive.html"
+          },
+          {
+            "slug": "deer-flow",
+            "name": "deer-flow",
+            "href": "deer-flow-deep-dive.html"
+          },
+          {
+            "slug": "gnhf",
+            "name": "gnhf",
+            "href": "gnhf-deep-dive.html"
+          },
+          {
+            "slug": "bigset",
+            "name": "bigset",
+            "href": "bigset-deep-dive.html"
+          },
+          {
+            "slug": "paseo",
+            "name": "Paseo",
+            "href": "paseo-deep-dive.html"
+          },
+          {
+            "slug": "mirofish",
+            "name": "MiroFish",
+            "href": "mirofish-deep-dive.html"
+          },
+          {
+            "slug": "loop-harness",
+            "name": "loop-harness",
+            "href": "loop-harness-deep-dive.html"
+          },
+          {
+            "slug": "improve",
+            "name": "improve",
+            "href": "improve-deep-dive.html"
+          },
+          {
+            "slug": "polyhelper",
+            "name": "polyhelper",
+            "href": "polyhelper-deep-dive.html"
+          },
+          {
+            "slug": "architect-loop",
+            "name": "architect-loop",
+            "href": "architect-loop-deep-dive.html"
+          },
+          {
+            "slug": "arbor",
+            "name": "Arbor",
+            "href": "arbor-deep-dive.html"
+          },
+          {
+            "slug": "5dive",
+            "name": "5dive",
+            "href": "5dive-deep-dive.html"
+          },
+          {
+            "slug": "airi",
+            "name": "airi",
+            "href": "airi-deep-dive.html"
+          },
+          {
+            "slug": "self-driving-agents",
+            "name": "self-driving-agents",
+            "href": "self-driving-agents-deep-dive.html"
+          },
+          {
+            "slug": "buzz",
+            "name": "buzz",
+            "href": "buzz-deep-dive.html"
+          },
+          {
+            "slug": "sol-advisor",
+            "name": "sol-advisor",
+            "href": "sol-advisor-deep-dive.html"
+          },
+          {
+            "slug": "sprix-sage-router",
+            "name": "Sprix SAGE Router",
+            "href": "sprix-sage-router-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "실사용 앱 · GUI · 인프라",
+        "items": [
+          {
+            "slug": "agentic-inbox",
+            "name": "agentic-inbox",
+            "href": "agentic-inbox-deep-dive.html"
+          },
+          {
+            "slug": "ai-website-cloner-template",
+            "name": "ai-website-cloner-template",
+            "href": "ai-website-cloner-template-deep-dive.html"
+          },
+          {
+            "slug": "hermes-desktop",
+            "name": "hermes-desktop",
+            "href": "hermes-desktop-deep-dive.html"
+          },
+          {
+            "slug": "hermes-webui",
+            "name": "hermes-webui",
+            "href": "hermes-webui-deep-dive.html"
+          },
+          {
+            "slug": "bindu",
+            "name": "bindu",
+            "href": "bindu-deep-dive.html"
+          },
+          {
+            "slug": "ai-job-search",
+            "name": "ai-job-search",
+            "href": "ai-job-search-deep-dive.html"
+          },
+          {
+            "slug": "deepseek-gui",
+            "name": "DeepSeek-GUI",
+            "href": "deepseek-gui-deep-dive.html"
+          },
+          {
+            "slug": "world-of-claudecraft",
+            "name": "world-of-claudecraft",
+            "href": "world-of-claudecraft-deep-dive.html"
+          },
+          {
+            "slug": "hiring-agent",
+            "name": "hiring-agent",
+            "href": "hiring-agent-deep-dive.html"
+          },
+          {
+            "slug": "page-agent",
+            "name": "page-agent",
+            "href": "page-agent-deep-dive.html"
+          },
+          {
+            "slug": "voice-ai",
+            "name": "Rapida voice-ai",
+            "href": "voice-ai-deep-dive.html"
+          },
+          {
+            "slug": "DeepTutor",
+            "name": "DeepTutor",
+            "href": "DeepTutor-deep-dive.html"
+          },
+          {
+            "slug": "llm-space",
+            "name": "llm-space",
+            "href": "llm-space-deep-dive.html"
+          },
+          {
+            "slug": "open-lovable",
+            "name": "open-lovable",
+            "href": "open-lovable-deep-dive.html"
+          },
+          {
+            "slug": "CubeSandbox",
+            "name": "CubeSandbox",
+            "href": "CubeSandbox-deep-dive.html"
+          },
+          {
+            "slug": "AgentENV",
+            "name": "AgentENV",
+            "href": "AgentENV-deep-dive.html"
+          },
+          {
+            "slug": "FAROS",
+            "name": "FAROS",
+            "href": "FAROS-deep-dive.html"
+          },
+          {
+            "slug": "crm",
+            "name": "crm",
+            "href": "crm-deep-dive.html"
+          },
+          {
+            "slug": "qwen-audio-agent",
+            "name": "qwen-audio-agent",
+            "href": "qwen-audio-agent-deep-dive.html"
+          },
+          {
+            "slug": "dashi-taskboard",
+            "name": "chuspeeism/dashi-taskboard",
+            "href": "dashi-taskboard-deep-dive.html"
+          },
+          {
+            "slug": "grok-bot-0.18-reconstructed",
+            "name": "grok-bot-0.18-reconstructed",
+            "href": "grok-bot-0.18-reconstructed-deep-dive.html"
+          },
+          {
+            "slug": "openmaic",
+            "name": "OpenMAIC",
+            "href": "openmaic-deep-dive.html"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "🛠️ Claude Code · 스킬 · 플러그인",
+    "count": "104편",
+    "subs": [
+      {
+        "title": "스킬 모음집 (제작자별)",
+        "items": [
+          {
+            "slug": "9arm-skills",
+            "name": "9arm-skills",
+            "href": "9arm-skills-deep-dive.html"
+          },
+          {
+            "slug": "andrej-karpathy-skills",
+            "name": "andrej-karpathy-skills",
+            "href": "andrej-karpathy-skills-deep-dive.html"
+          },
+          {
+            "slug": "gstack",
+            "name": "gstack",
+            "href": "gstack-deep-dive.html"
+          },
+          {
+            "slug": "minimax-skills",
+            "name": "minimax-skills",
+            "href": "minimax-skills-deep-dive.html"
+          },
+          {
+            "slug": "skills",
+            "name": "skills",
+            "href": "skills-deep-dive.html"
+          },
+          {
+            "slug": "emilkowalski-skills",
+            "name": "emilkowalski/skills",
+            "href": "emilkowalski-skills-deep-dive.html"
+          },
+          {
+            "slug": "slavingia-skills",
+            "name": "slavingia-skills",
+            "href": "slavingia-skills-deep-dive.html"
+          },
+          {
+            "slug": "waza",
+            "name": "waza",
+            "href": "waza-deep-dive.html"
+          },
+          {
+            "slug": "knowledge-work-plugins",
+            "name": "knowledge-work-plugins",
+            "href": "knowledge-work-plugins-deep-dive.html"
+          },
+          {
+            "slug": "superpowers",
+            "name": "superpowers",
+            "href": "superpowers-deep-dive.html"
+          },
+          {
+            "slug": "addyosmani-agent-skills",
+            "name": "agent-skills (Addy)",
+            "href": "addyosmani-agent-skills-deep-dive.html"
+          },
+          {
+            "slug": "hai-stack",
+            "name": "hai-stack",
+            "href": "hai-stack-deep-dive.html"
+          },
+          {
+            "slug": "k-skill",
+            "name": "k-skill",
+            "href": "k-skill-deep-dive.html"
+          },
+          {
+            "slug": "effective-html",
+            "name": "effective-html",
+            "href": "effective-html-deep-dive.html"
+          },
+          {
+            "slug": "builderio-skills",
+            "name": "skills (Builder.io)",
+            "href": "builderio-skills-deep-dive.html"
+          },
+          {
+            "slug": "obsidian-skills",
+            "name": "obsidian-skills",
+            "href": "obsidian-skills-deep-dive.html"
+          },
+          {
+            "slug": "swmansion-skills",
+            "name": "swmansion-skills",
+            "href": "swmansion-skills-deep-dive.html"
+          },
+          {
+            "slug": "davidondrej-skills",
+            "name": "davidondrej/skills",
+            "href": "davidondrej-skills-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "공식 · 표준",
+        "items": [
+          {
+            "slug": "anthropics-skills",
+            "name": "anthropics-skills",
+            "href": "anthropics-skills-deep-dive.html"
+          },
+          {
+            "slug": "claude-plugins-official",
+            "name": "claude-plugins-official",
+            "href": "claude-plugins-official-deep-dive.html"
+          },
+          {
+            "slug": "modern-web-guidance",
+            "name": "modern-web-guidance",
+            "href": "modern-web-guidance-deep-dive.html"
+          },
+          {
+            "slug": "google-skills",
+            "name": "google/skills",
+            "href": "google-skills-deep-dive.html"
+          },
+          {
+            "slug": "NVIDIA-skills",
+            "name": "NVIDIA Agent Skills",
+            "href": "NVIDIA-skills-deep-dive.html"
+          },
+          {
+            "slug": "agents-cli",
+            "name": "agents-cli",
+            "href": "agents-cli-deep-dive.html"
+          },
+          {
+            "slug": "codex-plugin-cc",
+            "name": "codex-plugin-cc",
+            "href": "codex-plugin-cc-deep-dive.html"
+          },
+          {
+            "slug": "financial-services",
+            "name": "anthropics/financial-services",
+            "href": "financial-services-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "멀티에이전트 · 오케스트레이션",
+        "items": [
+          {
+            "slug": "ECC",
+            "name": "ECC",
+            "href": "ECC-deep-dive.html"
+          },
+          {
+            "slug": "oh-my-claudecode",
+            "name": "oh-my-claudecode",
+            "href": "oh-my-claudecode-deep-dive.html"
+          },
+          {
+            "slug": "oh-my-codex",
+            "name": "oh-my-codex",
+            "href": "oh-my-codex-deep-dive.html"
+          },
+          {
+            "slug": "ruflo",
+            "name": "ruflo",
+            "href": "ruflo-deep-dive.html"
+          },
+          {
+            "slug": "Claude-Code-Game-Studios",
+            "name": "Claude-Code-Game-Studios",
+            "href": "Claude-Code-Game-Studios-deep-dive.html"
+          },
+          {
+            "slug": "compound-engineering-plugin",
+            "name": "compound-engineering-plugin",
+            "href": "compound-engineering-plugin-deep-dive.html"
+          },
+          {
+            "slug": "council-of-high-intelligence",
+            "name": "council-of-high-intelligence",
+            "href": "council-of-high-intelligence-deep-dive.html"
+          },
+          {
+            "slug": "adhd",
+            "name": "adhd",
+            "href": "adhd-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "코드 이해 · 그래프 · 테스트",
+        "items": [
+          {
+            "slug": "codegraph",
+            "name": "codegraph",
+            "href": "codegraph-deep-dive.html"
+          },
+          {
+            "slug": "graphify",
+            "name": "graphify",
+            "href": "graphify-deep-dive.html"
+          },
+          {
+            "slug": "expect",
+            "name": "expect",
+            "href": "expect-deep-dive.html"
+          },
+          {
+            "slug": "sem",
+            "name": "sem",
+            "href": "sem-deep-dive.html"
+          },
+          {
+            "slug": "brooks-lint",
+            "name": "brooks-lint",
+            "href": "brooks-lint-deep-dive.html"
+          },
+          {
+            "slug": "egonex-understand-anything",
+            "name": "understand-anything (Egonex-AI)",
+            "href": "egonex-understand-anything-deep-dive.html"
+          },
+          {
+            "slug": "gortex",
+            "name": "gortex",
+            "href": "gortex-deep-dive.html"
+          },
+          {
+            "slug": "graphiq",
+            "name": "graphiq",
+            "href": "graphiq-deep-dive.html"
+          },
+          {
+            "slug": "code-review-graph",
+            "name": "code-review-graph",
+            "href": "code-review-graph-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "스킬 제작 · 최적화 도구",
+        "items": [
+          {
+            "slug": "agent-skills",
+            "name": "agent-skills",
+            "href": "agent-skills-deep-dive.html"
+          },
+          {
+            "slug": "book-to-skill",
+            "name": "book-to-skill",
+            "href": "book-to-skill-deep-dive.html"
+          },
+          {
+            "slug": "SkillOpt",
+            "name": "SkillOpt",
+            "href": "SkillOpt-deep-dive.html"
+          },
+          {
+            "slug": "nuwa-skill",
+            "name": "nuwa-skill",
+            "href": "nuwa-skill-deep-dive.html"
+          },
+          {
+            "slug": "skillspector",
+            "name": "SkillSpector",
+            "href": "skillspector-deep-dive.html"
+          },
+          {
+            "slug": "yao-meta-skill",
+            "name": "Yao Meta Skill",
+            "href": "yao-meta-skill-deep-dive.html"
+          },
+          {
+            "slug": "caveman",
+            "name": "caveman",
+            "href": "caveman-deep-dive.html"
+          },
+          {
+            "slug": "cangjie-skill",
+            "name": "cangjie-skill",
+            "href": "cangjie-skill-deep-dive.html"
+          },
+          {
+            "slug": "design-md-chrome",
+            "name": "design-md-chrome",
+            "href": "design-md-chrome-deep-dive.html"
+          },
+          {
+            "slug": "skill-recorder",
+            "name": "skill-recorder",
+            "href": "skill-recorder-deep-dive.html"
+          },
+          {
+            "slug": "unlazy",
+            "name": "unlazy",
+            "href": "unlazy-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "직무별 스킬 (디자인·PM·연구·문서)",
+        "items": [
+          {
+            "slug": "gingiris-skills",
+            "name": "gingiris-skills",
+            "href": "gingiris-skills-deep-dive.html"
+          },
+          {
+            "slug": "claude-video",
+            "name": "claude-video",
+            "href": "claude-video-deep-dive.html"
+          },
+          {
+            "slug": "academic-research-skills",
+            "name": "academic-research-skills",
+            "href": "academic-research-skills-deep-dive.html"
+          },
+          {
+            "slug": "nature-skills",
+            "name": "nature-skills",
+            "href": "nature-skills-deep-dive.html"
+          },
+          {
+            "slug": "pm-skills",
+            "name": "pm-skills",
+            "href": "pm-skills-deep-dive.html"
+          },
+          {
+            "slug": "ui-ux-pro-max-skill",
+            "name": "ui-ux-pro-max-skill",
+            "href": "ui-ux-pro-max-skill-deep-dive.html"
+          },
+          {
+            "slug": "taste-skill",
+            "name": "taste-skill",
+            "href": "taste-skill-deep-dive.html"
+          },
+          {
+            "slug": "guizang-social-card-skill",
+            "name": "guizang-social-card-skill",
+            "href": "guizang-social-card-skill-deep-dive.html"
+          },
+          {
+            "slug": "GordenPPTSkill",
+            "name": "GordenPPTSkill",
+            "href": "GordenPPTSkill-deep-dive.html"
+          },
+          {
+            "slug": "gsap-skills",
+            "name": "gsap-skills",
+            "href": "gsap-skills-deep-dive.html"
+          },
+          {
+            "slug": "stop-slop",
+            "name": "stop-slop",
+            "href": "stop-slop-deep-dive.html"
+          },
+          {
+            "slug": "science-skills",
+            "name": "science-skills",
+            "href": "science-skills-deep-dive.html"
+          },
+          {
+            "slug": "impeccable",
+            "name": "impeccable",
+            "href": "impeccable-deep-dive.html"
+          },
+          {
+            "slug": "career-ops",
+            "name": "career-ops",
+            "href": "career-ops-deep-dive.html"
+          },
+          {
+            "slug": "huashu-design",
+            "name": "huashu-design",
+            "href": "huashu-design-deep-dive.html"
+          },
+          {
+            "slug": "lathe",
+            "name": "lathe",
+            "href": "lathe-deep-dive.html"
+          },
+          {
+            "slug": "GordenSuperPPTSkills",
+            "name": "GordenSuperPPTSkills",
+            "href": "GordenSuperPPTSkills-deep-dive.html"
+          },
+          {
+            "slug": "generative-media-skills",
+            "name": "Generative Media Skills",
+            "href": "generative-media-skills-deep-dive.html"
+          },
+          {
+            "slug": "humanizer-zh",
+            "name": "Humanizer-zh",
+            "href": "humanizer-zh-deep-dive.html"
+          },
+          {
+            "slug": "kami",
+            "name": "kami",
+            "href": "kami-deep-dive.html"
+          },
+          {
+            "slug": "baoyu-design",
+            "name": "baoyu-design",
+            "href": "baoyu-design-deep-dive.html"
+          },
+          {
+            "slug": "interview-coach-skill",
+            "name": "interview-coach-skill",
+            "href": "interview-coach-skill-deep-dive.html"
+          },
+          {
+            "slug": "archify",
+            "name": "archify",
+            "href": "archify-deep-dive.html"
+          },
+          {
+            "slug": "claude-design-system-prompt",
+            "name": "claude-design-system-prompt",
+            "href": "claude-design-system-prompt-deep-dive.html"
+          },
+          {
+            "slug": "hallmark",
+            "name": "hallmark",
+            "href": "hallmark-deep-dive.html"
+          },
+          {
+            "slug": "marketingskills",
+            "name": "marketingskills",
+            "href": "marketingskills-deep-dive.html"
+          },
+          {
+            "slug": "scroll-world",
+            "name": "scroll-world",
+            "href": "scroll-world-deep-dive.html"
+          },
+          {
+            "slug": "Codex-Dream-Skin",
+            "name": "Codex-Dream-Skin",
+            "href": "Codex-Dream-Skin-deep-dive.html"
+          },
+          {
+            "slug": "ui-skills",
+            "name": "ui-skills",
+            "href": "ui-skills-deep-dive.html"
+          },
+          {
+            "slug": "i-have-adhd",
+            "name": "i-have-adhd",
+            "href": "i-have-adhd-deep-dive.html"
+          },
+          {
+            "slug": "KLIC-Aesthete",
+            "name": "KLIC-Aesthete",
+            "href": "KLIC-Aesthete-deep-dive.html"
+          },
+          {
+            "slug": "stitch-skills",
+            "name": "stitch-skills",
+            "href": "stitch-skills-deep-dive.html"
+          },
+          {
+            "slug": "awesome-design-skills",
+            "name": "awesome-design-skills",
+            "href": "awesome-design-skills-deep-dive.html"
+          },
+          {
+            "slug": "material-3-skill",
+            "name": "material-3-skill",
+            "href": "material-3-skill-deep-dive.html"
+          },
+          {
+            "slug": "oh-my-design",
+            "name": "oh-my-design",
+            "href": "oh-my-design-deep-dive.html"
+          },
+          {
+            "slug": "no-ai-slop",
+            "name": "no-ai-slop",
+            "href": "no-ai-slop-deep-dive.html"
+          },
+          {
+            "slug": "fireworks-tech-graph",
+            "name": "fireworks-tech-graph",
+            "href": "fireworks-tech-graph-deep-dive.html"
+          },
+          {
+            "slug": "diagram-design",
+            "name": "diagram-design",
+            "href": "diagram-design-deep-dive.html"
+          },
+          {
+            "slug": "gathered-scenes-zine-skill",
+            "name": "gathered-scenes-zine-skill",
+            "href": "gathered-scenes-zine-skill-deep-dive.html"
+          },
+          {
+            "slug": "claude-seo",
+            "name": "claude-seo",
+            "href": "claude-seo-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "가이드 · 베스트프랙티스",
+        "items": [
+          {
+            "slug": "claude-code-best-practice",
+            "name": "claude-code-best-practice",
+            "href": "claude-code-best-practice-deep-dive.html"
+          },
+          {
+            "slug": "claude-howto",
+            "name": "claude-howto",
+            "href": "claude-howto-deep-dive.html"
+          },
+          {
+            "slug": "last30days-skill",
+            "name": "last30days-skill",
+            "href": "last30days-skill-deep-dive.html"
+          },
+          {
+            "slug": "claude-bughunter",
+            "name": "claude-bughunter",
+            "href": "claude-bughunter-deep-dive.html"
+          },
+          {
+            "slug": "ponytail",
+            "name": "ponytail",
+            "href": "ponytail-deep-dive.html"
+          },
+          {
+            "slug": "claude_code_vs",
+            "name": "claude_code_vs",
+            "href": "claude_code_vs-deep-dive.html"
+          },
+          {
+            "slug": "fablize",
+            "name": "fablize",
+            "href": "fablize-deep-dive.html"
+          },
+          {
+            "slug": "how-claude-code-works",
+            "name": "how-claude-code-works",
+            "href": "how-claude-code-works-deep-dive.html"
+          },
+          {
+            "slug": "fable-method",
+            "name": "fable-method",
+            "href": "fable-method-deep-dive.html"
+          },
+          {
+            "slug": "html-effectiveness",
+            "name": "html-effectiveness",
+            "href": "html-effectiveness-deep-dive.html"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "💻 AI 코딩 에이전트 · CLI 터미널",
+    "count": "50편",
+    "subs": [
+      {
+        "title": "터미널 코딩 에이전트",
+        "items": [
+          {
+            "slug": "claude-code",
+            "name": "claude-code",
+            "href": "claude-code-deep-dive.html"
+          },
+          {
+            "slug": "openai-codex",
+            "name": "openai-codex",
+            "href": "openai-codex-deep-dive.html"
+          },
+          {
+            "slug": "zero",
+            "name": "zero",
+            "href": "zero-deep-dive.html"
+          },
+          {
+            "slug": "opencode",
+            "name": "opencode",
+            "href": "opencode-deep-dive.html"
+          },
+          {
+            "slug": "pi",
+            "name": "pi",
+            "href": "pi-deep-dive.html"
+          },
+          {
+            "slug": "kimi-code",
+            "name": "kimi-code",
+            "href": "kimi-code-deep-dive.html"
+          },
+          {
+            "slug": "CodeWhale",
+            "name": "CodeWhale",
+            "href": "CodeWhale-deep-dive.html"
+          },
+          {
+            "slug": "DeepSeek-Reasonix",
+            "name": "DeepSeek-Reasonix",
+            "href": "DeepSeek-Reasonix-deep-dive.html"
+          },
+          {
+            "slug": "claw-code",
+            "name": "claw-code",
+            "href": "claw-code-deep-dive.html"
+          },
+          {
+            "slug": "oh-my-pi",
+            "name": "oh-my-pi",
+            "href": "oh-my-pi-deep-dive.html"
+          },
+          {
+            "slug": "Webwright",
+            "name": "Webwright",
+            "href": "Webwright-deep-dive.html"
+          },
+          {
+            "slug": "open-code-review",
+            "name": "open-code-review",
+            "href": "open-code-review-deep-dive.html"
+          },
+          {
+            "slug": "MiMo-Code",
+            "name": "MiMo-Code",
+            "href": "MiMo-Code-deep-dive.html"
+          },
+          {
+            "slug": "herdr",
+            "name": "herdr",
+            "href": "herdr-deep-dive.html"
+          },
+          {
+            "slug": "dao-code",
+            "name": "dao-code",
+            "href": "dao-code-deep-dive.html"
+          },
+          {
+            "slug": "tau",
+            "name": "tau",
+            "href": "tau-deep-dive.html"
+          },
+          {
+            "slug": "grok-build",
+            "name": "grok-build",
+            "href": "grok-build-deep-dive.html"
+          },
+          {
+            "slug": "openinterpreter",
+            "name": "openinterpreter",
+            "href": "openinterpreter-deep-dive.html"
+          },
+          {
+            "slug": "jcode",
+            "name": "jcode",
+            "href": "jcode-deep-dive.html"
+          },
+          {
+            "slug": "prime-agent",
+            "name": "prime-agent",
+            "href": "prime-agent-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "환경 · 확장 · 전환",
+        "items": [
+          {
+            "slug": "codex-plusplus",
+            "name": "codex-plusplus",
+            "href": "codex-plusplus-deep-dive.html"
+          },
+          {
+            "slug": "CodexPlusPlus",
+            "name": "CodexPlusPlus",
+            "href": "CodexPlusPlus-deep-dive.html"
+          },
+          {
+            "slug": "cc-switch",
+            "name": "cc-switch",
+            "href": "cc-switch-deep-dive.html"
+          },
+          {
+            "slug": "cc-gateway",
+            "name": "cc-gateway",
+            "href": "cc-gateway-deep-dive.html"
+          },
+          {
+            "slug": "cmux",
+            "name": "cmux",
+            "href": "cmux-deep-dive.html"
+          },
+          {
+            "slug": "openai-plugins",
+            "name": "openai-plugins",
+            "href": "openai-plugins-deep-dive.html"
+          },
+          {
+            "slug": "no-mistakes",
+            "name": "no-mistakes",
+            "href": "no-mistakes-deep-dive.html"
+          },
+          {
+            "slug": "splitrail",
+            "name": "splitrail",
+            "href": "splitrail-deep-dive.html"
+          },
+          {
+            "slug": "desktop-cc-gui",
+            "name": "desktop-cc-gui",
+            "href": "desktop-cc-gui-deep-dive.html"
+          },
+          {
+            "slug": "devspace",
+            "name": "DevSpace",
+            "href": "devspace-deep-dive.html"
+          },
+          {
+            "slug": "loom",
+            "name": "loom",
+            "href": "loom-deep-dive.html"
+          },
+          {
+            "slug": "coding-agent-session-search",
+            "name": "coding-agent-session-search",
+            "href": "coding-agent-session-search-deep-dive.html"
+          },
+          {
+            "slug": "herdr-plugin-examples",
+            "name": "herdr-plugin-examples",
+            "href": "herdr-plugin-examples-deep-dive.html"
+          },
+          {
+            "slug": "destructive_command_guard",
+            "name": "destructive_command_guard (dcg)",
+            "href": "destructive_command_guard-deep-dive.html"
+          },
+          {
+            "slug": "LibreCode",
+            "name": "LibreCode",
+            "href": "LibreCode-deep-dive.html"
+          },
+          {
+            "slug": "claude-tap",
+            "name": "claude-tap",
+            "href": "claude-tap-deep-dive.html"
+          },
+          {
+            "slug": "openchamber",
+            "name": "openchamber",
+            "href": "openchamber-deep-dive.html"
+          },
+          {
+            "slug": "iris",
+            "name": "versenilvis/IRIS",
+            "href": "iris-deep-dive.html"
+          },
+          {
+            "slug": "meat",
+            "name": "boldsoftware/meat",
+            "href": "meat-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "스펙 · UI 빌딩 블록",
+        "items": [
+          {
+            "slug": "spec-kit",
+            "name": "spec-kit",
+            "href": "spec-kit-deep-dive.html"
+          },
+          {
+            "slug": "ink",
+            "name": "ink",
+            "href": "ink-deep-dive.html"
+          },
+          {
+            "slug": "get-shit-done",
+            "name": "get-shit-done",
+            "href": "get-shit-done-deep-dive.html"
+          },
+          {
+            "slug": "json-render",
+            "name": "json-render",
+            "href": "json-render-deep-dive.html"
+          },
+          {
+            "slug": "design-md",
+            "name": "design.md (Google Labs)",
+            "href": "design-md-deep-dive.html"
+          },
+          {
+            "slug": "openui-wandb",
+            "name": "openui (wandb)",
+            "href": "openui-wandb-deep-dive.html"
+          },
+          {
+            "slug": "openui-thesys",
+            "name": "openui (thesys)",
+            "href": "openui-thesys-deep-dive.html"
+          },
+          {
+            "slug": "screenshot-to-code",
+            "name": "screenshot-to-code",
+            "href": "screenshot-to-code-deep-dive.html"
+          },
+          {
+            "slug": "shadcn-ui",
+            "name": "shadcn-ui",
+            "href": "shadcn-ui-deep-dive.html"
+          },
+          {
+            "slug": "chakra-ui",
+            "name": "chakra-ui",
+            "href": "chakra-ui-deep-dive.html"
+          },
+          {
+            "slug": "storybook",
+            "name": "storybook",
+            "href": "storybook-deep-dive.html"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "🧠 LLM·ML 모델 · 추론 인프라 · 메모리",
+    "count": "63편",
+    "subs": [
+      {
+        "title": "메모리 · 컨텍스트",
+        "items": [
+          {
+            "slug": "agentmemory",
+            "name": "agentmemory",
+            "href": "agentmemory-deep-dive.html"
+          },
+          {
+            "slug": "everos",
+            "name": "everos",
+            "href": "everos-deep-dive.html"
+          },
+          {
+            "slug": "garrytan-gbrain",
+            "name": "garrytan-gbrain",
+            "href": "garrytan-gbrain-deep-dive.html"
+          },
+          {
+            "slug": "mnemosyne",
+            "name": "mnemosyne",
+            "href": "mnemosyne-deep-dive.html"
+          },
+          {
+            "slug": "supermemory",
+            "name": "supermemory",
+            "href": "supermemory-deep-dive.html"
+          },
+          {
+            "slug": "headroom",
+            "name": "headroom",
+            "href": "headroom-deep-dive.html"
+          },
+          {
+            "slug": "claude-mem",
+            "name": "claude-mem",
+            "href": "claude-mem-deep-dive.html"
+          },
+          {
+            "slug": "mempalace",
+            "name": "mempalace",
+            "href": "mempalace-deep-dive.html"
+          },
+          {
+            "slug": "lowfat",
+            "name": "lowfat",
+            "href": "lowfat-deep-dive.html"
+          },
+          {
+            "slug": "PaperGuru-Benchmark",
+            "name": "PaperGuru-Benchmark",
+            "href": "PaperGuru-Benchmark-deep-dive.html"
+          },
+          {
+            "slug": "hivemind",
+            "name": "hivemind",
+            "href": "hivemind-deep-dive.html"
+          },
+          {
+            "slug": "tencentdb-agent-memory",
+            "name": "tencentdb-agent-memory",
+            "href": "tencentdb-agent-memory-deep-dive.html"
+          },
+          {
+            "slug": "codebase-memory-mcp",
+            "name": "codebase-memory-mcp",
+            "href": "codebase-memory-mcp-deep-dive.html"
+          },
+          {
+            "slug": "cognee",
+            "name": "cognee",
+            "href": "cognee-deep-dive.html"
+          },
+          {
+            "slug": "pxpipe",
+            "name": "pxpipe",
+            "href": "pxpipe-deep-dive.html"
+          },
+          {
+            "slug": "kungfu",
+            "name": "kungfu",
+            "href": "kungfu-deep-dive.html"
+          },
+          {
+            "slug": "paxm",
+            "name": "paxm",
+            "href": "paxm-deep-dive.html"
+          },
+          {
+            "slug": "paritok",
+            "name": "Paritok-4B-v1",
+            "href": "paritok-deep-dive.html"
+          },
+          {
+            "slug": "semantica",
+            "name": "Semantica",
+            "href": "semantica-deep-dive.html"
+          },
+          {
+            "slug": "ai-memory",
+            "name": "ai-memory",
+            "href": "ai-memory-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "로컬 추론 · 서빙",
+        "items": [
+          {
+            "slug": "keda-gpu-scaler",
+            "name": "keda-gpu-scaler",
+            "href": "keda-gpu-scaler-deep-dive.html"
+          },
+          {
+            "slug": "openmed",
+            "name": "OpenMed",
+            "href": "openmed-deep-dive.html"
+          },
+          {
+            "slug": "llama.cpp",
+            "name": "llama.cpp",
+            "href": "llama.cpp-deep-dive.html"
+          },
+          {
+            "slug": "ollama",
+            "name": "ollama",
+            "href": "ollama-deep-dive.html"
+          },
+          {
+            "slug": "ai-dynamo-dynamo",
+            "name": "ai-dynamo-dynamo",
+            "href": "ai-dynamo-dynamo-deep-dive.html"
+          },
+          {
+            "slug": "freellmapi",
+            "name": "freellmapi",
+            "href": "freellmapi-deep-dive.html"
+          },
+          {
+            "slug": "airllm",
+            "name": "AirLLM",
+            "href": "airllm-deep-dive.html"
+          },
+          {
+            "slug": "whichllm",
+            "name": "whichllm",
+            "href": "whichllm-deep-dive.html"
+          },
+          {
+            "slug": "coreai-models",
+            "name": "Core AI Models",
+            "href": "coreai-models-deep-dive.html"
+          },
+          {
+            "slug": "RCLI",
+            "name": "RCLI",
+            "href": "RCLI-deep-dive.html"
+          },
+          {
+            "slug": "ds4",
+            "name": "ds4",
+            "href": "ds4-deep-dive.html"
+          },
+          {
+            "slug": "llama-swap",
+            "name": "llama-swap",
+            "href": "llama-swap-deep-dive.html"
+          },
+          {
+            "slug": "OmniRoute",
+            "name": "OmniRoute",
+            "href": "OmniRoute-deep-dive.html"
+          },
+          {
+            "slug": "colibri",
+            "name": "colibri",
+            "href": "colibri-deep-dive.html"
+          },
+          {
+            "slug": "CLIProxyAPI",
+            "name": "CLIProxyAPI",
+            "href": "CLIProxyAPI-deep-dive.html"
+          },
+          {
+            "slug": "Bonsai-demo",
+            "name": "Bonsai-demo",
+            "href": "Bonsai-demo-deep-dive.html"
+          },
+          {
+            "slug": "opencodex",
+            "name": "opencodex",
+            "href": "opencodex-deep-dive.html"
+          },
+          {
+            "slug": "gigatoken",
+            "name": "gigatoken",
+            "href": "gigatoken-deep-dive.html"
+          },
+          {
+            "slug": "esp32-ai",
+            "name": "esp32-ai",
+            "href": "esp32-ai-deep-dive.html"
+          },
+          {
+            "slug": "MoonEP",
+            "name": "MoonEP",
+            "href": "MoonEP-deep-dive.html"
+          },
+          {
+            "slug": "kimi-k3-in-c",
+            "name": "kimi-k3-in-c",
+            "href": "kimi-k3-in-c-deep-dive.html"
+          },
+          {
+            "slug": "waste",
+            "name": "waste",
+            "href": "waste-deep-dive.html"
+          },
+          {
+            "slug": "modular",
+            "name": "modular",
+            "href": "modular-deep-dive.html"
+          },
+          {
+            "slug": "FreeToken",
+            "name": "FreeToken",
+            "href": "FreeToken-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "모델 · 연구",
+        "items": [
+          {
+            "slug": "glm-5",
+            "name": "GLM-5",
+            "href": "glm-5-deep-dive.html"
+          },
+          {
+            "slug": "ART",
+            "name": "ART",
+            "href": "ART-deep-dive.html"
+          },
+          {
+            "slug": "autoresearch",
+            "name": "autoresearch",
+            "href": "autoresearch-deep-dive.html"
+          },
+          {
+            "slug": "SenseNova-U1",
+            "name": "SenseNova-U1",
+            "href": "SenseNova-U1-deep-dive.html"
+          },
+          {
+            "slug": "x-algorithm",
+            "name": "x-algorithm",
+            "href": "x-algorithm-deep-dive.html"
+          },
+          {
+            "slug": "RuView",
+            "name": "RuView",
+            "href": "RuView-deep-dive.html"
+          },
+          {
+            "slug": "heretic",
+            "name": "heretic",
+            "href": "heretic-deep-dive.html"
+          },
+          {
+            "slug": "aisuite",
+            "name": "aisuite",
+            "href": "aisuite-deep-dive.html"
+          },
+          {
+            "slug": "timesfm",
+            "name": "TimesFM",
+            "href": "timesfm-deep-dive.html"
+          },
+          {
+            "slug": "AdaptiveTrainingSystem",
+            "name": "AdaptiveTrainingSystem",
+            "href": "AdaptiveTrainingSystem-deep-dive.html"
+          },
+          {
+            "slug": "graddy",
+            "name": "graddy",
+            "href": "graddy-deep-dive.html"
+          },
+          {
+            "slug": "UniverSat",
+            "name": "UniverSat",
+            "href": "UniverSat-deep-dive.html"
+          },
+          {
+            "slug": "deepspec",
+            "name": "DeepSpec",
+            "href": "deepspec-deep-dive.html"
+          },
+          {
+            "slug": "lingbot-map",
+            "name": "LingBot-Map",
+            "href": "lingbot-map-deep-dive.html"
+          },
+          {
+            "slug": "protomotions",
+            "name": "protomotions",
+            "href": "protomotions-deep-dive.html"
+          },
+          {
+            "slug": "AReaL-MinT",
+            "name": "AReaL-MinT",
+            "href": "AReaL-MinT-deep-dive.html"
+          },
+          {
+            "slug": "tabfm",
+            "name": "tabfm",
+            "href": "tabfm-deep-dive.html"
+          },
+          {
+            "slug": "open-dreamer",
+            "name": "open-dreamer",
+            "href": "open-dreamer-deep-dive.html"
+          },
+          {
+            "slug": "kimi-k3",
+            "name": "Kimi-K3",
+            "href": "kimi-k3-deep-dive.html"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "🔍 데이터 · 스크래핑 · 문서처리 · RAG",
+    "count": "46편",
+    "subs": [
+      {
+        "title": "웹 스크래핑 · 크롤링",
+        "items": [
+          {
+            "slug": "douyin-downloader",
+            "name": "douyin-downloader",
+            "href": "douyin-downloader-deep-dive.html"
+          },
+          {
+            "slug": "ai-goofish-monitor",
+            "name": "ai-goofish-monitor",
+            "href": "ai-goofish-monitor-deep-dive.html"
+          },
+          {
+            "slug": "crawl4ai",
+            "name": "crawl4ai",
+            "href": "crawl4ai-deep-dive.html"
+          },
+          {
+            "slug": "firecrawl",
+            "name": "firecrawl",
+            "href": "firecrawl-deep-dive.html"
+          },
+          {
+            "slug": "scrapling",
+            "name": "scrapling",
+            "href": "scrapling-deep-dive.html"
+          },
+          {
+            "slug": "iptv",
+            "name": "iptv",
+            "href": "iptv-deep-dive.html"
+          },
+          {
+            "slug": "horizon",
+            "name": "horizon",
+            "href": "horizon-deep-dive.html"
+          },
+          {
+            "slug": "kage",
+            "name": "kage",
+            "href": "kage-deep-dive.html"
+          },
+          {
+            "slug": "MediaCrawler",
+            "name": "MediaCrawler",
+            "href": "MediaCrawler-deep-dive.html"
+          },
+          {
+            "slug": "wigolo",
+            "name": "wigolo",
+            "href": "wigolo-deep-dive.html"
+          },
+          {
+            "slug": "anycrawl",
+            "name": "anycrawl",
+            "href": "anycrawl-deep-dive.html"
+          },
+          {
+            "slug": "kreuzcrawl",
+            "name": "kreuzcrawl",
+            "href": "kreuzcrawl-deep-dive.html"
+          },
+          {
+            "slug": "insane-search",
+            "name": "insane-search",
+            "href": "insane-search-deep-dive.html"
+          },
+          {
+            "slug": "gpt-crawler",
+            "name": "gpt-crawler",
+            "href": "gpt-crawler-deep-dive.html"
+          },
+          {
+            "slug": "shared-claude-chats",
+            "name": "fuadmefleh/Shared-Claude-Chats",
+            "href": "shared-claude-chats-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "문서 파싱 · OCR",
+        "items": [
+          {
+            "slug": "Unlimited-OCR",
+            "name": "Unlimited-OCR",
+            "href": "Unlimited-OCR-deep-dive.html"
+          },
+          {
+            "slug": "chandra",
+            "name": "chandra",
+            "href": "chandra-deep-dive.html"
+          },
+          {
+            "slug": "liteparse",
+            "name": "liteparse",
+            "href": "liteparse-deep-dive.html"
+          },
+          {
+            "slug": "markitdown",
+            "name": "markitdown",
+            "href": "markitdown-deep-dive.html"
+          },
+          {
+            "slug": "PaddleOCR",
+            "name": "PaddleOCR",
+            "href": "PaddleOCR-deep-dive.html"
+          },
+          {
+            "slug": "opendataloader-pdf",
+            "name": "opendataloader-pdf",
+            "href": "opendataloader-pdf-deep-dive.html"
+          },
+          {
+            "slug": "ppt-master",
+            "name": "ppt-master",
+            "href": "ppt-master-deep-dive.html"
+          },
+          {
+            "slug": "extend-ui",
+            "name": "extend-ui",
+            "href": "extend-ui-deep-dive.html"
+          },
+          {
+            "slug": "MinerU",
+            "name": "MinerU",
+            "href": "MinerU-deep-dive.html"
+          },
+          {
+            "slug": "light-ocr",
+            "name": "light-ocr",
+            "href": "light-ocr-deep-dive.html"
+          },
+          {
+            "slug": "open-file-viewer",
+            "name": "open-file-viewer",
+            "href": "open-file-viewer-deep-dive.html"
+          },
+          {
+            "slug": "pdf-inspector",
+            "name": "pdf-inspector",
+            "href": "pdf-inspector-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "검색 · RAG · 비전",
+        "items": [
+          {
+            "slug": "knowledge-catalog",
+            "name": "knowledge-catalog",
+            "href": "knowledge-catalog-deep-dive.html"
+          },
+          {
+            "slug": "onyx",
+            "name": "onyx",
+            "href": "onyx-deep-dive.html"
+          },
+          {
+            "slug": "semble",
+            "name": "semble",
+            "href": "semble-deep-dive.html"
+          },
+          {
+            "slug": "sentrysearch",
+            "name": "sentrysearch",
+            "href": "sentrysearch-deep-dive.html"
+          },
+          {
+            "slug": "supervision",
+            "name": "supervision",
+            "href": "supervision-deep-dive.html"
+          },
+          {
+            "slug": "open-notebook",
+            "name": "Open Notebook",
+            "href": "open-notebook-deep-dive.html"
+          },
+          {
+            "slug": "turbovec",
+            "name": "turbovec",
+            "href": "turbovec-deep-dive.html"
+          },
+          {
+            "slug": "private-gpt",
+            "name": "PrivateGPT",
+            "href": "private-gpt-deep-dive.html"
+          },
+          {
+            "slug": "zvec",
+            "name": "zvec",
+            "href": "zvec-deep-dive.html"
+          },
+          {
+            "slug": "hyper-extract",
+            "name": "Hyper-Extract",
+            "href": "hyper-extract-deep-dive.html"
+          },
+          {
+            "slug": "pixelrag",
+            "name": "PixelRAG",
+            "href": "pixelrag-deep-dive.html"
+          },
+          {
+            "slug": "llm_wiki",
+            "name": "llm_wiki",
+            "href": "llm_wiki-deep-dive.html"
+          },
+          {
+            "slug": "gpt-researcher",
+            "name": "GPT Researcher",
+            "href": "gpt-researcher-deep-dive.html"
+          },
+          {
+            "slug": "os-taxonomy",
+            "name": "os-taxonomy",
+            "href": "os-taxonomy-deep-dive.html"
+          },
+          {
+            "slug": "ossie",
+            "name": "apache/ossie",
+            "href": "ossie-deep-dive.html"
+          },
+          {
+            "slug": "deep-searcher",
+            "name": "DeepSearcher",
+            "href": "deep-searcher-deep-dive.html"
+          },
+          {
+            "slug": "code-graph-rag",
+            "name": "code-graph-rag",
+            "href": "code-graph-rag-deep-dive.html"
+          },
+          {
+            "slug": "openkb",
+            "name": "OpenKB",
+            "href": "openkb-deep-dive.html"
+          },
+          {
+            "slug": "hister",
+            "name": "hister",
+            "href": "hister-deep-dive.html"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "🎬 미디어 생성 (영상·오디오·이미지·CAD)",
+    "count": "64편",
+    "subs": [
+      {
+        "title": "영상 생성",
+        "items": [
+          {
+            "slug": "mockfeed",
+            "name": "mockfeed",
+            "href": "mockfeed-deep-dive.html"
+          },
+          {
+            "slug": "deep-printfilm",
+            "name": "deep-printfilm",
+            "href": "deep-printfilm-deep-dive.html"
+          },
+          {
+            "slug": "higgsfield-cli",
+            "name": "higgsfield-cli",
+            "href": "higgsfield-cli-deep-dive.html"
+          },
+          {
+            "slug": "longcat-video",
+            "name": "longcat-video",
+            "href": "longcat-video-deep-dive.html"
+          },
+          {
+            "slug": "moneyprinterturbo",
+            "name": "moneyprinterturbo",
+            "href": "moneyprinterturbo-deep-dive.html"
+          },
+          {
+            "slug": "MoneyPrinterV2",
+            "name": "MoneyPrinterV2",
+            "href": "MoneyPrinterV2-deep-dive.html"
+          },
+          {
+            "slug": "ViMax",
+            "name": "ViMax",
+            "href": "ViMax-deep-dive.html"
+          },
+          {
+            "slug": "openmontage",
+            "name": "OpenMontage",
+            "href": "openmontage-deep-dive.html"
+          },
+          {
+            "slug": "OpenCut",
+            "name": "OpenCut",
+            "href": "OpenCut-deep-dive.html"
+          },
+          {
+            "slug": "html-video",
+            "name": "html-video",
+            "href": "html-video-deep-dive.html"
+          },
+          {
+            "slug": "hyperframes",
+            "name": "hyperframes",
+            "href": "hyperframes-deep-dive.html"
+          },
+          {
+            "slug": "ffmpeg-webCLI",
+            "name": "ffmpeg-webCLI",
+            "href": "ffmpeg-webCLI-deep-dive.html"
+          },
+          {
+            "slug": "clypra",
+            "name": "Clypra",
+            "href": "clypra-deep-dive.html"
+          },
+          {
+            "slug": "remotion",
+            "name": "Remotion",
+            "href": "remotion-deep-dive.html"
+          },
+          {
+            "slug": "asciline",
+            "name": "asciline",
+            "href": "asciline-deep-dive.html"
+          },
+          {
+            "slug": "palmier-pro",
+            "name": "palmier-pro",
+            "href": "palmier-pro-deep-dive.html"
+          },
+          {
+            "slug": "video-use",
+            "name": "video-use",
+            "href": "video-use-deep-dive.html"
+          },
+          {
+            "slug": "Jellyfish",
+            "name": "Jellyfish",
+            "href": "Jellyfish-deep-dive.html"
+          },
+          {
+            "slug": "AlayaWorld",
+            "name": "AlayaWorld",
+            "href": "AlayaWorld-deep-dive.html"
+          },
+          {
+            "slug": "Pixelle-Video",
+            "name": "Pixelle-Video",
+            "href": "Pixelle-Video-deep-dive.html"
+          },
+          {
+            "slug": "pireel",
+            "name": "pireel",
+            "href": "pireel-deep-dive.html"
+          },
+          {
+            "slug": "video-shotcraft",
+            "name": "video-shotcraft",
+            "href": "video-shotcraft-deep-dive.html"
+          },
+          {
+            "slug": "ABot-World",
+            "name": "ABot-World",
+            "href": "ABot-World-deep-dive.html"
+          },
+          {
+            "slug": "animated-voiceover",
+            "name": "animated-voiceover",
+            "href": "animated-voiceover-deep-dive.html"
+          },
+          {
+            "slug": "stickman-video-director",
+            "name": "stickman-video-director",
+            "href": "stickman-video-director-deep-dive.html"
+          },
+          {
+            "slug": "shotcut",
+            "name": "shotcut",
+            "href": "shotcut-deep-dive.html"
+          },
+          {
+            "slug": "MiniMax-H3",
+            "name": "MiniMax-H3",
+            "href": "MiniMax-H3-deep-dive.html"
+          },
+          {
+            "slug": "manim",
+            "name": "manim",
+            "href": "manim-deep-dive.html"
+          },
+          {
+            "slug": "google-timeline-visualizer",
+            "name": "google-timeline-visualizer",
+            "href": "google-timeline-visualizer-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "오디오 · 음성 · TTS",
+        "items": [
+          {
+            "slug": "supertonic",
+            "name": "supertonic",
+            "href": "supertonic-deep-dive.html"
+          },
+          {
+            "slug": "abogen",
+            "name": "abogen",
+            "href": "abogen-deep-dive.html"
+          },
+          {
+            "slug": "audiomass",
+            "name": "audiomass",
+            "href": "audiomass-deep-dive.html"
+          },
+          {
+            "slug": "insanely-fast-whisper",
+            "name": "insanely-fast-whisper",
+            "href": "insanely-fast-whisper-deep-dive.html"
+          },
+          {
+            "slug": "stable-audio-3",
+            "name": "stable-audio-3",
+            "href": "stable-audio-3-deep-dive.html"
+          },
+          {
+            "slug": "stemdeck",
+            "name": "stemdeck",
+            "href": "stemdeck-deep-dive.html"
+          },
+          {
+            "slug": "VibeVoice",
+            "name": "VibeVoice",
+            "href": "VibeVoice-deep-dive.html"
+          },
+          {
+            "slug": "VoxCPM",
+            "name": "VoxCPM",
+            "href": "VoxCPM-deep-dive.html"
+          },
+          {
+            "slug": "misotts",
+            "name": "MisoTTS",
+            "href": "misotts-deep-dive.html"
+          },
+          {
+            "slug": "voicebox",
+            "name": "voicebox",
+            "href": "voicebox-deep-dive.html"
+          },
+          {
+            "slug": "gary4juce",
+            "name": "gary4juce",
+            "href": "gary4juce-deep-dive.html"
+          },
+          {
+            "slug": "KittenTTS",
+            "name": "KittenTTS",
+            "href": "KittenTTS-deep-dive.html"
+          },
+          {
+            "slug": "speech-to-speech",
+            "name": "speech-to-speech",
+            "href": "speech-to-speech-deep-dive.html"
+          },
+          {
+            "slug": "voice-pro",
+            "name": "voice-pro",
+            "href": "voice-pro-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "이미지 · 얼굴",
+        "items": [
+          {
+            "slug": "awesome-gpt-image-2-API-and-Prompts",
+            "name": "awesome-gpt-image-2-API-and-Prompts",
+            "href": "awesome-gpt-image-2-API-and-Prompts-deep-dive.html"
+          },
+          {
+            "slug": "Deep-Live-Cam",
+            "name": "Deep-Live-Cam",
+            "href": "Deep-Live-Cam-deep-dive.html"
+          },
+          {
+            "slug": "RapidRAW",
+            "name": "RapidRAW",
+            "href": "RapidRAW-deep-dive.html"
+          },
+          {
+            "slug": "image-extender",
+            "name": "image-extender",
+            "href": "image-extender-deep-dive.html"
+          },
+          {
+            "slug": "ideogram4",
+            "name": "Ideogram 4",
+            "href": "ideogram4-deep-dive.html"
+          },
+          {
+            "slug": "cowart",
+            "name": "cowart",
+            "href": "cowart-deep-dive.html"
+          },
+          {
+            "slug": "wardrobe",
+            "name": "wardrobe",
+            "href": "wardrobe-deep-dive.html"
+          },
+          {
+            "slug": "draw-your-font",
+            "name": "draw-your-font",
+            "href": "draw-your-font-deep-dive.html"
+          },
+          {
+            "slug": "Carpo-Prompt",
+            "name": "Carpo-Prompt",
+            "href": "Carpo-Prompt-deep-dive.html"
+          },
+          {
+            "slug": "ComfyUI",
+            "name": "ComfyUI",
+            "href": "ComfyUI-deep-dive.html"
+          },
+          {
+            "slug": "remove-ai-watermarks",
+            "name": "remove-ai-watermarks",
+            "href": "remove-ai-watermarks-deep-dive.html"
+          },
+          {
+            "slug": "awesome-gpt-image-2",
+            "name": "awesome-gpt-image-2",
+            "href": "awesome-gpt-image-2-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "3D · CAD · 캡처",
+        "items": [
+          {
+            "slug": "birds.cafe",
+            "name": "birds.cafe",
+            "href": "birds.cafe-deep-dive.html"
+          },
+          {
+            "slug": "gencad",
+            "name": "gencad",
+            "href": "gencad-deep-dive.html"
+          },
+          {
+            "slug": "text-to-cad",
+            "name": "text-to-cad",
+            "href": "text-to-cad-deep-dive.html"
+          },
+          {
+            "slug": "openscreen",
+            "name": "openscreen",
+            "href": "openscreen-deep-dive.html"
+          },
+          {
+            "slug": "pascalorg-editor",
+            "name": "pascalorg-editor",
+            "href": "pascalorg-editor-deep-dive.html"
+          },
+          {
+            "slug": "img2threejs",
+            "name": "img2threejs",
+            "href": "img2threejs-deep-dive.html"
+          },
+          {
+            "slug": "Claude-of-Duty",
+            "name": "mshumer/Claude-of-Duty",
+            "href": "Claude-of-Duty-deep-dive.html"
+          },
+          {
+            "slug": "persona",
+            "name": "persona",
+            "href": "persona-deep-dive.html"
+          },
+          {
+            "slug": "anatomy",
+            "name": "anatomy (Anatomy Atelier)",
+            "href": "anatomy-deep-dive.html"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "💰 금융 · 트레이딩",
+    "count": "19편",
+    "subs": [
+      {
+        "title": "금융 단말",
+        "items": [
+          {
+            "slug": "FinceptTerminal",
+            "name": "FinceptTerminal",
+            "href": "FinceptTerminal-deep-dive.html"
+          },
+          {
+            "slug": "OpenStock",
+            "name": "OpenStock",
+            "href": "OpenStock-deep-dive.html"
+          },
+          {
+            "slug": "investment-news",
+            "name": "investment-news",
+            "href": "investment-news-deep-dive.html"
+          },
+          {
+            "slug": "Financial-API",
+            "name": "Financial-API",
+            "href": "Financial-API-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "AI 리서치 · 트레이딩",
+        "items": [
+          {
+            "slug": "zhengxi-views",
+            "name": "zhengxi-views",
+            "href": "zhengxi-views-deep-dive.html"
+          },
+          {
+            "slug": "finsight-ai",
+            "name": "finsight-ai",
+            "href": "finsight-ai-deep-dive.html"
+          },
+          {
+            "slug": "TradingAgents",
+            "name": "TradingAgents",
+            "href": "TradingAgents-deep-dive.html"
+          },
+          {
+            "slug": "machine-learning-for-trading",
+            "name": "machine-learning-for-trading",
+            "href": "machine-learning-for-trading-deep-dive.html"
+          },
+          {
+            "slug": "ai-hedge-fund",
+            "name": "ai-hedge-fund",
+            "href": "ai-hedge-fund-deep-dive.html"
+          },
+          {
+            "slug": "vibe-trading",
+            "name": "Vibe-Trading",
+            "href": "vibe-trading-deep-dive.html"
+          },
+          {
+            "slug": "daily_stock_analysis",
+            "name": "daily_stock_analysis",
+            "href": "daily_stock_analysis-deep-dive.html"
+          },
+          {
+            "slug": "uzi-skill",
+            "name": "uzi-skill",
+            "href": "uzi-skill-deep-dive.html"
+          },
+          {
+            "slug": "ai-berkshire",
+            "name": "ai-berkshire",
+            "href": "ai-berkshire-deep-dive.html"
+          },
+          {
+            "slug": "polymm",
+            "name": "polymm",
+            "href": "polymm-deep-dive.html"
+          },
+          {
+            "slug": "vnpy",
+            "name": "vnpy",
+            "href": "vnpy-deep-dive.html"
+          },
+          {
+            "slug": "vibe-research",
+            "name": "Vibe-Research",
+            "href": "vibe-research-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "투자 가이드",
+        "items": [
+          {
+            "slug": "chinese-buy-us-stock-guide",
+            "name": "chinese-buy-us-stock-guide",
+            "href": "chinese-buy-us-stock-guide-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "결제 · 핀테크 인프라",
+        "items": [
+          {
+            "slug": "hyperswitch",
+            "name": "hyperswitch",
+            "href": "hyperswitch-deep-dive.html"
+          },
+          {
+            "slug": "rusty-cryptix",
+            "name": "rusty-cryptix",
+            "href": "rusty-cryptix-deep-dive.html"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "🔐 보안 · 프라이버시 · 네트워크",
+    "count": "32편",
+    "subs": [
+      {
+        "title": "공격 · 침투 · OSINT",
+        "items": [
+          {
+            "slug": "pentest-ai",
+            "name": "pentest-ai",
+            "href": "pentest-ai-deep-dive.html"
+          },
+          {
+            "slug": "sherlock",
+            "name": "sherlock",
+            "href": "sherlock-deep-dive.html"
+          },
+          {
+            "slug": "Anthropic-Cybersecurity-Skills",
+            "name": "Anthropic-Cybersecurity-Skills",
+            "href": "Anthropic-Cybersecurity-Skills-deep-dive.html"
+          },
+          {
+            "slug": "flowsint",
+            "name": "flowsint",
+            "href": "flowsint-deep-dive.html"
+          },
+          {
+            "slug": "defending-code-reference-harness",
+            "name": "defending-code-reference-harness",
+            "href": "defending-code-reference-harness-deep-dive.html"
+          },
+          {
+            "slug": "social-engineer-toolkit",
+            "name": "Social-Engineer Toolkit (SET)",
+            "href": "social-engineer-toolkit-deep-dive.html"
+          },
+          {
+            "slug": "maigret",
+            "name": "maigret",
+            "href": "maigret-deep-dive.html"
+          },
+          {
+            "slug": "reverse-skill",
+            "name": "reverse-skill",
+            "href": "reverse-skill-deep-dive.html"
+          },
+          {
+            "slug": "strix",
+            "name": "strix",
+            "href": "strix-deep-dive.html"
+          },
+          {
+            "slug": "deepsec",
+            "name": "deepsec",
+            "href": "deepsec-deep-dive.html"
+          },
+          {
+            "slug": "pentagi",
+            "name": "pentagi",
+            "href": "pentagi-deep-dive.html"
+          },
+          {
+            "slug": "visa-vulnerability-agentic-harness",
+            "name": "visa-vulnerability-agentic-harness",
+            "href": "visa-vulnerability-agentic-harness-deep-dive.html"
+          },
+          {
+            "slug": "codex-security",
+            "name": "codex-security",
+            "href": "codex-security-deep-dive.html"
+          },
+          {
+            "slug": "open-kritt",
+            "name": "open-kritt",
+            "href": "open-kritt-deep-dive.html"
+          },
+          {
+            "slug": "AI-Infra-Guard",
+            "name": "AI-Infra-Guard",
+            "href": "AI-Infra-Guard-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "프라이버시 · 우회 · 프록시",
+        "items": [
+          {
+            "slug": "clash-verge-rev",
+            "name": "clash-verge-rev",
+            "href": "clash-verge-rev-deep-dive.html"
+          },
+          {
+            "slug": "CloakBrowser",
+            "name": "CloakBrowser",
+            "href": "CloakBrowser-deep-dive.html"
+          },
+          {
+            "slug": "MasterDnsVPN",
+            "name": "MasterDnsVPN",
+            "href": "MasterDnsVPN-deep-dive.html"
+          },
+          {
+            "slug": "vpn-configs-for-russia",
+            "name": "vpn-configs-for-russia",
+            "href": "vpn-configs-for-russia-deep-dive.html"
+          },
+          {
+            "slug": "fanqiang",
+            "name": "fanqiang",
+            "href": "fanqiang-deep-dive.html"
+          },
+          {
+            "slug": "uad-ng",
+            "name": "UAD-NG",
+            "href": "uad-ng-deep-dive.html"
+          },
+          {
+            "slug": "private-ai-gateway",
+            "name": "private-ai-gateway",
+            "href": "private-ai-gateway-deep-dive.html"
+          },
+          {
+            "slug": "maskara",
+            "name": "maskara",
+            "href": "maskara-deep-dive.html"
+          },
+          {
+            "slug": "simplex-chat",
+            "name": "simplex-chat",
+            "href": "simplex-chat-deep-dive.html"
+          },
+          {
+            "slug": "wloc",
+            "name": "wloc",
+            "href": "wloc-deep-dive.html"
+          },
+          {
+            "slug": "X4G",
+            "name": "X4G",
+            "href": "X4G-deep-dive.html"
+          },
+          {
+            "slug": "agent-vault",
+            "name": "agent-vault",
+            "href": "agent-vault-deep-dive.html"
+          },
+          {
+            "slug": "adns",
+            "name": "adns",
+            "href": "adns-deep-dive.html"
+          },
+          {
+            "slug": "bitchat",
+            "name": "bitchat",
+            "href": "bitchat-deep-dive.html"
+          },
+          {
+            "slug": "amnezia-client",
+            "name": "amnezia-client",
+            "href": "amnezia-client-deep-dive.html"
+          },
+          {
+            "slug": "camofox-browser",
+            "name": "camofox-browser",
+            "href": "camofox-browser-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "네트워크 모니터링 · 트래픽",
+        "items": [
+          {
+            "slug": "sniffnet",
+            "name": "Sniffnet",
+            "href": "sniffnet-deep-dive.html"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "🌐 웹 · 데스크탑 앱 · 생산성 · 셀프호스팅",
+    "count": "144편",
+    "subs": [
+      {
+        "title": "지식 · 노트 · 생산성",
+        "items": [
+          {
+            "slug": "anytype-ts",
+            "name": "anytype-ts",
+            "href": "anytype-ts-deep-dive.html"
+          },
+          {
+            "slug": "files.md",
+            "name": "files.md",
+            "href": "files.md-deep-dive.html"
+          },
+          {
+            "slug": "markedit",
+            "name": "markedit",
+            "href": "markedit-deep-dive.html"
+          },
+          {
+            "slug": "tolaria",
+            "name": "tolaria",
+            "href": "tolaria-deep-dive.html"
+          },
+          {
+            "slug": "ziwei-doushu",
+            "name": "ziwei-doushu",
+            "href": "ziwei-doushu-deep-dive.html"
+          },
+          {
+            "slug": "open-knowledge",
+            "name": "open-knowledge",
+            "href": "open-knowledge-deep-dive.html"
+          },
+          {
+            "slug": "meetily",
+            "name": "meetily",
+            "href": "meetily-deep-dive.html"
+          },
+          {
+            "slug": "riddle",
+            "name": "riddle",
+            "href": "riddle-deep-dive.html"
+          },
+          {
+            "slug": "reflect-open",
+            "name": "reflect-open",
+            "href": "reflect-open-deep-dive.html"
+          },
+          {
+            "slug": "OpenBidKit_Yibiao",
+            "name": "OpenBidKit_Yibiao",
+            "href": "OpenBidKit_Yibiao-deep-dive.html"
+          },
+          {
+            "slug": "open-slide",
+            "name": "open-slide",
+            "href": "open-slide-deep-dive.html"
+          },
+          {
+            "slug": "harper",
+            "name": "harper",
+            "href": "harper-deep-dive.html"
+          },
+          {
+            "slug": "hubble",
+            "name": "bholmesdev/hubble.md",
+            "href": "hubble-deep-dive.html"
+          },
+          {
+            "slug": "genoffice",
+            "name": "genspark-ai/genoffice",
+            "href": "genoffice-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "셀프호스팅 서비스",
+        "items": [
+          {
+            "slug": "immich",
+            "name": "immich",
+            "href": "immich-deep-dive.html"
+          },
+          {
+            "slug": "plausible-analytics",
+            "name": "plausible-analytics",
+            "href": "plausible-analytics-deep-dive.html"
+          },
+          {
+            "slug": "project-nomad",
+            "name": "project-nomad",
+            "href": "project-nomad-deep-dive.html"
+          },
+          {
+            "slug": "OpenWA",
+            "name": "OpenWA",
+            "href": "OpenWA-deep-dive.html"
+          },
+          {
+            "slug": "emdash",
+            "name": "emdash",
+            "href": "emdash-deep-dive.html"
+          },
+          {
+            "slug": "osiris",
+            "name": "osiris",
+            "href": "osiris-deep-dive.html"
+          },
+          {
+            "slug": "twenty",
+            "name": "twenty",
+            "href": "twenty-deep-dive.html"
+          },
+          {
+            "slug": "skylight",
+            "name": "skylight",
+            "href": "skylight-deep-dive.html"
+          },
+          {
+            "slug": "WechatOnCloud",
+            "name": "WechatOnCloud",
+            "href": "WechatOnCloud-deep-dive.html"
+          },
+          {
+            "slug": "stirling-pdf",
+            "name": "stirling-pdf",
+            "href": "stirling-pdf-deep-dive.html"
+          },
+          {
+            "slug": "chatwoot",
+            "name": "chatwoot",
+            "href": "chatwoot-deep-dive.html"
+          },
+          {
+            "slug": "self-hosting-guide",
+            "name": "Self-Hosting-Guide",
+            "href": "self-hosting-guide-deep-dive.html"
+          },
+          {
+            "slug": "penpot",
+            "name": "penpot",
+            "href": "penpot-deep-dive.html"
+          },
+          {
+            "slug": "worldmonitor",
+            "name": "worldmonitor",
+            "href": "worldmonitor-deep-dive.html"
+          },
+          {
+            "slug": "logos-node-dashboard",
+            "name": "Logos Node Dashboard",
+            "href": "logos-node-dashboard-deep-dive.html"
+          },
+          {
+            "slug": "TREK",
+            "name": "TREK",
+            "href": "TREK-deep-dive.html"
+          },
+          {
+            "slug": "open-seo",
+            "name": "open-seo",
+            "href": "open-seo-deep-dive.html"
+          },
+          {
+            "slug": "CasaOS",
+            "name": "CasaOS",
+            "href": "CasaOS-deep-dive.html"
+          },
+          {
+            "slug": "AssppWeb",
+            "name": "AssppWeb",
+            "href": "AssppWeb-deep-dive.html"
+          },
+          {
+            "slug": "oomwoo",
+            "name": "oomwoo",
+            "href": "oomwoo-deep-dive.html"
+          },
+          {
+            "slug": "instatic",
+            "name": "Instatic",
+            "href": "instatic-deep-dive.html"
+          },
+          {
+            "slug": "romm",
+            "name": "romm",
+            "href": "romm-deep-dive.html"
+          },
+          {
+            "slug": "slasha",
+            "name": "slasha",
+            "href": "slasha-deep-dive.html"
+          },
+          {
+            "slug": "leantime",
+            "name": "Leantime",
+            "href": "leantime-deep-dive.html"
+          },
+          {
+            "slug": "home-assistant-core",
+            "name": "Home Assistant Core",
+            "href": "home-assistant-core-deep-dive.html"
+          },
+          {
+            "slug": "GEOFlow",
+            "name": "GEOFlow",
+            "href": "GEOFlow-deep-dive.html"
+          },
+          {
+            "slug": "posthog",
+            "name": "PostHog",
+            "href": "posthog-deep-dive.html"
+          },
+          {
+            "slug": "GeoLibre",
+            "name": "GeoLibre",
+            "href": "GeoLibre-deep-dive.html"
+          },
+          {
+            "slug": "kaneo",
+            "name": "kaneo",
+            "href": "kaneo-deep-dive.html"
+          },
+          {
+            "slug": "plane",
+            "name": "Plane",
+            "href": "plane-deep-dive.html"
+          },
+          {
+            "slug": "openGym",
+            "name": "openGym",
+            "href": "openGym-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "미디어 · 클라이언트 앱",
+        "items": [
+          {
+            "slug": "JKVideo",
+            "name": "JKVideo",
+            "href": "JKVideo-deep-dive.html"
+          },
+          {
+            "slug": "streambert",
+            "name": "streambert",
+            "href": "streambert-deep-dive.html"
+          },
+          {
+            "slug": "stremio-web",
+            "name": "stremio-web",
+            "href": "stremio-web-deep-dive.html"
+          },
+          {
+            "slug": "wechat-article-exporter",
+            "name": "wechat-article-exporter",
+            "href": "wechat-article-exporter-deep-dive.html"
+          },
+          {
+            "slug": "Open-LLM-VTuber",
+            "name": "Open-LLM-VTuber",
+            "href": "Open-LLM-VTuber-deep-dive.html"
+          },
+          {
+            "slug": "goose",
+            "name": "goose (WHOOP 앱)",
+            "href": "goose-deep-dive.html"
+          },
+          {
+            "slug": "firefox",
+            "name": "Mozilla Firefox",
+            "href": "firefox-deep-dive.html"
+          },
+          {
+            "slug": "noop",
+            "name": "NOOP",
+            "href": "noop-deep-dive.html"
+          },
+          {
+            "slug": "meatshell",
+            "name": "meatshell",
+            "href": "meatshell-deep-dive.html"
+          },
+          {
+            "slug": "create",
+            "name": "Create",
+            "href": "create-deep-dive.html"
+          },
+          {
+            "slug": "forge",
+            "name": "forge",
+            "href": "forge-deep-dive.html"
+          },
+          {
+            "slug": "Mineradio",
+            "name": "Mineradio",
+            "href": "Mineradio-deep-dive.html"
+          },
+          {
+            "slug": "FluidVoice",
+            "name": "FluidVoice",
+            "href": "FluidVoice-deep-dive.html"
+          },
+          {
+            "slug": "chika",
+            "name": "chika",
+            "href": "chika-deep-dive.html"
+          },
+          {
+            "slug": "comic-chat",
+            "name": "microsoft/comic-chat",
+            "href": "comic-chat-deep-dive.html"
+          },
+          {
+            "slug": "invidious",
+            "name": "invidious",
+            "href": "invidious-deep-dive.html"
+          },
+          {
+            "slug": "gsap",
+            "name": "gsap",
+            "href": "gsap-deep-dive.html"
+          },
+          {
+            "slug": "zhuzhiliao",
+            "name": "imsai-sh/zhuzhiliao",
+            "href": "zhuzhiliao-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "개발 · API · 인프라",
+        "items": [
+          {
+            "slug": "xrblocks",
+            "name": "xrblocks",
+            "href": "xrblocks-deep-dive.html"
+          },
+          {
+            "slug": "xlibre",
+            "name": "XLibre Xserver",
+            "href": "xlibre-deep-dive.html"
+          },
+          {
+            "slug": "floci",
+            "name": "floci",
+            "href": "floci-deep-dive.html"
+          },
+          {
+            "slug": "nango",
+            "name": "nango",
+            "href": "nango-deep-dive.html"
+          },
+          {
+            "slug": "FreeDomain",
+            "name": "FreeDomain",
+            "href": "FreeDomain-deep-dive.html"
+          },
+          {
+            "slug": "velopack",
+            "name": "velopack",
+            "href": "velopack-deep-dive.html"
+          },
+          {
+            "slug": "pretext",
+            "name": "pretext",
+            "href": "pretext-deep-dive.html"
+          },
+          {
+            "slug": "honker",
+            "name": "honker",
+            "href": "honker-deep-dive.html"
+          },
+          {
+            "slug": "nvm",
+            "name": "nvm",
+            "href": "nvm-deep-dive.html"
+          },
+          {
+            "slug": "pg_durable",
+            "name": "pg_durable",
+            "href": "pg_durable-deep-dive.html"
+          },
+          {
+            "slug": "butterbase",
+            "name": "butterbase",
+            "href": "butterbase-deep-dive.html"
+          },
+          {
+            "slug": "mitosis",
+            "name": "mitosis",
+            "href": "mitosis-deep-dive.html"
+          },
+          {
+            "slug": "solana-explorer",
+            "name": "solana-explorer",
+            "href": "solana-explorer-deep-dive.html"
+          },
+          {
+            "slug": "container",
+            "name": "container",
+            "href": "container-deep-dive.html"
+          },
+          {
+            "slug": "swc",
+            "name": "swc",
+            "href": "swc-deep-dive.html"
+          },
+          {
+            "slug": "iroh",
+            "name": "iroh",
+            "href": "iroh-deep-dive.html"
+          },
+          {
+            "slug": "zed",
+            "name": "zed",
+            "href": "zed-deep-dive.html"
+          },
+          {
+            "slug": "cerious-scroll",
+            "name": "cerious-scroll",
+            "href": "cerious-scroll-deep-dive.html"
+          },
+          {
+            "slug": "whook",
+            "name": "whook",
+            "href": "whook-deep-dive.html"
+          },
+          {
+            "slug": "NM-CYD-C5",
+            "name": "NM-CYD-C5",
+            "href": "NM-CYD-C5-deep-dive.html"
+          },
+          {
+            "slug": "canopy",
+            "name": "canopy",
+            "href": "canopy-deep-dive.html"
+          },
+          {
+            "slug": "sail",
+            "name": "sail",
+            "href": "sail-deep-dive.html"
+          },
+          {
+            "slug": "astryx",
+            "name": "astryx",
+            "href": "astryx-deep-dive.html"
+          },
+          {
+            "slug": "linuxmd",
+            "name": "linuxmd",
+            "href": "linuxmd-deep-dive.html"
+          },
+          {
+            "slug": "box3d",
+            "name": "box3d",
+            "href": "box3d-deep-dive.html"
+          },
+          {
+            "slug": "fastapi",
+            "name": "fastapi",
+            "href": "fastapi-deep-dive.html"
+          },
+          {
+            "slug": "copybara",
+            "name": "copybara",
+            "href": "copybara-deep-dive.html"
+          },
+          {
+            "slug": "pgrust",
+            "name": "pgrust",
+            "href": "pgrust-deep-dive.html"
+          },
+          {
+            "slug": "bun",
+            "name": "bun",
+            "href": "bun-deep-dive.html"
+          },
+          {
+            "slug": "Catch2",
+            "name": "Catch2",
+            "href": "Catch2-deep-dive.html"
+          },
+          {
+            "slug": "blume",
+            "name": "blume",
+            "href": "blume-deep-dive.html"
+          },
+          {
+            "slug": "canvas-ui",
+            "name": "canvas-ui",
+            "href": "canvas-ui-deep-dive.html"
+          },
+          {
+            "slug": "scriptc",
+            "name": "scriptc",
+            "href": "scriptc-deep-dive.html"
+          },
+          {
+            "slug": "dyad",
+            "name": "dyad",
+            "href": "dyad-deep-dive.html"
+          },
+          {
+            "slug": "onlook",
+            "name": "onlook",
+            "href": "onlook-deep-dive.html"
+          },
+          {
+            "slug": "fragments",
+            "name": "fragments",
+            "href": "fragments-deep-dive.html"
+          },
+          {
+            "slug": "tailwindcss",
+            "name": "tailwindcss",
+            "href": "tailwindcss-deep-dive.html"
+          },
+          {
+            "slug": "radix-primitives",
+            "name": "radix-primitives",
+            "href": "radix-primitives-deep-dive.html"
+          },
+          {
+            "slug": "daisyui",
+            "name": "daisyui",
+            "href": "daisyui-deep-dive.html"
+          },
+          {
+            "slug": "mantine",
+            "name": "mantine",
+            "href": "mantine-deep-dive.html"
+          },
+          {
+            "slug": "motion",
+            "name": "motion",
+            "href": "motion-deep-dive.html"
+          },
+          {
+            "slug": "react-spring",
+            "name": "react-spring",
+            "href": "react-spring-deep-dive.html"
+          },
+          {
+            "slug": "lucide",
+            "name": "lucide",
+            "href": "lucide-deep-dive.html"
+          },
+          {
+            "slug": "playwright",
+            "name": "playwright",
+            "href": "playwright-deep-dive.html"
+          },
+          {
+            "slug": "lighthouse",
+            "name": "lighthouse",
+            "href": "lighthouse-deep-dive.html"
+          },
+          {
+            "slug": "axe-core",
+            "name": "axe-core",
+            "href": "axe-core-deep-dive.html"
+          },
+          {
+            "slug": "ant-design",
+            "name": "ant-design",
+            "href": "ant-design-deep-dive.html"
+          },
+          {
+            "slug": "material-ui",
+            "name": "material-ui",
+            "href": "material-ui-deep-dive.html"
+          },
+          {
+            "slug": "react-spectrum",
+            "name": "react-spectrum",
+            "href": "react-spectrum-deep-dive.html"
+          },
+          {
+            "slug": "carbon",
+            "name": "carbon",
+            "href": "carbon-deep-dive.html"
+          },
+          {
+            "slug": "fluentui",
+            "name": "fluentui",
+            "href": "fluentui-deep-dive.html"
+          },
+          {
+            "slug": "style-dictionary",
+            "name": "style-dictionary",
+            "href": "style-dictionary-deep-dive.html"
+          },
+          {
+            "slug": "dtcg-community-group",
+            "name": "dtcg-community-group",
+            "href": "dtcg-community-group-deep-dive.html"
+          },
+          {
+            "slug": "tokens-studio-figma-plugin",
+            "name": "tokens-studio-figma-plugin",
+            "href": "tokens-studio-figma-plugin-deep-dive.html"
+          },
+          {
+            "slug": "webstudio",
+            "name": "webstudio",
+            "href": "webstudio-deep-dive.html"
+          },
+          {
+            "slug": "xy",
+            "name": "reflex-dev/xy",
+            "href": "xy-deep-dive.html"
+          },
+          {
+            "slug": "next-forge",
+            "name": "next-forge",
+            "href": "next-forge-deep-dive.html"
+          },
+          {
+            "slug": "witr",
+            "name": "witr",
+            "href": "witr-deep-dive.html"
+          },
+          {
+            "slug": "aily-blockly",
+            "name": "aily-blockly",
+            "href": "aily-blockly-deep-dive.html"
+          },
+          {
+            "slug": "threeui",
+            "name": "ThreeUI",
+            "href": "threeui-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "데스크탑 유틸리티",
+        "items": [
+          {
+            "slug": "MacSai",
+            "name": "MacSai",
+            "href": "MacSai-deep-dive.html"
+          },
+          {
+            "slug": "retro-go",
+            "name": "retro-go",
+            "href": "retro-go-deep-dive.html"
+          },
+          {
+            "slug": "OpenLogi",
+            "name": "OpenLogi",
+            "href": "OpenLogi-deep-dive.html"
+          },
+          {
+            "slug": "open-design",
+            "name": "open-design",
+            "href": "open-design-deep-dive.html"
+          },
+          {
+            "slug": "fredy",
+            "name": "fredy",
+            "href": "fredy-deep-dive.html"
+          },
+          {
+            "slug": "coreutils",
+            "name": "coreutils",
+            "href": "coreutils-deep-dive.html"
+          },
+          {
+            "slug": "pake",
+            "name": "Pake",
+            "href": "pake-deep-dive.html"
+          },
+          {
+            "slug": "EntropyVerify",
+            "name": "EntropyVerify",
+            "href": "EntropyVerify-deep-dive.html"
+          },
+          {
+            "slug": "vorssaint-utils",
+            "name": "Vorssaint",
+            "href": "vorssaint-utils-deep-dive.html"
+          },
+          {
+            "slug": "contained-app",
+            "name": "contained-app",
+            "href": "contained-app-deep-dive.html"
+          },
+          {
+            "slug": "CodexBar",
+            "name": "CodexBar",
+            "href": "CodexBar-deep-dive.html"
+          },
+          {
+            "slug": "FluentCleaner",
+            "name": "FluentCleaner",
+            "href": "FluentCleaner-deep-dive.html"
+          },
+          {
+            "slug": "sharpemu",
+            "name": "SharpEmu",
+            "href": "sharpemu-deep-dive.html"
+          },
+          {
+            "slug": "LinkSwift",
+            "name": "LinkSwift",
+            "href": "LinkSwift-deep-dive.html"
+          },
+          {
+            "slug": "PhotoGIMP",
+            "name": "PhotoGIMP",
+            "href": "PhotoGIMP-deep-dive.html"
+          },
+          {
+            "slug": "Win11Debloat",
+            "name": "Win11Debloat",
+            "href": "Win11Debloat-deep-dive.html"
+          },
+          {
+            "slug": "Ghost-Downloader-3",
+            "name": "XiaoYouChR/Ghost-Downloader-3",
+            "href": "Ghost-Downloader-3-deep-dive.html"
+          },
+          {
+            "slug": "CipherTalk",
+            "name": "CipherTalk",
+            "href": "CipherTalk-deep-dive.html"
+          },
+          {
+            "slug": "ZoomitForMac",
+            "name": "ZoomitForMac",
+            "href": "ZoomitForMac-deep-dive.html"
+          },
+          {
+            "slug": "WheelWizard",
+            "name": "WheelWizard",
+            "href": "WheelWizard-deep-dive.html"
+          },
+          {
+            "slug": "Screendrop",
+            "name": "Screendrop",
+            "href": "Screendrop-deep-dive.html"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "📚 학습 자료 · Awesome 큐레이션",
+    "count": "69편",
+    "subs": [
+      {
+        "title": "AI · 에이전트 강의",
+        "items": [
+          {
+            "slug": "ai-agent",
+            "name": "ai-agent-deep-dive",
+            "href": "ai-agent-deep-dive.html"
+          },
+          {
+            "slug": "ai-agents-for-beginners",
+            "name": "ai-agents-for-beginners",
+            "href": "ai-agents-for-beginners-deep-dive.html"
+          },
+          {
+            "slug": "ai-engineering-from-scratch",
+            "name": "ai-engineering-from-scratch",
+            "href": "ai-engineering-from-scratch-deep-dive.html"
+          },
+          {
+            "slug": "generative-ai-for-beginners",
+            "name": "generative-ai-for-beginners",
+            "href": "generative-ai-for-beginners-deep-dive.html"
+          },
+          {
+            "slug": "hello-agents",
+            "name": "hello-agents",
+            "href": "hello-agents-deep-dive.html"
+          },
+          {
+            "slug": "train-llm-from-scratch",
+            "name": "train-llm-from-scratch",
+            "href": "train-llm-from-scratch-deep-dive.html"
+          },
+          {
+            "slug": "learn-claude-code",
+            "name": "learn-claude-code",
+            "href": "learn-claude-code-deep-dive.html"
+          },
+          {
+            "slug": "CodexGuide",
+            "name": "CodexGuide",
+            "href": "CodexGuide-deep-dive.html"
+          },
+          {
+            "slug": "codex-orange-book",
+            "name": "codex-orange-book",
+            "href": "codex-orange-book-deep-dive.html"
+          },
+          {
+            "slug": "ML-For-Beginners",
+            "name": "ML-For-Beginners",
+            "href": "ML-For-Beginners-deep-dive.html"
+          },
+          {
+            "slug": "AI-For-Beginners",
+            "name": "AI-For-Beginners",
+            "href": "AI-For-Beginners-deep-dive.html"
+          },
+          {
+            "slug": "claude-cookbooks",
+            "name": "anthropics/claude-cookbooks",
+            "href": "claude-cookbooks-deep-dive.html"
+          },
+          {
+            "slug": "WorkBuddyGuide",
+            "name": "WorkBuddyGuide",
+            "href": "WorkBuddyGuide-deep-dive.html"
+          },
+          {
+            "slug": "ai-agent-book",
+            "name": "ai-agent-book",
+            "href": "ai-agent-book-deep-dive.html"
+          },
+          {
+            "slug": "sutskever-30-implementations",
+            "name": "sutskever-30-implementations",
+            "href": "sutskever-30-implementations-deep-dive.html"
+          },
+          {
+            "slug": "little-book-rl",
+            "name": "little-book-rl",
+            "href": "little-book-rl-deep-dive.html"
+          },
+          {
+            "slug": "LLMs-from-scratch",
+            "name": "LLMs-from-scratch",
+            "href": "LLMs-from-scratch-deep-dive.html"
+          },
+          {
+            "slug": "Foundations-of-LLMs",
+            "name": "Foundations-of-LLMs",
+            "href": "Foundations-of-LLMs-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "Awesome 큐레이션",
+        "items": [
+          {
+            "slug": "project-based-learning",
+            "name": "project-based-learning",
+            "href": "project-based-learning-deep-dive.html"
+          },
+          {
+            "slug": "free-programming-books",
+            "name": "free-programming-books",
+            "href": "free-programming-books-deep-dive.html"
+          },
+          {
+            "slug": "free-for-dev",
+            "name": "free-for-dev",
+            "href": "free-for-dev-deep-dive.html"
+          },
+          {
+            "slug": "Awesome-Blender-Seedance-Workflow-Usecases",
+            "name": "Awesome-Blender-Seedance-Workflow-Usecases",
+            "href": "Awesome-Blender-Seedance-Workflow-Usecases-deep-dive.html"
+          },
+          {
+            "slug": "awesome-claude-code",
+            "name": "awesome-claude-code",
+            "href": "awesome-claude-code-deep-dive.html"
+          },
+          {
+            "slug": "awesome-deepseek-agent",
+            "name": "awesome-deepseek-agent",
+            "href": "awesome-deepseek-agent-deep-dive.html"
+          },
+          {
+            "slug": "awesome-llm-apps",
+            "name": "awesome-llm-apps",
+            "href": "awesome-llm-apps-deep-dive.html"
+          },
+          {
+            "slug": "awesome-selfhosted",
+            "name": "awesome-selfhosted",
+            "href": "awesome-selfhosted-deep-dive.html"
+          },
+          {
+            "slug": "sindresorhus-awesome",
+            "name": "sindresorhus-awesome",
+            "href": "sindresorhus-awesome-deep-dive.html"
+          },
+          {
+            "slug": "public-apis",
+            "name": "public-apis",
+            "href": "public-apis-deep-dive.html"
+          },
+          {
+            "slug": "developer-portfolios",
+            "name": "developer-portfolios",
+            "href": "developer-portfolios-deep-dive.html"
+          },
+          {
+            "slug": "the-book-of-secret-knowledge",
+            "name": "the-book-of-secret-knowledge",
+            "href": "the-book-of-secret-knowledge-deep-dive.html"
+          },
+          {
+            "slug": "applied-ml",
+            "name": "applied-ml",
+            "href": "applied-ml-deep-dive.html"
+          },
+          {
+            "slug": "CL4R1T4S",
+            "name": "CL4R1T4S",
+            "href": "CL4R1T4S-deep-dive.html"
+          },
+          {
+            "slug": "system-prompts-and-models-of-ai-tools",
+            "name": "system-prompts-and-models-of-ai-tools",
+            "href": "system-prompts-and-models-of-ai-tools-deep-dive.html"
+          },
+          {
+            "slug": "system-prompts-leaks",
+            "name": "system_prompts_leaks",
+            "href": "system-prompts-leaks-deep-dive.html"
+          },
+          {
+            "slug": "awesome-design-md",
+            "name": "awesome-design-md",
+            "href": "awesome-design-md-deep-dive.html"
+          },
+          {
+            "slug": "exercises-dataset",
+            "name": "exercises-dataset",
+            "href": "exercises-dataset-deep-dive.html"
+          },
+          {
+            "slug": "chinese-independent-developer",
+            "name": "chinese-independent-developer",
+            "href": "chinese-independent-developer-deep-dive.html"
+          },
+          {
+            "slug": "awesome-mac",
+            "name": "awesome-mac",
+            "href": "awesome-mac-deep-dive.html"
+          },
+          {
+            "slug": "computer-science",
+            "name": "computer-science",
+            "href": "computer-science-deep-dive.html"
+          },
+          {
+            "slug": "awesome-claude-skills",
+            "name": "awesome-claude-skills",
+            "href": "awesome-claude-skills-deep-dive.html"
+          },
+          {
+            "slug": "awesome-systematic-trading",
+            "name": "awesome-systematic-trading",
+            "href": "awesome-systematic-trading-deep-dive.html"
+          },
+          {
+            "slug": "awesome-claude-design",
+            "name": "awesome-claude-design",
+            "href": "awesome-claude-design-deep-dive.html"
+          },
+          {
+            "slug": "awesome-design-systems",
+            "name": "awesome-design-systems",
+            "href": "awesome-design-systems-deep-dive.html"
+          },
+          {
+            "slug": "awesome-mcp-servers",
+            "name": "awesome-mcp-servers",
+            "href": "awesome-mcp-servers-deep-dive.html"
+          },
+          {
+            "slug": "awesome-codex-skills",
+            "name": "awesome-codex-skills",
+            "href": "awesome-codex-skills-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "엔지니어링 · 시스템 설계",
+        "items": [
+          {
+            "slug": "aidlc-workflows",
+            "name": "aidlc-workflows",
+            "href": "aidlc-workflows-deep-dive.html"
+          },
+          {
+            "slug": "build-your-own-x",
+            "name": "build-your-own-x",
+            "href": "build-your-own-x-deep-dive.html"
+          },
+          {
+            "slug": "eng-practices",
+            "name": "eng-practices",
+            "href": "eng-practices-deep-dive.html"
+          },
+          {
+            "slug": "learn-harness-engineering",
+            "name": "learn-harness-engineering",
+            "href": "learn-harness-engineering-deep-dive.html"
+          },
+          {
+            "slug": "leetcode-solutions",
+            "name": "leetcode-solutions",
+            "href": "leetcode-solutions-deep-dive.html"
+          },
+          {
+            "slug": "system-design-primer",
+            "name": "system-design-primer",
+            "href": "system-design-primer-deep-dive.html"
+          },
+          {
+            "slug": "coding-interview-university",
+            "name": "coding-interview-university",
+            "href": "coding-interview-university-deep-dive.html"
+          },
+          {
+            "slug": "hello-algo",
+            "name": "hello-algo",
+            "href": "hello-algo-deep-dive.html"
+          },
+          {
+            "slug": "pifs",
+            "name": "pifs",
+            "href": "pifs-deep-dive.html"
+          },
+          {
+            "slug": "freecodecamp",
+            "name": "freeCodeCamp",
+            "href": "freecodecamp-deep-dive.html"
+          },
+          {
+            "slug": "astrid-handbook",
+            "name": "astrid-handbook",
+            "href": "astrid-handbook-deep-dive.html"
+          },
+          {
+            "slug": "loop-engineering",
+            "name": "loop-engineering",
+            "href": "loop-engineering-deep-dive.html"
+          },
+          {
+            "slug": "CS-Fundamentals",
+            "name": "CS-Fundamentals",
+            "href": "CS-Fundamentals-deep-dive.html"
+          },
+          {
+            "slug": "cs249r_book",
+            "name": "cs249r_book",
+            "href": "cs249r_book-deep-dive.html"
+          },
+          {
+            "slug": "maths-cs-ai-compendium",
+            "name": "maths-cs-ai-compendium",
+            "href": "maths-cs-ai-compendium-deep-dive.html"
+          },
+          {
+            "slug": "Apollo-11",
+            "name": "Apollo-11",
+            "href": "Apollo-11-deep-dive.html"
+          },
+          {
+            "slug": "harness-engineering",
+            "name": "harness-engineering",
+            "href": "harness-engineering-deep-dive.html"
+          },
+          {
+            "slug": "Reverse-Engineering",
+            "name": "Reverse-Engineering",
+            "href": "Reverse-Engineering-deep-dive.html"
+          },
+          {
+            "slug": "fde-guidance-book",
+            "name": "FDE-Guidance-Book",
+            "href": "fde-guidance-book-deep-dive.html"
+          }
+        ]
+      },
+      {
+        "title": "영어 · 기타 학습",
+        "items": [
+          {
+            "slug": "Echo-Loop",
+            "name": "Echo-Loop",
+            "href": "Echo-Loop-deep-dive.html"
+          },
+          {
+            "slug": "english-level-up-tips",
+            "name": "english-level-up-tips",
+            "href": "english-level-up-tips-deep-dive.html"
+          },
+          {
+            "slug": "ebook-treasure-chest",
+            "name": "ebook-treasure-chest",
+            "href": "ebook-treasure-chest-deep-dive.html"
+          },
+          {
+            "slug": "ChinaTextbook",
+            "name": "ChinaTextbook",
+            "href": "ChinaTextbook-deep-dive.html"
+          },
+          {
+            "slug": "kana-dojo",
+            "name": "KanaDojo",
+            "href": "kana-dojo-deep-dive.html"
+          }
+        ]
+      }
+    ]
+  }
+]

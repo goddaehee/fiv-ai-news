@@ -5,7 +5,7 @@
   "dek": "Claude가 형식화한 페르마의 마지막 정리 증명이 Lean 4로 공개됐고, 에이전트가 외부 위키를 게시판처럼 쓴 사례와 Astra 한도 공개가 겹쳤습니다.",
   "tag": "연구",
   "briefMin": 3,
-  "readMin": 10,
+  "readMin": 15,
   "keywords": [
     "페르마",
     "정리",
@@ -49,6 +49,16 @@
       "id": "extras05",
       "headline": "그 밖의 신기능·신제품",
       "summary": "음악 생성 모델과 워크스테이션 키노트 소식이 올랐습니다."
+    },
+    {
+      "id": "proof",
+      "headline": "형식화 증명은 벤치 점수가 아니라 재현 패키지다",
+      "summary": "Lean 파일을 열 수 없으면 인용하지 마십시오."
+    },
+    {
+      "id": "board2",
+      "headline": "에이전트 게시판은 외부 쓰기 권한 사고에 가깝다",
+      "summary": "위키 편집 권한을 기본 allow로 두지 마십시오."
     }
   ],
   "keynums": [
@@ -71,6 +81,16 @@
       "val": "0.01달러",
       "lab": "이미지 편집 장당",
       "sub": "발표 가격"
+    },
+    {
+      "val": "재현",
+      "lab": "Lean 패키지",
+      "sub": "해시 필수"
+    },
+    {
+      "val": "ask",
+      "lab": "외부 쓰기",
+      "sub": "위키 금지"
     }
   ],
   "timeline": [
@@ -89,6 +109,10 @@
     {
       "t": "09-05 07시",
       "d": "웹 발행"
+    },
+    {
+      "t": "09-05 18시",
+      "d": "형식화 증명과 에이전트 게시판이 연구·보안 채널을 갈랐다"
     }
   ],
   "intro": "Claude가 형식화한 페르마의 마지막 정리 증명이 Lean 4로 공개됐고, 에이전트가 외부 위키를 게시판처럼 쓴 사례와 Astra 한도 공개가 겹쳤습니다.",
@@ -115,6 +139,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "Lean",
+          "url": "https://lean-lang.org/",
+          "kind": "doc"
         }
       ]
     },
@@ -139,6 +168,11 @@
         {
           "handle": "공식 자료",
           "url": "https://x.com/",
+          "kind": "talk"
+        },
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
           "kind": "talk"
         }
       ]
@@ -165,6 +199,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "OpenAI",
+          "url": "https://openai.com",
+          "kind": "doc"
         }
       ]
     },
@@ -190,6 +229,11 @@
           "handle": "공식 자료",
           "url": "https://x.com/",
           "kind": "talk"
+        },
+        {
+          "handle": "@arcprize",
+          "url": "https://x.com/arcprize",
+          "kind": "talk"
         }
       ]
     },
@@ -214,6 +258,100 @@
         {
           "handle": "공식 자료",
           "url": "https://x.com/",
+          "kind": "talk"
+        },
+        {
+          "handle": "@Blender",
+          "url": "https://x.com/Blender",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "proof",
+      "title": "6. Lean 증명은 파일을 열 수 있을 때만 인용한다",
+      "bullets": [
+        "형식화는 사람 해설이 아닙니다.",
+        "재현 스크립트와 커밋 해시가 본문입니다.",
+        "수학 성과 카피에 이름만 올리지 마십시오."
+      ],
+      "body": [
+        "증명이 공개됐다는 헤드라인은 쉽고, 빌드가 통과하는지를 보는 일은 지루합니다. 지루한 쪽이 사실입니다.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "인용 전에 재현 패키지 경로를 적으십시오.",
+      "tags": [
+        "Lean",
+        "재현"
+      ],
+      "sources": [
+        {
+          "handle": "Lean",
+          "url": "https://lean-lang.org/",
+          "kind": "doc"
+        },
+        {
+          "handle": "@arcprize",
+          "url": "https://x.com/arcprize",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "board2",
+      "title": "7. 외부 위키를 에이전트 메모장으로 쓰지 않는다",
+      "bullets": [
+        "게시판처럼 쓰는 순간 비밀이 외부에 쌓입니다.",
+        "쓰기 권한을 ask로 두십시오.",
+        "사내 이슈 트래커로 되돌립니다."
+      ],
+      "body": [
+        "에이전트가 기억할 곳이 필요하면 내부 저장소를 줍니다. 공개 위키는 로그가 아닙니다.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "외부 쓰기 도구를 기본 세션에서 빼십시오.",
+      "tags": [
+        "보안",
+        "에이전트"
+      ],
+      "sources": [
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "@AnthropicAI",
+          "url": "https://x.com/AnthropicAI",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "pacing",
+      "title": "8. 속도 조율 성명은 리스크 채널로만",
+      "bullets": [
+        "일정표가 없는 성명을 티켓으로 만들지 마십시오.",
+        "평가 체크리스트 한 칸만 추가합니다.",
+        "배포를 멈추지 않습니다."
+      ],
+      "body": [
+        "성명의 온도는 높고 실행 항목은 적습니다. 오늘의 할 일은 한도와 권한입니다.",
+        "숫자는 발표 화면 기준입니다. 사내 과제로 다시 재지 않으면 도입 근거로 쓰지 마십시오."
+      ],
+      "takeaway": "스프린트에 넣지 말고 리스크 메모로만 전달하십시오.",
+      "tags": [
+        "거버넌스"
+      ],
+      "sources": [
+        {
+          "handle": "@AnthropicAI",
+          "url": "https://x.com/AnthropicAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
           "kind": "talk"
         }
       ]
@@ -245,6 +383,16 @@
       "title": "데이터 잔류 위치를 조달 체크리스트 첫 칸에 둡니다",
       "body": "모델 카드보다 계약서의 보존 기간이 먼저입니다.",
       "via": "편집부"
+    },
+    {
+      "title": "에이전트 세션에서 공개 위키 쓰기를 뺍니다",
+      "body": "내부 이슈 트래커만 허용합니다.",
+      "via": "보안"
+    },
+    {
+      "title": "주당 200개 한도를 캘린더에 적습니다",
+      "body": "리셋 직후 잡을 몰지 마십시오.",
+      "via": "운영"
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크는 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다."

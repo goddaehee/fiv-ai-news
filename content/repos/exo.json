@@ -1,0 +1,127 @@
+{
+  "slug": "exo",
+  "name": "exo",
+  "repo": "exo-explore/exo",
+  "category": "local",
+  "subcategory": "클러스터 로컬 추론",
+  "stars": "30k+",
+  "license": "Apache-2.0",
+  "lang": "Python",
+  "updated": "2026-07-20",
+  "trendRank": 18,
+  "oneLiner": "여러 맥·GPU를 묶어 큰 모델을 로컬에서 돌리는 클러스터 추론.",
+  "analogyTitle": "사무실 맥 미니로 만드는 작은 데이터센터",
+  "analogy": "한 장의 VRAM에 안 들어가는 모델을, 책상 위 기기 여러 대에 나눠 올린다.",
+  "why": "클라우드에 못 올리는 가중치를 팀이 이미 가진 하드웨어로 돌리고 싶을 때.",
+  "pain": "단일 GPU 메모리 한도가 모델 선택을 가른다.",
+  "fix": "기기 발견 + 텐서/레이어 분할 + 로컬 API.",
+  "compare": [
+    {
+      "vs": "llama.cpp",
+      "point": "단일 머신. exo는 여러 대."
+    },
+    {
+      "vs": "vLLM multi-GPU",
+      "point": "서버 랙. exo는 이종 기기."
+    },
+    {
+      "vs": "Ollama",
+      "point": "한 데몬. exo는 클러스터."
+    }
+  ],
+  "stack": [
+    {
+      "name": "Python",
+      "role": "오케스트레이션",
+      "detail": "파티션"
+    },
+    {
+      "name": "기기 네트워크",
+      "role": "전송",
+      "detail": "로컬망"
+    },
+    {
+      "name": "추론 엔진",
+      "role": "실행",
+      "detail": "백엔드 위임"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Python",
+      "pct": "80%",
+      "bar": 80,
+      "note": "핵심"
+    },
+    {
+      "name": "Other",
+      "pct": "20%",
+      "bar": 20,
+      "note": "네이티브"
+    }
+  ],
+  "architecture": "노드 발견 ── 모델 파티션 ── 로컬 API\n     Mac / NVIDIA / 기타 ─┘",
+  "patterns": [
+    {
+      "name": "레이어 분할",
+      "body": "VRAM이 다른 기기를 섞는다."
+    },
+    {
+      "name": "로컬망만",
+      "body": "가중치가 밖으로 나가지 않게 한다."
+    },
+    {
+      "name": "벤치 먼저",
+      "body": "분할 오버헤드가 이득인지 잰다."
+    }
+  ],
+  "tree": "exo/\n├── exo/\n├── exo/inference/\n└── README.md",
+  "learn": [
+    {
+      "title": "두 대로 7B 이상",
+      "body": "단일 대비 토큰/s를 잰다."
+    },
+    {
+      "title": "방화벽·포트",
+      "body": "클러스터가 외부에 열리지 않게 한다."
+    }
+  ],
+  "requirements": [
+    {
+      "item": "기기",
+      "min": "2대+",
+      "rec": "같은 로컬망"
+    },
+    {
+      "item": "모델",
+      "min": "분할 가능 포맷",
+      "rec": "메모리 합"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "한 대 vs 두 대 지연",
+      "body": "오버헤드를 표로 남긴다."
+    },
+    {
+      "title": "클라우드 금지 문서를 로컬 클러스터로",
+      "body": "잔류 경로를 확인한다."
+    }
+  ],
+  "keywords": [
+    {
+      "word": "Partition",
+      "meaning": "모델을 여러 기기에 나누기"
+    },
+    {
+      "word": "Edge cluster",
+      "meaning": "사무실 기기 묶음"
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/exo-explore/exo"
+    }
+  ]
+}
