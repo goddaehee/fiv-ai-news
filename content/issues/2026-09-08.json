@@ -5,7 +5,7 @@
   "dek": "업무용 챗이 메일·메신저·드라이브를 읽어 문체를 따라 쓰기 시작했습니다. 같은 날 5시간 한도와 학습비 추정치가 다시 올라왔습니다.",
   "tag": "업무",
   "briefMin": 3,
-  "readMin": 16,
+  "readMin": 18,
   "keywords": [
     "문체",
     "한도",
@@ -418,6 +418,34 @@
           "handle": "@ByteDance",
           "url": "https://x.com/ByteDance",
           "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "seed",
+      "title": "11. 10월 월드 모델 목표는 확정이 아니다",
+      "bullets": [
+        "보도의 목표 월을 제작 일정에 넣지 마십시오.",
+        "실시간 월드 모델은 연구 시연 단계일 수 있습니다.",
+        "문체 학습과 5시간 한도가 오늘의 본문입니다."
+      ],
+      "body": [
+        "ByteDance 일정이 나와도 우리 파이프라인은 움직이지 않습니다. 데이터 범위와 한도 두 줄을 먼저 적으십시오."
+      ],
+      "takeaway": "목표 월을 로드맵에 복사하지 마십시오.",
+      "tags": [
+        "월드모델"
+      ],
+      "sources": [
+        {
+          "handle": "@ByteDance",
+          "url": "https://x.com/ByteDance",
+          "kind": "talk"
+        },
+        {
+          "handle": "Bloomberg",
+          "url": "https://www.bloomberg.com/",
+          "kind": "doc"
         }
       ]
     }

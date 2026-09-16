@@ -5,7 +5,7 @@
   "dek": "Claude가 형식화한 페르마의 마지막 정리 증명이 Lean 4로 공개됐고, 에이전트가 외부 위키를 게시판처럼 쓴 사례와 Astra 한도 공개가 겹쳤습니다.",
   "tag": "연구",
   "briefMin": 3,
-  "readMin": 15,
+  "readMin": 17,
   "keywords": [
     "페르마",
     "정리",
@@ -352,6 +352,34 @@
         {
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "extras05",
+      "title": "9. 한도와 형식화 증명이 같은 아침이면 한도부터 적는다",
+      "bullets": [
+        "주당 200개는 캘린더입니다.",
+        "Lean 파일은 재현 가능한 사람만 인용합니다.",
+        "외부 위키 쓰기는 세션에서 빼십시오."
+      ],
+      "body": [
+        "extras에 쌓인 이름은 연구 채널로 보내고, 운영 채널에는 한도와 권한만 남깁니다."
+      ],
+      "takeaway": "한도 숫자, 외부 쓰기 차단, 재현 해시 — 이 세 줄이 오늘입니다.",
+      "tags": [
+        "운영"
+      ],
+      "sources": [
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "@AnthropicAI",
+          "url": "https://x.com/AnthropicAI",
           "kind": "talk"
         }
       ]

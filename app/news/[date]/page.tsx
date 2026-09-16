@@ -14,6 +14,12 @@ export async function generateMetadata({ params }: { params: Promise<{ date: str
   return {
     title: `${issue.heroline} — ${issue.date} | 5분 AI 뉴스`,
     description: issue.dek,
+    openGraph: {
+      title: `${issue.heroline} — ${issue.date}`,
+      description: issue.dek,
+      type: "article",
+      locale: "ko_KR",
+    },
   };
 }
 

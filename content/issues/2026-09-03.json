@@ -5,7 +5,7 @@
   "dek": "가격을 유지한 채 모델이 다시 올라왔고, 몇 시간 간격으로 코딩 리더보드 1위가 바뀌었습니다.",
   "tag": "모델",
   "briefMin": 3,
-  "readMin": 14,
+  "readMin": 17,
   "keywords": [
     "Gemini",
     "3.8",
@@ -353,6 +353,35 @@
           "handle": "@MicrosoftAI",
           "url": "https://x.com/MicrosoftAI",
           "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "extras03",
+      "title": "9. 같은 날 리더보드가 바뀌면 이름을 외우지 않는다",
+      "bullets": [
+        "Flash와 Spark가 겹친 날은 표가 하루짜리입니다.",
+        "보안 변형 라벨만 보고 권한을 그대로 두지 마십시오.",
+        "청구서의 출력 길이를 먼저 봅니다."
+      ],
+      "body": [
+        "신기능 목록은 길었습니다. 오늘 바꿀 것은 조달 문서의 모델 ID 고정과 보안 파일럿의 도구 한 단계 축소입니다."
+      ],
+      "takeaway": "아레나 순위를 계약에 넣지 말고, 출력 길이를 청구서 칸에 추가하십시오.",
+      "tags": [
+        "메모",
+        "조달"
+      ],
+      "sources": [
+        {
+          "handle": "@Google",
+          "url": "https://x.com/Google",
+          "kind": "talk"
+        },
+        {
+          "handle": "Artificial Analysis",
+          "url": "https://artificialanalysis.ai/",
+          "kind": "doc"
         }
       ]
     }

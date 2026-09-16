@@ -204,6 +204,11 @@
           "handle": "@AnthropicAI",
           "url": "https://x.com/AnthropicAI",
           "kind": "talk"
+        },
+        {
+          "handle": "Claude Help",
+          "url": "https://support.claude.com/",
+          "kind": "doc"
         }
       ]
     },
@@ -234,6 +239,11 @@
         {
           "handle": "@MicrosoftAI",
           "url": "https://x.com/MicrosoftAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "@Microsoft",
+          "url": "https://x.com/Microsoft",
           "kind": "talk"
         }
       ]
@@ -328,6 +338,11 @@
           "handle": "arXiv 2609.15818",
           "url": "https://arxiv.org/abs/2609.15818",
           "kind": "doc"
+        },
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/",
+          "kind": "doc"
         }
       ]
     },
@@ -358,6 +373,11 @@
         {
           "handle": "@theinformation",
           "url": "https://x.com/theinformation",
+          "kind": "talk"
+        },
+        {
+          "handle": "@Palantir",
+          "url": "https://x.com/PalantirTech",
           "kind": "talk"
         }
       ]
@@ -390,6 +410,11 @@
           "handle": "Anthropic",
           "url": "https://www.anthropic.com/",
           "kind": "doc"
+        },
+        {
+          "handle": "Reuters",
+          "url": "https://www.reuters.com/",
+          "kind": "doc"
         }
       ]
     },
@@ -420,6 +445,11 @@
         {
           "handle": "Artificial Analysis",
           "url": "https://artificialanalysis.ai/",
+          "kind": "doc"
+        },
+        {
+          "handle": "NIPA",
+          "url": "https://www.nipa.kr/",
           "kind": "doc"
         }
       ]
@@ -452,6 +482,11 @@
           "handle": "@intern_lm",
           "url": "https://x.com/intern_lm/status/2099425184587370976",
           "kind": "rt"
+        },
+        {
+          "handle": "@huggingface",
+          "url": "https://x.com/huggingface",
+          "kind": "talk"
         }
       ]
     }

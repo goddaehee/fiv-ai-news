@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Issue, SourceKind } from "@/data/types";
 import { formatDotWeek } from "@/lib/utils";
+import { markRead } from "@/lib/saved";
 import { SubscribeForm } from "@/components/home/SubscribeForm";
 
 const KIND: Record<SourceKind, string> = {
@@ -12,6 +13,18 @@ const KIND: Record<SourceKind, string> = {
   rt: "🔁",
   doc: "📄",
 };
+
+const KIND_LABEL: Record<SourceKind, string> = {
+  hot: "널리 퍼진 글",
+  talk: "댓글이 많이 붙은 글",
+  rt: "리트윗 비중이 높은 글",
+  doc: "공식 문서",
+};
+
+function shortTitle(title: string) {
+  const t = title.replace(/^\d+\.\s*/, "");
+  return t.length > 22 ? `${t.slice(0, 20)}…` : t;
+}
 
 export function ArticleView({
   issue,
@@ -27,6 +40,7 @@ export function ArticleView({
   const analysisIds = new Set(issue.analysis.map((a) => a.id));
 
   useEffect(() => {
+    markRead(issue.date);
     const onScroll = () => {
       const el = document.documentElement;
       const max = el.scrollHeight - el.clientHeight;
@@ -44,6 +58,17 @@ export function ArticleView({
         오늘의 AI 브리핑 · <time dateTime={issue.date}>{formatDotWeek(issue.date)}</time>
       </p>
       <h1>{issue.heroline}</h1>
+
+      <nav className="issue-toc" aria-label="이 호 목차">
+        <a href="#brief">5분 브리핑</a>
+        {issue.analysis.map((sec, idx) => (
+          <a key={sec.id} href={`#sec-${sec.id}`}>
+            {idx + 1}. {shortTitle(sec.title)}
+          </a>
+        ))}
+        <a href="#mood">감정·온도</a>
+        <a href="#tips">실무 팁</a>
+      </nav>
 
       <section className="news-brief" id="brief" aria-labelledby="brief-heading">
         <div className="brief-top">
@@ -145,7 +170,13 @@ export function ArticleView({
           <p className="src-row">
             <span className="src-lab">출처 {sec.sources.length}</span>
             {sec.sources.map((s) => (
-              <a key={s.url + s.handle} href={s.url} target="_blank" rel="noopener noreferrer">
+              <a
+                key={s.url + s.handle}
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={KIND_LABEL[s.kind]}
+              >
                 {KIND[s.kind]} {s.handle}
               </a>
             ))}
@@ -156,6 +187,16 @@ export function ArticleView({
 
       <section className="article-sec" id="mood">
         <h2>오늘의 감정·온도</h2>
+        <div className="gauge-track" aria-hidden="true">
+          <span className="on" />
+          <span className="on" />
+          <span className="on" />
+          <span className="on" />
+        </div>
+        <div className="gauge-cap">
+          <span>차분</span>
+          <span>과열</span>
+        </div>
         <div className="gauge-rows">
           <div className="grow">
             <span className="gdot" style={{ background: "#4773c0" }} />
@@ -187,7 +228,7 @@ export function ArticleView({
       <hr className="hr" />
 
       <section className="article-sec" id="tips">
-        <h2>오늘의 실무 팁</h2>
+        <h2>오늘의 실무 팁 — 쉽게 풀어 쓴 사용법 {issue.tips.length}가지</h2>
         {issue.tips.map((tip, i) => (
           <p key={tip.title}>
             <strong>
@@ -205,7 +246,7 @@ export function ArticleView({
       </p>
       <p>{issue.method}</p>
       <p>
-        <strong>라벨 가이드</strong> — 📄 공식 문서 · 🔥 널리 퍼진 글 · 💬 댓글이 붙은 글 · 🔁 재확산 비중이 높은 글
+        <strong>라벨 가이드</strong> — 📄 공식 문서 · 🔥 널리 퍼진 글 · 💬 댓글이 많이 붙은 글 · 🔁 리트윗 비중이 높은 글
       </p>
 
       <aside className="reader-subscribe" id="subscribe">

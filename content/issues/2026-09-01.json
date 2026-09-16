@@ -5,7 +5,7 @@
   "dek": "EU가 ChatGPT를 초대형 검색엔진으로 분류하는 움직임과, 구독 배수 문구가 시간 단위로 환산된 표, 법률 특화 모델 소식이 겹쳤습니다.",
   "tag": "규제",
   "briefMin": 3,
-  "readMin": 14,
+  "readMin": 17,
   "keywords": [
     "EU",
     "ChatGPT",
@@ -356,6 +356,35 @@
           "handle": "Hugging Face",
           "url": "https://huggingface.co",
           "kind": "doc"
+        },
+        {
+          "handle": "@AnthropicAI",
+          "url": "https://x.com/AnthropicAI",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "extras01",
+      "title": "9. 그 밖의 신기능·신제품은 조달 칸에만 적는다",
+      "bullets": [
+        "당일 실행이 아니면 헤드라인을 백로그에 넣지 마십시오.",
+        "법률 카드·좌석 배수·분류 보도가 오늘의 본문입니다.",
+        "extras는 북마크입니다."
+      ],
+      "body": [
+        "검색엔진 분류와 배수 표만 오늘 손이 갑니다. 나머지는 주간 메모로 충분합니다.",
+        "신제품 이름을 조달 리스트에 바로 올리면 리전이 바뀐 다음 주에 다시 고칩니다."
+      ],
+      "takeaway": "extras는 북마크, 체크리스트는 분류 한 줄·배수 단위·법률 잔류입니다.",
+      "tags": [
+        "메모"
+      ],
+      "sources": [
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
         },
         {
           "handle": "@AnthropicAI",

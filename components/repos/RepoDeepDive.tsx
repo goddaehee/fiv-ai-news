@@ -1,11 +1,13 @@
 import Link from "next/link";
 import type { Repo } from "@/data/types";
+import { SaveRepoButton } from "./SaveRepoButton";
 
 export function RepoDeepDive({ repo }: { repo: Repo }) {
   return (
     <article className="dd-wrap">
       <p className="kicker">
         TRENDSHIFT #{repo.trendRank} 딥다이브 · {repo.updated} 분석
+        <SaveRepoButton slug={repo.slug} />
       </p>
       <h1>
         {repo.name} 딥다이브 — {repo.oneLiner}

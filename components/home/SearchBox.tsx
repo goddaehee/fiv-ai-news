@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState, type KeyboardEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState, type KeyboardEvent } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type NewsHit = {
   date: string;
@@ -24,6 +24,13 @@ export function SearchBox({ newsIndex, repoIndex }: { newsIndex: NewsHit[]; repo
   const [q, setQ] = useState("");
   const [chips, setChips] = useState<string[]>([]);
   const router = useRouter();
+  const params = useSearchParams();
+
+  useEffect(() => {
+    const fromUrl = params.get("q");
+    if (fromUrl && fromUrl.trim().length >= 2) setQ(fromUrl.trim());
+  }, [params]);
+
   const query = [...chips, q.trim()].filter(Boolean).join(" ");
 
   const results = useMemo(() => {

@@ -5,7 +5,7 @@
   "dek": "오픈웨이트 Flash가 캐시 용량과 단가를 앞세웠고, 코딩 벤치 1위와 수학 성과 의혹이 같은 아침에 올랐습니다. 점수는 조건과 같이 읽습니다.",
   "tag": "모델",
   "briefMin": 3,
-  "readMin": 16,
+  "readMin": 18,
   "keywords": [
     "Flash",
     "KV캐시",
@@ -422,6 +422,35 @@
       "takeaway": "extras는 북마크, 체크리스트는 루프·버전·카피 세 칸입니다.",
       "tags": [
         "메모"
+      ],
+      "sources": [
+        {
+          "handle": "@MetaAI",
+          "url": "https://x.com/MetaAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "muse",
+      "title": "11. 앱스토어 2위는 기업 도입 신호가 아니다",
+      "bullets": [
+        "소비자 트래픽과 업무 에이전트는 다른 층입니다.",
+        "무료 순위는 권한 검토를 생략하지 않습니다.",
+        "Flash 루프 실험이 오늘의 본문입니다."
+      ],
+      "body": [
+        "순위 헤드라인은 클릭을 만듭니다. 사내 기본 앱 목록에 올리지 마십시오."
+      ],
+      "takeaway": "소비자 앱 순위를 조달 근거로 쓰지 마십시오.",
+      "tags": [
+        "소비자",
+        "Muse"
       ],
       "sources": [
         {

@@ -1,58 +1,163 @@
-"use client";
-
 import { useEffect, useRef } from "react";
 
+const DIRECTIONS = ["up-left", "up", "up-right", "left", "center", "right", "down-left", "down", "down-right"] as const;
+const REACTIONS = ["blink", "heart", "sparkle", "surprised", "wink", "bashful", "sleepy", "dizzy", "delighted"] as const;
+const CLOCKWISE = ["right", "down-right", "down", "down-left", "left", "up-left", "up", "up-right"] as const;
+const SECTOR = (Math.PI * 2) / CLOCKWISE.length;
+const HYSTERESIS = 0.12;
+const PAYOFFS = ["heart", "sparkle", "delighted"] as const;
+
+function cell(index: number) {
+  return `${(index % 3) * 50}% ${Math.floor(index / 3) * 50}%`;
+}
+
+function wrap(angle: number) {
+  return Math.atan2(Math.sin(angle), Math.cos(angle));
+}
+
+function matches(query: string) {
+  return typeof window !== "undefined" && window.matchMedia?.(query).matches;
+}
+
 export function Mascot() {
-  const left = useRef<SVGCircleElement>(null);
-  const right = useRef<SVGCircleElement>(null);
-  const wrap = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const squashRef = useRef<HTMLSpanElement>(null);
+  const dirRef = useRef<HTMLSpanElement>(null);
+  const reactRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const onMove = (e: PointerEvent) => {
-      const el = wrap.current;
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const cy = r.top + r.height / 2;
-      const dx = (e.clientX - cx) / 40;
-      const dy = (e.clientY - cy) / 40;
-      const x = Math.max(-3.2, Math.min(3.2, dx));
-      const y = Math.max(-2.4, Math.min(2.4, dy));
-      left.current?.setAttribute("transform", `translate(${x} ${y})`);
-      right.current?.setAttribute("transform", `translate(${x} ${y})`);
+    const button = buttonRef.current;
+    const squash = squashRef.current;
+    const dirLayer = dirRef.current;
+    const reactLayer = reactRef.current;
+    if (!button || !squash || !dirLayer || !reactLayer) return;
+
+    let direction: (typeof DIRECTIONS)[number] = "center";
+    let reaction: (typeof REACTIONS)[number] | null = null;
+    const timers: number[] = [];
+    const boops = { count: 0, at: 0 };
+
+    const render = () => {
+      dirLayer.style.backgroundPosition = cell(DIRECTIONS.indexOf(direction));
+      dirLayer.style.opacity = reaction ? "0" : "1";
+      reactLayer.style.backgroundPosition = cell(REACTIONS.indexOf(reaction || "blink"));
+      reactLayer.style.opacity = reaction ? "1" : "0";
     };
-    window.addEventListener("pointermove", onMove);
-    return () => window.removeEventListener("pointermove", onMove);
+
+    const setDirection = (next: (typeof DIRECTIONS)[number]) => {
+      if (next === direction) return;
+      direction = next;
+      render();
+    };
+
+    const setReaction = (next: (typeof REACTIONS)[number] | null) => {
+      reaction = next;
+      render();
+    };
+
+    let sector = -1;
+    let pointer: { x: number; y: number } | null = null;
+    let frame = 0;
+
+    const aim = () => {
+      frame = 0;
+      if (!pointer) return;
+      const box = button.getBoundingClientRect();
+      const dx = pointer.x - (box.left + box.width / 2);
+      const dy = pointer.y - (box.top + box.height / 2);
+      if (Math.hypot(dx, dy) < box.width / 2) {
+        sector = -1;
+        setDirection("center");
+        return;
+      }
+      const angle = Math.atan2(dy, dx);
+      if (sector !== -1 && Math.abs(wrap(angle - sector * SECTOR)) < SECTOR / 2 + HYSTERESIS) {
+        return;
+      }
+      sector = (Math.round(angle / SECTOR) + CLOCKWISE.length) % CLOCKWISE.length;
+      setDirection(CLOCKWISE[sector]);
+    };
+
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(aim);
+    };
+
+    const onMove = (event: PointerEvent) => {
+      pointer = { x: event.clientX, y: event.clientY };
+      schedule();
+    };
+
+    const hoverOk = matches("(hover: hover) and (pointer: fine)");
+    if (hoverOk) {
+      window.addEventListener("pointermove", onMove, { passive: true });
+      window.addEventListener("scroll", schedule, { passive: true });
+    }
+
+    const onClick = () => {
+      timers.forEach((id) => window.clearTimeout(id));
+      timers.length = 0;
+      const later = (ms: number, next: (typeof REACTIONS)[number] | null) => {
+        timers.push(window.setTimeout(() => setReaction(next), ms));
+      };
+      const now = Date.now();
+      boops.count = now - boops.at < 1600 ? boops.count + 1 : 1;
+      boops.at = now;
+      if (boops.count >= 4) {
+        boops.count = 0;
+        setReaction("dizzy");
+        later(1100, null);
+      } else {
+        setReaction("blink");
+        later(120, PAYOFFS[(boops.count - 1) % PAYOFFS.length]);
+        later(560, null);
+      }
+      if (matches("(prefers-reduced-motion: reduce)") || !squash.animate) return;
+      squash.animate(
+        [
+          { transform: "scale(1, 1)", easing: "ease-in" },
+          { transform: "scale(1.10, 0.86)", offset: 0.18, easing: "ease-out" },
+          { transform: "scale(0.95, 1.08)", offset: 0.45, easing: "ease-in-out" },
+          { transform: "scale(1.03, 0.97)", offset: 0.72, easing: "ease-in-out" },
+          { transform: "scale(1, 1)" },
+        ],
+        { duration: 420, easing: "linear" },
+      );
+    };
+
+    button.addEventListener("click", onClick);
+    render();
+
+    return () => {
+      timers.forEach((id) => window.clearTimeout(id));
+      button.removeEventListener("click", onClick);
+      if (hoverOk) {
+        window.removeEventListener("pointermove", onMove);
+        window.removeEventListener("scroll", schedule);
+      }
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
     <button
-      ref={wrap}
+      ref={buttonRef}
       type="button"
       className="page-mascot"
-      aria-label="뉴스 로봇"
-      onClick={(e) => {
-        const svg = e.currentTarget.querySelector("svg");
-        if (!svg) return;
-        svg.animate(
-          [
-            { transform: "scale(1,1)" },
-            { transform: "scale(1.08,0.88)" },
-            { transform: "scale(1,1)" },
-          ],
-          { duration: 280, easing: "cubic-bezier(0.22,1,0.36,1)" },
-        );
-      }}
+      data-page-mascot
+      aria-label="뉴스 로봇 콕 찌르기"
     >
-      <svg viewBox="0 0 72 72" aria-hidden="true">
-        <rect x="10" y="16" width="52" height="44" rx="10" fill="var(--color-ink)" />
-        <rect x="16" y="24" width="40" height="22" rx="6" fill="var(--color-bg)" />
-        <circle ref={left} cx="28" cy="35" r="4.2" fill="var(--color-accent-ink)" />
-        <circle ref={right} cx="44" cy="35" r="4.2" fill="var(--color-accent-ink)" />
-        <rect x="30" y="50" width="12" height="3" fill="var(--color-bg)" opacity="0.85" />
-        <circle cx="36" cy="12" r="3.2" fill="var(--color-accent-ink)" />
-        <rect x="35" y="12" width="2" height="6" fill="var(--color-ink)" />
-      </svg>
+      <span className="pm-squash" ref={squashRef}>
+        <span
+          ref={dirRef}
+          className="pm-layer pm-dir"
+          style={{ backgroundImage: "url(/assets/mascot/newsbot-directions.webp)" }}
+        />
+        <span
+          ref={reactRef}
+          className="pm-layer pm-react"
+          style={{ backgroundImage: "url(/assets/mascot/newsbot-reactions.webp)" }}
+        />
+      </span>
     </button>
   );
 }

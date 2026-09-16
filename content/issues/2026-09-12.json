@@ -5,7 +5,7 @@
   "dek": "154쪽 보고서는 국가·산업 단위 사례를 적시했고, 같은 날 수학자 선언과 에이전트 API 베타가 올라왔습니다. 권한 점검표로 읽습니다.",
   "tag": "보안",
   "briefMin": 3,
-  "readMin": 17,
+  "readMin": 18,
   "keywords": [
     "오용",
     "증류",
@@ -419,6 +419,35 @@
           "handle": "@AnthropicAI",
           "url": "https://x.com/AnthropicAI",
           "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "img",
+      "title": "11. 이미지 아레나 1·2위는 브랜드 검수가 점수다",
+      "bullets": [
+        "자체 아레나 점수를 캠페인 KPI로 쓰지 마십시오.",
+        "유사성·일관성은 가이드와 같이 봅니다.",
+        "오용 보고서와 게이트웨이 로그가 오늘의 본문입니다."
+      ],
+      "body": [
+        "그림이 좋아져도 시크릿이 로그에 남아 있으면 사고가 먼저입니다."
+      ],
+      "takeaway": "디자인 팀 북마크만 하고, 키 마스킹을 먼저 하십시오.",
+      "tags": [
+        "이미지",
+        "검수"
+      ],
+      "sources": [
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "Artificial Analysis",
+          "url": "https://artificialanalysis.ai/",
+          "kind": "doc"
         }
       ]
     }

@@ -5,7 +5,7 @@
   "dek": "Astra가 예상보다 빨리 Plus·Business까지 열렸고, Claude Max 주간 한도 초기화와 지능 지수 v4.2가 같은 날에 겹쳤습니다.",
   "tag": "모델",
   "briefMin": 3,
-  "readMin": 15,
+  "readMin": 18,
   "keywords": [
     "GPT-6",
     "Astra",
@@ -358,6 +358,63 @@
         {
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "wiki",
+      "title": "9. 위키 사건을 정렬 실패로 분류해도 쓰기는 닫는다",
+      "bullets": [
+        "분류 이름이 바뀌어도 외부 게시판은 비밀 저장소가 됩니다.",
+        "사고 회고와 도구 권한은 다른 티켓입니다.",
+        "공개 위키 allow를 기본값에서 빼십시오."
+      ],
+      "body": [
+        "정렬 실패라는 라벨은 연구 팀의 언어입니다. 우리 쪽 언어는 쓰기 권한 ask입니다."
+      ],
+      "takeaway": "외부 쓰기 도구를 기본 세션에서 제거하십시오.",
+      "tags": [
+        "보안",
+        "정렬"
+      ],
+      "sources": [
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "OpenAI",
+          "url": "https://openai.com",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "extras06",
+      "title": "10. 개방 이튿날 extras는 회귀 로그 뒤에 온다",
+      "bullets": [
+        "Plus 개방과 한도 초기화가 본문입니다.",
+        "벤치가 갈리면 핀을 나눕니다.",
+        "새 이름 목록은 주간 메모입니다."
+      ],
+      "body": [
+        "extras를 읽고 모델을 바꾸지 마십시오. 실패 20개와 압축 인덱스 10줄이 먼저입니다."
+      ],
+      "takeaway": "회귀와 마스킹을 끝낸 뒤에 extras를 북마크하십시오.",
+      "tags": [
+        "메모"
+      ],
+      "sources": [
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "@AnthropicAI",
+          "url": "https://x.com/AnthropicAI",
           "kind": "talk"
         }
       ]

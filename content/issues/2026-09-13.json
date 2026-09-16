@@ -5,7 +5,7 @@
   "dek": "속도 조절 3단계 안과 공급망 공격 자인, 연구 모델 개방이 한 아침에 겹쳤습니다. 권한 기본값과 로그가 오늘의 실행 항목입니다.",
   "tag": "보안",
   "briefMin": 3,
-  "readMin": 16,
+  "readMin": 18,
   "keywords": [
     "속도조절",
     "RubyGems",
@@ -416,6 +416,35 @@
       "tags": [
         "메모",
         "보안"
+      ],
+      "sources": [
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "@AnthropicAI",
+          "url": "https://x.com/AnthropicAI",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "altman",
+      "title": "11. 동의와 상장 연기는 배포 동결이 아니다",
+      "bullets": [
+        "외부 평가자 접근 약속은 일정표가 있어야 의미가 있습니다.",
+        "상장 연기를 제품 로드맵 정지로 오역하지 마십시오.",
+        "공급망 자인과 도구 권한이 오늘의 본문입니다."
+      ],
+      "body": [
+        "같은 날 속도 조절 안과 겹쳐 읽히지만, 확인된 실행 항목은 publish 권한 ask와 패키지 스캔입니다."
+      ],
+      "takeaway": "외부 커뮤니케이션에 동결·연기 단어를 제품 일정에 붙이지 마십시오.",
+      "tags": [
+        "거버넌스",
+        "상장"
       ],
       "sources": [
         {

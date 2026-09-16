@@ -5,7 +5,7 @@
   "dek": "내부 모델로 난제 증명을 냈다는 발표에 데이터 출처 논란이 붙었고, 유전체 변이 지도와 유럽 대형 투자 소식이 같은 날에 겹쳤습니다.",
   "tag": "연구",
   "briefMin": 3,
-  "readMin": 15,
+  "readMin": 17,
   "keywords": [
     "OpenAI",
     "특이점",
@@ -59,11 +59,6 @@
       "id": "dna",
       "headline": "유전체 예측 지도는 임상 결정이 아니다",
       "summary": "브라우저 데모를 진료 도구로 공지하지 마십시오."
-    },
-    {
-      "id": "fund",
-      "headline": "30억 유로 보도는 확정 실적이 아니다",
-      "summary": "파트너십 가정 칸에만 둡니다."
     }
   ],
   "keynums": [
@@ -333,7 +328,7 @@
       ]
     },
     {
-      "id": "fund",
+      "id": "mistral",
       "title": "8. 30억 유로는 보도 칸이다",
       "bullets": [
         "주도 투자자 보도와 종결은 다릅니다.",
@@ -359,6 +354,34 @@
           "handle": "Reuters",
           "url": "https://www.reuters.com/",
           "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "extras09",
+      "title": "9. 증명·지도·투자 아래 extras는 관찰이다",
+      "bullets": [
+        "이미지 연속 편집은 브랜드 검수와 같이 봅니다.",
+        "초당 토큰 숫자는 자체 측정입니다.",
+        "보안 VM 밖 배포를 기본값으로 두지 마십시오."
+      ],
+      "body": [
+        "오늘의 실행은 출처 보류와 임상 채널 차단입니다. extras 이름은 연구 노트에만 남깁니다."
+      ],
+      "takeaway": "대외 문구에 증명과 임상 지도를 쓰지 마십시오.",
+      "tags": [
+        "메모"
+      ],
+      "sources": [
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "@GoogleDeepMind",
+          "url": "https://x.com/GoogleDeepMind",
+          "kind": "talk"
         }
       ]
     }

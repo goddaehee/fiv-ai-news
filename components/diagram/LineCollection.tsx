@@ -5,6 +5,9 @@ const LINES = [
       { id: "straight", title: "직선", body: "계층이 분명하고 방향이 하나일 때.", d: "M 16 40 H 184" },
       { id: "elbow", title: "꺾인 선", body: "격자에 맞춰 피할 때. 직교 다이어그램의 기본.", d: "M 16 28 H 100 V 52 H 184" },
       { id: "curve", title: "곡선", body: "관계의 흐름을 부드럽게 보여줄 때.", d: "M 16 48 C 70 8, 130 72, 184 24" },
+      { id: "s", title: "S자", body: "높이가 다른 두 상자를 한 번에 이을 때.", d: "M 16 56 C 70 56, 70 24, 184 24" },
+      { id: "loop", title: "루프", body: "자기 호출·재시도. 남용하면 장식이 된다.", d: "M 40 48 C 40 16, 160 16, 160 48" },
+      { id: "fork", title: "갈래", body: "한 입력이 두 경로로 나뉠 때. 분기점을 명시한다.", d: "M 16 40 H 90 M 90 40 L 184 20 M 90 40 L 184 60" },
     ],
   },
   {
@@ -13,6 +16,9 @@ const LINES = [
       { id: "solid", title: "실선", body: "확정된 의존, 실제 호출.", d: "M 16 40 H 184", dash: "" },
       { id: "dash", title: "점선", body: "선택·예정·약한 결합.", d: "M 16 40 H 184", dash: "6 6" },
       { id: "thick", title: "굵은 선", body: "주 경로. 한 장면에 하나면 충분하다.", d: "M 16 40 H 184", width: 4 },
+      { id: "thin", title: "가는 선", body: "보조 경로, 로그·메트릭.", d: "M 16 40 H 184", width: 1 },
+      { id: "dot", title: "점선 촘촘", body: "데이터 복사, 캐시 히트.", d: "M 16 40 H 184", dash: "2 4" },
+      { id: "double", title: "이중선", body: "양방향 합의. 드물게 쓴다.", d: "M 16 34 H 184 M 16 46 H 184" },
     ],
   },
   {
@@ -21,6 +27,9 @@ const LINES = [
       { id: "avoid", title: "장애물 우회", body: "노드를 뚫지 않는다. 먼저 칸을 비운다.", d: "M 16 56 H 70 V 20 H 184" },
       { id: "bundle", title: "묶음", body: "같은 방향 선은 간격을 맞춰 나란히.", d: "M 16 28 H 184 M 16 40 H 184 M 16 52 H 184" },
       { id: "cross", title: "교차 점프", body: "어쩔 수 없이 겹치면 한 쪽만 띄운다.", d: "M 16 40 H 184 M 100 16 V 64" },
+      { id: "lane", title: "레인", body: "계층을 가로지르지 않고 같은 층에서 돈다.", d: "M 16 24 H 184 M 16 56 H 184" },
+      { id: "back", title: "역방향", body: "콜백·이벤트. 순방향과 높이를 달리한다.", d: "M 184 28 H 16" },
+      { id: "bridge", title: "브리지", body: "레이어를 건너뛸 때만. 이유를 옆에 적는다.", d: "M 16 56 C 16 8, 184 8, 184 56" },
     ],
   },
   {
@@ -29,6 +38,9 @@ const LINES = [
       { id: "flow", title: "흐름", body: "데이터가 실제로 이동할 때만 움직인다.", d: "M 16 40 H 184", animate: true },
       { id: "pulse", title: "강조", body: "에러·병목 한 줄만 깜빡이게.", d: "M 16 40 H 184", pulse: true },
       { id: "still", title: "정지", body: "구조 설명은 움직이지 않는 편이 읽힌다.", d: "M 16 40 H 184" },
+      { id: "slow", title: "느린 흐름", body: "배치·큐. 실시간처럼 보이지 않게.", d: "M 16 40 H 184", animate: true },
+      { id: "alert", title: "경고 맥박", body: "실패 경로만 색을 바꾸고 맥박을 준다.", d: "M 16 40 H 184", pulse: true },
+      { id: "hold", title: "대기", body: "승인·휴먼 인 더 루프. 움직임 없이 점선.", d: "M 16 40 H 184", dash: "8 6" },
     ],
   },
 ] as const;
