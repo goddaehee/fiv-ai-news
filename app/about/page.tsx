@@ -111,8 +111,10 @@ export default function AboutPage() {
       </p>
       <h2>검색·AI 도구로 읽기</h2>
       <p>
-        기사의 발행일과 원문 링크를 함께 확인해 주세요. <a href="/feed.xml">RSS</a>,{" "}
-        <a href="/sitemap.xml">사이트맵</a>, 선택적 안내문인 <a href="/llms.txt">llms.txt</a>를 제공합니다.
+        검색창은 제목뿐 아니라 기사 본문 섹션과 레포 카탈로그까지 찾아 해당 대목으로 바로 이동합니다. WebMCP를 지원하는
+        브라우저에서는 검색·최신 뉴스 조회·본문 읽기를 도구로 쓸 수 있게 같은 데이터를{" "}
+        <a href="/llms.txt">llms.txt</a>와 <a href="/feed.xml">RSS</a>로도 열어 두었습니다. 실험적 기능이며 구독·해지·메일
+        발송 권한은 없습니다.
       </p>
     </main>
   );

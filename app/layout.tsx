@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "5분 AI 뉴스",
   },
+  other: {
+    "application-name": "5분 AI 뉴스",
+  },
   alternates: {
     types: {
       "application/rss+xml": "/feed.xml",
@@ -34,6 +37,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Script id="theme-boot" strategy="beforeInteractive">
           {THEME_BOOT}
         </Script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "5분 AI 뉴스",
+              alternateName: "5 Min AI News",
+              url: "https://fiv-ai-news.vercel.app/",
+              inLanguage: "ko-KR",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: "https://fiv-ai-news.vercel.app/?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
         <SiteShell latestDate={latest.date} latestTitle={latest.title} latestHeroline={latest.heroline}>
           {children}
         </SiteShell>

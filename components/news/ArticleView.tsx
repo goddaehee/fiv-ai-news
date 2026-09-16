@@ -41,14 +41,24 @@ export function ArticleView({
 
   useEffect(() => {
     markRead(issue.date);
+    const jump = () => {
+      const id = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+      if (!id) return;
+      document.getElementById(id)?.scrollIntoView({ block: "start" });
+    };
     const onScroll = () => {
       const el = document.documentElement;
       const max = el.scrollHeight - el.clientHeight;
       setProgress(max > 0 ? (el.scrollTop / max) * 100 : 0);
     };
     onScroll();
+    jump();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("hashchange", jump);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("hashchange", jump);
+    };
   }, [issue.date]);
 
   return (

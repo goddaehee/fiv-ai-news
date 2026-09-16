@@ -30,6 +30,20 @@ export default async function NewsPage({ params }: { params: Promise<{ date: str
   const { newer, older } = neighbors(date);
   return (
     <main id="main-content" tabIndex={-1}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "NewsArticle",
+            headline: issue.heroline,
+            description: issue.dek,
+            datePublished: issue.date,
+            inLanguage: "ko-KR",
+            mainEntityOfPage: `https://fiv-ai-news.vercel.app/news/${issue.date}`,
+          }),
+        }}
+      />
       <ArticleView
         issue={issue}
         newer={newer ? { date: newer.date, title: newer.title } : undefined}

@@ -7,6 +7,7 @@ import { KeyStrip } from "@/components/home/KeyStrip";
 import { SearchBox } from "@/components/home/SearchBox";
 import { SubscribeForm } from "@/components/home/SubscribeForm";
 import { ISSUES, citationCount, issuesByMonth, latestIssue } from "@/data/news";
+import { CATALOG, deepDiveSlug } from "@/data/catalog";
 import { REPOS } from "@/data/repos";
 
 export default function HomePage() {
@@ -19,14 +20,33 @@ export default function HomePage() {
     intro: i.intro,
     briefing: i.briefing.map((b) => `${b.headline} ${b.summary}`).join(" "),
     analysis: i.analysis.map((a) => `${a.title} ${a.takeaway}`).join(" "),
+    sections: [
+      ...i.briefing.map((b) => ({ id: b.id, title: b.headline, text: b.summary })),
+      ...i.analysis.map((a) => ({ id: a.id, title: a.title, text: `${a.bullets.join(" ")} ${a.body.join(" ")} ${a.takeaway}` })),
+    ],
   }));
-  const repoIndex = REPOS.map((r) => ({
-    slug: r.slug,
-    name: r.name,
-    repo: r.repo,
-    oneLiner: r.oneLiner,
-    subcategory: r.subcategory,
-  }));
+  const repoIndex = [
+    ...REPOS.map((r) => ({
+      slug: r.slug,
+      name: r.name,
+      repo: r.repo,
+      oneLiner: r.oneLiner,
+      subcategory: r.subcategory,
+    })),
+    ...CATALOG.flatMap((c) =>
+      c.subs.flatMap((s) =>
+        s.items
+          .filter((item) => !deepDiveSlug(item.slug))
+          .map((item) => ({
+            slug: item.slug,
+            name: item.name,
+            repo: item.gh ?? item.name,
+            oneLiner: item.use || item.one || s.title,
+            subcategory: s.title,
+          })),
+      ),
+    ),
+  ];
   return (
     <main className="main" id="main-content" tabIndex={-1}>
       <Suspense fallback={null}>

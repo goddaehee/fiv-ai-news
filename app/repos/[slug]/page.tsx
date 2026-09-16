@@ -2,14 +2,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CatalogStub } from "@/components/repos/CatalogStub";
 import { RepoDeepDive } from "@/components/repos/RepoDeepDive";
-import { deepDiveSlug, findCatalogItem } from "@/data/catalog";
+import { allCatalogSlugs, deepDiveSlug, findCatalogItem } from "@/data/catalog";
 import { REPOS, getRepo } from "@/data/repos";
 import type { Metadata } from "next";
 
 export const dynamicParams = true;
 
 export function generateStaticParams() {
-  return REPOS.map((r) => ({ slug: r.slug }));
+  const slugs = new Set([...REPOS.map((r) => r.slug), ...allCatalogSlugs()]);
+  return [...slugs].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -42,7 +43,16 @@ export default async function RepoPage({ params }: { params: Promise<{ slug: str
   if (!catalog) notFound();
   return (
     <main id="main-content" tabIndex={-1}>
-      <CatalogStub name={catalog.name} category={catalog.category} subcategory={catalog.subcategory} />
+      <CatalogStub
+        name={catalog.name}
+        slug={catalog.slug}
+        category={catalog.category}
+        subcategory={catalog.subcategory}
+        one={catalog.one}
+        use={catalog.use}
+        gh={catalog.gh}
+        tags={catalog.tags}
+      />
     </main>
   );
 }

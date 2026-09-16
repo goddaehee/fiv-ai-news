@@ -1,5 +1,6 @@
 const KEY = "fiv-saved-repos";
 const READ_KEY = "fiv-last-read";
+const INT_KEY = "fiv-repo-interest";
 
 function readList(): string[] {
   if (typeof window === "undefined") return [];
@@ -49,4 +50,31 @@ export function getLastRead() {
   } catch {
     return null;
   }
+}
+
+export function readInterestMap(): Record<string, number> {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = localStorage.getItem(INT_KEY);
+    return raw ? (JSON.parse(raw) as Record<string, number>) : {};
+  } catch {
+    return {};
+  }
+}
+
+export function getInterest(slug: string) {
+  return readInterestMap()[slug] ?? 0;
+}
+
+export function setInterest(slug: string, level: number) {
+  const map = readInterestMap();
+  const next = map[slug] === level ? 0 : level;
+  if (next) map[slug] = next;
+  else delete map[slug];
+  try {
+    localStorage.setItem(INT_KEY, JSON.stringify(map));
+  } catch {
+    /* ignore */
+  }
+  return next;
 }

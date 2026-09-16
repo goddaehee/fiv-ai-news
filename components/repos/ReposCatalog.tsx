@@ -1,69 +1,83 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import type { RepoCategory } from "@/data/types";
+import { useEffect, useMemo, useState } from "react";
 import type { CatalogCat } from "@/data/catalog";
+import { getInterest, listSavedRepos, setInterest, toggleSavedRepo } from "@/lib/saved";
+import { allTokensIn, tokenize } from "@/lib/search";
 
-type Cat = { id: RepoCategory | "all"; label: string };
-type Card = {
-  slug: string;
-  name: string;
-  repo: string;
-  category: RepoCategory;
-  subcategory: string;
-  oneLiner: string;
-  stars: string;
-  license: string;
-};
+type DeepMap = Record<string, string>;
 
 export function ReposCatalog({
-  categories,
-  repos,
   catalog,
   catalogCount,
   deepMap,
 }: {
-  categories: Cat[];
-  repos: Card[];
   catalog: CatalogCat[];
   catalogCount: number;
-  deepMap: Record<string, string>;
+  deepMap: DeepMap;
+  categories?: unknown;
+  repos?: unknown;
 }) {
   const [q, setQ] = useState("");
-  const [cat, setCat] = useState<RepoCategory | "all">("all");
+  const [savedOnly, setSavedOnly] = useState(false);
+  const [minStar, setMinStar] = useState(0);
+  const [tag, setTag] = useState("");
+  const [saved, setSaved] = useState<string[]>([]);
+  const [interest, setInt] = useState<Record<string, number>>({});
 
-  const list = useMemo(() => {
-    const terms = q.toLowerCase().trim();
-    return repos.filter((r) => {
-      if (cat !== "all" && r.category !== cat) return false;
-      if (!terms) return true;
-      const blob = `${r.name} ${r.repo} ${r.oneLiner} ${r.subcategory}`.toLowerCase();
-      return blob.includes(terms);
-    });
-  }, [q, cat, repos]);
+  useEffect(() => {
+    setSaved(listSavedRepos());
+    const map: Record<string, number> = {};
+    for (const cat of catalog) {
+      for (const sub of cat.subs) {
+        for (const item of sub.items) {
+          const lv = getInterest(item.slug);
+          if (lv) map[item.slug] = lv;
+        }
+      }
+    }
+    setInt(map);
+  }, [catalog]);
 
-  const filteredCatalog = useMemo(() => {
-    const terms = q.toLowerCase().trim();
-    if (!terms) return catalog;
-    return catalog
-      .map((c) => ({
-        ...c,
-        subs: c.subs
-          .map((s) => ({
-            ...s,
-            items: s.items.filter(
-              (i) => i.name.toLowerCase().includes(terms) || i.slug.toLowerCase().includes(terms),
-            ),
-          }))
-          .filter((s) => s.items.length),
-      }))
-      .filter((c) => c.subs.length);
-  }, [q, catalog]);
+  const tokens = tokenize(q);
+
+  const visible = useMemo(() => {
+    return catalog.map((cat) => {
+      const subs = cat.subs.map((sub) => {
+        const items = sub.items.filter((item) => {
+          if (savedOnly && !saved.includes(item.slug)) return false;
+          if (minStar && (interest[item.slug] ?? 0) < minStar) return false;
+          if (tag && !(item.tags ?? []).includes(tag)) return false;
+          if (!tokens.length) return true;
+          const blob = `${item.name} ${item.one ?? ""} ${item.use ?? ""} ${(item.tags ?? []).join(" ")} ${sub.title} ${cat.title}`.toLowerCase();
+          return allTokensIn(blob, tokens);
+        });
+        const ranked = [...items].sort((a, b) => {
+          const fa = saved.includes(a.slug) ? 1 : 0;
+          const fb = saved.includes(b.slug) ? 1 : 0;
+          if (fa !== fb) return fb - fa;
+          return (interest[b.slug] ?? 0) - (interest[a.slug] ?? 0);
+        });
+        return { ...sub, items: ranked };
+      });
+      return { ...cat, subs: subs.filter((s) => s.items.length) };
+    }).filter((c) => c.subs.length);
+  }, [catalog, tokens, savedOnly, minStar, tag, saved, interest]);
+
+  const shown = visible.reduce((n, c) => n + c.subs.reduce((m, s) => m + s.items.length, 0), 0);
+  const filtering = Boolean(q.trim() || savedOnly || minStar || tag);
+
+  const reset = () => {
+    setQ("");
+    setSavedOnly(false);
+    setMinStar(0);
+    setTag("");
+  };
 
   return (
     <main id="main-content" tabIndex={-1}>
-      <div className="repo-mast">
+      <div className="repo-mast" id="masthead">
         <p className="kicker">
           <Link href="/" style={{ color: "inherit" }}>
             ← 5분 AI 뉴스
@@ -71,57 +85,187 @@ export function ReposCatalog({
         </p>
         <h1>유행레포 공부자료</h1>
         <p className="repo-stats">
-          <b>{catalogCount}</b>개 레포 · <b>{catalog.length}</b>개 카테고리 · 한국어 딥다이브 <b>{repos.length}</b>편 ·
-          갱신 2026-09-16
+          <b>{catalogCount}</b>개 레포 · <b>{catalog.length}</b>개 카테고리 · 갱신 2026-09-07 · 출처 TrendShift
         </p>
         <input
+          id="q"
           type="search"
           value={q}
-          onChange={(e) => setQ(e.target.value)}
+          onChange={(e) => {
+            setTag("");
+            setQ(e.target.value);
+          }}
           placeholder="레포 이름·설명으로 검색…"
           autoComplete="off"
+          spellCheck={false}
           className="repo-search"
         />
-        <div className="chips" role="tablist" aria-label="카테고리">
-          {categories.map((c) => (
-            <button
-              key={c.id}
-              type="button"
-              className={cat === c.id ? "chip on" : "chip"}
-              onClick={() => setCat(c.id)}
-            >
-              {c.label}
-            </button>
+        <nav className="chips repo-chips" aria-label="카테고리">
+          <button type="button" className="chip on" onClick={reset}>
+            전체<span className="chip-n">{catalogCount}</span>
+          </button>
+          <button
+            type="button"
+            className={savedOnly ? "chip chip-fav on" : "chip chip-fav"}
+            aria-pressed={savedOnly}
+            onClick={() => setSavedOnly((v) => !v)}
+          >
+            ▱ 저장한 자료<span className="chip-n">{saved.length}</span>
+          </button>
+          {catalog.map((c) => (
+            <a key={c.title} className="chip" href={`#${c.id ?? c.title}`}>
+              {c.emo} {c.title}
+              <span className="chip-n">{c.subs.reduce((n, s) => n + s.items.length, 0)}</span>
+            </a>
           ))}
+        </nav>
+        <div className="filter-bar" aria-label="관심도 필터">
+          <span className="fb-label">관심도 필터</span>
+          <span className="fb-stars">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <button
+                key={n}
+                type="button"
+                className={minStar >= n ? "fstar is-selected" : "fstar"}
+                aria-label={`관심도 ${n} 이상`}
+                aria-pressed={minStar === n}
+                onClick={() => setMinStar((cur) => (cur === n ? 0 : n))}
+              >
+                ★
+              </button>
+            ))}
+          </span>
         </div>
       </div>
-      <div className="repo-grid">
-        {list.map((r) => (
-          <Link key={r.slug} href={`/repos/${r.slug}`} className="repo-card">
-            <div className="cat">{r.subcategory}</div>
-            <h3>{r.name}</h3>
-            <p>{r.oneLiner}</p>
-            <div className="meta">
-              {r.repo} · ★ {r.stars} · {r.license}
-            </div>
-          </Link>
-        ))}
+
+      <div className="catalog-results">
+        <span>
+          {shown}개 자료{filtering ? ` · 전체 ${catalogCount}개 중` : ""}
+          {tag ? ` · 태그 #${tag}` : ""}
+        </span>
+        {filtering ? (
+          <button type="button" className="catalog-reset" onClick={reset}>
+            검색·필터 초기화
+          </button>
+        ) : null}
       </div>
-      {list.length === 0 ? (
-        <p style={{ textAlign: "center", color: "var(--color-muted)", padding: 40 }}>검색 결과 없음</p>
-      ) : null}
+
+      {shown === 0 ? (
+        <div className="catalog-empty">
+          <strong>찾는 자료가 없어요.</strong>
+          <p>검색어를 짧게 바꾸거나 저장·관심도 필터를 해제해 보세요.</p>
+          <button type="button" className="catalog-reset" onClick={reset}>
+            전체 자료 다시 보기
+          </button>
+        </div>
+      ) : (
+        <div className="cats">
+          {visible.map((cat) => (
+            <section className="cat" id={cat.id ?? cat.title} key={cat.title} style={{ ["--cat-accent" as string]: cat.accent }}>
+              <div className="cathead">
+                <span className="emo">{cat.emo}</span>
+                <h2>{cat.title}</h2>
+                <span className="cnt">
+                  {cat.subs.reduce((n, s) => n + s.items.length, 0)}
+                  {filtering ? `/${cat.subs.reduce((n, s) => n + s.items.length, 0)}` : ""}
+                </span>
+              </div>
+              {cat.subs.map((sub, si) => (
+                <div className="sub" key={sub.title}>
+                  {sub.title ? (
+                    <div className="subhead">
+                      <span className="sub-mark">{String(si + 1).padStart(2, "0")}</span>
+                      <h3>{sub.title}</h3>
+                      <span className="sub-n">{sub.items.length}</span>
+                    </div>
+                  ) : null}
+                  <div className="grid">
+                    {sub.items.map((item, i) => {
+                      const deep = deepMap[item.slug];
+                      const href = `/repos/${deep ?? item.slug}`;
+                      const fav = saved.includes(item.slug);
+                      const lv = interest[item.slug] ?? 0;
+                      return (
+                        <article className={fav ? "card is-fav" : "card"} key={item.slug} data-name={item.name}>
+                          <Link className="c-open" href={href} aria-label={`${item.name} 공부자료 열기`} />
+                          <div className="c-top">
+                            <button
+                              type="button"
+                              className={fav ? "c-fav on" : "c-fav"}
+                              aria-pressed={fav}
+                              title="저장 (위로 고정)"
+                              onClick={() => {
+                                const on = toggleSavedRepo(item.slug);
+                                setSaved(listSavedRepos());
+                                void on;
+                              }}
+                            >
+                              <span aria-hidden="true">▱</span> 저장
+                            </button>
+                          </div>
+                          <span className="c-idx">{String(i + 1).padStart(2, "0")}</span>
+                          <Link className="c-name" href={href} style={deep ? { fontWeight: 800 } : undefined}>
+                            {item.name}
+                          </Link>
+                          {item.tags?.length ? (
+                            <span className="c-tags">
+                              {item.tags.map((t) => (
+                                <button
+                                  key={t}
+                                  type="button"
+                                  className={tag === t ? "tag on" : "tag"}
+                                  onClick={() => setTag((cur) => (cur === t ? "" : t))}
+                                >
+                                  {t}
+                                </button>
+                              ))}
+                            </span>
+                          ) : null}
+                          <span className="c-one">{item.use || item.one}</span>
+                          <div className="c-meta">
+                            <span className="c-interest" title="관심도">
+                              <span className="ilabel">관심도</span>
+                              {[1, 2, 3, 4, 5].map((n) => (
+                                <button
+                                  key={n}
+                                  type="button"
+                                  className={lv >= n ? "star is-selected" : "star"}
+                                  aria-label={`관심도 ${n}`}
+                                  onClick={() => {
+                                    const next = setInterest(item.slug, n);
+                                    setInt((m) => ({ ...m, [item.slug]: next }));
+                                  }}
+                                >
+                                  ★
+                                </button>
+                              ))}
+                            </span>
+                            {item.gh ? (
+                              <a className="c-github" href={item.gh} target="_blank" rel="noopener noreferrer">
+                                GitHub ↗
+                              </a>
+                            ) : null}
+                          </div>
+                        </article>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </section>
+          ))}
+        </div>
+      )}
 
       <section className="repos-all" id="repos-all" aria-labelledby="repos-all-h">
         <h2 id="repos-all-h">
-          전체 목록 <span>({catalogCount}편)</span>
+          전체 딥다이브 목록 <span>({catalogCount}편)</span>
         </h2>
-        <p className="repos-all-note">
-          위 카드와 같은 자료를 분류별 글 목록으로 모았습니다. 굵은 항목은 이 클론에서 한국어 본문을 읽을 수 있습니다.
-        </p>
-        {filteredCatalog.map((c) => (
-          <details key={c.title} className="repos-all-cat">
+        <p className="repos-all-note">위 카드와 같은 자료를 분류별 글 목록으로 모았습니다. 검색·필터 없이 훑어보거나 링크를 공유할 때 씁니다.</p>
+        {catalog.map((c) => (
+          <details key={c.title} className="repos-all-cat" id={c.id ? `all-${c.id}` : undefined}>
             <summary>
-              {c.title}
+              {c.emo} {c.title}
               <span>{c.subs.reduce((n, s) => n + s.items.length, 0)}편</span>
             </summary>
             {c.subs.map((s) => (
@@ -130,10 +274,9 @@ export function ReposCatalog({
                 <ul>
                   {s.items.map((item) => {
                     const deep = deepMap[item.slug];
-                    const href = `/repos/${deep ?? item.slug}`;
                     return (
                       <li key={item.slug}>
-                        <Link href={href} style={deep ? { fontWeight: 800 } : undefined}>
+                        <Link href={`/repos/${deep ?? item.slug}`} style={deep ? { fontWeight: 800 } : undefined}>
                           {item.name}
                         </Link>
                       </li>

@@ -1,6 +1,5 @@
 import { ReposCatalog } from "@/components/repos/ReposCatalog";
 import { CATALOG, CATALOG_COUNT, deepDiveSlug } from "@/data/catalog";
-import { CATEGORIES, REPOS } from "@/data/repos";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -19,22 +18,5 @@ export default function ReposPage() {
     }
   }
 
-  return (
-    <ReposCatalog
-      categories={CATEGORIES}
-      repos={REPOS.map((r) => ({
-        slug: r.slug,
-        name: r.name,
-        repo: r.repo,
-        category: r.category,
-        subcategory: r.subcategory,
-        oneLiner: r.oneLiner,
-        stars: r.stars,
-        license: r.license,
-      }))}
-      catalog={CATALOG}
-      catalogCount={CATALOG_COUNT}
-      deepMap={deepMap}
-    />
-  );
+  return <ReposCatalog catalog={CATALOG} catalogCount={CATALOG_COUNT} deepMap={deepMap} />;
 }
