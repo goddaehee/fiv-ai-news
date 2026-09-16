@@ -5,3 +5,5 @@ out
 *.log
 .vercel
 tsconfig.tsbuildinfo
+__pycache__/
+*.pyc
