@@ -22,8 +22,8 @@ python3 scripts/pipeline/validate.py content/issues/*.json
 | 키 | 용도 |
 |---|---|
 | `GLM_API_KEY` 또는 `ZHIPU_API_KEY` | 지푸 GLM으로 한국어 초안 |
-| `GLM_MODEL` | 기본 `glm-4.6` |
-| `GLM_BASE_URL` | 기본 `https://open.bigmodel.cn/api/paas/v4`. 해외면 `https://api.z.ai/api/paas/v4` |
+| `GLM_MODEL` | 기본 `glm-5.3` |
+| `GLM_BASE_URL` | 기본 `https://api.z.ai/api/paas/v4`. 중국이면 `https://open.bigmodel.cn/api/paas/v4` |
 | `LLM_PROVIDER` | `glm` / `xai` / `openai` — 키가 여러 개일 때 강제 |
 | `XAI_API_KEY` 또는 `GROK_API_KEY` | xAI |
 | `OPENAI_API_KEY` | OpenAI 폴백 |
@@ -35,8 +35,8 @@ GLM 예:
 ```bash
 export GLM_API_KEY=...
 export LLM_PROVIDER=glm
-# 해외 엔드포인트면
-# export GLM_BASE_URL=https://api.z.ai/api/paas/v4
+# 중국 리전이면
+# export GLM_BASE_URL=https://open.bigmodel.cn/api/paas/v4
 python3 scripts/pipeline/run.py --llm --provider glm
 ```
 

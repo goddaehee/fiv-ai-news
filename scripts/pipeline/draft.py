@@ -53,9 +53,9 @@ PROVIDERS = {
     "glm": {
         "env": ("GLM_API_KEY", "ZHIPU_API_KEY", "ZHIPUAI_API_KEY"),
         "url_env": "GLM_BASE_URL",
-        "url": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+        "url": "https://api.z.ai/api/paas/v4/chat/completions",
         "model_env": "GLM_MODEL",
-        "model": "glm-4.6",
+        "model": "glm-5.3",
     },
     "openai": {
         "env": ("OPENAI_API_KEY",),
@@ -86,16 +86,18 @@ def pick_key(prefer: str | None = None) -> tuple[str, str, str, str] | None:
 
 
 def chat(url: str, key: str, model: str, user: str) -> str:
-    body = json.dumps(
-        {
-            "model": model,
-            "temperature": 0.3,
-            "messages": [
-                {"role": "system", "content": PROMPT},
-                {"role": "user", "content": user},
-            ],
-        }
-    ).encode("utf-8")
+    payload = {
+        "model": model,
+        "temperature": 1.0,
+        "messages": [
+            {"role": "system", "content": PROMPT},
+            {"role": "user", "content": user},
+        ],
+    }
+    if model.lower().startswith("glm-5"):
+        payload["thinking"] = {"type": "enabled"}
+        payload["reasoning_effort"] = os.environ.get("GLM_REASONING", "high")
+    body = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(
         url,
         data=body,
@@ -104,7 +106,8 @@ def chat(url: str, key: str, model: str, user: str) -> str:
     )
     with urllib.request.urlopen(req, timeout=180, context=ssl.create_default_context()) as res:
         data = json.loads(res.read().decode("utf-8"))
-    return data["choices"][0]["message"]["content"]
+    msg = data["choices"][0]["message"]
+    return msg.get("content") or msg.get("reasoning_content") or ""
 
 
 def extract_json(text: str) -> dict:
