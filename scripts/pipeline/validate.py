@@ -12,6 +12,13 @@ from pathlib import Path
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 URI_RE = re.compile(r"^https?://")
 KINDS = {"hot", "talk", "rt", "doc"}
+VOICE_BAN = (
+    "하십시오",
+    "칸에 적",
+    "칸을 나눠",
+    "내부 메모에",
+    "공식 발표문과 1차 매체 숫자를 맞춰 본 뒤에",
+)
 
 
 def err(path: str, msg: str, bag: list[str]) -> None:
@@ -93,14 +100,33 @@ def check(issue: dict) -> list[str]:
             if not isinstance(s, dict):
                 err(f"{p}.sources[{j}]", "must be object", bag)
                 continue
+            if s.get("kind") not in KINDS:
                 err(f"{p}.sources[{j}].kind", "hot|talk|rt|doc", bag)
-            if not URI_RE.match(str(s.get("url") or "")):
+            url = str(s.get("url") or "")
+            if not URI_RE.match(url):
                 err(f"{p}.sources[{j}].url", "http(s) url", bag)
+            if "example.com" in url:
+                err(f"{p}.sources[{j}].url", "example.com 금지 — 수집 링크를 넣습니다", bag)
         take = a.get("takeaway") or ""
         if "하십시오" in take:
             err(p + ".takeaway", "시사점은 입니다/됩니다 톤. '하십시오' 금지", bag)
+        for bad in VOICE_BAN:
+            if bad in take or any(bad in (x or "") for x in (a.get("body") or [])):
+                err(p, f"편집 메모 투 금지: {bad}", bag)
+                break
+        if len(take) < 60:
+            err(p + ".takeaway", "시사점은 두 문장, 60자 이상", bag)
+        if take.count("다.") + take.count("요.") < 1:
+            err(p + ".takeaway", "종결 어미가 없습니다", bag)
         if a.get("id") not in ids:
             err(p + ".id", "should match a briefing id", bag)
+        for para in a.get("body") or []:
+            if isinstance(para, str) and len(para) < 80:
+                err(p + ".body", "본문 한 단은 80자 이상", bag)
+                break
+    takes = [(a.get("takeaway") or "") for a in (issue.get("analysis") or []) if isinstance(a, dict)]
+    if takes and len(takes) != len(set(takes)):
+        err("analysis.takeaway", "시사점 복붙 금지", bag)
     return bag
 
 

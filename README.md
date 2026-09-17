@@ -45,7 +45,7 @@ python3 scripts/pipeline/validate.py content/issues/*.json
 3. 이미 손으로 고친 호(`draft` 없는 JSON)는 덮지 않습니다
 4. 메일 발송은 이후 Resend
 
-키가 없으면 수집 JSON만 아티팩트로 남습니다. GLM을 쓰려면 레포 Secrets에 `GLM_API_KEY`와 `LLM_PROVIDER=glm`을 넣으면 됩니다. 모델 기본값은 `glm-5.3`, 엔드포인트는 `https://api.z.ai/api/paas/v4`입니다. 중국 리전이면 `GLM_BASE_URL=https://open.bigmodel.cn/api/paas/v4`.
+글의 말투·밀도는 [`AGENTS.md`](AGENTS.md)와 [`content/VOICE.md`](content/VOICE.md)를 따릅니다.
 
 글·레포·검색은 JSON 파일이라 **DB는 없습니다.** 구독은 브라우저 localStorage입니다. 메일 명단·조회수·여러 기기 저장을 붙일 때만 DB가 필요합니다.
 
