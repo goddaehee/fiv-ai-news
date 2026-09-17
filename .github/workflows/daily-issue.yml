@@ -46,21 +46,18 @@ jobs:
             content/pipeline/
             content/issues/
           if-no-files-found: warn
-      - name: Open draft PR
+      - name: Publish issue to main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           DATE=$(TZ=Asia/Seoul date +%F)
           git config user.name "fiv-pipeline"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -B "issue/${DATE}"
-          git add content/issues/"${DATE}".json content/pipeline/"${DATE}".draft.json 2>/dev/null || true
+          git add content/issues/"${DATE}".json 2>/dev/null || true
           if git diff --cached --quiet; then
-            echo "nothing to commit"
+            echo "no new issue file — published copy kept"
             exit 0
           fi
-          git commit -m "draft ${DATE} issue from public feeds"
-          git push -u origin "issue/${DATE}" --force
-          gh pr view "issue/${DATE}" >/dev/null 2>&1 \
-            || gh pr create --title "초안: ${DATE} 호" --head "issue/${DATE}" --body "공개 RSS·HN으로 만든 초안입니다. 수치와 출처 URL을 공식 페이지와 맞춘 뒤 머지하면 Vercel이 재빌드합니다." \
-            || echo "PR 링크: https://github.com/${{ github.repository }}/pull/new/issue/${DATE}"
+          git commit -m "publish ${DATE} issue"
+          git push origin HEAD:main
+          echo "pushed ${DATE} to main — Vercel will rebuild"

@@ -46,6 +46,6 @@ python3 scripts/pipeline/run.py --llm --provider glm
 
 ## 발행
 
-1. PR 본문을 읽고 수치·출처 URL을 공식 페이지와 맞춘다
-2. 머지하면 Vercel이 `/news/YYYY-MM-DD`를 다시 빌드한다
-3. 메일 발송은 이후 Resend
+검증이 통과하면 Action이 `content/issues/YYYY-MM-DD.json`을 **main에 바로 푸시**합니다. PR을 만들고 머지할 필요 없습니다. Vercel이 재빌드합니다.
+
+손으로 고친 호는 `draft` 필드가 없어서 파이프라인이 덮지 않습니다.

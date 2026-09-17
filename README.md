@@ -40,9 +40,9 @@ python3 scripts/pipeline/run.py --collect-only
 python3 scripts/pipeline/validate.py content/issues/*.json
 ```
 
-1. 평일 05:30 KST — GitHub Action이 수집 후, Secret `GLM_API_KEY`(또는 xAI/OpenAI)가 있으면 초안 PR
-2. 편집자가 수치·출처를 공식 페이지와 맞춤
-3. 머지 후 Vercel이 `/news/YYYY-MM-DD` 재빌드
+1. 평일 05:30 KST — GitHub Action이 수집·초안을 만들고, 검증이 되면 **main에 바로 푸시**합니다. PR·머지는 없습니다.
+2. Vercel이 `/news/YYYY-MM-DD`를 재빌드합니다
+3. 이미 손으로 고친 호(`draft` 없는 JSON)는 덮지 않습니다
 4. 메일 발송은 이후 Resend
 
 키가 없으면 수집 JSON만 아티팩트로 남습니다. GLM을 쓰려면 레포 Secrets에 `GLM_API_KEY`와 `LLM_PROVIDER=glm`을 넣으면 됩니다. 모델 기본값은 `glm-5.3`, 엔드포인트는 `https://api.z.ai/api/paas/v4`입니다. 중국 리전이면 `GLM_BASE_URL=https://open.bigmodel.cn/api/paas/v4`.
