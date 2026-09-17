@@ -62,4 +62,5 @@ jobs:
           fi
           git commit -m "draft ${DATE} issue from public feeds"
           git push -u origin "issue/${DATE}" --force
-          gh pr create --title "초안: ${DATE} 호" --body "공개 RSS·HN으로 만든 초안입니다. 수치와 출처 URL을 공식 페이지와 맞춘 뒤 머지하면 Vercel이 재빌드합니다." || true
+          gh pr create --title "초안: ${DATE} 호" --body "공개 RSS·HN으로 만든 초안입니다. 수치와 출처 URL을 공식 페이지와 맞춘 뒤 머지하면 Vercel이 재빌드합니다." \
+            || echo "PR 생성이 막혔습니다. 레포 Settings → Actions → General 에서 'Allow GitHub Actions to create and approve pull requests' 를 켜세요. 임시 링크: https://github.com/${{ github.repository }}/pull/new/issue/${DATE}"
