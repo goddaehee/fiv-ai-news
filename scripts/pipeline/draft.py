@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import ssl
 import sys
 import urllib.error
@@ -30,7 +31,9 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - 남의 문장을 베끼지 말고, 공개된 회사·수치·날짜만 사실로 삼아 우리 문장으로 씁니다.
 - 제목은 '누가 무엇을 했다' 과거형 완결 문장.
 - 시사점은 입니다/됩니다. '하십시오' 금지.
-- sources.url 은 입력에 있는 실제 http(s) 링크만. 없으면 공식 홈(https://openai.com 등).
+- sources.url 은 입력 buckets에 있는 실제 http(s) 링크만. example.com 금지.
+- briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
+- mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
 - briefing 8~10, analysis는 briefing id와 1:1, bullets 3, body 2~3문단, tips 6, keynums 6~8, timeline 5~8.
 - extras 섹션 id는 extras, 제목은 '🆕 그 밖의 신기능·신제품'.
@@ -132,6 +135,37 @@ def extract_json(text: str) -> dict:
     return json.loads(text[start : end + 1])
 
 
+def slug(s: str) -> str:
+    s = re.sub(r"[^a-zA-Z0-9가-힣]+", "-", (s or "").lower()).strip("-")
+    return (s[:36] or "s")
+
+
+def _hit(items: list[dict], title: str) -> dict | None:
+    words = [w for w in re.split(r"\W+", (title or "").lower()) if len(w) > 3][:8]
+    if not words:
+        return None
+    best, score = None, 0
+    for it in items:
+        blob = f"{it.get('title') or ''} {it.get('summary') or ''}".lower()
+        sc = sum(1 for w in words if w in blob)
+        if sc > score:
+            best, score = it, sc
+    return best if score >= 2 else None
+
+
+def attach_sources(issue: dict, snap: dict) -> dict:
+    items = [it for it in (snap.get("items") or []) if (it.get("url") or "").startswith("http")]
+    for a in issue.get("analysis") or []:
+        srcs = a.get("sources") or []
+        hollow = not srcs or all("example.com" in (s.get("url") or "") for s in srcs)
+        if not hollow:
+            continue
+        hit = _hit(items, a.get("title") or "") or _hit(items, " ".join(a.get("bullets") or []))
+        if hit:
+            a["sources"] = [{"handle": hit["source"], "url": hit["url"], "kind": hit.get("kind") or "doc"}]
+    return issue
+
+
 MOOD_KEYS = ("shift", "grow", "caution", "heat")
 DEFAULT_MOOD = {
     "shift": "새 모델·정책이 같은 날에 겹치면 기본값이 바뀝니다.",
@@ -213,13 +247,16 @@ def normalize(issue: dict) -> dict:
             b = {"headline": b}
         if not isinstance(b, dict):
             continue
-        hid = _text(b.get("id")) or f"s{i}"
+        hid = _text(b.get("id"))
+        headline = _text(b.get("headline") or b.get("title"))
+        if not hid or hid.isdigit() or len(hid) < 3:
+            hid = slug(headline or f"s{i}")
         hid = hid.replace(" ", "-")[:40]
         brief.append(
             {
                 "id": hid,
-                "headline": _text(b.get("headline") or b.get("title")) or hid,
-                "summary": _text(b.get("summary") or b.get("dek") or b.get("headline"))[:400],
+                "headline": headline or hid,
+                "summary": _text(b.get("summary") or b.get("dek") or headline)[:400],
             }
         )
     ids = {b["id"] for b in brief}
@@ -246,7 +283,7 @@ def normalize(issue: dict) -> dict:
         if "하십시오" in take:
             take = take.replace("하십시오", "하면 됩니다")
         if not take:
-            take = "공식 발표문과 1차 매체 숫자를 맞춰 본 뒤에 내부 메모에 올리면 됩니다."
+            take = body[-1] if body else "공식 발표문과 1차 매체 숫자를 맞춰 본 뒤에 내부 메모에 올리면 됩니다."
         analysis.append(
             {
                 "id": hid if hid in ids or not ids else brief[min(i - 1, len(brief) - 1)]["id"],
@@ -310,9 +347,24 @@ def normalize(issue: dict) -> dict:
             )
             if len(analysis) >= 2:
                 break
+    if keynums and all(str(k["val"]).isdigit() and str(k["lab"]).isdigit() for k in keynums):
+        keynums = []
+    if len(keynums) < 3:
+        blob = " ".join(f"{b['headline']} {b['summary']}" for b in brief)
+        seen = {k["val"] for k in keynums}
+        for m in re.finditer(r"(\$[\d,.]+|\d+(?:\.\d+)?%|\d{1,3}(?:,\d{3})+)", blob):
+            val = m.group(1)
+            if val in seen:
+                continue
+            seen.add(val)
+            keynums.append({"val": val, "lab": "본문 수치", "sub": "초안 · 교차검증 전"})
+            if len(keynums) >= 3:
+                break
     while len(keynums) < 3 and brief:
         b = brief[len(keynums) % len(brief)]
-        keynums.append({"val": str(len(keynums) + 1), "lab": b["id"], "sub": "초안"})
+        if any(k["lab"] == b["headline"][:24] for k in keynums):
+            break
+        keynums.append({"val": "—", "lab": b["headline"][:24], "sub": "교차검증 전"})
     while len(timeline) < 3:
         timeline.append({"t": f"0{len(timeline)+1}", "d": (brief[0]["headline"] if brief else "수집")[:80]})
     if not tips:
@@ -344,7 +396,11 @@ def normalize(issue: dict) -> dict:
         "readMin": _int(issue.get("readMin"), 14),
         "briefing": brief,
         "keywords": keywords[:8],
-        "mainEvent": _text(issue.get("mainEvent")) or (brief[0]["headline"] if brief else ""),
+        "mainEvent": (
+            _text(issue.get("mainEvent"))
+            if len(_text(issue.get("mainEvent"))) >= 12 and not _text(issue.get("mainEvent")).isdigit()
+            else (brief[0]["headline"] if brief else "")
+        ),
         "keynums": keynums,
         "timeline": timeline,
         "intro": _text(issue.get("intro")) or "이 파일은 자동 초안입니다. 공식 문서 숫자와 출처 URL을 채운 뒤 발행합니다.",
@@ -487,6 +543,7 @@ def main() -> int:
         issue["date"] = snap["date"]
         issue = normalize(issue)
         issue["date"] = snap["date"]
+        issue = attach_sources(issue, snap)
         issue["draft"] = True
     else:
         print("no API key — writing skeleton for the editor")

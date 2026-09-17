@@ -20,18 +20,29 @@ from html import unescape
 from pathlib import Path
 
 KST = timezone(timedelta(hours=9))
-UA = "fiv-ai-news-pipeline/1.0 (+https://github.com/goddaehee/fiv-ai-news)"
+UA = "Mozilla/5.0 (compatible; fiv-ai-news/1.1; +https://github.com/goddaehee/fiv-ai-news)"
 CTX = ssl.create_default_context()
 
 FEEDS = [
     ("OpenAI News", "https://openai.com/news/rss.xml", "doc"),
-    ("Anthropic", "https://www.anthropic.com/news/rss.xml", "doc"),
+    (
+        "Anthropic News",
+        "https://raw.githubusercontent.com/alan-turing-institute/ai-rss-feeds/refs/heads/main/feeds/anthropic-news.xml",
+        "doc",
+    ),
+    (
+        "Anthropic GNews",
+        "https://news.google.com/rss/search?q=site:anthropic.com+when:2d&hl=en-US&gl=US&ceid=US:en",
+        "doc",
+    ),
     ("Google Blog", "https://blog.google/rss/", "doc"),
     ("DeepMind", "https://deepmind.google/blog/feed/basic/", "doc"),
     ("Hugging Face", "https://huggingface.co/blog/feed.xml", "doc"),
     ("NVIDIA Blog", "https://blogs.nvidia.com/feed/", "doc"),
-    ("Meta AI", "https://ai.meta.com/blog/rss/", "doc"),
-    ("Microsoft AI", "https://blogs.microsoft.com/ai/feed/", "doc"),
+    ("Meta News", "https://about.fb.com/news/feed/", "doc"),
+    ("Meta Eng", "https://engineering.fb.com/feed/", "doc"),
+    ("Azure Blog", "https://azure.microsoft.com/en-us/blog/feed/", "doc"),
+    ("MS Research", "https://www.microsoft.com/en-us/research/feed/", "doc"),
     ("TechCrunch AI", "https://techcrunch.com/category/artificial-intelligence/feed/", "doc"),
     ("The Verge AI", "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", "doc"),
     ("Ars Technica", "https://feeds.arstechnica.com/arstechnica/technology-lab", "doc"),
@@ -51,13 +62,24 @@ AI_HINT = re.compile(
 TAG = re.compile(r"<[^>]+>")
 
 
-def fetch(url: str, timeout: int = 18) -> bytes | None:
-    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/rss+xml, application/xml, text/xml, */*"})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout, context=CTX) as res:
-            return res.read()
-    except (urllib.error.URLError, TimeoutError, ssl.SSLError, ValueError):
-        return None
+def fetch(url: str, timeout: int = 22) -> bytes | None:
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": UA, "Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml, application/json, */*"},
+    )
+    last: Exception | None = None
+    for _ in range(2):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout, context=CTX) as res:
+                return res.read()
+        except urllib.error.HTTPError as e:
+            print(f"    HTTP {e.code} {url[:88]}")
+            return None
+        except (urllib.error.URLError, TimeoutError, ssl.SSLError, ValueError) as e:
+            last = e
+            time.sleep(0.5)
+    print(f"    fail {type(last).__name__ if last else 'error'} {url[:88]}")
+    return None
 
 
 def text_of(el: ET.Element | None) -> str:
@@ -143,7 +165,7 @@ def hn_algolia(hours: int = 36) -> list[dict]:
     url = (
         "https://hn.algolia.com/api/v1/search_by_date?tags=story"
         f"&numericFilters=created_at_i>{since}&hitsPerPage=40"
-        "&query=AI%20OR%20LLM%20OR%20OpenAI%20OR%20Anthropic%20OR%20Gemini"
+        "&query=AI&hitsPerPage=40"
     )
     raw = fetch(url)
     if not raw:

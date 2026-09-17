@@ -6,4 +6,4 @@ out
 .vercel
 tsconfig.tsbuildinfo
 __pycache__/
-*.pyc
+content/pipeline/*.collected.json
