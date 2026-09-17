@@ -1,0 +1,305 @@
+{
+  "date": "2026-09-17",
+  "title": "판단만 하는 Jev · Claude Docs/Slides · ChatGPT 광고 에이전트",
+  "heroline": "글을 쓰지 않는 모델이 가격표를 열었다",
+  "dek": "TypeSafe AI가 텍스트를 만들지 않는 판단 모델 Jev를 대기자 명단으로 열었고, Anthropic은 Cowork를 채팅에 합쳤습니다. OpenAI는 ChatGPT 광고 위에 Sponsored Agents 시험을 시작했습니다.",
+  "tag": "판단모델",
+  "briefMin": 5,
+  "readMin": 16,
+  "keywords": [
+    "Jev",
+    "Claude Docs",
+    "Sponsored Agents",
+    "Firefox Smart Window",
+    "System One"
+  ],
+  "mainEvent": "TypeSafe AI가 글을 쓰지 않고 판단만 돌려주는 모델 Jev를 열며, 입력 100만 토큰당 $0.042에 출력은 무료라는 가격을 붙였습니다.",
+  "briefing": [
+    {
+      "id": "jev",
+      "headline": "TypeSafe AI가 텍스트를 만들지 않는 모델 Jev를 공개했다 — 입력 100만 토큰 $0.042, 출력은 무료",
+      "summary": "질문에 글을 쓰지 않고 정해진 선택지를 점수로 돌려줍니다. 대기자 명단 방식 얼리 액세스입니다. 독립 벤치마크는 아직 없습니다."
+    },
+    {
+      "id": "claude-merge",
+      "headline": "Anthropic이 Cowork와 채팅을 하나의 Claude로 합치고 Claude Docs·Claude Slides를 베타로 열었다",
+      "summary": "Pro·Max부터 몇 주에 걸쳐 웹·데스크톱·모바일에 올라갑니다. 어디에 넣을지 고르지 않아도 됩니다."
+    },
+    {
+      "id": "ads",
+      "headline": "OpenAI가 ChatGPT에 Sponsored Agents를 시험하고 광고 도구를 넓힌다",
+      "summary": "광고를 누른 뒤 사업자가 후원하는 에이전트와 별도 대화를 시작할 수 있습니다. 미국 일부 광고주 시험입니다."
+    },
+    {
+      "id": "firefox",
+      "headline": "Mozilla가 Mistral과 손잡고 Firefox Smart Window 베타에 Mistral Small 4를 넣는다",
+      "summary": "미국·캐나다에 이어 프랑스가 열립니다. Mozilla는 대화를 기본으로 서버에 남기지 않고, Mistral은 제로 리텐션에 동의했다고 적었습니다."
+    },
+    {
+      "id": "extras",
+      "headline": "🆕 그 밖의 신기능·신제품",
+      "summary": "긴 과제 에이전트 후기, 메모리 가격이 밀어 올린 하드웨어 호가가 같은 타임라인에 올라왔습니다. 본문 하단에 짧게 모았습니다."
+    }
+  ],
+  "keynums": [
+    {
+      "val": "$0.042",
+      "lab": "Jev 입력 100만 토큰",
+      "sub": "출력 무료 · TypeSafe 발표"
+    },
+    {
+      "val": "70–500ms",
+      "lab": "Jev 응답 시간",
+      "sub": "회사 발표 구간"
+    },
+    {
+      "val": "Pro·Max",
+      "lab": "Claude 통합 우선",
+      "sub": "Docs·Slides 베타"
+    },
+    {
+      "val": "미국",
+      "lab": "Sponsored Agents 시험",
+      "sub": "선택 광고주"
+    },
+    {
+      "val": "FR+NA",
+      "lab": "Smart Window 베타",
+      "sub": "Mistral Small 4"
+    },
+    {
+      "val": "9/23",
+      "lab": "Shopify 앱 국제",
+      "sub": "ChatGPT Ads 가능 시장"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "09-15",
+      "d": "TypeSafe AI가 System One 모델 Jev 얼리 액세스를 열었다"
+    },
+    {
+      "t": "09-16",
+      "d": "Anthropic이 Cowork와 채팅을 합치고 Docs·Slides 베타를 열었다"
+    },
+    {
+      "t": "09-16",
+      "d": "OpenAI가 Sponsored Agents와 광고 도구를 발표했다"
+    },
+    {
+      "t": "09-16",
+      "d": "Mozilla가 Mistral Small 4를 Firefox Smart Window 베타에 넣는다고 밝혔다"
+    },
+    {
+      "t": "09-17",
+      "d": "Jev 가격표와 ‘환각 불가’ 문장이 커뮤니티에서 교차 검증 대상으로 올랐다"
+    }
+  ],
+  "intro": "글을 쓰지 않는 모델이 가격을 먼저 열었습니다. 같은 날 채팅과 에이전트 화면이 하나로 합쳐지고, 광고 대화가 제품 기능으로 들어왔습니다. 점수를 카피에 넣기 전에 누가 어떤 조건에서 쟀는지를 칸을 나눠 적으면 됩니다.",
+  "analysis": [
+    {
+      "id": "jev",
+      "title": "1. TypeSafe AI가 텍스트를 만들지 않는 모델 Jev를 공개했다 — 입력 100만 토큰 $0.042, 출력은 무료",
+      "bullets": [
+        "개발자가 질문과 선택지를 정하면 모델이 점수·확률·신뢰도를 돌려줍니다.",
+        "입력 $0.042/1M 토큰, 출력은 미터링하지 않는다고 적었습니다.",
+        "창립자 Diogo Almeida는 InstructGPT 저자 중 한 명으로 소개됩니다."
+      ],
+      "body": [
+        "TypeSafe AI는 9월 15일 첫 System One 모델 Jev를 얼리 액세스로 열었습니다. 채팅용 자동회귀 문장이 아니라, 소프트웨어가 바로 받을 수 있는 타입 있는 판단입니다. 회사는 병렬 샘플러와 Reinforcement Learning for Calibrated Decisions(RLCD)를 썼다고 적었습니다. 출력을 안 만들기 때문에 구조 밖 문장을 지어낼 수 없다고 말합니다. 허용된 선택지 안에서의 오답은 별개입니다.",
+        "가격은 입력 100만 토큰 $0.042, 출력 무료입니다. 지연은 70–500ms라고 적었습니다. 20–200배 빠르고 40–400배 싸다는 비교는 회사가 만든 워크플로 기준입니다. 공개 리더보드와 아키텍처 논문은 아직 없습니다. 분류·라우팅처럼 선택지가 고정된 자리에 값싼 판정기를 붙일 때 대기자 명단을 보면 됩니다."
+      ],
+      "takeaway": "분류·라우팅은 값싼 판단 모델로 먼저 재 보면 됩니다. 독립 점수가 나오기 전에는 사내 과제 몇 개만 대기자 접근으로 굴리면 됩니다.",
+      "tags": [
+        "Jev",
+        "TypeSafe",
+        "판단"
+      ],
+      "sources": [
+        {
+          "handle": "TypeSafe AI",
+          "url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+          "kind": "doc"
+        },
+        {
+          "handle": "The Decoder",
+          "url": "https://the-decoder.com/former-openai-researcher-builds-an-ai-model-that-judges-options-instead-of-writing-text/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "claude-merge",
+      "title": "2. Anthropic이 Cowork와 채팅을 하나의 Claude로 합치고 Claude Docs·Claude Slides를 베타로 열었다",
+      "bullets": [
+        "어디에 넣을지 고르지 않아도 Cowork가 하던 일이 모든 대화에서 됩니다.",
+        "Claude Docs와 Claude Slides는 유료 플랜 베타, 엔터프라이즈는 관리자가 켭니다.",
+        "Pro·Max 웹·데스크톱·모바일부터 몇 주에 걸쳐 올라갑니다."
+      ],
+      "body": [
+        "Anthropic은 9월 16일 Cowork와 채팅을 한 Claude로 합친다고 밝혔습니다. 큰 일은 Cowork, 질문은 채팅으로 나누던 선택이 사라집니다. 노트북을 닫아도 이어지고, Docs·Slides·Design이 같은 대화 안에 들어갑니다. 슬라이드는 바로 발표하거나 PowerPoint·PDF로 내릴 수 있습니다.",
+        "한국 구독자에게는 새 모델보다 화면이 바뀌는 변화입니다. 기존 Cowork 작업·커넥터·스킬은 그대로 넘어온다고 적었습니다. 팀·무료 플랜은 이후입니다. 엔터프라이즈는 관리자 스위치가 있습니다."
+      ],
+      "takeaway": "한국 구독자에게는 새 모델이 아니라 화면이 바뀌는 변화입니다. 엔터프라이즈라면 Docs·Slides 베타 켜는 주체를 먼저 확인하면 됩니다.",
+      "tags": [
+        "Claude",
+        "Cowork",
+        "Docs"
+      ],
+      "sources": [
+        {
+          "handle": "Anthropic",
+          "url": "https://claude.com/blog/cowork-is-now-claude",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic",
+          "url": "https://www.anthropic.com",
+          "kind": "doc"
+        },
+        {
+          "handle": "@AnthropicAI",
+          "url": "https://x.com/AnthropicAI",
+          "kind": "talk"
+        }
+      ]
+    },
+    {
+      "id": "ads",
+      "title": "3. OpenAI가 ChatGPT에 Sponsored Agents를 시험하고 광고 도구를 넓힌다",
+      "bullets": [
+        "광고를 본 뒤 사업자 후원 에이전트와 라벨이 붙은 별도 대화를 시작할 수 있습니다.",
+        "이 대화는 ChatGPT의 독립 답변·원래 채팅과 분리된다고 적었습니다.",
+        "HubSpot이 첫 CRM, Shopify가 첫 이커머스 파트너입니다."
+      ],
+      "body": [
+        "OpenAI는 9월 16일 광고를 더 쓰게 만드는 도구와 Sponsored Agents 시험을 열었습니다. 식탁 광고를 본 뒤 치수·관리법을 사업자 에이전트에게 묻는 그림입니다. Reuters가 같은 날 받아 전했습니다. 미국 일부 광고주 시험입니다.",
+        "유료 계정은 광고에서 빠지는 기존 구분을 유지하는지, 무료 창이 광고에서 시작되는지를 화면에서 보면 됩니다. Shopify 앱은 ChatGPT Ads가 열린 시장에 9월 23일부터 국제로 간다고 적었습니다. 조달 문장에는 ‘후원 에이전트와 독립 답변을 칸을 나눠 적는다’고 두면 됩니다."
+      ],
+      "takeaway": "ChatGPT를 무료로 쓴다면 지금 창이 광고에서 시작됐는지 보면 됩니다. 후원 대화와 독립 답변을 한 로그에 섞지 않으면 됩니다.",
+      "tags": [
+        "광고",
+        "OpenAI",
+        "에이전트"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI",
+          "url": "https://openai.com/index/reimagining-advertising-with-ai/",
+          "kind": "doc"
+        },
+        {
+          "handle": "Reuters",
+          "url": "https://www.reuters.com/business/media-telecom/openai-tests-advertiser-sponsored-agents-expands-ai-tools-chatgpt-ads-2026-09-16/",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI",
+          "url": "https://openai.com",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "firefox",
+      "title": "4. Mozilla가 Mistral과 손잡고 Firefox Smart Window 베타에 Mistral Small 4를 넣는다",
+      "bullets": [
+        "미국·캐나다에 이어 프랑스가 공식 프랑스어로 열립니다.",
+        "브라우저에 내장 모델이 여럿이고, 가져오기(BYO)도 있다고 적었습니다.",
+        "Mozilla는 대화를 기본으로 서버에 안 남기고, Mistral은 제로 리텐션에 동의했다고 했습니다."
+      ],
+      "body": [
+        "Mozilla는 9월 16일 Mistral Small 4를 Firefox Smart Window 베타 모델로 넣는다고 밝혔습니다. 복잡한 검색 경로를 정리하고, 닫았던 탭을 다시 집어 주는 브라우저 조수입니다. 영국·독일은 올해 후반 예정입니다.",
+        "브라우저 AI 경쟁이 점수보다 데이터 보존과 모델 선택권에서 갈립니다. 기본값 모델과 선택 화면을 먼저 열면 됩니다. 한국 리전 일정은 이 발표에 없습니다."
+      ],
+      "takeaway": "브라우저 AI는 기본값과 모델 선택 화면을 먼저 열면 됩니다. 보존 정책이 제로 리텐션인지만 칸에 적으면 됩니다.",
+      "tags": [
+        "Firefox",
+        "Mistral",
+        "프라이버시"
+      ],
+      "sources": [
+        {
+          "handle": "Mozilla",
+          "url": "https://blog.mozilla.org/en/firefox/mozilla-mistral-partnership/",
+          "kind": "doc"
+        },
+        {
+          "handle": "Mistral AI",
+          "url": "https://mistral.ai/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "extras",
+      "title": "5. 🆕 그 밖의 신기능·신제품",
+      "bullets": [
+        "에이전트 긴 과제 후기는 복구 설계가 병목이라는 쪽으로 모입니다.",
+        "메모리 가격이 소비자 기기와 워크스테이션 호가를 같이 밀고 있습니다.",
+        "숫자 큰 서브에이전트 실험은 개수보다 삭제한 줄의 검수 비용이 본문입니다."
+      ],
+      "body": [
+        " 엔더 진주에 막히고 크리퍼에 날아가는 식의 긴 플레이 로그는, 능력이 아니라 중간 상태를 어디에 둘지의 문제입니다. 긴 작업을 맡길 때는 체크포인트를 저장소 밖에 두면 됩니다.",
+        "RTX 워크스테이션 호가와 이미 팔리던 폰 값 인상은 같은 부품 곡선입니다. 살 계획이면 마켓 호가와 제조사 정가를 나눠 보면 됩니다."
+      ],
+      "takeaway": "긴 작업을 맡길 땐 중간 결과를 어디에 둘지 먼저 정하면 됩니다. 에이전트가 지운 코드는 저장소 밖에서 확인하면 됩니다.",
+      "tags": [
+        "에이전트",
+        "하드웨어",
+        "검수"
+      ],
+      "sources": [
+        {
+          "handle": "@OpenAI",
+          "url": "https://x.com/OpenAI",
+          "kind": "talk"
+        },
+        {
+          "handle": "@AnthropicAI",
+          "url": "https://x.com/AnthropicAI",
+          "kind": "talk"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "채팅 문장 대신 타입 있는 판단, Cowork 탭 대신 한 화면으로 기본값이 움직입니다.",
+    "grow": "값싼 판정기와 브라우저 로컬 조수가 같은 날의 성장 축입니다.",
+    "caution": "회사 자체 비교표와 ‘환각 불가’ 문장은 독립 검증 전입니다.",
+    "heat": "광고 대화가 제품 기능이 되면 무료 창의 기본값이 과열됩니다."
+  },
+  "tips": [
+    {
+      "title": "분류·라우팅은 값싼 판단 모델로 먼저 재 봅니다",
+      "body": "선택지가 고정된 단계는 긴 글을 만들 필요가 없습니다. Jev처럼 출력 구조가 막힌 모델이 싸면 그 구간만 바꿔 보면 됩니다.",
+      "via": "TypeSafe AI"
+    },
+    {
+      "title": "긴 작업을 맡길 땐 중간 결과를 어디에 둘지 먼저 정합니다",
+      "body": "141시간짜리 로그가  엔더 진주에서 멈추는 것은 모델 점수가 아니라 체크포인트 부재입니다. 산출물을 대화 밖에 저장하면 됩니다.",
+      "via": "운영"
+    },
+    {
+      "title": "에이전트가 지운 코드는 저장소 밖에서 확인합니다",
+      "body": "대량 삭제 실험은 줄 수로 성과를 말합니다. 머지 전에 diff를 사람 큐에 올리면 됩니다.",
+      "via": "운영"
+    },
+    {
+      "title": "서브에이전트는 개수를 올릴 때마다 효과를 기록합니다",
+      "body": "1,393개라는 숫자를 규칙으로 읽지 않습니다. 개수를 두 배로 늘려 품질이 안 바뀌면 그 구간에서 멈추면 됩니다.",
+      "via": "운영"
+    },
+    {
+      "title": "ChatGPT를 무료로 쓴다면 지금 창이 광고에서 시작됐는지 봅니다",
+      "body": "Sponsored Agents는 라벨이 붙은 별도 대화입니다. 독립 답변과 한 화면에 있어도 로그는 나눠 적으면 됩니다.",
+      "via": "OpenAI"
+    },
+    {
+      "title": "브라우저 AI는 기본값과 모델 선택 화면을 먼저 엽니다",
+      "body": "Smart Window는 모델이 여럿입니다. 보존 정책과 기본 모델을 확인한 뒤에 사내 기본값으로 둘지 정하면 됩니다.",
+      "via": "Mozilla"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다."
+}

@@ -28,7 +28,7 @@ python3 scripts/pipeline/validate.py content/issues/*.json
 | `XAI_API_KEY` 또는 `GROK_API_KEY` | xAI |
 | `OPENAI_API_KEY` | OpenAI 폴백 |
 
-키가 없으면 토픽 묶음 스켈레톤만 씁니다. 시사점의 `하십시오`는 검증이 막습니다.
+키가 없으면 토픽 묶음 스켈레톤만 씁니다. 시사점의 `하십시오`는 검증이 막습니다. GLM-5.3은 생각 시간이 길어서 초안 단계는 10분(`LLM_TIMEOUT=600`)까지 기다립니다. GitHub Actions 로그의 `TimeoutError`는 키가 아니라 응답 지연입니다.
 
 GLM 예:
 

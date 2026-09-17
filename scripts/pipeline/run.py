@@ -28,6 +28,7 @@ def main() -> int:
     ap.add_argument("--provider", choices=["xai", "glm", "openai"])
     ap.add_argument("--allow-weekend", action="store_true")
     ap.add_argument("--collect-only", action="store_true")
+    ap.add_argument("--skip-collect", action="store_true")
     args = ap.parse_args()
 
     now = datetime.now(KST)
@@ -43,9 +44,13 @@ def main() -> int:
     collected = pipe / f"{date}.collected.json"
     issue = root / "content" / "issues" / f"{date}.json"
 
-    rc = sh([sys.executable, str(HERE / "collect.py"), "--out", str(collected)])
-    if rc != 0:
-        return rc
+    if not args.skip_collect:
+        rc = sh([sys.executable, str(HERE / "collect.py"), "--out", str(collected)])
+        if rc != 0:
+            return rc
+    elif not collected.exists():
+        print(f"missing {collected}", file=sys.stderr)
+        return 2
     if args.collect_only:
         return 0
 

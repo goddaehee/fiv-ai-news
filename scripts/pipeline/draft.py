@@ -12,6 +12,7 @@ import json
 import os
 import ssl
 import sys
+import urllib.error
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -74,18 +75,19 @@ def pick_key(prefer: str | None = None) -> tuple[str, str, str, str] | None:
         order = [want] + [p for p in order if p != want]
     for name in order:
         spec = PROVIDERS[name]
-        key = next((os.environ[k] for k in spec["env"] if os.environ.get(k)), None)
+        key = next((os.environ[k].strip() for k in spec["env"] if os.environ.get(k) and os.environ[k].strip()), None)
         if not key:
             continue
-        url = os.environ.get(spec["url_env"]) or spec["url"]
+        url = (os.environ.get(spec["url_env"]) or spec["url"]).strip()
         if not url.endswith("/chat/completions"):
             url = url.rstrip("/") + "/chat/completions"
-        model = os.environ.get(spec["model_env"]) or spec["model"]
+        model = (os.environ.get(spec["model_env"]) or spec["model"]).strip()
         return name, key, url, model
     return None
 
 
-def chat(url: str, key: str, model: str, user: str) -> str:
+def chat(url: str, key: str, model: str, user: str, *, effort: str | None = None) -> str:
+    timeout = int(os.environ.get("LLM_TIMEOUT", "600"))
     payload = {
         "model": model,
         "temperature": 1.0,
@@ -96,7 +98,7 @@ def chat(url: str, key: str, model: str, user: str) -> str:
     }
     if model.lower().startswith("glm-5"):
         payload["thinking"] = {"type": "enabled"}
-        payload["reasoning_effort"] = os.environ.get("GLM_REASONING", "high")
+        payload["reasoning_effort"] = effort or os.environ.get("GLM_REASONING", "low")
     body = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(
         url,
@@ -104,8 +106,14 @@ def chat(url: str, key: str, model: str, user: str) -> str:
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=180, context=ssl.create_default_context()) as res:
-        data = json.loads(res.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=timeout, context=ssl.create_default_context()) as res:
+            data = json.loads(res.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode("utf-8", "replace")[:400]
+        raise SystemExit(f"LLM HTTP {e.code} from {url.split('?')[0]} model={model}: {detail}") from e
+    except TimeoutError as e:
+        raise TimeoutError(f"LLM timed out after {timeout}s ({url.split('?')[0]} model={model})") from e
     msg = data["choices"][0]["message"]
     return msg.get("content") or msg.get("reasoning_content") or ""
 
@@ -219,13 +227,26 @@ def main() -> int:
                 {
                     "topic": topic,
                     "n": len(items),
-                    "items": [{"title": it["title"], "url": it.get("url"), "source": it["source"], "summary": it.get("summary"), "published": it.get("published")} for it in items[:6]],
+                    "items": [
+                        {
+                            "title": it["title"],
+                            "url": it.get("url"),
+                            "source": it["source"],
+                            "summary": (it.get("summary") or "")[:180],
+                            "published": it.get("published"),
+                        }
+                        for it in items[:3]
+                    ],
                 }
-                for topic, items in buckets[:10]
+                for topic, items in buckets[:8]
             ],
         }
-        print(f"drafting with {name}/{model}…")
-        raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False))
+        print(f"drafting provider={name} model={model} buckets={len(payload['buckets'])}", flush=True)
+        try:
+            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False))
+        except TimeoutError as e:
+            print(f"{e}; retrying with reasoning_effort=low", flush=True)
+            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False), effort="low")
         issue = extract_json(raw)
         issue["date"] = snap["date"]
     else:
