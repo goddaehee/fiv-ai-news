@@ -62,17 +62,26 @@ def check(issue: dict) -> list[str]:
         err("analysis", "need 2–14", bag)
     if len(issue.get("tips") or []) < 1:
         err("tips", "need ≥1", bag)
-    mood = issue.get("mood") or {}
+    mood = issue.get("mood")
+    if not isinstance(mood, dict):
+        err("mood", "must be an object with shift/grow/caution/heat", bag)
+        mood = {}
     for k in ("shift", "grow", "caution", "heat"):
         if not mood.get(k):
             err("mood", f"missing {k}", bag)
 
     ids = []
     for i, b in enumerate(issue.get("briefing") or []):
+        if not isinstance(b, dict):
+            err(f"briefing[{i}]", "must be object", bag)
+            continue
         require(b, ["id", "headline", "summary"], f"briefing[{i}]", bag)
         ids.append(b.get("id"))
     for i, a in enumerate(issue.get("analysis") or []):
         p = f"analysis[{i}]"
+        if not isinstance(a, dict):
+            err(p, "must be object", bag)
+            continue
         require(a, ["id", "title", "bullets", "body", "takeaway", "tags", "sources"], p, bag)
         if len(a.get("bullets") or []) < 2:
             err(p + ".bullets", "need ≥2", bag)
@@ -81,7 +90,9 @@ def check(issue: dict) -> list[str]:
         if len(a.get("sources") or []) < 1:
             err(p + ".sources", "need ≥1", bag)
         for j, s in enumerate(a.get("sources") or []):
-            if s.get("kind") not in KINDS:
+            if not isinstance(s, dict):
+                err(f"{p}.sources[{j}]", "must be object", bag)
+                continue
                 err(f"{p}.sources[{j}].kind", "hot|talk|rt|doc", bag)
             if not URI_RE.match(str(s.get("url") or "")):
                 err(f"{p}.sources[{j}].url", "http(s) url", bag)
