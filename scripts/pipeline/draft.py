@@ -154,16 +154,52 @@ def _hit(items: list[dict], title: str) -> dict | None:
     return best if score >= 2 else None
 
 
-def attach_sources(issue: dict, snap: dict) -> dict:
-    items = [it for it in (snap.get("items") or []) if (it.get("url") or "").startswith("http")]
-    for a in issue.get("analysis") or []:
+def attach_sources(issue: dict, snap: dict, buckets: list | None = None) -> dict:
+    pool: list[dict] = []
+    for pair in buckets or []:
+        items = pair[1] if isinstance(pair, (list, tuple)) and len(pair) == 2 else []
+        pool.extend(items)
+    pool.extend(snap.get("items") or [])
+    seen: set[str] = set()
+    uniq: list[dict] = []
+    for it in pool:
+        url = it.get("url") or ""
+        if not url.startswith("http") or "example.com" in url or url in seen:
+            continue
+        seen.add(url)
+        uniq.append(it)
+
+    analyses = issue.get("analysis") or []
+    bucket_list = list(buckets or [])
+    for i, a in enumerate(analyses):
         srcs = a.get("sources") or []
         hollow = not srcs or all("example.com" in (s.get("url") or "") for s in srcs)
         if not hollow:
             continue
-        hit = _hit(items, a.get("title") or "") or _hit(items, " ".join(a.get("bullets") or []))
+        candidates: list[dict] = []
+        if i < len(bucket_list):
+            candidates.extend(bucket_list[i][1][:4])
+        hit = _hit(uniq, a.get("title") or "") or _hit(uniq, " ".join(a.get("bullets") or []))
         if hit:
-            a["sources"] = [{"handle": hit["source"], "url": hit["url"], "kind": hit.get("kind") or "doc"}]
+            candidates.insert(0, hit)
+        picked = []
+        used: set[str] = set()
+        for it in candidates + uniq[:12]:
+            url = it.get("url") or ""
+            if not url.startswith("http") or "example.com" in url or url in used:
+                continue
+            used.add(url)
+            picked.append(
+                {
+                    "handle": it.get("source") or "source",
+                    "url": url,
+                    "kind": it.get("kind") or "doc",
+                }
+            )
+            if len(picked) >= 2:
+                break
+        if picked:
+            a["sources"] = picked
     return issue
 
 
@@ -232,7 +268,7 @@ def _sources(v) -> list[dict]:
         if not isinstance(s, dict):
             continue
         url = _text(s.get("url") or s.get("href") or s.get("link"))
-        if not url.startswith("http"):
+        if not url.startswith("http") or "example.com" in url:
             continue
         kind = s.get("kind") if s.get("kind") in KINDS else "doc"
         handle = _text(s.get("handle") or s.get("name") or s.get("source") or s.get("title")) or "source"
@@ -279,7 +315,7 @@ def normalize(issue: dict) -> dict:
         tags = [_text(x) for x in _list(a.get("tags")) if _text(x)] or [hid]
         sources = _sources(a.get("sources"))
         if not sources:
-            sources = [{"handle": "source", "url": "https://example.com", "kind": "doc"}]
+            sources = []
         take = _text(a.get("takeaway") or a.get("so") or a.get("point"))
         if "하십시오" in take:
             take = take.replace("하십시오", "하면 됩니다")
@@ -544,7 +580,7 @@ def main() -> int:
         issue["date"] = snap["date"]
         issue = normalize(issue)
         issue["date"] = snap["date"]
-        issue = attach_sources(issue, snap)
+        issue = attach_sources(issue, snap, buckets)
         issue["draft"] = True
     else:
         print("no API key — writing skeleton for the editor")

@@ -9,9 +9,12 @@ from collections import defaultdict
 
 RULES: list[tuple[str, re.Pattern[str]]] = [
     ("gemini-voice", re.compile(r"gemini\s*3\.8|live extended|speech to speech|search live", re.I)),
-    ("openai", re.compile(r"\bopenai\b|gpt-live|gpt-6|chatgpt|sora|codex", re.I)),
+    ("openai", re.compile(r"\bopenai\b|gpt-live|gpt-6|chatgpt|sora|codex|misalignment|astra for law", re.I)),
     ("anthropic", re.compile(r"anthropic|\bclaude\b|fable|amodei", re.I)),
-    ("safety", re.compile(r"safety|cheatbench|reward hack|pace the frontier|kill switch|regulation", re.I)),
+    ("safety", re.compile(r"safety|cheatbench|reward hack|pace the frontier|kill switch|regulation|cheating", re.I)),
+    ("law", re.compile(r"\blaw\b|legal search|courtlistener|lexis", re.I)),
+    ("routing", re.compile(r"openrouter|wallet share|token share", re.I)),
+    ("china", re.compile(r"\bz\.ai\b|zhipu|glm-5|chinese accelerator", re.I)),
     ("science", re.compile(r"science|x-ray|periodic neon|atlas|scientist", re.I)),
     ("chips", re.compile(r"\bgpu\b|h200|blackwell|mtia|inferenc|nvidia|tpu", re.I)),
     ("benchmark", re.compile(r"benchmark|leaderboard|artificial analysis|index|eval", re.I)),
