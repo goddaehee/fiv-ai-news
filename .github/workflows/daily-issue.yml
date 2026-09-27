@@ -2,8 +2,8 @@ name: daily-issue
 
 on:
   schedule:
-    # 평일 05:30 KST = 전날 20:30 UTC (일–목)
-    - cron: "30 20 * * 0-4"
+    # 매일 05:30 KST = 전날 20:30 UTC (주말 포함)
+    - cron: "30 20 * * *"
   workflow_dispatch:
 
 jobs:

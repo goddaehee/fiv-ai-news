@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One-shot daily pipeline: collect → draft → validate.
 
-Weekdays only by default (KST). Weekend files are not created.
+Runs every day including weekends (KST).
 """
 
 from __future__ import annotations
@@ -33,10 +33,6 @@ def main() -> int:
 
     now = datetime.now(KST)
     date = args.date or now.strftime("%Y-%m-%d")
-    dt = datetime.strptime(date, "%Y-%m-%d").replace(tzinfo=KST)
-    if dt.weekday() >= 5 and not args.allow_weekend:
-        print(f"{date} is weekend — skip (use --allow-weekend to override)")
-        return 0
 
     root = HERE.parents[1]
     pipe = root / "content" / "pipeline"

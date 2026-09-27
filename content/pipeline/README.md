@@ -6,7 +6,7 @@
 23:00 KST  collect.py   RSS + HN 스냅샷
 05:30 KST  draft.py     편집 초안 (XAI_API_KEY가 있으면 LLM, 없으면 스켈레톤)
          validate.py  스키마·톤 검사
-평일만    주말 파일은 만들지 않음
+매일    주말 호도 만든다
 ```
 
 ## 로컬
@@ -29,7 +29,7 @@ python3 scripts/pipeline/validate.py content/issues/*.json
 
 ## GitHub Actions
 
-`.github/workflows/daily-issue.yml` — 평일 05:30 KST (`20:30 UTC` 전날). 저장소 Secret에 `XAI_API_KEY`를 넣으면 초안 PR이 열립니다. 없으면 수집 JSON만 아티팩트로 남습니다.
+`.github/workflows/daily-issue.yml` — 매일 05:30 KST (`20:30 UTC` 전날, 주말 포함). 저장소 Secret에 `GLM_API_KEY`를 넣으면 검증 통과 시 main에 바로 올라갑니다.
 
 ## 발행
 

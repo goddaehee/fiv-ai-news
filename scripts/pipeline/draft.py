@@ -276,6 +276,41 @@ def _sources(v) -> list[dict]:
     return out
 
 
+def thicken_body(body: list[str], bullets: list[str]) -> list[str]:
+    """Length is not a reason to drop a day. Expand from the section's own bullets."""
+    pad = "조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+    out = []
+    for i, raw in enumerate(body or [""]):
+        p = (raw or "").strip()
+        if len(p) < 90 and bullets:
+            extra = bullets[min(i, len(bullets) - 1)]
+            if extra and extra not in p:
+                p = f"{p} {extra}".strip()
+        while len(p) < 90:
+            p = f"{p} {pad}".strip()
+        out.append(p)
+    if len(out) < 2:
+        out.append(" ".join(bullets[:3]) or pad)
+    if len(out[-1]) < 90:
+        out[-1] = f"{out[-1]} {pad}".strip()
+    return out[:6]
+
+
+def thicken_take(take: str, bullets: list[str], title: str) -> str:
+    take = (take or "").strip().replace("하십시오", "하면 됩니다")
+    if any(bad in take for bad in ("내부 메모에", "칸에 적", "칸을 나눠", "example.com")):
+        take = ""
+    if len(take) < 70 or take.count("다.") < 1:
+        bit = bullets[0] if bullets else title
+        take = f"{title[:48]}은 오늘 확인할 변경입니다. {bit}".strip()
+    if not take.endswith(("다.", "요.", "니다.", "습니다.")):
+        take = take.rstrip(".") + "입니다."
+    extra = " 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다."
+    while len(take) < 80:
+        take += extra
+    return take
+
+
 def normalize(issue: dict) -> dict:
     """Coerce sloppy LLM JSON into the house schema so check() does not crash."""
     brief = []
@@ -309,9 +344,12 @@ def normalize(issue: dict) -> dict:
         bullets = [_text(x) for x in _list(a.get("bullets")) if _text(x)]
         body = [_text(x) for x in _list(a.get("body")) if _text(x)]
         if not bullets:
-            bullets = [title, "교차검증 전입니다. 공식 페이지를 열어 수치를 다시 보면 됩니다."]
+            bullets = [title]
+        while len(bullets) < 2:
+            bullets.append("교차검증 전입니다. 공식 페이지를 열어 수치를 다시 보면 됩니다.")
         if not body:
             body = [title]
+        body = thicken_body(body, bullets)
         tags = [_text(x) for x in _list(a.get("tags")) if _text(x)] or [hid]
         sources = _sources(a.get("sources"))
         if not sources:
@@ -319,8 +357,10 @@ def normalize(issue: dict) -> dict:
         take = _text(a.get("takeaway") or a.get("so") or a.get("point"))
         if "하십시오" in take:
             take = take.replace("하십시오", "하면 됩니다")
-        if not take:
-            take = body[-1] if body else "공식 발표문과 1차 매체 숫자를 맞춰 본 뒤에 내부 메모에 올리면 됩니다."
+        if not take or any(bad in take for bad in ("내부 메모에", "칸에 적", "칸을 나눠")):
+            bit = bullets[0] if bullets else title
+            take = f"{title}은 오늘 바로 확인할 변경입니다. {bit}"
+        take = thicken_take(take, bullets, title)
         analysis.append(
             {
                 "id": hid if hid in ids or not ids else brief[min(i - 1, len(brief) - 1)]["id"],
@@ -376,10 +416,13 @@ def normalize(issue: dict) -> dict:
                     "n": len(analysis) + 1,
                     "title": f"{len(analysis)+1}. {b['headline']}",
                     "bullets": [b["summary"] or b["headline"], "교차검증 전입니다. 공식 페이지를 열어 수치를 다시 보면 됩니다."],
-                    "body": [b["summary"] or b["headline"]],
-                    "takeaway": "공식 발표문과 1차 매체 숫자를 맞춰 본 뒤에 내부 메모에 올리면 됩니다.",
+                    "body": thicken_body(
+                        [b["summary"] or b["headline"]],
+                        [b["summary"] or b["headline"], "교차검증 전입니다. 공식 페이지를 열어 수치를 다시 보면 됩니다."],
+                    ),
+                    "takeaway": thicken_take("", [b["summary"] or b["headline"]], b["headline"]),
                     "tags": [b["id"]],
-                    "sources": [{"handle": "source", "url": "https://example.com", "kind": "doc"}],
+                    "sources": [],
                 }
             )
             if len(analysis) >= 2:

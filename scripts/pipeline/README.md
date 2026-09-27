@@ -6,7 +6,7 @@
 23:00 KST  collect.py   RSS + HN 스냅샷
 05:30 KST  draft.py     편집 초안 (GLM/xAI/OpenAI 키가 있으면 LLM, 없으면 스켈레톤)
          validate.py  스키마·톤 검사
-평일만    주말 파일은 만들지 않음
+매일    주말 호도 만든다
 ```
 
 ## 로컬
@@ -42,7 +42,7 @@ python3 scripts/pipeline/run.py --llm --provider glm
 
 ## GitHub Actions
 
-`.github/workflows/daily-issue.yml` — 평일 05:30 KST. Secret에 `GLM_API_KEY`(또는 xAI/OpenAI)를 넣으면 초안 PR이 열립니다. 키가 여러 개면 `LLM_PROVIDER=glm`도 같이 넣으면 됩니다.
+`.github/workflows/daily-issue.yml` — 매일 05:30 KST. Secret에 `GLM_API_KEY`(또는 xAI/OpenAI)를 넣으면 초안이 main에 바로 올라갑니다. 키가 여러 개면 `LLM_PROVIDER=glm`도 같이 넣으면 됩니다.
 
 ## 발행
 
