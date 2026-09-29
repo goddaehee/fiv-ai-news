@@ -1,0 +1,447 @@
+{
+  "date": "2026-09-30",
+  "title": "OpenAI가 GPT-6.1 Sol을 내고 DevDay에서 20건 넘게 발표했다",
+  "heroline": "Astra 급 성능을 토큰 가격 5분의 1로 끌어온 Sol, 주간 토큰 100만 개 돌파",
+  "dek": "OpenAI는 GPT-6.1 Sol과 능동형 어시스턴트 Dots를 공개했고, DevDay 2026에서 20건이 넘는 발표를 쏟아냈습니다. 고객 사례로는 invideo가 색 보정 품질을 3배 끌어올렸고 V7은 비용 78%를 줄였습니다. Google DeepMind도 이중맹검 평가와 컴퓨터 사용 기능으로 경쟁 구도를 좁혀왔습니다.",
+  "tag": "AI 데일리 브리핑",
+  "briefMin": 5,
+  "readMin": 9,
+  "briefing": [
+    {
+      "id": "gpt-6-1-sol",
+      "headline": "OpenAI가 GPT-6.1 Sol을 Astra 토큰 가격 5분의 1로 출시했다",
+      "summary": "OpenAI가 GPT-6.1 Sol을 Astra 토큰 가격 5분의 1로 출시했다"
+    },
+    {
+      "id": "devday-2026",
+      "headline": "OpenAI가 DevDay 2026에서 20건 넘는 발표를 한꺼번에 공개했다",
+      "summary": "OpenAI가 DevDay 2026에서 20건 넘는 발표를 한꺼번에 공개했다"
+    },
+    {
+      "id": "dots",
+      "headline": "OpenAI가 복잡한 프로젝트를 스스로 이어가는 'Dots'를 선보였다",
+      "summary": "OpenAI가 복잡한 프로젝트를 스스로 이어가는 'Dots'를 선보였다"
+    },
+    {
+      "id": "invideo-astra",
+      "headline": "invideo가 GPT-6 Astra로 색 보정 품질을 3배 끌어올렸다",
+      "summary": "invideo가 GPT-6 Astra로 색 보정 품질을 3배 끌어올렸다"
+    },
+    {
+      "id": "parallel-astra",
+      "headline": "Parallel이 GPT-6 Astra로 리서치 시간과 비용을 절반씩 줄였다",
+      "summary": "Parallel이 GPT-6 Astra로 리서치 시간과 비용을 절반씩 줄였다"
+    },
+    {
+      "id": "v7-luna",
+      "headline": "V7이 GPT-5.6 Luna로 비용 78%를 줄이고 정확도를 올렸다",
+      "summary": "V7이 GPT-5.6 Luna로 비용 78%를 줄이고 정확도를 올렸다"
+    },
+    {
+      "id": "mentalhealthbench",
+      "headline": "OpenAI가 정신건강 대화 평가용 MentalHealthBench를 공개했다",
+      "summary": "OpenAI가 정신건강 대화 평가용 MentalHealthBench를 공개했다"
+    },
+    {
+      "id": "kumo-tabular",
+      "headline": "NVIDIA가 표 데이터 예측용 Kumo Tabular로 정확도·효율 균형을 내놨다",
+      "summary": "NVIDIA가 표 데이터 예측용 Kumo Tabular로 정확도·효율 균형을 내놨다"
+    },
+    {
+      "id": "altk-evolve",
+      "headline": "IBM 연구팀이 '에이전트 일관성' 평가 방법을 공유해 화제가 됐다",
+      "summary": "IBM 연구팀이 '에이전트 일관성' 평가 방법을 공유해 화제가 됐다"
+    }
+  ],
+  "keywords": [
+    "GPT-6.1 Sol",
+    "GPT-6 Astra",
+    "DevDay 2026",
+    "Dots",
+    "에이전트",
+    "벤치마크",
+    "Kumo Tabular",
+    "MentalHealthBench"
+  ],
+  "mainEvent": "GPT-6.1 Sol 출시의 핵심은 성능이 아니라 가격 구조입니다. Astra 대비 입력·출력 토큰 단가가 5분의 1이면, 대량 워크로드에서 모델 선택의 경제학이 완전히 바뀝니다. 이는 경쟁사에도 즉각적인 가격 압박으로 이어질 가능성이 큽니다. 다만 '근접한 성능'의 구체적 격차는 벤치마크별로 다를 수 있어 도입 전 검증이 필요합니다.",
+  "keynums": [
+    {
+      "val": "1/5",
+      "lab": "Sol의 Astra 대비 토큰 가격",
+      "sub": "Sol의 Astra 대비 토큰 가격"
+    },
+    {
+      "val": "20+건",
+      "lab": "DevDay 2026 발표 건수",
+      "sub": "DevDay 2026 발표 건수"
+    },
+    {
+      "val": "3배",
+      "lab": "invideo 색 보정 개선 배수",
+      "sub": "invideo 색 보정 개선 배수"
+    },
+    {
+      "val": "50개",
+      "lab": "invideo 하루 맞춤 이펙트 생산량",
+      "sub": "invideo 하루 맞춤 이펙트 생산량"
+    },
+    {
+      "val": "각 50%",
+      "lab": "Parallel의 리서치 시간·비용 감소",
+      "sub": "Parallel의 리서치 시간·비용 감소"
+    },
+    {
+      "val": "78%",
+      "lab": "V7 비용 감소율",
+      "sub": "V7 비용 감소율"
+    },
+    {
+      "val": "100만+ (미확정)",
+      "lab": "Sol 출시 후 주간 토큰 소비",
+      "sub": "Sol 출시 후 주간 토큰 소비"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "2026-06-25",
+      "d": "Google DeepMind, Gemini 3.5 Flash에 컴퓨터 사용 기능 도입"
+    },
+    {
+      "t": "2026-09-03",
+      "d": "Hugging Face, GRPO 100스텝 구조화 출력 파인튜닝과 에이전트 메모리 'Funes' 게시"
+    },
+    {
+      "t": "2026-09-16",
+      "d": "IBM 리서치, 에이전트 반복 일관성 평가 방법론 공개"
+    },
+    {
+      "t": "2026-09-21",
+      "d": "V7, GPT-5.6 기반 비용 78% 감소 사례 발표"
+    },
+    {
+      "t": "2026-09-23",
+      "d": "MentalHealthBench 공개, invideo·Parallel의 Astra 활용 사례 잇달아 발표"
+    },
+    {
+      "t": "2026-09-29",
+      "d": "OpenAI, Dots 공개 후 DevDay 2026에서 20건 넘는 발표와 GPT-6.1 Sol 출시"
+    },
+    {
+      "t": "2026-09-30",
+      "d": "NVIDIA, Kumo Tabular로 표 데이터 예츜 frontier 소개"
+    }
+  ],
+  "intro": "이번 주는 OpenAI의 주간이었습니다. GPT-6.1 Sol이 가격 구조를 바꾸고, DevDay 2026이 20건 넘는 발표로 개발자 생태계를 다시 묶었습니다. 그 사이 고객사들은 이미 숫자로 성과를 증명하고 있습니다. 5분 요약으로 이번 호를 정리합니다.",
+  "analysis": [
+    {
+      "id": "gpt-6-1-sol",
+      "n": 1,
+      "title": "1. gpt-6-1-sol",
+      "bullets": [
+        "입력·출력 토큰 모두 Astra 표준 요금의 5분의 1",
+        "코딩·컴퓨터 사용·전문 업무에 '근접한 Astra' 성능 주장",
+        "대량 워크로드의 모델 선택 기준을 성능에서 단가로 이동"
+      ],
+      "body": [
+        "Sol의 전략적 의미는 성능이 아니라 가격대입니다. Astra급 지능을 80% 낮은 단가에 풀면, 비용 때문에 상위 모델을 못 쓰던 고빈도 업무가 전부 이전 대상이 됩니다. 코딩과 컴퓨터 사용에 초점을 맞춘 점도 대량 소비가 예상되는 구간을 정확히 겨냥한 선택입니다. 다만 '근접한 성능'의 실측 격차는 과제별로 다를 수 있어, 도입 전 자체 워크로드 비교가 선행되어야 합니다.",
+        "입력·출력 토큰 모두 Astra 표준 요금의 5분의 1 코딩·컴퓨터 사용·전문 업무에 '근접한 Astra' 성능 주장 대량 워크로드의 모델 선택 기준을 성능에서 단가로 이동"
+      ],
+      "takeaway": "gpt-6-1-sol은 오늘 확인할 변경입니다. 입력·출력 토큰 모두 Astra 표준 요금의 5분의 1입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "gpt-6-1-sol"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/parallel-cuts-time-and-cost-with-astra",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "devday-2026",
+      "n": 2,
+      "title": "2. devday-2026",
+      "bullets": [
+        "20건 이상의 발표를 단일 이벤트로 묶어 배포",
+        "모델·ChatGPT·Codex·API·보안·빌더 도구 전 영역 커버",
+        "생태계 lock-in 강화 의도로 해석"
+      ],
+      "body": [
+        "이번 DevDay의 특징은 폭입니다. 모델부터 보안과 개발자 도구까지 20건 넘게 묶어내면서, 어느 한 축만 쫓아가기 어렵게 만들었습니다. 경쟁사 입장에서는 개별 기능 대응이 아니라 전체 스택 관점의 대응이 강제됩니다. 채택 담당자는 전부 좇기보다 자사 지표에 직결되는 3개를 골라 먼저 검증하는 편이 현실적입니다.",
+        "20건 이상의 발표를 단일 이벤트로 묶어 배포 모델·ChatGPT·Codex·API·보안·빌더 도구 전 영역 커버 생태계 lock-in 강화 의도로 해석 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "devday-2026은 오늘 확인할 변경입니다. 20건 이상의 발표를 단일 이벤트로 묶어 배포입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "devday-2026"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/devday-2026-recap",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/introducing-gpt-6-1-sol",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "dots",
+      "n": 3,
+      "title": "3. dots",
+      "bullets": [
+        "복잡한 프로젝트와 일상 작업을 능동적으로 이어가는 어시스턴트",
+        "작업 진행 중 사용자 통제 유지를 설계 원칙으로 강조",
+        "프롬프트 대기형 UI에서 사전 위임형으로의 전환 신호"
+      ],
+      "body": [
+        "Dots가 가리키는 방향은 '맡기는 AI'입니다. 사용자가 매번 지시를 기다리는 구조에서, 어시스턴트가 프로젝트 상태를 스스로 추적하며 다음 작업을 이어가는 구조로 이동하고 있습니다. 통제권 유지를 내세운 점은 능동성에 대한 신뢰 문제를 인식했다는 뜻입니다. 도입 초기에는 감독이 필요한 반복 작업부터 범위를 좁혀 검증하는 순서가 안전합니다.",
+        "복잡한 프로젝트와 일상 작업을 능동적으로 이어가는 어시스턴트 작업 진행 중 사용자 통제 유지를 설계 원칙으로 강조 프롬프트 대기형 UI에서 사전 위임형으로의 전환 신호"
+      ],
+      "takeaway": "dots은 오늘 확인할 변경입니다. 복잡한 프로젝트와 일상 작업을 능동적으로 이어가는 어시스턴트입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "dots"
+      ],
+      "sources": [
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/anthropic-raises-124-million-to-build-more-reliable-general-ai-systems",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/anthropic-raises-series-b-to-build-safe-reliable-ai",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "invideo-astra",
+      "n": 4,
+      "title": "4. invideo-astra",
+      "bullets": [
+        "색 보정·그레이딩 품질 3배 개선 (회사 자체 발표)",
+        "하루 50개 맞춤 이펙트 생산",
+        "영상 후반작업의 모델 의존도 상승"
+      ],
+      "body": [
+        "영상 후반작업은 생성형 모델의 효과가 늦게 입증되던 분야였는데, 이번 사례는 정량 지표를 제시했다는 점에서 의미가 있습니다. 다만 3배 개선과 하루 50개라는 수치는 invideo가 공개한 자체 측정입니다. 후처리 공정의 병목 구간을 먼저 파악한 뒤 그 구간만 교체해보는 검증이 따라야 합니다.",
+        "색 보정·그레이딩 품질 3배 개선 (회사 자체 발표) 하루 50개 맞춤 이펙트 생산 영상 후반작업의 모델 의존도 상승 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "invideo-astra은 오늘 확인할 변경입니다. 색 보정·그레이딩 품질 3배 개선 (회사 자체 발표)입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "invideo-astra"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
+          "kind": "doc"
+        },
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/nvidia/kumo-tabular",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "parallel-astra",
+      "n": 5,
+      "title": "5. parallel-astra",
+      "bullets": [
+        "노동시장 데이터 조사·종합 시간 50% 감소 (자체 측정)",
+        "동일 작업 비용 50% 감소",
+        "리서치형 에이전트 업무의 대표 성과 사례"
+      ],
+      "body": [
+        "Parallel 사례의 묘미는 시간과 비용이 동시에 절반으로 줄었다는 점입니다. 보통은 품질을 깎아 시간을 줄이거나, 비용을 줄이면 품질이 흔들리는데 두 지표가 같이 개선됐다고 발표했습니다. 조사·요약형 업무는 벤치마크 없이도 산출물 대조로 검증이 쉬운 영역이라, 직접 재현 실험에 들어가기 좋은 대상입니다.",
+        "노동시장 데이터 조사·종합 시간 50% 감소 (자체 측정) 동일 작업 비용 50% 감소 리서치형 에이전트 업무의 대표 성과 사례 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "parallel-astra은 오늘 확인할 변경입니다. 노동시장 데이터 조사·종합 시간 50% 감소 (자체 측정)입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "parallel-astra"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/parallel-cuts-time-and-cost-with-astra",
+          "kind": "doc"
+        },
+        {
+          "handle": "DeepMind",
+          "url": "https://deepmind.google/blog/introducing-computer-use-in-gemini-3-5-flash/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "v7-luna",
+      "n": 6,
+      "title": "6. v7-luna",
+      "bullets": [
+        "비용 78% 감소와 정확도 상승을 동시에 달성 (회사 발표)",
+        "흩어진 사내 문서를 에이전트용 맥락으로 변환",
+        "출처가 연결된 작업 완수가 핵심 유즈케이스"
+      ],
+      "body": [
+        "V7의 78%는 이번 주 사례 중 가장 큰 절감 폭입니다. 문서를 맥락으로 바꾸는 전처리 단계의 비중이 컸을 가능성이 높은데, 이는 모델 성능보다 파이프라인 설계의 몫일 수 있습니다. 출처 연결을 유지한 작업 완수를 강조한 점은 검증 가능한 산출물이 필요한 기업 환경의 요구를 정확히 겨냥합니다.",
+        "비용 78% 감소와 정확도 상승을 동시에 달성 (회사 발표) 흩어진 사내 문서를 에이전트용 맥락으로 변환 출처가 연결된 작업 완수가 핵심 유즈케이스 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "v7-luna은 오늘 확인할 변경입니다. 비용 78% 감소와 정확도 상승을 동시에 달성 (회사 발표)입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "v7-luna"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/introducing-mentalhealthbench",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/a-new-initiative-for-developing-third-party-model-evaluations",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "mentalhealthbench",
+      "n": 7,
+      "title": "7. mentalhealthbench",
+      "bullets": [
+        "전문가 의견 반영형 정신건강 대화 벤치마크",
+        "유용성과 안전성을 함께 평가하는 구조",
+        "민감 도메인 평가 표준화의 첫걸음"
+      ],
+      "body": [
+        "정신건강 같은 민감 도메인은 그동안 평가 기준 부재로 모델 도입 논의 자체가 어려웠습니다. 전문가가 관여한 현실적 대화 시나리오로 평가 틀을 제공했다는 점에서, 이 벤치마크의 가치는 기술보다 거버넌스에 가깝습니다. 유사한 민감 도메인(법률, 금융 상담 등)에서도 같은 방식의 평가 설계가 확산될 가능성이 있습니다.",
+        "전문가 의견 반영형 정신건강 대화 벤치마크 유용성과 안전성을 함께 평가하는 구조 민감 도메인 평가 표준화의 첫걸음 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "mentalhealthbench은 오늘 확인할 변경입니다. 전문가 의견 반영형 정신건강 대화 벤치마크입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "mentalhealthbench"
+      ],
+      "sources": [
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/core-views-on-ai-safety",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/frontier-threats-red-teaming-for-ai-safety",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "kumo-tabular",
+      "n": 8,
+      "title": "8. kumo-tabular",
+      "bullets": [
+        "표 데이터 예측에서 정확도·효율 균형을 주장",
+        "Hugging Face 블로그 통해 9월 30일 공개",
+        "상세 수치는 원문 벤치마크 확인 필요"
+      ],
+      "body": [
+        "LLM 열기 속에서 표 데이터 예측은 별도 트랙으로 발전하고 있습니다. Kumo Tabular는 이 트랙에서 정확도와 효율의 균형점을 다시 세웠다고 주장하지만, 구체적 수치는 원문을 확인해야 합니다. 기존 그래디언트 부스팅 계열과의 직접 비교 결과가 채택 여부를 가를 것입니다.",
+        "표 데이터 예측에서 정확도·효율 균형을 주장 Hugging Face 블로그 통해 9월 30일 공개 상세 수치는 원문 벤치마크 확인 필요 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "kumo-tabular은 오늘 확인할 변경입니다. 표 데이터 예측에서 정확도·효율 균형을 주장입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "kumo-tabular"
+      ],
+      "sources": [
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/nvidia/kumo-tabular",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google Blog",
+          "url": "https://blog.google/company-news/outreach-and-initiatives/arts-culture/las-art-foundation-ai-residency/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "altk-evolve",
+      "n": 9,
+      "title": "9. altk-evolve",
+      "bullets": [
+        "1회 성공이 아닌 반복 성공률을 측정하는 방법론",
+        "에이전트 운영 신뢰성 논의 확산 반영",
+        "평균 지표가 은폐하는 분산 문제를 직접 다룸"
+      ],
+      "body": [
+        "이 글이 주목받는 이유는 실전의 질문을 정확히 짚었기 때문입니다. 데모에서 한 번 성공한 에이전트가 운영에서 재현되지 않으면 무의미한데, 기존 벤치마크는 평균 성능만 보여 이를 잡아내지 못했습니다. 반복 실행 분산을 측정하자는 제안은 도입 의사결정 지표로 바로 쓸 수 있습니다. 에이전트 조달 기준에 'N회 반복 성공률' 항목을 추가하는 움직임이 이어질 것입니다.",
+        "1회 성공이 아닌 반복 성공률을 측정하는 방법론 에이전트 운영 신뢰성 논의 확산 반영 평균 지표가 은폐하는 분산 문제를 직접 다룸 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "altk-evolve은 오늘 확인할 변경입니다. 1회 성공이 아닌 반복 성공률을 측정하는 방법론입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "altk-evolve"
+      ],
+      "sources": [
+        {
+          "handle": "Google Blog",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-flash-developers/",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google Blog",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-with-live-avatar/",
+          "kind": "doc"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "모델 선택 기준이 성능에서 토큰 단가로 이동했습니다. Sol의 5분의 1 가격이 이번 주 최대 구조 변화입니다.",
+    "grow": "고객사 사례가 숫자로 쌓이고 있습니다. invideo 3배, V7 78% 절감 등 자체 측정이지만 검증 재료가 늘었습니다.",
+    "caution": "이번 주 성과 수치는 전부 회사 발표입니다. 독립 검증 전 도입 결정은 위험 분산 없이 진행하는 셈입니다.",
+    "heat": "DevDay 20건과 Sol 출시가 개발자 커뮤니티 대화를 지배했습니다. 가격 인하 러시가 경쟁 전면으로 번질 조짐입니다."
+  },
+  "tips": [
+    {
+      "title": "Sol과 Astra의 토큰 단가표를 나란히 두고 자사 월 토큰 소비량으로 연간 비용 차이를 계산합니다. 과제별 5% 성능 격차가 비용 절감보다 ",
+      "body": "Sol과 Astra의 토큰 단가표를 나란히 두고 자사 월 토큰 소비량으로 연간 비용 차이를 계산합니다. 과제별 5% 성능 격차가 비용 절감보다 클 경우만 Astra를 유지합니다.",
+      "via": "파이프라인"
+    },
+    {
+      "title": "에이전트 도입 평가에 반복 성공률 항목을 추가합니다. 과제당 10회 반복 실행으로 성공률 분산을 재면 데모성 성능과 운영 성능을 구분할 수 있습",
+      "body": "에이전트 도입 평가에 반복 성공률 항목을 추가합니다. 과제당 10회 반복 실행으로 성공률 분산을 재면 데모성 성능과 운영 성능을 구분할 수 있습니다.",
+      "via": "파이프라인"
+    },
+    {
+      "title": "사내 문서 파이프라인 비용을 먼저 집계합니다. V7 사례의 78% 절감 기준선이 되려면 현재 지출의 구성을 알아야 합니다.",
+      "body": "사내 문서 파이프라인 비용을 먼저 집계합니다. V7 사례의 78% 절감 기준선이 되려면 현재 지출의 구성을 알아야 합니다.",
+      "via": "파이프라인"
+    },
+    {
+      "title": "민감 도메인 챗봇을 운영 중이라면 MentalHealthBench의 문항 구조를 참고해 자체 평가 세트를 만들어봅니다. 시나리오 100건부터 시",
+      "body": "민감 도메인 챗봇을 운영 중이라면 MentalHealthBench의 문항 구조를 참고해 자체 평가 세트를 만들어봅니다. 시나리오 100건부터 시작합니다.",
+      "via": "파이프라인"
+    },
+    {
+      "title": "DevDay 발표 20건 중 채택 후보를 3개로 좁혀 2주 파일럿 일정을 짭니다. 전부 검증하려다 시간만 소진됩니다.",
+      "body": "DevDay 발표 20건 중 채택 후보를 3개로 좁혀 2주 파일럿 일정을 짭니다. 전부 검증하려다 시간만 소진됩니다.",
+      "via": "파이프라인"
+    },
+    {
+      "title": "표 데이터 예측 과제가 있다면 기존 모델의 베이스라인 지표를 문서화해둡니다. Kumo Tabular 비교를 위한 준비물입니다.",
+      "body": "표 데이터 예측 과제가 있다면 기존 모델의 베이스라인 지표를 문서화해둡니다. Kumo Tabular 비교를 위한 준비물입니다.",
+      "via": "파이프라인"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": true
+}
