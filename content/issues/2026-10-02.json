@@ -1,0 +1,525 @@
+{
+  "date": "2026-10-02",
+  "title": "오픈AI, 모델 증류 공격을 차단했다 — 알버트슨·퀸·멘탈헬스벤치까지 하루 브리핑",
+  "heroline": "10월 2일 기준, 오픈AI가 조직적인 모델 증류 캠페인을 막아냈고 유통·바이오·영상 제작 현장에 AI가 실무 툴로 자리 잡는 흐름이 뚜렷해졌습니다.",
+  "dek": "보호된 추론 능력을 빼내려는 시도를 차단한 오픈AI의 보안 대응, 미국 유통사 알버트슨의 기업용 ChatGPT 도입 사례, 마이크로소프트의 생물학 연구용 AI '퀸' 공개 등 오늘 주요 소식을 숫자 중심으로 정리했습니다.",
+  "tag": "AI 데일리",
+  "briefMin": 5,
+  "readMin": 9,
+  "briefing": [
+    {
+      "id": "openai-distillation-defense",
+      "headline": "오픈AI가 모델 증류 캠페인을 차단했다",
+      "summary": "보호된 모델 추론을 빼내려던 조율된 시도를 막아냈다고 밝혔고, 적대적 증류 방어도 강화 중입니다."
+    },
+    {
+      "id": "albertsons-enterprise",
+      "headline": "알버트슨이 ChatGPT Enterprise로 내부 업무를 바꿨다",
+      "summary": "미국 대형 식료품 유통사가 ChatGPT Enterprise와 OpenAI API로 팀 속도를 끌어올리고 수백만 고객 경험 개선에 적용했습니다."
+    },
+    {
+      "id": "msr-quine",
+      "headline": "마이크로소프트가 생물학 전용 AI 연구 시스템 '퀸'을 공개했다",
+      "summary": "생물학의 복잡계를 담는 멀티모달 월드모델을 목표로 한 초기 단계 연구 프로젝트입니다."
+    },
+    {
+      "id": "invideo-astra",
+      "headline": "인비디오가 GPT-6 아스트라로 색 보정 품질을 3배 올렸다",
+      "summary": "회사 발표 기준 컬러 그레이딩이 3배 개선됐고 하루에 커스텀 이펙트 50개를 제작했습니다. 자체 측정입니다."
+    },
+    {
+      "id": "parallel-astra",
+      "headline": "Parallel이 GPT-6 아스트라로 조사 시간과 비용을 절반으로 줄였다",
+      "summary": "노동시장 데이터 조사·종합 작업에서 이전 모델 대비 시간과 비용이 각각 절반 수준이 됐다고 밝혔습니다. 회사 자체 비교입니다."
+    },
+    {
+      "id": "mentalhealthbench",
+      "headline": "오픈AI가 정신건강 대화 벤치마크 '멘탈헬스벤치'를 내놓았다",
+      "summary": "현실적인 정신건강 상담 상황에서 유용성과 안전성을 평가하는 전문가 검토 기반 벤치마크입니다."
+    },
+    {
+      "id": "openai-sbdc",
+      "headline": "오픈AI가 미 소상공인 지원 기구와 AI 교육 확대에 나섰다",
+      "summary": "America's SBDC와 손잡고 실습형 AI 교육과 지역 지원을 늘리고, 소규모 팀의 AI 활용 실태 보고서도 함께 냈습니다."
+    },
+    {
+      "id": "kumo-tabular",
+      "headline": "엔비디아가 테이블 예측용 '쿠모 테뷸러'로 정확도·효율 경계를 다시 그었다",
+      "summary": "테이블형 데이터 예측 과제에서 정확도와 효율의 새로운 균형점을 제시했다고 소개했습니다."
+    },
+    {
+      "id": "grpo-ifstruct",
+      "headline": "Hugging Face가 구조화 출력 개선용 3.5억 파라미터 파인튜닝 레시피를 공유했다",
+      "summary": "GRPO 100스텝만으로 350M 모델의 구조화 출력 품질을 끌어올리는 방법을 문서로 정리했습니다."
+    },
+    {
+      "id": "agent-consistency",
+      "headline": "IBM 리서치가 에이전트 재현성 문제를 정면으로 다뤘다",
+      "summary": "과제를 한 번 성공한 에이전트가 같은 일을 반복해 해내는지 묻는 평가 방법과 도구를 공개했습니다."
+    },
+    {
+      "id": "evaleval-aisi",
+      "headline": "영국 AISI가 벤치마크 결과 재현 가능성을 높이는 실험을 벌였다",
+      "summary": "EvalEval과 함께 리더보드 점수를 재현 가능하게 만드는 절차를 정리해 공유했습니다."
+    },
+    {
+      "id": "nvidia-open-protein",
+      "headline": "엔비디아가 오픈 단백질 데이터셋으로 팬데믹 대비 연구를 지원했다",
+      "summary": "차기 팬데믹 대비 오픈사이언스의 중요성을 강조하며 관련 데이터셋을 소개했습니다."
+    }
+  ],
+  "keywords": [
+    "오픈AI",
+    "모델 증류",
+    "GPT-6 아스트라",
+    "에이전트",
+    "벤치마크",
+    "생물학 AI"
+  ],
+  "mainEvent": "openai-distillation-defense",
+  "keynums": [
+    {
+      "val": "3배",
+      "lab": "컬러 그레이딩 개선 배수",
+      "sub": "인비디오 자체 측정, GPT-6 아스트라 적용"
+    },
+    {
+      "val": "50개",
+      "lab": "하루 제작 커스텀 이펙트",
+      "sub": "인비디오 발표"
+    },
+    {
+      "val": "각 50%",
+      "lab": "Parallel의 조사 시간·비용 감소",
+      "sub": "이전 모델 대비 회사 비교"
+    },
+    {
+      "val": "100 GRPO 스텝",
+      "lab": "구조화 출력 파인튜닝 스텝",
+      "sub": "350M 모델 기준"
+    },
+    {
+      "val": "1편",
+      "lab": "오픈AI 증류 방어 관련 공개 글",
+      "sub": "9월 30일 게시"
+    },
+    {
+      "val": "125건",
+      "lab": "기타 소식 묶음 규모",
+      "sub": "당일 RSS 'other' 버킷 집계"
+    },
+    {
+      "val": "3편",
+      "lab": "에이전트·메모리 관련 공개 문서",
+      "sub": "8~9월 Hugging Face 블로그"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "2026-09-03",
+      "d": "에이전트 메모리·GRPO 파인튜닝 문서가 Hugging Face에 올라왔다"
+    },
+    {
+      "t": "2026-09-16",
+      "d": "IBM 리서치가 에이전트 일관성 평가 글을 공개했다"
+    },
+    {
+      "t": "2026-09-22",
+      "d": "영국 AISI의 벤치마크 재현성 실험 글이 나왔다"
+    },
+    {
+      "t": "2026-09-23",
+      "d": "멘탈헬스벤치와 인비디오 사례가 같은 주에 공개됐다"
+    },
+    {
+      "t": "2026-09-29",
+      "d": "마이크로소프트가 생물학 AI 연구 시스템 퀸을 발표했다"
+    },
+    {
+      "t": "2026-09-30",
+      "d": "오픈AI가 증류 공격 차단과 소상공인 지원 소식을 각각 냈다"
+    },
+    {
+      "t": "2026-10-02",
+      "d": "알버트슨 사례와 '영원한 보완재' 에세이가 게시됐다"
+    }
+  ],
+  "intro": "오늘 소식의 축은 두 개입니다. 하나는 방어입니다. 오픈AI가 보호된 추론 능력을 빼내려던 조율된 증류 캠페인을 막았다고 밝혔고, 프론티어 모델의 지식 자산을 지키는 일이 이제 일상 운영의 한 부분이 됐다는 점을 보여줍니다. 다른 하나는 적용입니다. 유통(알버트슨), 영상(인비디오), 리서치(Parallel, 마이크로소프트 퀸)까지 현장 사례가 쌓이고 있고, 각 사례에는 시간·비용·품질의 구체적 숫자가 붙어 있습니다.",
+  "analysis": [
+    {
+      "id": "openai-distillation-defense",
+      "n": 1,
+      "title": "1. openai-distillation-defense",
+      "bullets": [
+        "조율된 방식으로 보호된 모델 추론을 추출하려는 시도를 차단했다고 공식 발표했습니다",
+        "적대적 증류에 대한 방어 강화가 진행 중이라고 밝혔습니다",
+        "공격·방어 구도가 서비스 약관 문제를 넘어 운영 문제로 옮겨 왔습니다"
+      ],
+      "body": [
+        "오픈AI는 9월 30일 글을 통해 여러 주체가 조율된 방식으로 보호된 추론 능력을 빼내려 했다고 밝혔습니다. 차단 경위의 기술적 세부는 공개되지 않았지만, 이후 대응으로 방어 체계를 계속 강화하겠다고 덧붙였습니다.",
+        "이는 단발 사건이 아니라 구조적 현상입니다. 프론티어 모델의 추론 품질이 곧 과금 자산이 된 이상, 증류 시도는 계속 이어질 수밖에 없습니다. 방어 비용이 어느 수준에서 정상 운영 비용으로 자리 잡는지가 앞으로 따져볼 지점입니다."
+      ],
+      "takeaway": "openai-distillation-defense은 오늘 바로 확인할 변경입니다. 조율된 방식으로 보호된 모델 추론을 추출하려는 시도를 차단했다고 공식 발표했습니다입니다.",
+      "tags": [
+        "openai-distillation-defense"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/disrupting-a-coordinated-model-distillation-campaign",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/the-eternal-complement",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "albertsons-enterprise",
+      "n": 2,
+      "title": "2. albertsons-enterprise",
+      "bullets": [
+        "ChatGPT Enterprise와 OpenAI API를 함께 도입했습니다",
+        "내부 팀의 업무 속도와 수백만 고객의 장보기 경험 개선을 목표로 했습니다",
+        "유통 업종에서 기업용 AI가 검증 단계를 지나고 있음을 보여줍니다"
+      ],
+      "body": [
+        "알버트슨은 미국 전역에 매장을 둔 식료품 유통사로, ChatGPT Enterprise를 내부 협업과 고객 대면 서비스 양쪽에 적용했습니다. 이번 글은 사례 소개 중심이며 정량 효과 수치는 포함되지 않았습니다.",
+        "업종 특성상 실패 비용이 크고 데이터 규제도 까다롭습니다. 그런 조건에서 도입 사례가 공식적으로 공개됐다는 것 자체가 기업용 AI 시장의 확장 폭을 보여주는 대목입니다."
+      ],
+      "takeaway": "albertsons-enterprise은 오늘 바로 확인할 변경입니다. ChatGPT Enterprise와 OpenAI API를 함께 도입했습니다입니다.",
+      "tags": [
+        "albertsons-enterprise"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/albertsons-reimagining-retail",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/disrupting-a-coordinated-model-distillation-campaign",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "msr-quine",
+      "n": 3,
+      "title": "3. msr-quine",
+      "bullets": [
+        "생물학의 비분절적 특성을 반영한 멀티모달 월드모델을 지향합니다",
+        "초기 단계 연구 프로젝트로 명시됐습니다",
+        "바이오 분야 AI의 방향이 도구 조합에서 통합 모델로 옮겨가고 있습니다"
+      ],
+      "body": [
+        "마이크로소프트 리서치는 9월 29일 '퀸'을 소개했습니다. 사일로 없는 생물학의 특성을 반영해 여러 데이터 모달을 하나의 월드모델로 연결하겠다는 구상입니다. 생물학의 비분절적 특성을 반영한 멀티모달 월드모델을 지향합니다",
+        "지금은 연구 시스템이지 제품이 아닙니다. 다만 대형 기술 기업이 '생물학용 기반 모델'이라는 시장에 공식적으로 이름을 올렸다는 점에서, 향후 바이오 제약 업계의 AI 도입 경로에 영향을 줄 수 있습니다."
+      ],
+      "takeaway": "msr-quine은 오늘 확인할 변경입니다. 생물학의 비분절적 특성을 반영한 멀티모달 월드모델을 지향합니다입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "msr-quine"
+      ],
+      "sources": [
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/anthropic-raises-124-million-to-build-more-reliable-general-ai-systems",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/anthropic-raises-series-b-to-build-safe-reliable-ai",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "invideo-astra",
+      "n": 4,
+      "title": "4. invideo-astra",
+      "bullets": [
+        "컬러 그레이딩 정확도가 3배 개선됐다고 밝혔습니다",
+        "하루에 커스텀 이펙트 50개를 제작했다고 합니다",
+        "영상 후반 작업에 대형 모델이 실제로 투입된 사례입니다"
+      ],
+      "body": [
+        "인비디오는 영상 편집 도구에 GPT-6 아스트라를 적용해 편집 계획 정밀도와 색 보정 품질을 끌어올렸다고 밝혔습니다. 그레이딩 3배 개선, 하루 이펙트 50개는 모두 회사 발표 수치입니다.",
+        "색 보정은 정답이 주관적인 영역이라 자동화가 어려웠던 후반 작업입니다. 이 영역의 품질 수치가 개선됐다는 것은 대형 모델의 판단 능력이 감독의 취향 영역까지 침투하고 있음을 뜻합니다."
+      ],
+      "takeaway": "invideo-astra은 오늘 확인할 변경입니다. 컬러 그레이딩 정확도가 3배 개선됐다고 밝혔습니다입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "invideo-astra"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
+          "kind": "doc"
+        },
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/nvidia/kumo-tabular",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "parallel-astra",
+      "n": 5,
+      "title": "5. parallel-astra",
+      "bullets": [
+        "노동시장 데이터 조사·종합 작업에서 시간과 비용이 각각 절반이 됐다고 합니다",
+        "에이전트 워크플로에 새 모델을 얹은 비교입니다",
+        "회사 자체 측정이라는 한계는 명시돼 있습니다"
+      ],
+      "body": [
+        "리서치 회사 Parallel은 에이전트가 노동시장 데이터를 조사·종합하는 과제에서 GPT-6 아스트라 적용 후 소요 시간과 비용이 모두 절반 수준이 됐다고 밝혔습니다. 비교 기준은 이전 세대 모델입니다.",
+        "반복 가능한 조사 업무는 모델 성능 차이가 곧 원가 차이로 직결되는 영역입니다. 이런 분야에서 신모델 전환이 가속되면, 조사·리포팅 서비스의 가격 구조 자체가 눌릴 수 있습니다."
+      ],
+      "takeaway": "parallel-astra은 오늘 바로 확인할 변경입니다. 노동시장 데이터 조사·종합 작업에서 시간과 비용이 각각 절반이 됐다고 합니다입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "parallel-astra"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/parallel-cuts-time-and-cost-with-astra",
+          "kind": "doc"
+        },
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/ibm-research/altk-evolve-consistency",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "mentalhealthbench",
+      "n": 6,
+      "title": "6. mentalhealthbench",
+      "bullets": [
+        "현실적인 정신건강 대화에서 유용성과 안전성을 평가합니다",
+        "전문가 검토를 거친 문항 구성입니다",
+        "고감도 영역 평가의 표준화 시도라는 의미가 있습니다"
+      ],
+      "body": [
+        "오픈AI는 9월 23일 멘탈헬스벤치를 공개했습니다. 실제 상담에 가까운 대화 상황을 전문가가 설계해, 응답의 유용성과 안전성을 함께 평가하는 구조입니다. 현실적인 정신건강 대화에서 유용성과 안전성을 평가합니다",
+        "평가 항목 설계에 임상 전문가가 참여했다는 점에서, 단순 지식 퀴즈형 벤치마크와 결이 다릅니다. 상담 챗봇류 서비스가 늘어나는 상황에서 이런 기준의 존재 자체가 배포 판단의 근거가 됩니다."
+      ],
+      "takeaway": "mentalhealthbench은 오늘 확인할 변경입니다. 현실적인 정신건강 대화에서 유용성과 안전성을 평가합니다입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "mentalhealthbench"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/introducing-mentalhealthbench",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/a-new-initiative-for-developing-third-party-model-evaluations",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "openai-sbdc",
+      "n": 7,
+      "title": "7. openai-sbdc",
+      "bullets": [
+        "America's SBDC와 손잡고 실습형 AI 교육을 확대합니다",
+        "소규모 팀의 AI 활용 실태 보고서도 함께 냈습니다",
+        "기업용 고객 확보의 최전선이 소상공인 교육으로 내려왔습니다"
+      ],
+      "body": [
+        "오픈AI는 미국 소상공인 지원 네트워크인 America's SBDC와 협력해 실습 중심 AI 교육과 지역별 지원을 늘린다고 밝혔습니다. 동시에 소규모 팀이 AI를 어떻게 쓰는지 정리한 보고서도 공개했습니다.",
+        "교육은 느리지만 확실한 시장 형성 수단입니다. 소상공인 세그먼트는 개인 사용자와 기업 고객 사이의 비어 있는 지점이기도 합니다. 소규모 팀의 AI 활용 실태 보고서도 함께 냈습니다"
+      ],
+      "takeaway": "openai-sbdc은 오늘 확인할 변경입니다. America's SBDC와 손잡고 실습형 AI 교육을 확대합니다입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "openai-sbdc"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/helping-small-businesses-put-ai-to-work",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/core-views-on-ai-safety",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "kumo-tabular",
+      "n": 8,
+      "title": "8. kumo-tabular",
+      "bullets": [
+        "테이블형 데이터 예측에서 정확도-효율 균형을 다시 잡았다고 소개합니다",
+        "전통 ML이 지켜 온 영역에 딥러닝 계열 접근이 도전장을 냈습니다",
+        "Hugging Face 블로그를 통해 공개됐습니다"
+      ],
+      "body": [
+        "엔비디아는 쿠모 테뷸러를 통해 테이블형 데이터 예측의 정확도와 효율 경계를 새로 그었다고 소개했습니다. 세부 수치는 공개 글에 담겨 있습니다. 테이블형 데이터 예측에서 정확도-효율 균형을 다시 잡았다고 소개합니다",
+        "테이블 예측은 금융·물류·리테일의 실무 대부분을 차지하는 과제입니다. 이 영역의 지형이 움직이면 기존 ML 파이프라인의 유지보수 전략에도 영향이 갑니다. 전통 ML이 지켜 온 영역에 딥러닝 계열 접근이 도전장을 냈습니다"
+      ],
+      "takeaway": "kumo-tabular은 오늘 확인할 변경입니다. 테이블형 데이터 예측에서 정확도-효율 균형을 다시 잡았다고 소개합니다입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "kumo-tabular"
+      ],
+      "sources": [
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/nvidia/kumo-tabular",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google Blog",
+          "url": "https://blog.google/company-news/outreach-and-initiatives/arts-culture/las-art-foundation-ai-residency/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "grpo-ifstruct",
+      "n": 9,
+      "title": "9. grpo-ifstruct",
+      "bullets": [
+        "3.5억 파라미터 소형 모델을 대상으로 했습니다",
+        "GRPO 100스텝이라는 짧은 학습으로 구조화 출력을 개선했습니다",
+        "레시피 전체가 공개 문서로 정리됐습니다"
+      ],
+      "body": [
+        "Hugging Face 블로그는 350M 모델을 GRPO 100스텝으로 파인튜닝해 구조화 출력 품질을 개선한 과정을 정리했습니다. 학습 코드와 절차가 함께 공개됐습니다.",
+        "대형 모델에만 의존하지 않고 작은 모델을 과제에 맞게 다듬는 접근은 비용 민감한 서비스에 바로 적용 가능한 수준입니다. 재현에 필요한 계산 자원도 문서에서 확인할 수 있습니다."
+      ],
+      "takeaway": "grpo-ifstruct은 오늘 확인할 변경입니다. 3.5억 파라미터 소형 모델을 대상으로 했습니다입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "grpo-ifstruct"
+      ],
+      "sources": [
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNMmpUdUtUSE9Bb3JSMDU4STdUb21sU3lmYl9NcFU0NmJ2d0hCbHlWQ1c1SFJrSUc1aXNtMXpKX3ozUzFSWWtPVWpjanVXeHpoU3VLbnFDNlJLV3hubDZJUTFFN0I2b1otWVVlOS1MeXZrVXlCWlk2Smp6amFNbXItMGR1dGRxVkNIc09mOHFfdnFDak1iT2NFU2R0cXAzX0tweldHMlBWNmdDTE51bl8xekdZSzVvUzh0VldF?oc=5",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNYndZZG5Fd0dmLXI2UVA5YkNnZ2NlTC1vcm4xM0Q1OTl3ajgxQ1o2Y3lBRkx3Yk0xVWVPWlVMTFZpbHh2ZFJSaF9aS3JMMldSUFNnWDN0bm9EYzluX0pYWG96a1g4OFRad2ItZWExazFEZnBUMHFLZ01OYi1rMWtPUXNRTnh4MkNhMlpwWlNTd2FWTGt0ZWViZlZ0UQ?oc=5",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "agent-consistency",
+      "n": 10,
+      "title": "10. agent-consistency",
+      "bullets": [
+        "일회성 성공이 재현 가능한지를 별도로 평가합니다",
+        "IBM 리서치의 도구와 방법이 공개됐습니다",
+        "에이전트 도입의 마지막 걸림돌인 신뢰성 문제를 정면으로 다룹니다"
+      ],
+      "body": [
+        "IBM 리서치는 에이전트가 과제를 성공한 뒤 같은 과제를 다시 수행할 수 있는지를 평가하는 방법을 공개했습니다. 일관성 자체를 측정 대상으로 삼은 점이 기존 벤치마크와 다릅니다.",
+        "에이전트 도입이 확산될수록 재현성 문제는 비용 문제와 직결됩니다. 재시도 비용을 줄이려면 성공률만이 아니라 편차를 관리해야 합니다. IBM 리서치의 도구와 방법이 공개됐습니다"
+      ],
+      "takeaway": "agent-consistency은 오늘 확인할 변경입니다. 일회성 성공이 재현 가능한지를 별도로 평가합니다입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "agent-consistency"
+      ],
+      "sources": [
+        {
+          "handle": "Google Blog",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-flash-developers/",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/the-eternal-complement",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "evaleval-aisi",
+      "n": 11,
+      "title": "11. evaleval-aisi",
+      "bullets": [
+        "벤치마크 점수를 재현 가능하게 만드는 절차를 다룹니다",
+        "영국 AISI와 EvalEval의 협력 결과물입니다",
+        "리더보드 점수를 구매·도입 판단에 쓰는 팀에게 직접 도움이 됩니다"
+      ],
+      "body": [
+        "영국 AISI와 EvalEval은 벤치마크 결과의 재현 가능성을 높이는 실험과 절차를 공유했습니다. 동일 조건에서 점수가 다시 나오는지를 검증하는 작업입니다. 벤치마크 점수를 재현 가능하게 만드는 절차를 다룹니다",
+        "리더보드는 이미 모델 선택의 1차 근거로 쓰입니다. 그 점수의 재현성이 담보되지 않으면 선택 자체가 흔들리므로, 이런 메타 평가의 가치는 계속 커질 것으로 보입니다."
+      ],
+      "takeaway": "evaleval-aisi은 오늘 확인할 변경입니다. 벤치마크 점수를 재현 가능하게 만드는 절차를 다룹니다입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "evaleval-aisi"
+      ],
+      "sources": [
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/evaleval-aisi",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPVGc0Q29na2pWRTd6Y0NfV2tEbTlQSy04cnREZ01Mcm50QzhGSVo0SElmUmNFRGRIZFk5NGk2SFB2SzMzdmpoa1JlOXhSa0JpUm5xV0FyX1hDTzJudHBfNlo5am5fOFJfSEJzN2Q5cTVBWkFKdHVyODc1SzAtLXBpeVF0cm51OWZWSEwtUllFcThBUVRJSjhn0gGcAUFVX3lxTFBxWVpsTS1xeXh5d2lpRTk3S2ZKZzh5WkRLaGh4c2UtNzNIc204cFZwNVZLcEhVeXI3bmJ4S0dXSUFYNFFRUnZsOFRUSFpadTBmQjNHMWtKYkdITHRJNDJ5cjBmTkJLSnZ6Wm9DS0FXS1lBUFUzVVFFUFRJVmE1N2F0M2l3cjF0THdFSGlyS0xBZ0NFNkFueHltdlRvNA?oc=5",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "nvidia-open-protein",
+      "n": 12,
+      "title": "12. nvidia-open-protein",
+      "bullets": [
+        "오픈 단백질 데이터셋을 통해 팬데믹 대비 오픈사이언스를 지원합니다",
+        "코로나19 때 쌓인 선행 연구가 백신 설계 속도를 결정했다는 관점을 담았습니다",
+        "AI 데이터 인프라가 공공보다 과제와 이어졌습니다"
+      ],
+      "body": [
+        "엔비디아는 오픈 단백질 데이터셋을 소개하며 오픈사이언스가 다음 팬데믹 대비의 핵심이라는 입장을 냈습니다. 코로나19 당시 축적된 코로나바이러스 연구가 백신 설계를 가능하게 했다는 회고가 골자입니다.",
+        "생물학 데이터의 공개 축적은 마이크로소프트 퀸 같은 기반 모델 구상과도 맞닿아 있습니다. 데이터와 모델, 두 축이 함께 움직이고 있다는 점에서 오늘 소식들을 하나의 흐름으로 읽을 수 있습니다."
+      ],
+      "takeaway": "nvidia-open-protein은 오늘 바로 확인할 변경입니다. 오픈 단백질 데이터셋을 통해 팬데믹 대비 오픈사이언스를 지원합니다입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "nvidia-open-protein"
+      ],
+      "sources": [
+        {
+          "handle": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/open-protein-dataset/",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/the-eternal-complement",
+          "kind": "doc"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "모델 증류 방어가 발표됨에 따라 지식 자산 보호가 사업 운영의 상시 과제로 넘어왔습니다",
+    "grow": "유통·영상·조사·바이오까지 사례가 쌓이며 시간·비용 절감 수치가 여러 업종에서 나오고 있습니다",
+    "caution": "GPT-6 아스트라 관련 개선 수치는 모두 해당 회사의 자체 측정이라는 점을 감안해야 합니다",
+    "heat": "재현성과 일관성 평가가 공개되면서 벤치마크 점수를 둘러싼 검증 압력이 높아지고 있습니다"
+  },
+  "tips": [
+    {
+      "title": "초안 숫자는 공식 페이지에서 다시 봅니다",
+      "body": "RSS 요약은 잘립니다. 모델명·점수·일자는 회사 발표문을 연 뒤에 적으면 됩니다.",
+      "via": "파이프라인"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": true
+}
