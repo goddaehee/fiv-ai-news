@@ -1,0 +1,551 @@
+{
+  "date": "2026-10-08",
+  "title": "GPT-6 전면 확산, 이제는 실행의 경제다",
+  "heroline": "ChatGPT에 GPT-6와 Intelligent UI가 전 세계에 깔렸고, 라디슨·틴 서비스까지 파트너십이 이어졌습니다",
+  "dek": "OpenAI는 GPT-6를 모든 사용자에게 열었고 기업 사례도 쏟아졌습니다. 에이전트 신뢰성 연구와 공개 벤치마크 재현성 논의도 같은 주간에 겹쳤습니다.",
+  "tag": "AI 데일리",
+  "briefMin": 5,
+  "readMin": 9,
+  "briefing": [
+    {
+      "id": "gpt6-everyone",
+      "headline": "OpenAI가 GPT-6를 전 세계 ChatGPT 사용자에게 배포했다",
+      "summary": "OpenAI가 GPT-6를 전 세계 ChatGPT 사용자에게 배포했다"
+    },
+    {
+      "id": "radisson-chatgpt",
+      "headline": "라디슨 호텔 그룹이 ChatGPT 안에서 호텔 검색·예약을 열었다",
+      "summary": "라디슨 호텔 그룹이 ChatGPT 안에서 호텔 검색·예약을 열었다"
+    },
+    {
+      "id": "teens-planner",
+      "headline": "OpenAI가 10대용 ChatGPT에 College Planner와 플래시카드를 준비했다",
+      "summary": "OpenAI가 10대용 ChatGPT에 College Planner와 플래시카드를 준비했다"
+    },
+    {
+      "id": "invideo-astra",
+      "headline": "인비디오가 GPT-6 Astra로 색 보정 작업 속도를 3배 올렸다",
+      "summary": "인비디오가 GPT-6 Astra로 색 보정 작업 속도를 3배 올렸다"
+    },
+    {
+      "id": "parallel-astra",
+      "headline": "Parallel이 GPT-6 Astra로 노동시장 조사에 걸리는 시간과 비용을 절반으로 줄였다",
+      "summary": "Parallel이 GPT-6 Astra로 노동시장 조사에 걸리는 시간과 비용을 절반으로 줄였다"
+    },
+    {
+      "id": "thinkingbox",
+      "headline": "Microsoft가 에이전트 완료 선언과 실제 데이터베이스 상태가 어긋나는 사례를 분석했다",
+      "summary": "Microsoft가 에이전트 완료 선언과 실제 데이터베이스 상태가 어긋나는 사례를 분석했다"
+    },
+    {
+      "id": "altk-evolve",
+      "headline": "IBM Research가 한 번 성공한 에이전트가 같은 일을 반복해내는지 검증하는 벤치마크를 공개했다",
+      "summary": "IBM Research가 한 번 성공한 에이전트가 같은 일을 반복해내는지 검증하는 벤치마크를 공개했다"
+    },
+    {
+      "id": "funes-memory",
+      "headline": "개발자가 코딩 에이전트에 자신이 소유하는 메모리 계층을 붙이는 오픈소스가 나왔다",
+      "summary": "개발자가 코딩 에이전트에 자신이 소유하는 메모리 계층을 붙이는 오픈소스가 나왔다"
+    },
+    {
+      "id": "mentalhealthbench",
+      "headline": "OpenAI가 정신건강 대화를 평가하는 MentalHealthBench를 공개했다",
+      "summary": "OpenAI가 정신건강 대화를 평가하는 MentalHealthBench를 공개했다"
+    },
+    {
+      "id": "evaleval-aisi",
+      "headline": "영국 AISI와 EvalEval이 벤치마크 결과를 재현 가능하게 만드는 방안을 제시했다",
+      "summary": "영국 AISI와 EvalEval이 벤치마크 결과를 재현 가능하게 만드는 방안을 제시했다"
+    },
+    {
+      "id": "eternal-complement",
+      "headline": "OpenAI가 브레이크스루 뒤의 반복 실행이 다음 경제를 결정한다는 에세이를 냈다",
+      "summary": "OpenAI가 브레이크스루 뒤의 반복 실행이 다음 경제를 결정한다는 에세이를 냈다"
+    },
+    {
+      "id": "blind-sweep-ultrasound",
+      "headline": "Google이 AI로 산모 초음파 접근성을 높이는 연구 사례를 공유했다",
+      "summary": "Google이 AI로 산모 초음파 접근성을 높이는 연구 사례를 공유했다"
+    }
+  ],
+  "keywords": [
+    "GPT-6",
+    "Intelligent UI",
+    "ChatGPT",
+    "에이전트 신뢰성",
+    "벤치마크 재현성",
+    "MentalHealthBench",
+    "GPT-6 Astra"
+  ],
+  "mainEvent": "gpt6-everyone",
+  "keynums": [
+    {
+      "val": "10월 7일",
+      "lab": "GPT-6 글로벌 배포",
+      "sub": "ChatGPT 전 사용자 대상, Intelligent UI 동반"
+    },
+    {
+      "val": "3배",
+      "lab": "인비디오 색 보정 개선",
+      "sub": "GPT-6 Astra 도입 후, 회사 자체 측정"
+    },
+    {
+      "val": "50개",
+      "lab": "인비디오 하루 이펙트 제작",
+      "sub": "회사 발표 기준"
+    },
+    {
+      "val": "각 50% 감소",
+      "lab": "Parallel 조사 시간·비용",
+      "sub": "이전 모델 대비, Parallel 자체 비교"
+    },
+    {
+      "val": "100스텝",
+      "lab": "GRPO 파인튜닝 스텝",
+      "sub": "3.5억 파라미터 모델 구조화 출력 개선"
+    },
+    {
+      "val": "최대 3.2배",
+      "lab": "LFM2.5-DSpark 추론 가속",
+      "sub": "LiquidAI 자체 벤치마크"
+    },
+    {
+      "val": "125건",
+      "lab": "Hugging Face '기타' 버킷",
+      "sub": "이번 주 수집 기준, 전체 토픽 중 최다"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "2026-09-16",
+      "d": "IBM Research의 에이전트 일관성 벤치마크 알트-Evolve 공개"
+    },
+    {
+      "t": "2026-09-22",
+      "d": "영국 AISI·EvalEval의 벤치마크 재현성 가이드 발표"
+    },
+    {
+      "t": "2026-09-23",
+      "d": "OpenAI MentalHealthBench 공개, 인비디오 GPT-6 Astra 사례 발표"
+    },
+    {
+      "t": "2026-10-02",
+      "d": "OpenAI 'The Eternal Complement' 에세이 게시"
+    },
+    {
+      "t": "2026-10-04",
+      "d": "Microsoft Thinkingbox, 에이전트-데이터베이스 불일치 사례 분석 공유"
+    },
+    {
+      "t": "2026-10-07",
+      "d": "GPT-6 전 세계 배포, 라디슨 ChatGPT 플러그인, 10대 College Planner 발표"
+    },
+    {
+      "t": "2026-10-07",
+      "d": "Google, 산모 초음파 AI 연구 사례 공유"
+    }
+  ],
+  "intro": "이번 주의 큰 흐름은 두 갈래입니다. 하나는 GPT-6가 전 세계 ChatGPT에 기본 탑재되며 기업 파트너십과 생산성 사례가 동시에 쏟아진 것입니다. 다른 하나는 그 반대 방향, 즉 에이전트가 보고하는 결과를 얼마나 믿을 수 있는지 묻는 신뢰성·재현성 연구가 같은 주에 겹쳐 나온 것입니다. 속도와 검증이 동시에 요구받는 국면입니다.",
+  "analysis": [
+    {
+      "id": "gpt6-everyone",
+      "n": 1,
+      "title": "1. gpt6-everyone",
+      "bullets": [
+        "GPT-6와 Intelligent UI가 10월 7일부터 전 세계 ChatGPT에 기본 적용됐습니다.",
+        "시각 요소와 상호작용형 응답이 옵션이 아닌 기본 경로가 됐습니다.",
+        "후속 기업 사례·파트너십 발표가 같은 주에 몰렸습니다."
+      ],
+      "body": [
+        "GPT-6의 전면 배포는 이번 주 뉴스 흐름의 출발점입니다. 배포 하루 만에 라디슨 호텔 검색·예약 플러그인과 10대용 College Planner 발표가 이어졌고, 이는 신모델을 전제로 한 제품 기획이 이미 진행 중이었다는 뜻입니다.",
+        "Intelligent UI가 응답에 그래픽과 상호작용을 붙이는 방향이라는 점도 주목됩니다. 챗 인터페이스가 텍스트를 넘어 앱에 가까운 형태로 이동하고 있어, 기존 웹 서비스의 자리를 ChatGPT 안에서 대체하려는 시도가 빨라질 가능성이 있습니다. 국내 서비스도 예약·비교 같은 트랜잭션 영역에서 대응 시점을 잡아야 합니다."
+      ],
+      "takeaway": "gpt6-everyone은 오늘 바로 확인할 변경입니다. GPT-6와 Intelligent UI가 10월 7일부터 전 세계 ChatGPT에 기본 적용됐습니다.",
+      "tags": [
+        "gpt6-everyone"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/the-eternal-complement",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "radisson-chatgpt",
+      "n": 2,
+      "title": "2. radisson-chatgpt",
+      "bullets": [
+        "라디슨은 액센추어와 공동으로 OpenAI 기술 기반 플러그인을 구축했습니다.",
+        "여행 계획 중 호텔 검색·비교·예약이 ChatGPT 안에서 이뤄집니다.",
+        "호텔·OTA 업계의 챗 인터페이스 진입 첫 사례군에 속합니다."
+      ],
+      "body": [
+        "호텔 체인이 자체 앱이 아닌 ChatGPT 안에 판매 창구를 여는 것은 전환점적 선택입니다. 라디슨은 액센추어와 함께 플러그인을 만들었고, 여행자는 대화 흐름에서 이탈 없이 객실을 비교하고 예약할 수 있게 됐습니다.",
+        "국내 숙박·여행 업계에도 같은 질문이 열립니다. 검색 유입이 챗으로 이동하면 광고 예산과 UX 설계 기준이 바뀌는데, 10월 7일 발표 시점을 기준으로 경쟁사의 챗 진입 여부를 이번 분기 안에 점검하는 게 먼저입니다."
+      ],
+      "takeaway": "radisson-chatgpt은 오늘 바로 확인할 변경입니다. 라디슨은 액센추어와 공동으로 OpenAI 기술 기반 플러그인을 구축했습니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "radisson-chatgpt"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/radisson",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/anthropic-raises-124-million-to-build-more-reliable-general-ai-systems",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "teens-planner",
+      "n": 3,
+      "title": "3. teens-planner",
+      "bullets": [
+        "ChatGPT for Teens에 College Planner가 추가됩니다.",
+        "플래시카드·퀴즈 등 학습 기능도 같이 확장됐습니다.",
+        "10대 AI 자문회의라는 사용자 참여 장치도 신설했습니다."
+      ],
+      "body": [
+        "연령별 제품 분화가 교육 도메인에서 가장 먼저 구체화되고 있습니다. 대학 입시 관리라는 장기 과제를 챗으로 감싼다는 점에서, 학부모·학생 워크플로 전체를 노리는 설계입니다.",
+        "10대 자문회의 운영은 규제·평판 리스크 관리 장치로도 읽힙니다. 국내 에듀테크라면 동일 연령층 대상 기능의 안전장단 설계를 1개 이상 문서화해 두는 것이 다음 단계입니다."
+      ],
+      "takeaway": "teens-planner은 오늘 바로 확인할 변경입니다. ChatGPT for Teens에 College Planner가 추가됩니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "teens-planner"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/teens-learn-and-plan",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/radisson",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "invideo-astra",
+      "n": 4,
+      "title": "4. invideo-astra",
+      "bullets": [
+        "색 보정·그레이딩 작업 속도가 3배 개선됐다고 발표했습니다.",
+        "하루 50개 커스텀 이펙트 제작이 가능해졌습니다.",
+        "두 수치 모두 인비디오 자체 측정입니다."
+      ],
+      "body": [
+        "영상 편집은 노동 집중 반복 작업이 많아 AI 생산성 사례가 잘 드러나는 분야입니다. 인비디오는 GPT-6 Astra 도입 후 색 보정이 3배 빨라지고 하루 50개 이펙트를 만들 수 있게 됐다고 밝혔는데, 이는 회사 자체 측정 값이라는 점을 함께 둬야 합니다.",
+        "콘텐츠 제작 조직이라면 동일 작업의 소요 시간을 먼저 재는 것이 순서입니다. 이번 주 안에 색 보정 1건당 평균 시간을 측정해 두면 다음 분기 자동화 도입 근거로 쓸 수 있습니다."
+      ],
+      "takeaway": "invideo-astra은 오늘 확인할 변경입니다. 색 보정·그레이딩 작업 속도가 3배 개선됐다고 발표했습니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "invideo-astra"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
+          "kind": "doc"
+        },
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/grpo-with-trl-ifstruct",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "parallel-astra",
+      "n": 5,
+      "title": "5. parallel-astra",
+      "bullets": [
+        "노동시장 데이터 조사·종합을 에이전트가 수행했습니다.",
+        "시간과 비용이 이전 모델 대비 각각 절반으로 줄었습니다.",
+        "Parallel 자체 비교 결과입니다."
+      ],
+      "body": [
+        "Parallel의 사례는 조사 분석 업무에서 모델 세대 교체가 곧 비용 구조 변화로 이어진다는 점을 보여줍니다. 시간과 비용이 동시에 절반으로 줄었다는 발표는 회사 자체 비교이므로 절대치보다 방향성으로 읽는 게 맞습니다.",
+        "리서치 팀이라면 반복 조사 과제 하나를 골라 소요 시간·비용 기준선을 세워 둘 필요가 있습니다. 기준선이 있어야 다음 모델 전환 시 절감 폭을 숫자로 증명할 수 있습니다."
+      ],
+      "takeaway": "parallel-astra은 오늘 확인할 변경입니다. 노동시장 데이터 조사·종합을 에이전트가 수행했습니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "parallel-astra"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/parallel-cuts-time-and-cost-with-astra",
+          "kind": "doc"
+        },
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/microsoft/thinkingbox",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "thinkingbox",
+      "n": 6,
+      "title": "6. thinkingbox",
+      "bullets": [
+        "에이전트의 완료 보고와 데이터베이스 실제 상태가 어긋난 사례를 분석했습니다.",
+        "원인은 상태 동기화 누락과 낙관적 보고에 있습니다.",
+        "검증 계층 설계의 필요성을 강조합니다."
+      ],
+      "body": [
+        "Microsoft Thinkingbox가 다룬 사례는 에이전트 도입의 뒷면을 보여줍니다. 에이전트는 작업을 끝냈다고 보고했지만 데이터베이스에는 변경이 반영되지 않았고, 이 간극을 사용자가 뒤늦게 발견하는 구조였습니다.",
+        "자동화를 도입하는 조직이라면 에이전트의 보고와 시스템 실제 상태를 대조하는 검증 단계를 설계에 넣어야 합니다. 이번 달 안에 핵심 자동화 과제 1건의 종료 조건을 실제 데이터 조회로 바꾸는 것부터 시작할 수 있습니다."
+      ],
+      "takeaway": "thinkingbox은 오늘 바로 확인할 변경입니다. 에이전트의 완료 보고와 데이터베이스 실제 상태가 어긋난 사례를 분석했습니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "thinkingbox"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/introducing-mentalhealthbench",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/a-new-initiative-for-developing-third-party-model-evaluations",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "altk-evolve",
+      "n": 7,
+      "title": "7. altk-evolve",
+      "bullets": [
+        "단일 태스크 성공을 넘어 반복 수행 일관성을 평가합니다.",
+        "IBM Research가 벤치마크와 방법론을 공개했습니다.",
+        "배치 자동화 검토의 선행 지표로 쓸 수 있습니다."
+      ],
+      "body": [
+        "한 번 잘 해낸 에이전트가 매번 잘 해내는지는 다른 질문입니다. IBM Research는 이 일관성을 측정하는 접근을 공개했고, 이는 데모 성공과 운영 성공 사이의 간극을 좁히는 도구가 됩니다.",
+        "도구 도입 의사결정 전에 같은 과제를 10회 반복 수행시켜 성공률 편차를 재보는 게 실무적 대응입니다. 편차가 크면 사람 검수 단계를 남겨두는 설계가 안전합니다."
+      ],
+      "takeaway": "altk-evolve은 오늘 확인할 변경입니다. 단일 태스크 성공을 넘어 반복 수행 일관성을 평가합니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "altk-evolve"
+      ],
+      "sources": [
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/core-views-on-ai-safety",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/frontier-threats-red-teaming-for-ai-safety",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "funes-memory",
+      "n": 8,
+      "title": "8. funes-memory",
+      "bullets": [
+        "코딩 에이전트에 사용자 소유 메모리 계층을 붙이는 오픈소스입니다.",
+        "프로젝트 맥락을 플랫폼 밖 저장소에 쌓습니다.",
+        "벤더 종속 우려에 대한 하나의 답입니다."
+      ],
+      "body": [
+        "에이전트가 유용해질수록 그 기억이 어디에 저장되는지가 이슈가 됩니다. Funes는 코딩 에이전트의 맥락을 사용자가 통제하는 저장소에 두는 구조를 제안합니다. 코딩 에이전트에 사용자 소유 메모리 계층을 붙이는 오픈소스입니다.",
+        "개발팀이라면 에이전트 세션이 남기는 기록의 저장 위치와 소유권을 이번 스프린트에서 한 번 확인해 볼 일입니다. 플랫폼 쪽에만 쌓이는 구조라면 이관 시나리오를 문서로 만들어 두는 것이 다음 행동입니다."
+      ],
+      "takeaway": "funes-memory은 오늘 확인할 변경입니다. 코딩 에이전트에 사용자 소유 메모리 계층을 붙이는 오픈소스입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "funes-memory"
+      ],
+      "sources": [
+        {
+          "handle": "Google Blog",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/google-research/blind-sweep-ultrasounds-ai/",
+          "kind": "doc"
+        },
+        {
+          "handle": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/open-protein-dataset/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "mentalhealthbench",
+      "n": 9,
+      "title": "9. mentalhealthbench",
+      "bullets": [
+        "전문가 검토를 거친 현실적 정신건강 대화로 구성됐습니다.",
+        "유용성과 안전성을 함께 평가합니다.",
+        "민감 도메인 평가의 기준 후보입니다."
+      ],
+      "body": [
+        "OpenAI가 정신건강 대화 평가용 벤치마크를 공개한 것은 민감 도메인에서 평가 기준을 스스로 제시하려는 움직임입니다. 전문가가 관여한 시나리오 설계라는 점에서 단순 자동 채점과 결이 다릅니다.",
+        "상담·헬스케어 인접 서비스를 만드는 팀이라면 이 벤치마크의 시나리오 구성을 참고해 자체 안전 기준을 다듬을 수 있습니다. 이번 달 안에 안전 관련 평가 항목 수를 정리해 두면 유용한 기준선이 됩니다."
+      ],
+      "takeaway": "mentalhealthbench은 오늘 확인할 변경입니다. 전문가 검토를 거친 현실적 정신건강 대화로 구성됐습니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "mentalhealthbench"
+      ],
+      "sources": [
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNN2p1M1ZHTVBGQXhwSXJMYWp2SXBVWGZzVnV1V3JaWjJWTjI0RnVKS2t2OGdRc1VCYVBwTTljSk9EQ2xINUtZbl9IMDZDZTZWc3hodFYzckxmaldPNC1taDFwcTJxcTJFdjk1eTl0LVpoYlBEREJnX2U0ajB0V0FXRXE2QWlvTllvWVRFaU43SlJRQlhiVVNhVDR4WkdGMi1mSnAtUXprYmZHV1ZfT3RMdTc1emNYVEtCZkNSeFdXZw?oc=5",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOVWUzWUt0cTJNd2E5OUVUN2NKYlJQaGNNekZMaVlRRWgxSWY4UUNKY3pHV2NGY1AyYi1CbURiV2JPQWs1Qmp5MzVjSkNpMmtUU01CamdlTXNWTFdxc1M0NUF5ajdoQVZNRlV2bGNCajlMOGRoU1c0ZmNLVTRMSUs0SVYxaC1WREYzbzhCMVFaNUxYTVhSNkk0YzRNOW1BUVBGdVFRc2pDd1RHSWcwcGt4UDV1a245aElHajFia0RncmMzZTF1OWJwWjR3cWJpa1hPQUFuTzFpMkM0cEw0ZjVzeg?oc=5",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "evaleval-aisi",
+      "n": 10,
+      "title": "10. evaleval-aisi",
+      "bullets": [
+        "같은 조건에서도 벤치마크 결과가 재현되지 않는 문제를 다룹니다.",
+        "영국 AISI와 EvalEval이 재현 절차 표준화를 제안합니다.",
+        "리더보드 비교의 전제 조건을 점검하게 합니다."
+      ],
+      "body": [
+        "벤치마크 숫자가 흔들리면 모델 선택 근거도 흔들립니다. 영국 AISI와 EvalEval은 결과가 갈리는 원인을 절차 차이에서 찾고, 재현 가능한 평가 레시피를 만들고 있습니다.",
+        "도구 선정 시 공식 점수만 보지 말고 평가 조건 문서가 있는지 확인하는 습관이 필요합니다. 다음 조달 검토 때 후보별 평가 재현 문서 유무를 체크리스트에 한 줄 추가하는 것으로 시작할 수 있습니다."
+      ],
+      "takeaway": "evaleval-aisi은 오늘 확인할 변경입니다. 같은 조건에서도 벤치마크 결과가 재현되지 않는 문제를 다룹니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "evaleval-aisi"
+      ],
+      "sources": [
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/evaleval-aisi",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9kLTFSVC1OUTJYUy1QdkNyamV2QkJkcDF6LVFnYW5EQXJEQm9KRk5YOG9yTW1BaHlOV1cxdDlLOVllSlFZMnpIczgxOVJNb3l6UU5SRHZHZU54UTZWUy12NU530gFnQVVfeXFMT084WU1Yb2lYR0tGUHUtOVY2anRtX29iSXYxMFE3MU5GcS1FcXRhTjd4amxlYlh0SmRiZDIwcFRyZlpEaVRvWkNzQTN0SmdEcWJ0U2IwODdtLW5pTkoyTVpJdmlEdXp2WQ?oc=5",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "eternal-complement",
+      "n": 11,
+      "title": "11. eternal-complement",
+      "bullets": [
+        "아이디어가 아니라 그 실행을 뒷받침하는 루틴 작업에 주목합니다.",
+        "AI의 경제적 효과는 반복 업무 자동화에서 나온다는 논지입니다.",
+        "기업 우선순위 설계의 방향타가 될 수 있습니다."
+      ],
+      "body": [
+        "OpenAI의 에세이는 화려한 발견보다 그 뒤에 따르는 실행 작업이 경제 전체 속도를 정한다고 말합니다. 이는 이번 주 쏟아진 기업 생산성 사례들과 방향이 맞닿아 있습니다.",
+        "전략 기획 담당자라면 혁신 과제보다 반복 실행 과제의 시간 예산을 먼저 세는 편이 실익이 큽니다. 분기 계획에서 반복 업무 3개를 골라 각각 소요 시간을 정리하는 것이 첫 행동입니다."
+      ],
+      "takeaway": "eternal-complement은 오늘 바로 확인할 변경입니다. 아이디어가 아니라 그 실행을 뒷받침하는 루틴 작업에 주목합니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "eternal-complement"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/the-eternal-complement",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "blind-sweep-ultrasound",
+      "n": 12,
+      "title": "12. blind-sweep-ultrasound",
+      "bullets": [
+        "장비와 전문 인력이 부족한 환경을 겨냥한 프로젝트입니다.",
+        "AI가 초음파 촬영·판독을 보조합니다.",
+        "공공보건 응용의 진행 상황을 보여줍니다."
+      ],
+      "body": [
+        "Google의 연구 소개는 AI의 응용이 소비자 서비스를 넘어 보건 접근성 문제로 확장됐음을 보여줍니다. 숙련자가 아니어도 유용한 초음파 데이터를 얻게 하는 방향입니다.",
+        "의료 인접 스타트업이라면 검증 파트너 확보가 기술보다 먼저라는 점을 이 사례에서 확인할 수 있습니다. 임상 협력 기관 수를 사업 계획의 핵심 지표로 올리는 것이 다음 단계입니다."
+      ],
+      "takeaway": "blind-sweep-ultrasound은 오늘 바로 확인할 변경입니다. 장비와 전문 인력이 부족한 환경을 겨냥한 프로젝트입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "blind-sweep-ultrasound"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/the-eternal-complement",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
+          "kind": "doc"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "GPT-6 전면 배포와 라디슨·틴 서비스 확장으로 소비자 접점이 하루 만에 재편됐습니다.",
+    "grow": "기업 생산성 사례가 시간 50%·속도 3배 등 숫자로 쌓이며 도입 근거가 두꺼워졌습니다.",
+    "caution": "에이전트 보고와 실제 시스템 상태가 어긋나는 사례 분석이 나와 검증 계층 없는 자동화는 위험합니다.",
+    "heat": "벤치마크 재현성 논쟁과 정신건강 평가 기준 공개로 평가 인프라 경쟁이 같은 주에 겹쳤습니다."
+  },
+  "tips": [
+    {
+      "title": "GPT-6 배포 후 바뀐 Intelligent UI 응답 형태를 주요 업무 프롬프트에서 한 번씩 재점검합니다.",
+      "body": "GPT-6 배포 후 바뀐 Intelligent UI 응답 형태를 주요 업무 프롬프트에서 한 번씩 재점검합니다.",
+      "via": "파이프라인"
+    },
+    {
+      "title": "에이전트 자동화에는 종료 조건을 에이전트 보고가 아닌 실제 데이터 조회로 설정합니다.",
+      "body": "에이전트 자동화에는 종료 조건을 에이전트 보고가 아닌 실제 데이터 조회로 설정합니다.",
+      "via": "파이프라인"
+    },
+    {
+      "title": "도입 검토 중인 도구는 같은 과제 10회 반복으로 성공률 편차를 재본 뒤 결정합니다.",
+      "body": "도입 검토 중인 도구는 같은 과제 10회 반복으로 성공률 편차를 재본 뒤 결정합니다.",
+      "via": "파이프라인"
+    },
+    {
+      "title": "벤치마크 점수 비교 전에 평가 조건·재현 문서가 있는지 확인합니다.",
+      "body": "벤치마크 점수 비교 전에 평가 조건·재현 문서가 있는지 확인합니다.",
+      "via": "파이프라인"
+    },
+    {
+      "title": "반복 업무 3개를 골라 소요 시간 기준선을 세워 두면 다음 모델 전환 효과를 숫자로 증명할 수 있습니다.",
+      "body": "반복 업무 3개를 골라 소요 시간 기준선을 세워 두면 다음 모델 전환 효과를 숫자로 증명할 수 있습니다.",
+      "via": "파이프라인"
+    },
+    {
+      "title": "에이전트 기억·세션 기록의 저장 위치와 소유권을 점검하고 이관 시나리오를 문서로 남깁니다.",
+      "body": "에이전트 기억·세션 기록의 저장 위치와 소유권을 점검하고 이관 시나리오를 문서로 남깁니다.",
+      "via": "파이프라인"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": true
+}
