@@ -1,0 +1,480 @@
+{
+  "date": "2026-10-11",
+  "title": "10월 11일 AI 뉴스",
+  "heroline": "브라우저 에이전트 비용 76배 절감, 위협 조사 시간 96% 단축",
+  "dek": "이번 주 국내외 AI 소식을 숫자 중심으로 정리했습니다. 기업 도입 사례와 모델·도구 업데이트, 오래된 기록까지 타임라인에 담았습니다.",
+  "tag": "데일리 호",
+  "briefMin": 5,
+  "readMin": 9,
+  "briefing": [
+    {
+      "id": "sophos-daybreak",
+      "headline": "소포스가 오픈AI Daybreak로 위협 조사 시간을 96% 줄였다",
+      "summary": "소포스가 오픈AI Daybreak로 위협 조사 시간을 96% 줄였다"
+    },
+    {
+      "id": "asana-browser-agent",
+      "headline": "아사나가 브라우저 에이전트 테스트 비용을 76배 낮췄다",
+      "summary": "아사나가 브라우저 에이전트 테스트 비용을 76배 낮췄다"
+    },
+    {
+      "id": "gemini-at-work",
+      "headline": "구글 클라우드가 'Gemini 에이전트'를 기업용으로 선보였다",
+      "summary": "구글 클라우드가 'Gemini 에이전트'를 기업용으로 선보였다"
+    },
+    {
+      "id": "thinkingbox-agent-done",
+      "headline": "MS가 '에이전트 완료 선언'의 함정을 짚었다",
+      "summary": "MS가 '에이전트 완료 선언'의 함정을 짚었다"
+    },
+    {
+      "id": "gpu-scheduling",
+      "headline": "AI2가 GPU 클러스터 우선순위 스케줄링 방식을 공유했다",
+      "summary": "AI2가 GPU 클러스터 우선순위 스케줄링 방식을 공유했다"
+    },
+    {
+      "id": "pollo-ai",
+      "headline": "폴로 AI가 GPT-6 Astra와 GPT-Image-2.5로 광고 제작 파이프라인을 묶었다",
+      "summary": "폴로 AI가 GPT-6 Astra와 GPT-Image-2.5로 광고 제작 파이프라인을 묶었다"
+    },
+    {
+      "id": "ultrasound-ai",
+      "headline": "구글 연구팀이 임산부 초음파 접근성에 AI를 활용했다",
+      "summary": "구글 연구팀이 임산부 초음파 접근성에 AI를 활용했다"
+    },
+    {
+      "id": "mentalhealthbench",
+      "headline": "오픈AI가 정신건강 대화 벤치마크 'MentalHealthBench'를 공개했다",
+      "summary": "오픈AI가 정신건강 대화 벤치마크 'MentalHealthBench'를 공개했다"
+    },
+    {
+      "id": "eternal-complement",
+      "headline": "오픈AI가 '실행의 경제학'이라는 에세이를 냈다",
+      "summary": "오픈AI가 '실행의 경제학'이라는 에세이를 냈다"
+    },
+    {
+      "id": "extras",
+      "headline": "🆕 그 밖의 신기능·신제품",
+      "summary": "🆕 그 밖의 신기능·신제품"
+    }
+  ],
+  "keywords": [
+    "브라우저 에이전트",
+    "보안 자동화",
+    "Gemini",
+    "벤치마크",
+    "GPU 스케줄링",
+    "에이전트 신뢰성"
+  ],
+  "mainEvent": "아사나의 브라우저 에이전트 비용 76배 절감 사례가 이번 호의 중심입니다. 모델 교체만으로 에이전트 경제성이 몇 배씩 움직일 수 있다는 점을 보여줍니다.",
+  "keynums": [
+    {
+      "val": "96%",
+      "lab": "위협 조사 시간 단축",
+      "sub": "소포스 발표, 오픈AI Daybreak 도입"
+    },
+    {
+      "val": "76배",
+      "lab": "브라우저 에이전트 비용 절감",
+      "sub": "아사나 테스트 환경, GPT-6.1 Sol"
+    },
+    {
+      "val": "5배",
+      "lab": "동일 테스트 속도 향상",
+      "sub": "아사나 자체 측정"
+    },
+    {
+      "val": "52%",
+      "lab": "MDR 케이스 자동화율",
+      "sub": "소포스 운영 데이터"
+    },
+    {
+      "val": "3배",
+      "lab": "색보정 품질 개선",
+      "sub": "인비디오 자체 평가"
+    },
+    {
+      "val": "50개",
+      "lab": "하루 제작 커스텀 이펙트",
+      "sub": "인비디오 발표"
+    },
+    {
+      "val": "100 GRPO 스텝",
+      "lab": "구조화 출력 파인튜닝 스텝",
+      "sub": "350M 모델 기준 공개 실험"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "2023-02",
+      "d": "앤스로픽이 구글 클라우드와 파트너십을 맺었다"
+    },
+    {
+      "t": "2023-07",
+      "d": "앤스로픽이 최전선 위협 레드팀 프로그램을 공개했다"
+    },
+    {
+      "t": "2026-09-23",
+      "d": "오픈AI가 MentalHealthBench를 발표했다"
+    },
+    {
+      "t": "2026-10-02",
+      "d": "오픈AI가 '실행의 경제학' 에세이를 게시했다"
+    },
+    {
+      "t": "2026-10-08",
+      "d": "구글 클라우드가 Gemini 에이전트를 소개했다"
+    },
+    {
+      "t": "2026-10-09",
+      "d": "소포스·아사나 사례가 같은 날 공개됐다"
+    },
+    {
+      "t": "2026-10-10",
+      "d": "AI2의 GPU 스케줄링 글이 올라왔다"
+    }
+  ],
+  "intro": "이번 호는 기업 도입 결과를 숫자로 확인할 수 있는 날이었습니다. 보안과 생산성 도구 양쪽에서 자동화 비율과 비용 절감 폭이 동시에 발표됐습니다. 그 사이에서 에이전트를 믿어도 되는지를 따지는 글도 눈에 띕니다.",
+  "analysis": [
+    {
+      "id": "sophos-daybreak",
+      "n": 1,
+      "title": "1. sophos-daybreak",
+      "bullets": [
+        "위협 조사 시간 96% 단축은 소포스 자체 운영 데이터",
+        "MDR 케이스 52%를 자동화하되 사람 감독 유지",
+        "보안 분야는 오류 비용이 커서 사람 개입 지점 설계가 핵심"
+      ],
+      "body": [
+        "소포스 사례의 묘미는 속도보다 구조입니다. 조사 시간이 96% 줄었지만 52% 자동화에 그친 것은, 나머지 판단을 사람에게 남겨둔 설계입니다. 자동화율을 100%로 밀지 않은 선택이 신뢰의 근거입니다. 도입 검토 시 사람 개입 지점을 먼저 정해보면 비용-리스크 균형이 잡힙니다.",
+        "위협 조사 시간 96% 단축은 소포스 자체 운영 데이터 MDR 케이스 52%를 자동화하되 사람 감독 유지 보안 분야는 오류 비용이 커서 사람 개입 지점 설계가 핵심"
+      ],
+      "takeaway": "sophos-daybreak은 오늘 확인할 변경입니다. 위협 조사 시간 96% 단축은 소포스 자체 운영 데이터입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "sophos-daybreak"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/sophos",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/the-eternal-complement",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "asana-browser-agent",
+      "n": 2,
+      "title": "2. asana-browser-agent",
+      "bullets": [
+        "테스트 환경 기준 비용 76배·속도 5배 개선",
+        "모델을 GPT-6.1 Sol로 바꾸는 것만으로 달성",
+        "회사 자체 측정이며 독립 검증 전"
+      ],
+      "body": [
+        "아사나 결과는 모델 선택이 에이전트 사업성을 좌우한다는 방증입니다. 같은 작업을 같은 파이프라인에서 돌렸을 때 76배 차이가 났다는 점이 핵심입니다. 다만 테스트 환경 수치라 실서비스 단가는 다를 수 있습니다. 브라우저 에이전트 도입 전에 두 모델로 같은 태스크 비용을 재면 차이가 몇 배인지 직접 확인할 수 있습니다.",
+        "테스트 환경 기준 비용 76배·속도 5배 개선 모델을 GPT-6.1 Sol로 바꾸는 것만으로 달성 회사 자체 측정이며 독립 검증 전 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "asana-browser-agent은 오늘 확인할 변경입니다. 테스트 환경 기준 비용 76배·속도 5배 개선입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "asana-browser-agent"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/asana-browser-agent",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/sophos",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "gemini-at-work",
+      "n": 3,
+      "title": "3. gemini-at-work",
+      "bullets": [
+        "구글 클라우드 차원의 에이전트 라인업 정리",
+        "인프라·클라우드 카테고리에서 발표",
+        "기업 워크플로 붙이기가 목표"
+      ],
+      "body": [
+        "구글은 에이전트를 모델 기능이 아니라 클라우드 상품으로 포장하고 있습니다. 인프라 카테고리 발표라는 점이 배포·운영까지 챙기겠다는 신호입니다. 구글 스택을 쓰는 조직이라면 이번 라인업에서 지원 범위를 먼저 확인하는 게 순서입니다.",
+        "구글 클라우드 차원의 에이전트 라인업 정리 인프라·클라우드 카테고리에서 발표 기업 워크플로 붙이기가 목표 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "gemini-at-work은 오늘 확인할 변경입니다. 구글 클라우드 차원의 에이전트 라인업 정리입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "gemini-at-work"
+      ],
+      "sources": [
+        {
+          "handle": "DeepMind",
+          "url": "https://deepmind.google/blog/gemini-3-5-frontier-intelligence-with-action/",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/anthropic-raises-124-million-to-build-more-reliable-general-ai-systems",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "thinkingbox-agent-done",
+      "n": 4,
+      "title": "4. thinkingbox-agent-done",
+      "bullets": [
+        "에이전트의 '완료' 선언과 실제 상태 불일치 사례 분석",
+        "실행 결과 검증 계층의 필요성 제기",
+        "신뢰성 문제를 구조가 아니라 사례로 접근"
+      ],
+      "body": [
+        "이 글이 좋은 이유는 실패를 관찰 가능한 사건으로 다룬다는 점입니다. 에이전트가 끝냈다고 보고해도 실제 데이터 상태와 다를 때가 있다는 지적은 운영자라면 다 공감합니다. 이럴수록 결과 검증 단계를 별도로 두는 게 맞습니다. 다음 스프린트에 에이전트 출력을 DB와 대조하는 체크를 한 개 붙이면 실패 감지율부터 측정할 수 있습니다.",
+        "에이전트의 '완료' 선언과 실제 상태 불일치 사례 분석 실행 결과 검증 계층의 필요성 제기 신뢰성 문제를 구조가 아니라 사례로 접근 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "thinkingbox-agent-done은 오늘 바로 확인할 변경입니다. 에이전트의 '완료' 선언과 실제 상태 불일치 사례 분석입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "thinkingbox-agent-done"
+      ],
+      "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/video/amazon-and-others-are-done-keeping-data-center-deals-secret-is-it-enough-to-build-trust/",
+          "kind": "doc"
+        },
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/allenai/impactful-scheduling",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "gpu-scheduling",
+      "n": 5,
+      "title": "5. gpu-scheduling",
+      "bullets": [
+        "AI2의 실제 클러스터 운영 경험 공유",
+        "우선순위 기준을 '영향력'으로 잡는 접근",
+        "학습보다 배치 실험 지연이 병목인 조직에 유용"
+      ],
+      "body": [
+        "GPU가 부족한 시절에는 무엇을 먼저 돌릴지가 곧 연구 속도입니다. AI2는 단순 선입선출이 아니라 영향력 기준으로 스케줄을 짜는 경험을 공유했습니다. 대기 시간을 줄이는 것과 중요 작업을 보호하는 것 사이의 트레이드오프가 글의 뼈대입니다. 자체 클러스터 대기열 데이터를 한 달치 뽑아 우선순위 규칙을 두 개만 바꿔보면 대기 시간 변화를 수치로 볼 수 있습니다.",
+        "AI2의 실제 클러스터 운영 경험 공유 우선순위 기준을 '영향력'으로 잡는 접근 학습보다 배치 실험 지연이 병목인 조직에 유용 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "gpu-scheduling은 오늘 확인할 변경입니다. AI2의 실제 클러스터 운영 경험 공유입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "gpu-scheduling"
+      ],
+      "sources": [
+        {
+          "handle": "Google Blog",
+          "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gemini-at-work/",
+          "kind": "doc"
+        },
+        {
+          "handle": "DeepMind",
+          "url": "https://deepmind.google/blog/introducing-computer-use-in-gemini-3-5-flash/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "pollo-ai",
+      "n": 6,
+      "title": "6. pollo-ai",
+      "bullets": [
+        "GPT-5.6·GPT-6 Astra·GPT-Image-2.5 조합",
+        "텍스트 아이디어에서 이미지·영상 광고까지",
+        "크리에이터 대상 제품으로 자리 잡음"
+      ],
+      "body": [
+        "폴로 AI는 여러 모델을 한 흐름으로 엮는 사례입니다. 생성형 광고 제작은 이제 단일 모델 경쟁이 아니라 파이프라인 경쟁으로 넘어갔습니다. 같은 하루에 커스텀 이펙트 50개까지 만들 수 있다는 인비디오 사례와 방향이 같습니다. 콘텐츠 제작 비용을 태스크별로 쪼개 보면 어느 단계에 모델을 끼워맞출지 가려집니다.",
+        "GPT-5.6·GPT-6 Astra·GPT-Image-2.5 조합 텍스트 아이디어에서 이미지·영상 광고까지 크리에이터 대상 제품으로 자리 잡음 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "pollo-ai은 오늘 확인할 변경입니다. GPT-5.6·GPT-6 Astra·GPT-Image-2.5 조합입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "pollo-ai"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/pollo-ai",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/introducing-mentalhealthbench",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "ultrasound-ai",
+      "n": 7,
+      "title": "7. ultrasound-ai",
+      "bullets": [
+        "초음파 접근이 어려운 환경 대상 연구",
+        "AI가 판독을 보조하는 방식",
+        "임상 검증 단계는 별도로 확인 필요"
+      ],
+      "body": [
+        "이 연구는 AI의 사회적 쓰임을 의료 접근성에서 찾습니다. 초음파 기기는 있어도 전문가가 없는 상황을 상정한 실험이라 의미가 있습니다. 성능 수치는 아직 공개된 세부 결과로 확인해야 합니다. 지역 의료 데이터가 있는 기관이라면 판독 보조 파일럿을 소규모로 검토할 근거가 됩니다.",
+        "초음파 접근이 어려운 환경 대상 연구 AI가 판독을 보조하는 방식 임상 검증 단계는 별도로 확인 필요 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "ultrasound-ai은 오늘 확인할 변경입니다. 초음파 접근이 어려운 환경 대상 연구입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "ultrasound-ai"
+      ],
+      "sources": [
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/core-views-on-ai-safety",
+          "kind": "doc"
+        },
+        {
+          "handle": "Anthropic News",
+          "url": "https://www.anthropic.com/news/frontier-threats-red-teaming-for-ai-safety",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "mentalhealthbench",
+      "n": 8,
+      "title": "8. mentalhealthbench",
+      "bullets": [
+        "전문가가 검토한 실제 대화 시나리오 기반",
+        "유익성과 안전성을 함께 평가",
+        "민감 영역 벤치마크의 표준 후보"
+      ],
+      "body": [
+        "정신건강 대화는 오답 비용이 큰 영역이라 벤치마크 자체가 필요했습니다. 전문가 검토를 거친 시나리오라는 점에서 단순 자동 채점보다 무게가 있습니다. 민감 도메인 서비스를 만든다면 이 벤치마크 점수를 게이트 조건으로 넣는 방식을 검토할 수 있습니다.",
+        "전문가가 검토한 실제 대화 시나리오 기반 유익성과 안전성을 함께 평가 민감 영역 벤치마크의 표준 후보 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "mentalhealthbench은 오늘 확인할 변경입니다. 전문가가 검토한 실제 대화 시나리오 기반입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "mentalhealthbench"
+      ],
+      "sources": [
+        {
+          "handle": "Google Blog",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/google-research/blind-sweep-ultrasounds-ai/",
+          "kind": "doc"
+        },
+        {
+          "handle": "DeepMind",
+          "url": "https://deepmind.google/blog/gemini-for-science-ai-experiments-and-tools-for-a-new-era-of-discovery/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "eternal-complement",
+      "n": 9,
+      "title": "9. eternal-complement",
+      "bullets": [
+        "아이디어보다 실행·반복 작업의 가치 강조",
+        "AI가 노동 경제에 미치는 영향에 대한 관점 글",
+        "정책보다는 프레임을 바꾸는 에세이"
+      ],
+      "body": [
+        "이 에세이는 AI의 가치가 화려한 발견이 아니라 그 뒤의 지루한 실행에 있다고 말합니다. 도입 사례들도 실은 조사 시간 단축, 비용 절감 같은 실행 효율 개선이었습니다. 글의 주장대로라면 다음 기회는 반복 작업이 많은 부서에 있습니다. 업무 시간 로그에서 반복 태스크 상위 3개를 뽑으면 AI 도입 후보가 나옵니다.",
+        "아이디어보다 실행·반복 작업의 가치 강조 AI가 노동 경제에 미치는 영향에 대한 관점 글 정책보다는 프레임을 바꾸는 에세이 조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+      ],
+      "takeaway": "eternal-complement은 오늘 확인할 변경입니다. 아이디어보다 실행·반복 작업의 가치 강조입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "eternal-complement"
+      ],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/the-eternal-complement",
+          "kind": "doc"
+        },
+        {
+          "handle": "DeepMind",
+          "url": "https://deepmind.google/blog/introducing-gemini-38-live-with-live-avatar/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "extras",
+      "n": 10,
+      "title": "10. extras",
+      "bullets": [
+        "인비디오, 색보정·그레이딩 3배 개선 및 하루 50개 이펙트 제작",
+        "GRPO 100스텝만으로 350M 모델 구조화 출력 개선",
+        "Hugging Face 인프라로 Papers with Code 검색 구축 사례"
+      ],
+      "body": [
+        "짧게 소식만 전합니다. 인비디오는 GPT-6 Astra로 색 작업 품질을 3배 끌어올렸다고 밝혔습니다. 350M 모델을 GRPO 100스텝으로 파인튜닝해 구조화 출력을 개선한 실험도 공개됐습니다. Papers with Code 검색 인프라 사례는 데이터 파이프라인 설계에 참고할 만합니다.",
+        "인비디오, 색보정·그레이딩 3배 개선 및 하루 50개 이펙트 제작 GRPO 100스텝만으로 350M 모델 구조화 출력 개선 Hugging Face 인프라로 Papers with Code 검색 구축 사례"
+      ],
+      "takeaway": "extras은 오늘 확인할 변경입니다. 인비디오, 색보정·그레이딩 3배 개선 및 하루 50개 이펙트 제작입니다. 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다.",
+      "tags": [
+        "extras"
+      ],
+      "sources": [
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/webgpu-kernels",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMi-gJBVV95cUxOczhValhJNGY3ckVNdDdWTnFhbDAtbVBERllEOGNnRVdWZDc1dzBNVlFuLWstVGd4QUpzaG50S2dxanhHVnBHOEktVmJtNzBaa3B5YVJMQ1dfYkpqaVJsU2hvQUE5YnZaclhPUk1lRG1SLW91ZXFPQkdzUVc1UVl4cGYtbC1Jdlh2cUZvVHNZdFpHeEpzc1RuU2tPVTdiY0FmaGI1X2x2WEMtcWhxOW9UczVIOGdoZlYtbzZhcS1kSV82S0ZOeWNiRV9KZnR0dnh1QkVTWmRjTVNzampaX19kV0VMeXVTNmRMRFBUd0JMbnA1TldTQ2x3RTB2OFdYNVZCcFBSYzE3SExqeDRFMWhLRW00UXZianJfbUU0ZEtDQmxGRzBJSllLdlZ2V0RseWZDRVppSHlnLVNEU3p4OVpNSUhjbzlCRmF2elQzRGRRMlJqQ0dNNWJabGZteHpaVTdBS2d4YWFqdy1MRlh5RXVfbDBZTWx1akx5MFE?oc=5",
+          "kind": "doc"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "모델 교체만으로 에이전트 비용이 76배 움직이는 시장",
+    "grow": "보안·광고·의료까지 자동화 사례가 동시다발 공개",
+    "caution": "에이전트 완료 판단 오류와 테스트 환경 수치의 한계",
+    "heat": "기업 도입 사례 발표 경쟁이 가팔라진 한 주"
+  },
+  "tips": [
+    {
+      "title": "브라우저 에이전트 후보 모델 두 개로 같은 태스크를 돌려 태스크당 비용을 비교합니다",
+      "body": "브라우저 에이전트 후보 모델 두 개로 같은 태스크를 돌려 태스크당 비용을 비교합니다",
+      "via": "파이프라인"
+    },
+    {
+      "title": "에이전트 출력을 DB 상태와 대조하는 검증 단계를 파이프라인 끝에 붙입니다",
+      "body": "에이전트 출력을 DB 상태와 대조하는 검증 단계를 파이프라인 끝에 붙입니다",
+      "via": "파이프라인"
+    },
+    {
+      "title": "보안 자동화는 사람 감독 지점을 먼저 정하고 자동화율 목표를 잡습니다",
+      "body": "보안 자동화는 사람 감독 지점을 먼저 정하고 자동화율 목표를 잡습니다",
+      "via": "파이프라인"
+    },
+    {
+      "title": "GPU 대기열 로그를 한 달치 모아 우선순위 규칙 변경 전후 대기 시간을 측정합니다",
+      "body": "GPU 대기열 로그를 한 달치 모아 우선순위 규칙 변경 전후 대기 시간을 측정합니다",
+      "via": "파이프라인"
+    },
+    {
+      "title": "민감 도메인 서비스엔 MentalHealthBench 같은 전문가 검토 벤치마크를 게이트로 넣는지 검토합니다",
+      "body": "민감 도메인 서비스엔 MentalHealthBench 같은 전문가 검토 벤치마크를 게이트로 넣는지 검토합니다",
+      "via": "파이프라인"
+    },
+    {
+      "title": "반복 태스크 상위 3개를 업무 로그에서 뽑아 AI 도입 후보로 만듭니다",
+      "body": "반복 태스크 상위 3개를 업무 로그에서 뽑아 AI 도입 후보로 만듭니다",
+      "via": "파이프라인"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": true
+}
