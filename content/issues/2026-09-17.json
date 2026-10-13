@@ -286,11 +286,6 @@
           "handle": "Reuters",
           "url": "https://www.reuters.com/business/media-telecom/openai-tests-advertiser-sponsored-agents-expands-ai-tools-chatgpt-ads-2026-09-16/",
           "kind": "doc"
-        },
-        {
-          "handle": "OpenAI",
-          "url": "https://openai.com",
-          "kind": "doc"
         }
       ]
     },
@@ -400,11 +395,6 @@
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
           "kind": "talk"
-        },
-        {
-          "handle": "Anthropic",
-          "url": "https://www.anthropic.com",
-          "kind": "doc"
         }
       ]
     }

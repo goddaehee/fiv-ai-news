@@ -160,16 +160,6 @@
           "handle": "@deepseek_ai",
           "url": "https://x.com/deepseek_ai",
           "kind": "talk"
-        },
-        {
-          "handle": "DeepSeek",
-          "url": "https://www.deepseek.com",
-          "kind": "doc"
-        },
-        {
-          "handle": "Hugging Face",
-          "url": "https://huggingface.co",
-          "kind": "doc"
         }
       ]
     },
@@ -226,11 +216,6 @@
           "handle": "@cognition_labs",
           "url": "https://x.com/cognition_labs",
           "kind": "talk"
-        },
-        {
-          "handle": "Terminal-Bench",
-          "url": "https://www.tbench.ai/",
-          "kind": "doc"
         }
       ]
     },
@@ -251,11 +236,6 @@
         "규정"
       ],
       "sources": [
-        {
-          "handle": "OpenAI",
-          "url": "https://openai.com",
-          "kind": "doc"
-        },
         {
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
@@ -284,11 +264,6 @@
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
           "kind": "talk"
-        },
-        {
-          "handle": "OpenAI",
-          "url": "https://openai.com",
-          "kind": "doc"
         }
       ]
     },
@@ -313,11 +288,6 @@
           "handle": "@Google",
           "url": "https://x.com/Google",
           "kind": "talk"
-        },
-        {
-          "handle": "Google Workspace",
-          "url": "https://workspace.google.com/",
-          "kind": "doc"
         }
       ]
     },
@@ -342,11 +312,6 @@
           "handle": "@TencentGlobal",
           "url": "https://x.com/TencentGlobal",
           "kind": "talk"
-        },
-        {
-          "handle": "Hugging Face",
-          "url": "https://huggingface.co",
-          "kind": "doc"
         }
       ]
     },
@@ -367,11 +332,6 @@
         "평가"
       ],
       "sources": [
-        {
-          "handle": "CADArena",
-          "url": "https://cadarena.ai/",
-          "kind": "doc"
-        },
         {
           "handle": "@huggingface",
           "url": "https://x.com/huggingface",
@@ -396,11 +356,6 @@
         "인프라"
       ],
       "sources": [
-        {
-          "handle": "Reuters",
-          "url": "https://www.reuters.com/",
-          "kind": "doc"
-        },
         {
           "handle": "@nvidia",
           "url": "https://x.com/nvidia",
@@ -504,5 +459,6 @@
       "via": "규정"
     }
   ],
-  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다."
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "legacy": true
 }

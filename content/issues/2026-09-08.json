@@ -159,11 +159,6 @@
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
           "kind": "talk"
-        },
-        {
-          "handle": "OpenAI",
-          "url": "https://openai.com",
-          "kind": "doc"
         }
       ]
     },
@@ -188,11 +183,6 @@
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
           "kind": "talk"
-        },
-        {
-          "handle": "OpenAI",
-          "url": "https://openai.com",
-          "kind": "doc"
         }
       ]
     },
@@ -217,11 +207,6 @@
           "handle": "@nvidia",
           "url": "https://x.com/nvidia",
           "kind": "talk"
-        },
-        {
-          "handle": "Bloomberg",
-          "url": "https://www.bloomberg.com/",
-          "kind": "doc"
         }
       ]
     },
@@ -241,13 +226,7 @@
         "평가",
         "지수"
       ],
-      "sources": [
-        {
-          "handle": "Artificial Analysis",
-          "url": "https://artificialanalysis.ai/",
-          "kind": "doc"
-        }
-      ]
+      "sources": []
     },
     {
       "id": "mini",
@@ -266,11 +245,6 @@
         "오픈웨이트"
       ],
       "sources": [
-        {
-          "handle": "Hugging Face",
-          "url": "https://huggingface.co",
-          "kind": "doc"
-        },
         {
           "handle": "@huggingface",
           "url": "https://x.com/huggingface",
@@ -295,11 +269,6 @@
         "장기과제"
       ],
       "sources": [
-        {
-          "handle": "Artificial Analysis",
-          "url": "https://artificialanalysis.ai/",
-          "kind": "doc"
-        },
         {
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
@@ -328,11 +297,6 @@
           "handle": "@AMD",
           "url": "https://x.com/AMD",
           "kind": "talk"
-        },
-        {
-          "handle": "SemiAnalysis",
-          "url": "https://semianalysis.com/",
-          "kind": "doc"
         }
       ]
     },
@@ -441,11 +405,6 @@
           "handle": "@ByteDance",
           "url": "https://x.com/ByteDance",
           "kind": "talk"
-        },
-        {
-          "handle": "Bloomberg",
-          "url": "https://www.bloomberg.com/",
-          "kind": "doc"
         }
       ]
     }
@@ -488,5 +447,6 @@
       "via": "프라이버시"
     }
   ],
-  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다."
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "legacy": true
 }

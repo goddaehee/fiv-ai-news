@@ -159,11 +159,6 @@
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
           "kind": "talk"
-        },
-        {
-          "handle": "OpenAI",
-          "url": "https://openai.com",
-          "kind": "doc"
         }
       ]
     },
@@ -188,11 +183,6 @@
           "handle": "@arcprize",
           "url": "https://x.com/arcprize",
           "kind": "talk"
-        },
-        {
-          "handle": "ARC Prize",
-          "url": "https://arcprize.org/",
-          "kind": "doc"
         }
       ]
     },
@@ -222,16 +212,6 @@
           "handle": "@huggingface",
           "url": "https://x.com/huggingface",
           "kind": "talk"
-        },
-        {
-          "handle": "Hugging Face",
-          "url": "https://huggingface.co",
-          "kind": "doc"
-        },
-        {
-          "handle": "Reuters",
-          "url": "https://www.reuters.com/",
-          "kind": "doc"
         }
       ]
     },
@@ -287,11 +267,6 @@
       ],
       "sources": [
         {
-          "handle": "Reuters",
-          "url": "https://www.reuters.com/",
-          "kind": "doc"
-        },
-        {
           "handle": "@AnthropicAI",
           "url": "https://x.com/AnthropicAI",
           "kind": "talk"
@@ -315,11 +290,6 @@
         "K2"
       ],
       "sources": [
-        {
-          "handle": "Hugging Face",
-          "url": "https://huggingface.co",
-          "kind": "doc"
-        },
         {
           "handle": "@huggingface",
           "url": "https://x.com/huggingface",
@@ -376,11 +346,6 @@
           "handle": "@GoogleDeepMind",
           "url": "https://x.com/GoogleDeepMind",
           "kind": "talk"
-        },
-        {
-          "handle": "Janelia",
-          "url": "https://www.janelia.org/",
-          "kind": "doc"
         }
       ]
     },
@@ -401,11 +366,6 @@
         "정책"
       ],
       "sources": [
-        {
-          "handle": "Reuters",
-          "url": "https://www.reuters.com/",
-          "kind": "doc"
-        },
         {
           "handle": "@Google",
           "url": "https://x.com/Google",
@@ -510,5 +470,6 @@
       "via": "IDE"
     }
   ],
-  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다."
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "legacy": true
 }

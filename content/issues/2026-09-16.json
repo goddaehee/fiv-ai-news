@@ -192,11 +192,6 @@
           "kind": "hot"
         },
         {
-          "handle": "Artificial Analysis",
-          "url": "https://artificialanalysis.ai/",
-          "kind": "doc"
-        },
-        {
           "handle": "Google",
           "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/",
           "kind": "doc"
@@ -288,18 +283,7 @@
         "CheatBench",
         "에이전트"
       ],
-      "sources": [
-        {
-          "handle": "CheatBench",
-          "url": "https://www.cheatbench.ai/",
-          "kind": "doc"
-        },
-        {
-          "handle": "@hendrycks",
-          "url": "https://www.cheatbench.ai/",
-          "kind": "talk"
-        }
-      ]
+      "sources": []
     },
     {
       "id": "science",
@@ -412,18 +396,7 @@
         "MCP",
         "양자"
       ],
-      "sources": [
-        {
-          "handle": "Meta AI",
-          "url": "https://ai.meta.com/",
-          "kind": "doc"
-        },
-        {
-          "handle": "Laravel",
-          "url": "https://laravel.com/",
-          "kind": "doc"
-        }
-      ]
+      "sources": []
     }
   ],
   "mood": {

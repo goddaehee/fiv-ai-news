@@ -204,11 +204,6 @@
           "handle": "@AnthropicAI",
           "url": "https://x.com/AnthropicAI",
           "kind": "talk"
-        },
-        {
-          "handle": "Claude Help",
-          "url": "https://support.claude.com/",
-          "kind": "doc"
         }
       ]
     },
@@ -268,11 +263,6 @@
       ],
       "sources": [
         {
-          "handle": "Reuters",
-          "url": "https://www.reuters.com/",
-          "kind": "doc"
-        },
-        {
           "handle": "@Reuters",
           "url": "https://x.com/Reuters",
           "kind": "rt"
@@ -302,11 +292,6 @@
           "handle": "@SakanaAILabs",
           "url": "https://x.com/SakanaAILabs/status/2099468208231399687",
           "kind": "hot"
-        },
-        {
-          "handle": "Sakana AI",
-          "url": "https://sakana.ai/",
-          "kind": "doc"
         }
       ]
     },
@@ -338,11 +323,6 @@
           "handle": "arXiv 2609.15818",
           "url": "https://arxiv.org/abs/2609.15818",
           "kind": "doc"
-        },
-        {
-          "handle": "Hugging Face",
-          "url": "https://huggingface.co/",
-          "kind": "doc"
         }
       ]
     },
@@ -365,11 +345,6 @@
         "보안"
       ],
       "sources": [
-        {
-          "handle": "The Information",
-          "url": "https://www.theinformation.com/",
-          "kind": "doc"
-        },
         {
           "handle": "@theinformation",
           "url": "https://x.com/theinformation",
@@ -405,16 +380,6 @@
           "handle": "@AnthropicAI",
           "url": "https://x.com/AnthropicAI",
           "kind": "hot"
-        },
-        {
-          "handle": "Anthropic",
-          "url": "https://www.anthropic.com/",
-          "kind": "doc"
-        },
-        {
-          "handle": "Reuters",
-          "url": "https://www.reuters.com/",
-          "kind": "doc"
         }
       ]
     },
@@ -441,16 +406,6 @@
           "handle": "@ArtificialAnlys",
           "url": "https://x.com/ArtificialAnlys/status/2099275327012999193",
           "kind": "hot"
-        },
-        {
-          "handle": "Artificial Analysis",
-          "url": "https://artificialanalysis.ai/",
-          "kind": "doc"
-        },
-        {
-          "handle": "NIPA",
-          "url": "https://www.nipa.kr/",
-          "kind": "doc"
         }
       ]
     },

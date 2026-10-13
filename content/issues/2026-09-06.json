@@ -131,26 +131,14 @@
         "원문과 조건표를 본 뒤에 적용하는 편이 안전합니다."
       ],
       "body": [
-        "Astra가 예상보다 빨리 Plus·Business까지 열렸고 Codex 메시지 상한이 50% 올랐다 소식이 전날 타임라인에서 반복됐습니다. 확인된 문장만 브리핑에 올렸고, 확인되지 않은 수치는 빼 두었습니다.",
-        "이 항목은 그날의 흐름을 잇기 위한 재구성입니다. 원문 링크와 공식 문서가 있으면 그쪽이 우선입니다."
+        "Astra가 예상보다 빨리 Plus·Business까지 열렸고 Codex 메시지 상한이 50% 올랐다 소식이 전날 타임라인에서 반복됐습니다."
       ],
       "takeaway": "발표 문장과 실제 제품 기본값이 같은지부터 확인하면 됩니다. 로드맵에 넣기 전에 조건표를 한 줄로 적어두면 됩니다.",
       "tags": [
         "모델",
         "브리핑"
       ],
-      "sources": [
-        {
-          "handle": "공식 자료",
-          "url": "https://x.com/",
-          "kind": "talk"
-        },
-        {
-          "handle": "OpenAI",
-          "url": "https://openai.com",
-          "kind": "doc"
-        }
-      ]
+      "sources": []
     },
     {
       "id": "maxreset",
@@ -161,26 +149,14 @@
         "원문과 조건표를 본 뒤에 적용하는 편이 안전합니다."
       ],
       "body": [
-        "Anthropic이 Claude Max 이용자의 주간 한도를 초기화했다 소식이 전날 타임라인에서 반복됐습니다. 확인된 문장만 브리핑에 올렸고, 확인되지 않은 수치는 빼 두었습니다.",
-        "이 항목은 그날의 흐름을 잇기 위한 재구성입니다. 원문 링크와 공식 문서가 있으면 그쪽이 우선입니다."
+        "Anthropic이 Claude Max 이용자의 주간 한도를 초기화했다 소식이 전날 타임라인에서 반복됐습니다."
       ],
       "takeaway": "발표 문장과 실제 제품 기본값이 같은지부터 확인하면 됩니다. 로드맵에 넣기 전에 조건표를 한 줄로 적어두면 됩니다.",
       "tags": [
         "모델",
         "브리핑"
       ],
-      "sources": [
-        {
-          "handle": "공식 자료",
-          "url": "https://x.com/",
-          "kind": "talk"
-        },
-        {
-          "handle": "Anthropic",
-          "url": "https://www.anthropic.com",
-          "kind": "doc"
-        }
-      ]
+      "sources": []
     },
     {
       "id": "compress",
@@ -191,8 +167,7 @@
         "원문과 조건표를 본 뒤에 적용하는 편이 안전합니다."
       ],
       "body": [
-        "Codex가 문맥 압축을 노트+검색 기록으로 바꾸는 실험을 열었다 소식이 전날 타임라인에서 반복됐습니다. 확인된 문장만 브리핑에 올렸고, 확인되지 않은 수치는 빼 두었습니다.",
-        "이 항목은 그날의 흐름을 잇기 위한 재구성입니다. 원문 링크와 공식 문서가 있으면 그쪽이 우선입니다."
+        "Codex가 문맥 압축을 노트+검색 기록으로 바꾸는 실험을 열었다 소식이 전날 타임라인에서 반복됐습니다."
       ],
       "takeaway": "발표 문장과 실제 제품 기본값이 같은지부터 확인하면 됩니다. 로드맵에 넣기 전에 조건표를 한 줄로 적어두면 됩니다.",
       "tags": [
@@ -200,11 +175,6 @@
         "브리핑"
       ],
       "sources": [
-        {
-          "handle": "공식 자료",
-          "url": "https://x.com/",
-          "kind": "talk"
-        },
         {
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
@@ -221,26 +191,14 @@
         "원문과 조건표를 본 뒤에 적용하는 편이 안전합니다."
       ],
       "body": [
-        "Artificial Analysis가 지능 지수 v4.2를 내며 비공개 테스트 세트를 늘렸다 소식이 전날 타임라인에서 반복됐습니다. 확인된 문장만 브리핑에 올렸고, 확인되지 않은 수치는 빼 두었습니다.",
-        "이 항목은 그날의 흐름을 잇기 위한 재구성입니다. 원문 링크와 공식 문서가 있으면 그쪽이 우선입니다."
+        "Artificial Analysis가 지능 지수 v4.2를 내며 비공개 테스트 세트를 늘렸다 소식이 전날 타임라인에서 반복됐습니다."
       ],
       "takeaway": "발표 문장과 실제 제품 기본값이 같은지부터 확인하면 됩니다. 로드맵에 넣기 전에 조건표를 한 줄로 적어두면 됩니다.",
       "tags": [
         "모델",
         "브리핑"
       ],
-      "sources": [
-        {
-          "handle": "공식 자료",
-          "url": "https://x.com/",
-          "kind": "talk"
-        },
-        {
-          "handle": "Artificial Analysis",
-          "url": "https://artificialanalysis.ai/",
-          "kind": "doc"
-        }
-      ]
+      "sources": []
     },
     {
       "id": "bench",
@@ -251,26 +209,14 @@
         "원문과 조건표를 본 뒤에 적용하는 편이 안전합니다."
       ],
       "body": [
-        "Astra가 컴퓨터 사용 벤치에선 뛰고 글쓰기·토론 벤치에선 전작 아래로 내려갔다 소식이 전날 타임라인에서 반복됐습니다. 확인된 문장만 브리핑에 올렸고, 확인되지 않은 수치는 빼 두었습니다.",
-        "이 항목은 그날의 흐름을 잇기 위한 재구성입니다. 원문 링크와 공식 문서가 있으면 그쪽이 우선입니다."
+        "Astra가 컴퓨터 사용 벤치에선 뛰고 글쓰기·토론 벤치에선 전작 아래로 내려갔다 소식이 전날 타임라인에서 반복됐습니다."
       ],
       "takeaway": "발표 문장과 실제 제품 기본값이 같은지부터 확인하면 됩니다. 로드맵에 넣기 전에 조건표를 한 줄로 적어두면 됩니다.",
       "tags": [
         "모델",
         "브리핑"
       ],
-      "sources": [
-        {
-          "handle": "공식 자료",
-          "url": "https://x.com/",
-          "kind": "talk"
-        },
-        {
-          "handle": "Artificial Analysis",
-          "url": "https://artificialanalysis.ai/",
-          "kind": "doc"
-        }
-      ]
+      "sources": []
     },
     {
       "id": "plus",
@@ -294,11 +240,6 @@
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
           "kind": "talk"
-        },
-        {
-          "handle": "OpenAI",
-          "url": "https://openai.com",
-          "kind": "doc"
         }
       ]
     },
@@ -324,11 +265,6 @@
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
           "kind": "talk"
-        },
-        {
-          "handle": "OpenAI",
-          "url": "https://openai.com",
-          "kind": "doc"
         }
       ]
     },
@@ -350,11 +286,6 @@
         "평가"
       ],
       "sources": [
-        {
-          "handle": "Artificial Analysis",
-          "url": "https://artificialanalysis.ai/",
-          "kind": "doc"
-        },
         {
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
@@ -383,11 +314,6 @@
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
           "kind": "talk"
-        },
-        {
-          "handle": "OpenAI",
-          "url": "https://openai.com",
-          "kind": "doc"
         }
       ]
     },
@@ -458,5 +384,6 @@
       "via": "보안"
     }
   ],
-  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크는 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다."
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크는 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "legacy": true
 }
