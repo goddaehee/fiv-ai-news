@@ -101,6 +101,7 @@ export type Repo = {
   learn: { title: string; body: string }[];
   requirements: { item: string; min: string; rec: string }[];
   exercises: { title: string; body: string }[];
+  roadmap?: { week: string; topic: string; content: string }[];
   keywords: { word: string; meaning: string }[];
   links: { label: string; href: string }[];
 };

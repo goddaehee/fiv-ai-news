@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { CatalogCat } from "@/data/catalog";
+import { CATALOG_META as catalogMeta } from "@/data/catalog";
 import { getInterest, listSavedRepos, setInterest, toggleSavedRepo } from "@/lib/saved";
 import { allTokensIn, tokenize } from "@/lib/search";
 
@@ -85,7 +86,7 @@ export function ReposCatalog({
         </p>
         <h1>유행레포 공부자료</h1>
         <p className="repo-stats">
-          <b>{catalogCount}</b>개 레포 · <b>{catalog.length}</b>개 카테고리 · 갱신 2026-09-07 · 출처 TrendShift
+          <b>{catalogCount}</b>개 레포 · <b>{catalog.length}</b>개 카테고리 · 갱신 {catalogMeta.updated} · 출처 {catalogMeta.source}
         </p>
         <input
           id="q"
@@ -206,6 +207,11 @@ export function ReposCatalog({
                           <span className="c-idx">{String(i + 1).padStart(2, "0")}</span>
                           <Link className="c-name" href={href} style={deep ? { fontWeight: 800 } : undefined}>
                             {item.name}
+                            {deep ? (
+                              <span className="c-deep-badge" title="심층 분석 기사 있음">
+                                딥다이브
+                              </span>
+                            ) : null}
                           </Link>
                           {item.tags?.length ? (
                             <span className="c-tags">
