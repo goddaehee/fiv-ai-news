@@ -7,6 +7,7 @@ Runs every day including weekends (KST).
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
@@ -44,6 +45,18 @@ def main() -> int:
         rc = sh([sys.executable, str(HERE / "collect.py"), "--out", str(collected)])
         if rc != 0:
             return rc
+        # fail-closed: 수집 0건이면 조용히 넘기지 않고 실패
+        try:
+            snap = json.loads(collected.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"collected snapshot unreadable: {e}", file=sys.stderr)
+            return 3
+        if not snap.get("count"):
+            print(
+                f"collected 0 items (failed_feeds={snap.get('failed_feeds')}) — failing closed",
+                file=sys.stderr,
+            )
+            return 3
     elif not collected.exists():
         print(f"missing {collected}", file=sys.stderr)
         return 2
@@ -57,7 +70,20 @@ def main() -> int:
         draft_cmd.extend(["--provider", args.provider])
     rc = sh(draft_cmd)
     if issue.exists():
-        v = sh([sys.executable, str(HERE / "validate.py"), str(issue)])
+        vcmd = [
+            sys.executable,
+            str(HERE / "validate.py"),
+            "--date",
+            date,
+            "--collected",
+            str(collected),
+            str(issue),
+        ]
+        prev_date = (datetime.strptime(date, "%Y-%m-%d") - timedelta(days=1)).strftime("%Y-%m-%d")
+        prev_file = root / "content" / "issues" / f"{prev_date}.json"
+        if prev_file.exists():
+            vcmd.extend(["--prev", str(prev_file)])
+        v = sh(vcmd)
         if v != 0:
             return v
     return rc

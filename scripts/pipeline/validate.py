@@ -7,11 +7,14 @@ import argparse
 import json
 import re
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from urllib.parse import urlparse
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 URI_RE = re.compile(r"^https?://")
 KINDS = {"hot", "talk", "rt", "doc"}
+KST = timezone(timedelta(hours=9))
 VOICE_BAN = (
     "하십시오",
     "칸에 적",
@@ -130,14 +133,121 @@ def check(issue: dict) -> list[str]:
     return bag
 
 
+def normalize_headline(s: str | None) -> str:
+    s = (s or "").lower()
+    s = re.sub(r"[\s\u200b-\u200f\u2028\u2029]+", "", s)
+    return re.sub(r"[^\w가-힣]", "", s)
+
+
+def url_core(u: str) -> str:
+    try:
+        p = urlparse(u.strip())
+        host = (p.hostname or "").lower()
+        path = (p.path or "").rstrip("/")
+        return f"{host}{path}"
+    except Exception:
+        return u.strip().rstrip("/")
+
+
+def check_quality(
+    issue: dict,
+    collected_urls: set[str] | None,
+    prev: dict | None,
+    date_str: str | None,
+) -> tuple[list[str], list[str]]:
+    """내용 품질 게이트. (errors, warnings) — warnings는 실패시키지 않는다."""
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    # 1. 발행일 일치 (수동 재실행·백필은 --date override)
+    if date_str and issue.get("date") != date_str:
+        errors.append(f"date: {issue.get('date')} != {date_str} (수동 재실행이면 --date로 지정)")
+
+    # 2. 헤드라인 중복 (정규화 후 비교)
+    heads: list[tuple[str, str]] = []
+    for b in issue.get("briefing") or []:
+        if isinstance(b, dict):
+            heads.append(("briefing", normalize_headline(b.get("headline"))))
+    for a in issue.get("analysis") or []:
+        if isinstance(a, dict):
+            heads.append(("analysis", normalize_headline(a.get("title"))))
+    seen: dict[str, str] = {}
+    for kind, h in heads:
+        if not h:
+            continue
+        if h in seen:
+            errors.append(f"headline-dup: {kind} 항목이 {seen[h]} 항목과 중복")
+        else:
+            seen[h] = kind
+
+    # 3. 출력 URL ⊆ 수집 URL (환각 URL 방지)
+    if collected_urls is not None:
+        for i, a in enumerate(issue.get("analysis") or []):
+            if not isinstance(a, dict):
+                continue
+            for s in a.get("sources") or []:
+                u = str((s or {}).get("url") or "")
+                if u and url_core(u) not in collected_urls:
+                    errors.append(f"analysis[{i}].sources: 수집되지 않은 URL {u[:70]}")
+
+    # 4. 전날 호 재탕 (warning — 이어지는 이슈도 있으므로)
+    if prev:
+        prev_heads: set[str] = set()
+        for b in prev.get("briefing") or []:
+            if isinstance(b, dict):
+                prev_heads.add(normalize_headline(b.get("headline")))
+        for a in prev.get("analysis") or []:
+            if isinstance(a, dict):
+                prev_heads.add(normalize_headline(a.get("title")))
+        for kind, h in heads:
+            if h and h in prev_heads:
+                warnings.append(f"prev-dup: {kind} 헤드라인이 전날 호와 중복될 수 있음")
+                break
+
+    # 5. keynums 미검증 문구 잔류 (warning — 프론트에서 제외되지만 파이프라인도 경고)
+    for k in issue.get("keynums") or []:
+        sub = str((k or {}).get("sub") or "")
+        if "교차검증 전" in sub or "초안" in sub:
+            warnings.append("keynums: sub에 미검증 표시 잔류 (공개 지면에서는 제외됨)")
+            break
+
+    # 6. timeline t 포맷 (warning) — 현재 파이프라인은 MM-DD 형식 사용
+    for t in issue.get("timeline") or []:
+        tt = str((t or {}).get("t") or "")
+        if tt and not re.match(r"^\d{2}-\d{2}$", tt):
+            warnings.append(f"timeline: t 포맷 비정상 '{tt}' (MM-DD 기대)")
+            break
+
+    return errors, warnings
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("files", nargs="+", type=Path)
+    ap.add_argument("--date", help="기대 발행일 (KST YYYY-MM-DD). 기본값: 오늘(KST)")
+    ap.add_argument("--collected", type=Path, help="수집 스냅샷 JSON (URL ⊆ 검사)")
+    ap.add_argument("--prev", type=Path, help="전날 호 JSON (재탕 검사)")
     args = ap.parse_args()
+    date_str = args.date or datetime.now(KST).strftime("%Y-%m-%d")
+    collected_urls: set[str] | None = None
+    if args.collected and args.collected.exists():
+        try:
+            snap = json.loads(args.collected.read_text(encoding="utf-8"))
+            collected_urls = {url_core(str(it.get("url") or "")) for it in snap.get("items", []) if it.get("url")}
+        except Exception as e:
+            print(f"WARN collected snapshot unreadable: {e}")
+    prev: dict | None = None
+    if args.prev and args.prev.exists():
+        try:
+            prev = json.loads(args.prev.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"WARN prev issue unreadable: {e}")
     failed = 0
     for f in args.files:
         issue = json.loads(f.read_text(encoding="utf-8"))
         bag = check(issue)
+        qerr, qwarn = check_quality(issue, collected_urls, prev, date_str)
+        bag.extend(qerr)
         if bag:
             failed += 1
             print(f"FAIL {f}")
@@ -149,6 +259,8 @@ def main() -> int:
                 f"OK   {f.name} brief={len(issue['briefing'])} analysis={len(issue['analysis'])} "
                 f"keynums={len(issue['keynums'])} tips={len(issue['tips'])} sources={nsrc}"
             )
+        for line in qwarn:
+            print(f"  ! WARN {f.name}: {line}")
     return 1 if failed else 0
 
 
