@@ -44,10 +44,13 @@ export function RepoDeepDive({ repo }: { repo: Repo }) {
             <a href="#s8">실습 과제</a>
           </li>
           <li>
-            <a href="#s9">키워드</a>
+            <a href="#s9">학습 로드맵</a>
           </li>
           <li>
-            <a href="#s10">참고 링크</a>
+            <a href="#s10">키워드</a>
+          </li>
+          <li>
+            <a href="#s11">참고 링크</a>
           </li>
         </ol>
       </nav>
@@ -188,8 +191,36 @@ export function RepoDeepDive({ repo }: { repo: Repo }) {
         </p>
       ))}
 
-      <h2 id="s9">
-        <span className="num">9</span>키워드 사전
+      {repo.roadmap?.length ? (
+        <>
+          <h2 id="s9">
+            <span className="num">9</span>관련 기술 심화 학습 로드맵
+          </h2>
+          <table>
+            <thead>
+              <tr>
+                <th>주차</th>
+                <th>주제</th>
+                <th>핵심 학습 내용</th>
+              </tr>
+            </thead>
+            <tbody>
+              {repo.roadmap.map((r) => (
+                <tr key={r.week}>
+                  <td>{r.week}</td>
+                  <td>
+                    <strong>{r.topic}</strong>
+                  </td>
+                  <td>{r.content}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      ) : null}
+
+      <h2 id="s10">
+        <span className="num">10</span>키워드 사전
       </h2>
       <table>
         <tbody>
@@ -204,8 +235,8 @@ export function RepoDeepDive({ repo }: { repo: Repo }) {
         </tbody>
       </table>
 
-      <h2 id="s10">
-        <span className="num">10</span>참고 링크
+      <h2 id="s11">
+        <span className="num">11</span>참고 링크
       </h2>
       <ul>
         {repo.links.map((l) => (
