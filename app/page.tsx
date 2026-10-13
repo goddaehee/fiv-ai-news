@@ -5,6 +5,7 @@ import { Hero } from "@/components/home/Hero";
 import { KeyStrip } from "@/components/home/KeyStrip";
 import { SearchBox } from "@/components/home/SearchBox";
 import { SubscribeForm } from "@/components/home/SubscribeForm";
+import { Welcome } from "@/components/home/Welcome";
 import { ISSUES, citationCount, issuesByMonth, latestIssue } from "@/data/news";
 import { CATALOG, deepDiveSlug } from "@/data/catalog";
 import { REPOS } from "@/data/repos";
@@ -48,6 +49,7 @@ export default function HomePage() {
   ];
   return (
     <main className="main" id="main-content" tabIndex={-1}>
+      <Welcome />
       <SearchBox newsIndex={newsIndex} repoIndex={repoIndex} />
       <Hero
         date={latest.date}
