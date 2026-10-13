@@ -1,9 +1,6 @@
 import catalog from "../content/repos-catalog.json";
-import catalogMeta from "../content/repos-catalog-meta.json";
 import { REPOS } from "./repos";
 import { allTokensIn, tokenize } from "@/lib/search";
-
-export const CATALOG_META = catalogMeta as { updated: string; source: string; note?: string };
 
 export type CatalogCard = {
   slug: string;
