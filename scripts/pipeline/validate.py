@@ -211,11 +211,20 @@ def check_quality(
             warnings.append("keynums: sub에 미검증 표시 잔류 (공개 지면에서는 제외됨)")
             break
 
-    # 6. timeline t 포맷 (warning) — 현재 파이프라인은 MM-DD 형식 사용
+    # 6. timeline t 포맷 (warning) — "MM/DD HH:MM" 권장, 구 형식 "MM-DD"도 허용
     for t in issue.get("timeline") or []:
         tt = str((t or {}).get("t") or "")
-        if tt and not re.match(r"^\d{2}-\d{2}$", tt):
-            warnings.append(f"timeline: t 포맷 비정상 '{tt}' (MM-DD 기대)")
+        if not tt:
+            continue
+        m = re.match(r"^(\d{2})[/-](\d{2})(?: (\d{2}):(\d{2}))?$", tt)
+        ok = bool(m)
+        if ok:
+            mo, day = int(m.group(1)), int(m.group(2))
+            ok = 1 <= mo <= 12 and 1 <= day <= 31
+            if ok and m.group(3) is not None:
+                ok = 0 <= int(m.group(3)) <= 23 and 0 <= int(m.group(4)) <= 59
+        if not ok:
+            warnings.append(f"timeline: t 포맷 비정상 '{tt}' (MM/DD HH:MM 기대)")
             break
 
     # 7. 목표 범위 초과 (warning)

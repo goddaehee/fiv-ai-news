@@ -41,6 +41,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - 각 analysis는 extra 필드를 가질 수 있습니다: '그 밖에: '로 시작하는 한 문단. 본문에서 못 다룬 관련 소식이 해당 항목의 sources에 있을 때만 2~3문장으로 짧게 쓰고, 없으면 빈 문자열로 둡니다. 본문·다른 항목과 겹치지 않게.
 - keynums의 sub에는 '초안', '교차검증 전' 같은 문구를 넣지 않습니다. 확인 안 된 수치는 keynums에 넣지 않습니다.
 - intro 첫 문장은 입력 JSON의 date_ko 값으로 시작합니다(예: '10월 15일 수요일 발행.'). 이어서 오늘 호 항목에서 나온 맥락 한 문장을 붙입니다. 맥락이 없으면 날짜만 씁니다.
+- timeline의 t는 "MM/DD HH:MM" 형식으로, 입력 items의 published_ko 값을 그대로 복사합니다. published_ko가 없는 항목은 "MM/DD"만 씁니다. 시각을 지어내지 않습니다.
 - 전체 분량: briefMin 5, readMin은 실제 분량 기준이며 normalize에서 글자 수로 계산합니다.
 - 확인 안 된 인수는 미확정이라고 밝힙니다. 회사 자체 측정은 본문에 그 사실을 적습니다.
 - 과장 형용사(혁명, 폭발) 금지. 숫자로 강도를 전합니다.
@@ -622,6 +623,16 @@ def main() -> int:
         dt = datetime.strptime(snap["date"], "%Y-%m-%d")
         weekday_ko = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"][dt.weekday()]
         date_ko = f"{dt.month}월 {dt.day}일 {weekday_ko}"
+
+        def _published_ko(pub: str | None) -> str | None:
+            # "2026-10-10T20:30+09:00" (KST) → "10/10 20:30". LLM이 타임존 계산을 하지 않게 미리 변환.
+            if not pub:
+                return None
+            m = re.match(r"^\d{4}-(\d{2})-(\d{2})T(\d{2}):(\d{2})", str(pub))
+            if not m:
+                return None
+            return f"{m.group(1)}/{m.group(2)} {m.group(3)}:{m.group(4)}"
+
         payload = {
             "date": snap["date"],
             "date_ko": date_ko,
@@ -636,6 +647,7 @@ def main() -> int:
                             "source": it["source"],
                             "summary": (it.get("summary") or "")[:180],
                             "published": it.get("published"),
+                            "published_ko": _published_ko(it.get("published")),
                         }
                         for it in items[:3]
                     ],
