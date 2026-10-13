@@ -237,6 +237,34 @@ def check_quality(
             warnings.append(f"analysis extra: 300자 초과 ({len(ex)}자)")
             break
 
+    # 8. 출처 URL은 경로가 있는 실제 기사여야 함 (generic 도메인 금지)
+    for i, a in enumerate(issue.get("analysis") or []):
+        if not isinstance(a, dict):
+            continue
+        for s in a.get("sources") or []:
+            u = str((s or {}).get("url") or "").strip()
+            if u and re.match(r"^https?://(www\.)?[a-zA-Z0-9-]+(\.[a-z]+)+/?(\?.*)?$", u):
+                warnings.append(f"analysis[{i}].sources: generic URL '{u[:50]}' (경로 없는 도메인)")
+                break
+
+    # 9. body 최소 길이 + 금지 메타 문구
+    BANNED_PHRASES = [
+        "그날의 흐름을 잇기 위한 재구성입니다",
+        "확인된 문장만 브리핑에 올렸고",
+        "원문 링크와 공식 문서가 있으면 그쪽이 우선입니다",
+    ]
+    for i, a in enumerate(issue.get("analysis") or []):
+        if not isinstance(a, dict):
+            continue
+        body = a.get("body", "")
+        btext = " ".join(body) if isinstance(body, list) else str(body)
+        if btext and len(btext) < 50:
+            warnings.append(f"analysis[{i}].body: 50자 미만 ({len(btext)}자)")
+        for bp in BANNED_PHRASES:
+            if bp in btext:
+                warnings.append(f"analysis[{i}].body: 금지 메타 문구 포함")
+                break
+
     return errors, warnings
 
 

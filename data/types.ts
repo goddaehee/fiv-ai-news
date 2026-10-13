@@ -65,6 +65,7 @@ export type Issue = {
   mood: Mood;
   tips: Tip[];
   method: string;
+  legacy?: boolean;
 };
 
 export type RepoCategory =

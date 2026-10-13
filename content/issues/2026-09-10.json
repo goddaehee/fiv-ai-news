@@ -159,11 +159,6 @@
           "handle": "@OpenAI",
           "url": "https://x.com/OpenAI",
           "kind": "talk"
-        },
-        {
-          "handle": "OpenAI",
-          "url": "https://openai.com",
-          "kind": "doc"
         }
       ]
     },
@@ -190,11 +185,6 @@
           "handle": "@deepseek_ai",
           "url": "https://x.com/deepseek_ai",
           "kind": "talk"
-        },
-        {
-          "handle": "DeepSeek",
-          "url": "https://www.deepseek.com",
-          "kind": "doc"
         }
       ]
     },
@@ -221,11 +211,6 @@
           "handle": "@AnthropicAI",
           "url": "https://x.com/AnthropicAI",
           "kind": "talk"
-        },
-        {
-          "handle": "Anthropic",
-          "url": "https://www.anthropic.com",
-          "kind": "doc"
         }
       ]
     },
@@ -277,11 +262,6 @@
       ],
       "sources": [
         {
-          "handle": "Anthropic",
-          "url": "https://www.anthropic.com",
-          "kind": "doc"
-        },
-        {
           "handle": "@AnthropicAI",
           "url": "https://x.com/AnthropicAI",
           "kind": "talk"
@@ -309,11 +289,6 @@
           "handle": "@GoogleDeepMind",
           "url": "https://x.com/GoogleDeepMind",
           "kind": "talk"
-        },
-        {
-          "handle": "Google Research",
-          "url": "https://research.google/",
-          "kind": "doc"
         }
       ]
     },
@@ -338,11 +313,6 @@
           "handle": "@MicrosoftAI",
           "url": "https://x.com/MicrosoftAI",
           "kind": "talk"
-        },
-        {
-          "handle": "SWE-bench",
-          "url": "https://www.swebench.com/",
-          "kind": "doc"
         }
       ]
     },
@@ -368,11 +338,6 @@
           "handle": "@nvidia",
           "url": "https://x.com/nvidia",
           "kind": "talk"
-        },
-        {
-          "handle": "NVIDIA",
-          "url": "https://www.nvidia.com",
-          "kind": "doc"
         }
       ]
     },
@@ -397,11 +362,6 @@
           "handle": "@harvey_ai",
           "url": "https://x.com/harvey_ai",
           "kind": "talk"
-        },
-        {
-          "handle": "Reuters",
-          "url": "https://www.reuters.com/",
-          "kind": "doc"
         }
       ]
     },
@@ -474,5 +434,6 @@
       "via": "거버넌스"
     }
   ],
-  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다."
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "legacy": true
 }
