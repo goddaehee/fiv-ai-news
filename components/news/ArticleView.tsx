@@ -217,7 +217,7 @@ export function ArticleView({
             <span className="gpin g-red">과열</span>
           </div>
           <div className="gauge-ends">
-            <span>차분</span>
+            <span>차분 ←</span>
             <span>과열</span>
           </div>
         </div>
