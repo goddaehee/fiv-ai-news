@@ -6,6 +6,11 @@ on:
     - cron: "30 20 * * *"
   workflow_dispatch:
 
+# 수동 실행과 cron이 겹치면 push 충돌 → 직렬화
+concurrency:
+  group: daily-issue
+  cancel-in-progress: false
+
 jobs:
   collect-and-draft:
     runs-on: ubuntu-latest
@@ -37,7 +42,9 @@ jobs:
           if [ -n "$GLM_API_KEY$ZHIPU_API_KEY$XAI_API_KEY$GROK_API_KEY$OPENAI_API_KEY" ]; then
             python3 scripts/pipeline/run.py --llm --skip-collect
           else
-            echo "no LLM key — leaving collected snapshot only"
+            # fail-closed: 키 없음도 조용한 스킵이 아니라 실패로 처리 (알림 발동)
+            echo "::error::no LLM key — failing closed"
+            exit 1
           fi
       - uses: actions/upload-artifact@v4
         if: always()
@@ -54,11 +61,53 @@ jobs:
           DATE=$(TZ=Asia/Seoul date +%F)
           git config user.name "fiv-pipeline"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add content/issues/"${DATE}".json 2>/dev/null || true
-          if git diff --cached --quiet; then
+          git pull --rebase origin main || true
+          git add "content/issues/${DATE}.json" 2>/dev/null || true
+          STAGED=$(git diff --cached --name-only)
+          if [ -z "$STAGED" ]; then
             echo "no new issue file — published copy kept"
             exit 0
           fi
+          # 푸시 범위 제한: 오늘 호 파일 외에는 커밋하지 않음
+          case "$STAGED" in
+            "content/issues/"*) ;;
+            *)
+              echo "::error::unexpected staged paths: $STAGED"
+              exit 1
+              ;;
+          esac
           git commit -m "publish ${DATE} issue"
           git push origin HEAD:main
           echo "pushed ${DATE} to main — Vercel will rebuild"
+      - name: Close resolved alerts
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(TZ=Asia/Seoul date +%F)
+          for NUM in $(gh issue list --search "🚨 파이프라인 실패 in:title" --state open --json number --jq '.[].number'); do
+            gh issue close "$NUM" --comment "복구됨: ${DATE} 호 정상 발행"
+          done
+      - name: Alert on failure
+        if: failure() || cancelled()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          DATE=$(TZ=Asia/Seoul date +%F)
+          TITLE="🚨 파이프라인 실패 ${DATE}"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          BODY="run: ${RUN_URL}\n아티팩트: pipeline-${{ github.run_id }}"
+          # 같은 날 중복 이슈 방지: 열린 이슈가 있으면 댓글로 누적
+          NUM=$(gh issue list --search "$TITLE in:title" --state open --json number --jq '.[0].number')
+          if [ -n "$NUM" ] && [ "$NUM" != "null" ]; then
+            gh issue comment "$NUM" --body "재발생: $BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label "pipeline" || echo "::warning::issue create failed"
+          fi
+          # Slack 실시간 알림 (시크릿이 있을 때만)
+          if [ -n "$SLACK_WEBHOOK_URL" ]; then
+            curl --fail -s -X POST -H 'Content-type: application/json' \
+              --data "{\"text\":\"🚨 fiv-ai-news 파이프라인 실패 (${DATE})\n${RUN_URL}\"}" \
+              "$SLACK_WEBHOOK_URL" || echo "::warning::slack webhook failed"
+          fi

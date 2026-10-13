@@ -1,0 +1,57 @@
+name: freshness-check
+
+# 독립 신선도 모니터: daily-issue와 별도 스케줄로 돌아서
+# "워크플로우가 아예 안 돌았거나, push는 됐는데 배포가 안 된 경우"를 잡는다.
+on:
+  schedule:
+    # 매일 08:00 KST = 전날 23:00 UTC
+    - cron: "0 23 * * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check today's issue in main
+        run: |
+          DATE=$(TZ=Asia/Seoul date +%F)
+          if [ ! -f "content/issues/${DATE}.json" ]; then
+            echo "::error::missing content/issues/${DATE}.json in main"
+            exit 1
+          fi
+          python3 scripts/pipeline/validate.py --date "$DATE" "content/issues/${DATE}.json"
+          echo "issue file OK: ${DATE}"
+      - name: Check production site shows today
+        run: |
+          DATE=$(TZ=Asia/Seoul date +%F)
+          HTML=$(curl --fail -s "https://fiv-ai-news.vercel.app/")
+          echo "$HTML" | grep -q "$DATE" || {
+            echo "::error::production site does not show ${DATE}"
+            exit 1
+          }
+          echo "production site OK: ${DATE}"
+      - name: Alert on failure
+        if: failure() || cancelled()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          DATE=$(TZ=Asia/Seoul date +%F)
+          TITLE="🚨 발행 신선도 이상 ${DATE}"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          BODY="run: ${RUN_URL}\n오늘 호가 main 또는 프로덕션 사이트에 없음"
+          NUM=$(gh issue list --search "$TITLE in:title" --state open --json number --jq '.[0].number')
+          if [ -n "$NUM" ] && [ "$NUM" != "null" ]; then
+            gh issue comment "$NUM" --body "재발생: $BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label "pipeline" || echo "::warning::issue create failed"
+          fi
+          if [ -n "$SLACK_WEBHOOK_URL" ]; then
+            curl --fail -s -X POST -H 'Content-type: application/json' \
+              --data "{\"text\":\"🚨 fiv-ai-news 발행 신선도 이상 (${DATE})\n${RUN_URL}\"}" \
+              "$SLACK_WEBHOOK_URL" || echo "::warning::slack webhook failed"
+          fi
