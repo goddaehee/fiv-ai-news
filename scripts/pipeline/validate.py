@@ -62,8 +62,8 @@ def check(issue: dict) -> list[str]:
     )
     if not DATE_RE.match(str(issue.get("date", ""))):
         err("date", "YYYY-MM-DD required", bag)
-    if not (4 <= len(issue.get("briefing") or []) <= 14):
-        err("briefing", "need 4–14 items", bag)
+    if not (3 <= len(issue.get("briefing") or []) <= 14):
+        err("briefing", "need 3–14 items", bag)
     if not (3 <= len(issue.get("keynums") or []) <= 16):
         err("keynums", "need 3–16 items", bag)
     if len(issue.get("timeline") or []) < 3:
@@ -216,6 +216,16 @@ def check_quality(
         tt = str((t or {}).get("t") or "")
         if tt and not re.match(r"^\d{2}-\d{2}$", tt):
             warnings.append(f"timeline: t 포맷 비정상 '{tt}' (MM-DD 기대)")
+            break
+
+    # 7. 목표 범위 초과 (warning)
+    nb = len(issue.get("briefing") or [])
+    if nb > 7:
+        warnings.append(f"briefing: 목표 5~7 초과 ({nb}개)")
+    for a in issue.get("analysis") or []:
+        ex = str((a or {}).get("extra") or "")
+        if len(ex) > 300:
+            warnings.append(f"analysis extra: 300자 초과 ({len(ex)}자)")
             break
 
     return errors, warnings

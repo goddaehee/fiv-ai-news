@@ -36,8 +36,12 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
-- briefing 8~12, analysis는 briefing id와 1:1, bullets 3, body 2~3문단(문단당 2문장 이상), tips 6, keynums 6~8, timeline 5~8.
-- extras 섹션 id는 extras, 제목은 '🆕 그 밖의 신기능·신제품'.
+- briefing 5~7 (중요도 순 선정. 뉴스가 적은 날은 3~4개도 가능 — 억지 채우기 금지), analysis는 briefing id와 1:1, bullets 3, body 3문단 기본(핵심 기사는 최대 4문단, 문단당 2~3문장), tips 4~5, keynums 4~6, timeline 4~6.
+- 수치·주장·인용은 입력에 제공된 원문 요약(summary)과 URL 정보에서 확인된 사실만 씁니다. 해석·전망은 허용하되 사실과 구분하고, 확인 안 된 것은 '추정'·'미확정'으로 명시합니다. 이 규칙은 body뿐 아니라 intro·bullets·extra·tips·keynums·timeline 전체에 적용됩니다.
+- 각 analysis는 extra 필드를 가질 수 있습니다: '그 밖에: '로 시작하는 한 문단. 본문에서 못 다룬 관련 소식이 해당 항목의 sources에 있을 때만 2~3문장으로 짧게 쓰고, 없으면 빈 문자열로 둡니다. 본문·다른 항목과 겹치지 않게.
+- keynums의 sub에는 '초안', '교차검증 전' 같은 문구를 넣지 않습니다. 확인 안 된 수치는 keynums에 넣지 않습니다.
+- intro 첫 문장은 입력 JSON의 date_ko 값으로 시작합니다(예: '10월 15일 수요일 발행.'). 이어서 오늘 호 항목에서 나온 맥락 한 문장을 붙입니다. 맥락이 없으면 날짜만 씁니다.
+- 전체 분량: briefMin 5, readMin은 실제 분량 기준이며 normalize에서 글자 수로 계산합니다.
 - 확인 안 된 인수는 미확정이라고 밝힙니다. 회사 자체 측정은 본문에 그 사실을 적습니다.
 - 과장 형용사(혁명, 폭발) 금지. 숫자로 강도를 전합니다.
 
@@ -286,7 +290,7 @@ def thicken_body(body: list[str], bullets: list[str]) -> list[str]:
             extra = bullets[min(i, len(bullets) - 1)]
             if extra and extra not in p:
                 p = f"{p} {extra}".strip()
-        while len(p) < 90:
+        if len(p) < 90:
             p = f"{p} {pad}".strip()
         out.append(p)
     if len(out) < 2:
@@ -361,6 +365,11 @@ def normalize(issue: dict) -> dict:
             bit = bullets[0] if bullets else title
             take = f"{title}은 오늘 바로 확인할 변경입니다. {bit}"
         take = thicken_take(take, bullets, title)
+        extra = _text(a.get("extra"))
+        if extra in ("없음", "해당 없음", "없습니다", "-", "—"):
+            extra = ""
+        if extra and not extra.startswith("그 밖에"):
+            extra = f"그 밖에: {extra}"
         analysis.append(
             {
                 "id": hid if hid in ids or not ids else brief[min(i - 1, len(brief) - 1)]["id"],
@@ -368,6 +377,7 @@ def normalize(issue: dict) -> dict:
                 "title": title if title[:1].isdigit() else f"{i}. {title}",
                 "bullets": bullets[:8],
                 "body": body[:6],
+                "extra": extra,
                 "takeaway": take,
                 "tags": tags[:6],
                 "sources": sources[:6],
@@ -466,14 +476,30 @@ def normalize(issue: dict) -> dict:
         except (TypeError, ValueError):
             return default
 
+    def _read_mins() -> tuple[int, int]:
+        # 읽기 시간은 LLM 선언이 아니라 실제 글자 수로 계산 (분당 500자)
+        brief_chars = sum(len(b["headline"]) + len(b["summary"]) for b in brief)
+        total_chars = (
+            brief_chars
+            + len(_text(issue.get("intro")))
+            + sum(len(p) for a in analysis for p in a["body"])
+            + sum(len(a["takeaway"]) + len(a.get("extra") or "") for a in analysis)
+            + sum(len(t["title"]) + len(t["body"]) for t in tips)
+        )
+        brief_min = min(7, max(3, round(brief_chars / 500)))
+        read_min = min(15, max(5, round(total_chars / 500)))
+        return brief_min, read_min
+
+    _brief_min, _read_min = _read_mins()
+
     out = {
         "date": _text(issue.get("date")),
         "title": _text(issue.get("title")) or (brief[0]["headline"] if brief else "초안"),
         "heroline": _text(issue.get("heroline")) or (brief[0]["headline"][:48] if brief else "초안"),
         "dek": _text(issue.get("dek")) or (brief[0]["summary"] if brief else "수집 파이프라인 초안입니다."),
         "tag": _text(issue.get("tag")) or (keywords[0] if keywords else "AI"),
-        "briefMin": _int(issue.get("briefMin"), 5),
-        "readMin": _int(issue.get("readMin"), 14),
+        "briefMin": _brief_min,
+        "readMin": _read_min,
         "briefing": brief,
         "keywords": keywords[:8],
         "mainEvent": (
@@ -593,8 +619,12 @@ def main() -> int:
     if creds:
         name, key, url, model = creds
         buckets = rank_buckets(cluster(snap["items"]))
+        dt = datetime.strptime(snap["date"], "%Y-%m-%d")
+        weekday_ko = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"][dt.weekday()]
+        date_ko = f"{dt.month}월 {dt.day}일 {weekday_ko}"
         payload = {
             "date": snap["date"],
+            "date_ko": date_ko,
             "buckets": [
                 {
                     "topic": topic,
@@ -610,7 +640,7 @@ def main() -> int:
                         for it in items[:3]
                     ],
                 }
-                for topic, items in buckets[:8]
+                for topic, items in buckets[:7]
             ],
         }
         print(f"drafting provider={name} model={model} buckets={len(payload['buckets'])}", flush=True)
