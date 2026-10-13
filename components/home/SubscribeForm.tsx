@@ -36,9 +36,11 @@ export function SubscribeForm({ compact = false }: { compact?: boolean }) {
     <section className={compact ? undefined : "sub-card"} id={compact ? undefined : "subscribe-card"}>
       {!compact ? (
         <div>
-          <p className="sub-label">메일 구독</p>
+          <p className="sub-label">
+            메일 구독 <span className="sub-badge">준비 중</span>
+          </p>
           <h2 className="sub-title">내일 아침 브리핑, 메일함으로 받기</h2>
-          <p className="sub-desc">평일 07:00 전후 발행 · 무료 · 이메일만 · 메일 하단에서 1클릭 해지</p>
+          <p className="sub-desc">정식 발송 준비 중 · 무료</p>
         </div>
       ) : null}
       <form className="sub-form" onSubmit={onSubmit} noValidate>
