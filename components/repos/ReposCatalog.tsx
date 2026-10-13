@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { CatalogCat } from "@/data/catalog";
-import { CATALOG_META as catalogMeta } from "@/data/catalog";
+import catalogMeta from "@/content/repos-catalog-meta.json";
 import { getInterest, listSavedRepos, setInterest, toggleSavedRepo } from "@/lib/saved";
 import { allTokensIn, tokenize } from "@/lib/search";
 
