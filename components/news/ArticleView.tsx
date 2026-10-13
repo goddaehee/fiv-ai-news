@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Issue, SourceKind } from "@/data/types";
 import { formatDotWeek } from "@/lib/utils";
+import { isPublicKeyNum } from "@/lib/keynums";
 import { markRead } from "@/lib/saved";
 import { SubscribeForm } from "@/components/home/SubscribeForm";
 
@@ -43,6 +44,8 @@ export function ArticleView({
   older?: { date: string; title: string };
 }) {
   const [progress, setProgress] = useState(0);
+  // 미검증(초안 · 교차검증 전) 수치와 플레이스홀더는 공개 지면에 노출하지 않는다
+  const publicKeynums = issue.keynums.filter(isPublicKeyNum);
   const firstId = issue.analysis[0]?.id ?? issue.briefing[0]?.id;
   const analysisIds = new Set(issue.analysis.map((a) => a.id));
 
@@ -141,15 +144,17 @@ export function ArticleView({
         </p>
       </div>
 
-      <div className="keynum">
-        {issue.keynums.map((k) => (
-          <div className="kn-cell" key={k.lab}>
-            <div className="kn-val">{k.val}</div>
-            <div className="kn-lab">{k.lab}</div>
-            <div className="kn-sub">{k.sub}</div>
-          </div>
-        ))}
-      </div>
+      {publicKeynums.length ? (
+        <div className="keynum">
+          {publicKeynums.map((k) => (
+            <div className="kn-cell" key={k.lab + k.val}>
+              <div className="kn-val">{k.val}</div>
+              <div className="kn-lab">{k.lab}</div>
+              <div className="kn-sub">{k.sub}</div>
+            </div>
+          ))}
+        </div>
+      ) : null}
 
       <p className="issue-intro">{issue.intro}</p>
 
