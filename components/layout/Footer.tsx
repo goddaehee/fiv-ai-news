@@ -13,7 +13,7 @@ export function Footer() {
       <nav>
         <strong>읽기</strong>
         <Link href="/">오늘의 브리핑</Link>
-        <Link href="/#archive-all-h">지난 뉴스</Link>
+        <Link href="/archive">지난 뉴스</Link>
         <Link href="/repos">레포 공부</Link>
         <Link href="/diagram">선 컬렉션</Link>
       </nav>
@@ -21,14 +21,14 @@ export function Footer() {
         <strong>안내</strong>
         <Link href="/about">소개 · 제작 방식</Link>
         <Link href="/privacy">개인정보처리방침</Link>
-        <Link href="/#faq">FAQ</Link>
+        <Link href="/faq">FAQ</Link>
       </nav>
       <nav>
         <strong>구독</strong>
         <Link href="/#subscribe-card">메일 구독</Link>
         <a href="/feed.xml">RSS</a>
-        <span>웹은 매일 · 메일은 평일 07:00</span>
-        <span>무료 · 1클릭 해지</span>
+        <span>웹은 매일 07:00 발행</span>
+        <span>메일 발송 준비 중 · 무료</span>
       </nav>
     </footer>
   );

@@ -5,7 +5,7 @@ import { REPOS } from "@/data/repos";
 const origin = process.env.SITE_ORIGIN || "https://fiv-ai-news.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPaths = ["", "/about", "/privacy", "/repos", "/diagram"];
+  const staticPaths = ["", "/about", "/privacy", "/repos", "/diagram", "/archive", "/faq"];
   return [
     ...staticPaths.map((p) => ({ url: `${origin}${p || "/"}`, changeFrequency: "daily" as const })),
     ...ISSUES.map((i) => ({ url: `${origin}/news/${i.date}`, changeFrequency: "weekly" as const })),
