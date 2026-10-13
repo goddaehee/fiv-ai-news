@@ -99,7 +99,7 @@ export default function AboutPage() {
         <dt>운영</dt>
         <dd>개인 운영 · 매일 발행</dd>
         <dt>구독 메일</dt>
-        <dd>평일 07:00 전후 · 무료 · 1클릭 해지</dd>
+        <dd>준비 중 · 무료 · 1클릭 해지</dd>
         <dt>개인정보</dt>
         <dd>
           <Link href="/privacy">개인정보처리방침</Link>
