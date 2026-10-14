@@ -75,7 +75,7 @@ def fetch(url: str, timeout: int = 22) -> bytes | None:
         except urllib.error.HTTPError as e:
             print(f"    HTTP {e.code} {url[:88]}")
             return None
-        except (urllib.error.URLError, TimeoutError, ssl.SSLError, ValueError) as e:
+        except (urllib.error.URLError, TimeoutError, ssl.SSLError, ValueError, ConnectionError) as e:
             last = e
             time.sleep(0.5)
     print(f"    fail {type(last).__name__ if last else 'error'} {url[:88]}")
