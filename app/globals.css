@@ -943,6 +943,32 @@ html[data-theme="sepia"] {
   text-decoration:none;
   display:flex;
 }
+/* 4주차: 아카이브 검색 */
+.archive-search {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:16px 0 8px;
+}
+.archive-search input {
+  flex:1;
+  padding:10px 14px;
+  border:1px solid var(--color-border);
+  border-radius:8px;
+  font-size:14px;
+  background:var(--color-bg);
+  color:var(--color-fg);
+}
+.archive-search-count {
+  font-size:13px;
+  color:var(--color-muted);
+  white-space:nowrap;
+}
+.archive-empty {
+  color:var(--color-muted);
+  font-size:14px;
+  margin:24px 0;
+}
 .archive-list a:hover {
   color:var(--color-accent-ink);
 }
@@ -1343,6 +1369,21 @@ html[data-theme="sepia"] {
 .src-row a:hover {
   background:var(--color-accent-soft);
   border-bottom-style:solid;
+}
+/* 3주차: 기사 구조 소제목 + 출처 신뢰 배지 */
+.body-sub {
+  font-size:14px;
+  font-weight:700;
+  color:var(--color-accent);
+  margin:1.2em 0 0.3em;
+}
+.src-trust {
+  font-size:11px;
+  font-weight:700;
+  color:#1a7f37;
+  background:#dafbe1;
+  border-radius:999px;
+  padding:2px 8px;
 }
 .hr {
   border:0;

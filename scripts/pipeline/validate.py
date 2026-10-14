@@ -455,6 +455,102 @@ def check_quality(
     errors.extend(p0_err)
     warnings.extend(p0_warn)
 
+    # 11. 2주차: 깊이 슬롯 게이트 + 근거 연결 + 문체 패스
+    d_err, d_warn = check_depth(issue)
+    errors.extend(d_err)
+    warnings.extend(d_warn)
+
+    return errors, warnings
+
+
+# ---------------------------------------------------------------------------
+# 2주차: 깊이 슬롯 게이트 (품질 개선 계획 v5)
+# 슬롯 5개: 무슨 일인가 / 맥락 / 수치 2개+ / 한계·반론 / 왜 중요한가
+# 생략: 기사별 ≤1개, 전체 평균 ≤10%. 사유는 '근거 없음'으로 통일, 로그에 하위 사유.
+# ---------------------------------------------------------------------------
+
+DEPTH_SLOTS = ["what", "context", "numbers", "limits", "why"]
+LIMIT_MARKERS = ["한계", "하지만", "단,", "주의", "반론", "다만", "아직", "불확실", "검증되지"]
+WHY_MARKERS = ["중요", "의미", "영향", "바뀐", "달라진"]
+
+
+def _slot_status(a: dict) -> dict[str, bool]:
+    """단일 analysis의 슬롯 충족 여부."""
+    bullets = a.get("bullets") or []
+    body = a.get("body") or []
+    takeaway = str(a.get("takeaway") or "")
+    btext = " ".join(str(x) for x in (bullets if isinstance(bullets, list) else [bullets]))
+    body_text = " ".join(str(x) for x in (body if isinstance(body, list) else [body]))
+    full = btext + " " + body_text + " " + takeaway
+
+    # what: body 첫 문단이 30자 이상
+    first = str(body[0]) if isinstance(body, list) and body else ""
+    what = len(first) >= 30
+    # context: body 2개 문단 이상 (첫 문단=what, 둘째=맥락)
+    context = isinstance(body, list) and len(body) >= 2 and len(str(body[1])) >= 30
+    # numbers: 본문+bullet에 수치 2개 이상
+    nums = re.findall(r"\d+(\.\d+)?\s*(%|배|달러|억|만|점|분|시간|일|명|개)", full)
+    numbers = len(nums) >= 2
+    # limits: 한계·반론 마커 포함
+    limits = any(m in full for m in LIMIT_MARKERS)
+    # why: takeaway가 있고 왜-중요 마커 포함
+    why = len(takeaway) >= 20 and any(m in full for m in WHY_MARKERS)
+    return {"what": what, "context": context, "numbers": numbers, "limits": limits, "why": why}
+
+
+def check_depth(issue: dict) -> tuple[list[str], list[str]]:
+    """깊이 슬롯 + 근거 연결 + 문체 패스. (errors, warnings)."""
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
+    if not analyses:
+        return errors, warnings
+
+    # 깊이 슬롯: 기사별 생략 ≤1개
+    total_missing = 0
+    for i, a in enumerate(analyses):
+        status = _slot_status(a)
+        missing = [s for s in DEPTH_SLOTS if not status[s]]
+        total_missing += len(missing)
+        if len(missing) > 1:
+            errors.append(
+                f"analysis[{i}].depth: 슬롯 {len(missing)}개 미충족 ({', '.join(missing)}) — 최대 1개까지 생략 가능"
+            )
+        elif len(missing) == 1:
+            warnings.append(f"analysis[{i}].depth: 슬롯 1개 생략 ({missing[0]}) — 사유 '근거 없음' 기록 필요")
+
+    # 전체 평균 생략률 ≤10%
+    avg_missing = total_missing / (len(analyses) * len(DEPTH_SLOTS))
+    if avg_missing > 0.10:
+        errors.append(f"depth: 전체 슬롯 생략률 {avg_missing:.0%} > 10%")
+
+    # 근거 연결: 출처 없는 수치 0건 — 수치 있는 문장에 출처 마커가 없으면 warning
+    for i, a in enumerate(analyses):
+        body = a.get("body") or []
+        sources = a.get("sources") or []
+        body_text = " ".join(str(x) for x in (body if isinstance(body, list) else [body]))
+        nums = re.findall(r"\d+(\.\d+)?\s*(%|배|달러|억|만|점)", body_text)
+        if nums and not sources:
+            warnings.append(f"analysis[{i}].evidence: 수치 {len(nums)}개 있으나 sources 없음")
+
+    # 문체 패스: distinct-3 ≥ 0.869
+    # 근거: 0주차 원본 실측 (fiv.co.kr 최근 3호 평균 0.919) − 5%p 허용 오차.
+    # 상세: ~/workspace/fiv-panel/q_baseline_0week.md
+    all_text = " ".join(
+        str(b.get("headline") or "") + " " + str(b.get("summary") or "")
+        for b in (issue.get("briefing") or []) if isinstance(b, dict)
+    )
+    for a in analyses:
+        body = a.get("body") or []
+        all_text += " " + " ".join(str(x) for x in (body if isinstance(body, list) else [body]))
+    toks = all_text.split()
+    grams = [tuple(toks[j:j+3]) for j in range(len(toks) - 2)]
+    if grams:
+        d3 = len(set(grams)) / len(grams)
+        if d3 < 0.869:
+            warnings.append(f"style: distinct-3 {d3:.3f} < 0.869 (반복 과다)")
+
     return errors, warnings
 
 

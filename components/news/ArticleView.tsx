@@ -193,13 +193,18 @@ export function ArticleView({
               <figcaption className="ai-cap">{img.caption}</figcaption>
             </figure>
           ))}
-          {sec.body.map((p) => (
-            <p key={p.slice(0, 24)}>{p}</p>
+          {sec.body.map((p, pi) => (
+            <div key={p.slice(0, 24)}>
+              {pi === 0 ? <h3 className="body-sub">무슨 일인가</h3> : null}
+              {pi === 1 ? <h3 className="body-sub">배경과 맥락</h3> : null}
+              {pi === 2 ? <h3 className="body-sub">한계와 반론</h3> : null}
+              <p>{p}</p>
+            </div>
           ))}
           {sec.extra ? <p>{sec.extra}</p> : null}
           <blockquote className="bq-take">
             <p>
-              <strong>시사점:</strong> {sec.takeaway}
+              <strong>왜 중요한가:</strong> {sec.takeaway}
             </p>
             {sec.tags?.filter((t) => t?.trim()).length ? (
               <p>
@@ -209,6 +214,10 @@ export function ArticleView({
           </blockquote>
           <p className="src-row">
             <span className="src-lab">출처 {sec.sources.length}</span>
+            {/* 1차 출처 = kind "doc" (공식 문서·발표). validate.py KINDS 참고 */}
+            {sec.sources.some((s) => s.kind === "doc") ? (
+              <span className="src-trust" title="공식 문서·발표 포함">1차 출처 포함</span>
+            ) : null}
             {sec.sources.map((s) => (
               <a
                 key={s.url + s.handle}
