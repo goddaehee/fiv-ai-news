@@ -19,6 +19,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from cluster import cluster, rank_buckets
+from select_items import select_buckets
 from validate import KINDS, check
 
 KST = timezone(timedelta(hours=9))
@@ -41,7 +42,15 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
-- briefing 5~7 (중요도 순 선정. 뉴스가 적은 날은 3~4개도 가능 — 억지 채우기 금지), analysis는 briefing id와 1:1, bullets 3, body 3문단 기본(핵심 기사는 최대 4문단, 문단당 2~3문장), tips 4~5, keynums 4~6, timeline 4~6.
+- briefing 5~7 (중요도 순 선정. 뉴스가 적은 날은 3~4개도 가능 — 억지 채우기 금지), analysis는 briefing 중 메인 3~5개 id와 1:1 (나머지는 단신, analysis 없음), bullets 3, body 3문단 기본(핵심 기사는 최대 4문단, 문단당 2~3문장), tips 4~5, keynums 4~6, timeline 4~6.
+- 깊이 슬롯 (analysis마다 5개 슬롯 필수, 최대 1개까지만 생략 가능 — 생략 시 사유 '근거 없음'):
+  1. 무슨 일인가 (body 첫 문단, 30자 이상)
+  2. 맥락 (body 둘째 문단, 30자 이상 — 배경·이전 흐름)
+  3. 수치 2개+ (본문+bullet에 수치 2개 이상, 각 수치에 출처 연결)
+  4. 한계·반론 (한계·하지만·단·주의·반론·불확실 중 1개 이상 포함)
+  5. 왜 중요한가 (takeaway 20자 이상, 중요·의미·영향 중 1개 이상 포함)
+- 선별 점수제: 각 기사를 영향도(0~2: 다룬 매체 수)·새로움(0~2: 24시간 이내=2)·관련성(0~2: 수치·고유명사)·근거(0~2: 공식 출처 URL) 로 채점, 총 8점 중 5점 미만은 제외.
+- 소스 쿼터: 단일 출처가 당일 전체 기사 수의 25%를 넘지 않게. 메인 기사는 출처당 1개까지.
 - 수치·주장·인용은 입력에 제공된 원문 요약(summary)과 URL 정보에서 확인된 사실만 씁니다. 해석·전망은 허용하되 사실과 구분하고, 확인 안 된 것은 '추정'·'미확정'으로 명시합니다. 이 규칙은 body뿐 아니라 intro·bullets·extra·tips·keynums·timeline 전체에 적용됩니다.
 - 각 analysis는 extra 필드를 가질 수 있습니다: '그 밖에: '로 시작하는 한 문단. 본문에서 못 다룬 관련 소식이 해당 항목의 sources에 있을 때만 2~3문장으로 짧게 쓰고, 없으면 빈 문자열로 둡니다. 본문·다른 항목과 겹치지 않게.
 - keynums의 sub에는 '초안', '교차검증 전' 같은 문구를 넣지 않습니다. 확인 안 된 수치는 keynums에 넣지 않습니다.
@@ -550,7 +559,11 @@ def published_lock(path: Path) -> bool:
 
 def skeleton(snap: dict) -> dict:
     date = snap["date"]
-    buckets = rank_buckets(cluster(snap["items"]))
+    ranked = rank_buckets(cluster(snap["items"]))
+    # 1주차: 선별 점수제 + 소스 쿼터. 메인 3~5개는 briefing+analysis, 나머지는 briefing만 (단신).
+    main_buckets, rest_buckets = select_buckets(ranked)
+    buckets = [(n, it) for n, it, _ in main_buckets] + [(n, it) for n, it, _ in rest_buckets]
+    main_names = {n for n, _, _ in main_buckets}
     briefing = []
     analysis = []
     timeline = []
@@ -560,6 +573,8 @@ def skeleton(snap: dict) -> dict:
         hid = name.replace("_", "-")[:24]
         headline = top["title"].rstrip(".")
         briefing.append({"id": hid, "headline": headline, "summary": (top.get("summary") or headline)[:220]})
+        if name not in main_names:
+            continue  # 단신: briefing만, analysis 없음
         src = {"handle": top["source"], "url": top.get("url") or "https://example.com", "kind": top.get("kind") or "doc"}
         analysis.append(
             {
@@ -587,7 +602,7 @@ def skeleton(snap: dict) -> dict:
         raise SystemExit("not enough clustered items to draft a skeleton")
     return {
         "date": date,
-        "title": " · ".join(b["headline"].split()[:3] for b in briefing[:3]),
+        "title": " · ".join(" ".join(b["headline"].split()[:3]) for b in briefing[:3]),
         "heroline": briefing[0]["headline"][:48],
         "dek": "수집 파이프라인 초안입니다. 교차검증 후 본문을 채우면 됩니다.",
         "tag": buckets[0][0],
