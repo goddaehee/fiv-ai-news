@@ -31,6 +31,11 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - 남의 문장을 베끼지 말고, 공개된 회사·수치·날짜만 사실로 삼아 우리 문장으로 씁니다. 영어 직역 금지.
 - 제목은 '누가 무엇을 했다' 과거형 완결 문장. 같은 줄에 숫자를 넣습니다.
 - 시사점은 두 문장(판단 + 숫자 있는 다음 행동). 입니다/됩니다. '하십시오' 금지. 칸에 적으면/내부 메모 금지.
+- 시사점에 템플릿 문구를 쓰지 않습니다. '오늘 확인할 변경입니다', '숫자·적용 범위·분모는 출처 문서에서 다시 보고' 같은 메타 지시문은 절대 포함하지 않습니다. 누가 무엇을 확인·결정해야 하는지 구체적인 독자와 상황으로 씁니다.
+- briefing.summary는 headline을 복사하지 않고 1~2줄로 핵심을 압축해 씁니다.
+- tags는 실제 주제 태그 3개 (내부 ID·슬러그 금지).
+- mainEvent는 사람이 읽는 이벤트명 (내부 ID 금지).
+- tips의 title과 body는 서로 다르게 씁니다. via는 실제 출처명 (디버그 값 금지).
 - 같은 시사점을 여러 칸에 복붙하지 않습니다.
 - sources.url 은 입력 buckets에 있는 실제 http(s) 링크만. example.com 금지.
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
@@ -282,8 +287,8 @@ def _sources(v) -> list[dict]:
 
 
 def thicken_body(body: list[str], bullets: list[str]) -> list[str]:
-    """Length is not a reason to drop a day. Expand from the section's own bullets."""
-    pad = "조건과 분모는 출처 문서에서 다시 보면 됩니다. 회사 측정과 외부 측정은 한 문장에 섞지 않습니다."
+    """Length is not a reason to drop a day. Expand from the section's own bullets.
+    P0: 템플릿 패딩 제거 — 부족하면 짧게 두고 validate가 잡는다."""
     out = []
     for i, raw in enumerate(body or [""]):
         p = (raw or "").strip()
@@ -291,28 +296,31 @@ def thicken_body(body: list[str], bullets: list[str]) -> list[str]:
             extra = bullets[min(i, len(bullets) - 1)]
             if extra and extra not in p:
                 p = f"{p} {extra}".strip()
-        if len(p) < 90:
-            p = f"{p} {pad}".strip()
+        # P0: 고정 패딩 문구 추가 금지. 짧으면 짧은 대로 둔다.
         out.append(p)
     if len(out) < 2:
-        out.append(" ".join(bullets[:3]) or pad)
-    if len(out[-1]) < 90:
-        out[-1] = f"{out[-1]} {pad}".strip()
-    return out[:6]
+        out.append(" ".join(bullets[:3]))
+    return [p for p in out[:6] if p]
 
 
 def thicken_take(take: str, bullets: list[str], title: str) -> str:
+    """P0: 템플릿 패딩 제거. 기준 미달이면 빈 문자열 — validate가 error로 잡는다."""
     take = (take or "").strip().replace("하십시오", "하면 됩니다")
+    # P0: 블록리스트 문구가 있으면 전체를 비운다 (기존 데이터의 템플릿 잔류 제거)
+    _bl = Path(__file__).resolve().parent / "template_blocklist.txt"
+    if _bl.exists():
+        phrases = [l.strip() for l in _bl.read_text(encoding="utf-8").splitlines()
+                   if l.strip() and not l.strip().startswith("#")]
+        if any(ph in take for ph in phrases):
+            take = ""
     if any(bad in take for bad in ("내부 메모에", "칸에 적", "칸을 나눠", "example.com")):
         take = ""
+    # P0: "{title}은 오늘 확인할 변경입니다" 템플릿 생성 금지.
+    # 미달이면 빈 문자열로 두고, draft 단계에서 재생성 → 실패 시 항목 숨김.
     if len(take) < 70 or take.count("다.") < 1:
-        bit = bullets[0] if bullets else title
-        take = f"{title[:48]}은 오늘 확인할 변경입니다. {bit}".strip()
+        return ""
     if not take.endswith(("다.", "요.", "니다.", "습니다.")):
         take = take.rstrip(".") + "입니다."
-    extra = " 숫자·적용 범위·분모는 출처 문서에서 다시 보고, 회사 측정과 외부 측정을 한 문장에 섞지 않으면 됩니다."
-    while len(take) < 80:
-        take += extra
     return take
 
 
@@ -355,16 +363,16 @@ def normalize(issue: dict) -> dict:
         if not body:
             body = [title]
         body = thicken_body(body, bullets)
-        tags = [_text(x) for x in _list(a.get("tags")) if _text(x)] or [hid]
+        tags = [_text(x).strip() for x in _list(a.get("tags")) if _text(x).strip()]
+        # P0: 내부 ID 폴백 금지. 비어 있으면 비운 채로 두고 validate가 판단한다.
+        tags = [t for t in tags if t != hid]
         sources = _sources(a.get("sources"))
         if not sources:
             sources = []
         take = _text(a.get("takeaway") or a.get("so") or a.get("point"))
         if "하십시오" in take:
             take = take.replace("하십시오", "하면 됩니다")
-        if not take or any(bad in take for bad in ("내부 메모에", "칸에 적", "칸을 나눠")):
-            bit = bullets[0] if bullets else title
-            take = f"{title}은 오늘 바로 확인할 변경입니다. {bit}"
+        # P0: 템플릿 생성 금지. 비어 있으면 비운 채로 두고 validate가 error로 잡는다.
         take = thicken_take(take, bullets, title)
         extra = _text(a.get("extra"))
         if extra in ("없음", "해당 없음", "없습니다", "-", "—"):
@@ -407,14 +415,19 @@ def normalize(issue: dict) -> dict:
     tips = []
     for t in _list(issue.get("tips")):
         if isinstance(t, str):
-            tips.append({"title": t[:80], "body": t, "via": "파이프라인"})
+            # P0: via 디버그 값 금지. 비워 두고 validate가 error로 잡는다.
+            tips.append({"title": t[:80], "body": t, "via": ""})
             continue
         if not isinstance(t, dict):
             continue
         title = _text(t.get("title") or t.get("h") or t.get("name"))
         body = _text(t.get("body") or t.get("text") or t.get("d"))
         if title and body:
-            tips.append({"title": title, "body": body, "via": _text(t.get("via")) or "파이프라인"})
+            # P0: 기존 데이터의 '파이프라인' 디버그 값도 제거
+            via = _text(t.get("via"))
+            if via.lower() in ("파이프라인", "pipeline", "auto", "draft"):
+                via = ""
+            tips.append({"title": title, "body": body, "via": via})
 
     if len(analysis) < 2:
         have = {x["id"] for x in analysis}
@@ -463,7 +476,7 @@ def normalize(issue: dict) -> dict:
             {
                 "title": "초안 숫자는 공식 페이지에서 다시 봅니다",
                 "body": "RSS 요약은 잘립니다. 모델명·점수·일자는 회사 발표문을 연 뒤에 적으면 됩니다.",
-                "via": "파이프라인",
+                "via": "",
             }
         )
 
@@ -504,10 +517,14 @@ def normalize(issue: dict) -> dict:
         "briefing": brief,
         "keywords": keywords[:8],
         "mainEvent": (
-            _text(issue.get("mainEvent"))
-            if len(_text(issue.get("mainEvent"))) >= 12 and not _text(issue.get("mainEvent")).isdigit()
-            else (brief[0]["headline"] if brief else "")
-        ),
+            lambda me=(_text(issue.get("mainEvent")) or ""): (
+                # P0: 내부 ID면 headline으로 폴백. 비어 있으면 비운 채로 validate가 판단.
+                (brief[0]["headline"] if brief else "")
+                if (me in {b["id"] for b in brief if isinstance(b, dict)})
+                or not (len(me) >= 12)
+                else me
+            )
+        )(),
         "keynums": keynums,
         "timeline": timeline,
         "intro": _text(issue.get("intro")) or "이 파일은 자동 초안입니다. 공식 문서 숫자와 출처 URL을 채운 뒤 발행합니다.",
@@ -593,7 +610,7 @@ def skeleton(snap: dict) -> dict:
             {
                 "title": "초안 숫자는 공식 페이지에서 다시 봅니다",
                 "body": "RSS 요약은 잘립니다. 모델명·점수·일자는 회사 발표문을 연 뒤에 적으면 됩니다.",
-                "via": "파이프라인",
+                "via": "",
             }
         ],
         "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",

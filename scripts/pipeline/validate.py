@@ -15,6 +15,191 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 URI_RE = re.compile(r"^https?://")
 KINDS = {"hot", "talk", "rt", "doc"}
 KST = timezone(timedelta(hours=9))
+
+# --- P0: 출력 정리 검사 (TPL/ID/DUP/VIA/RND) ---
+_BLOCKLIST_PATH = Path(__file__).resolve().parent / "template_blocklist.txt"
+_TPL_PHRASES: list[str] = [
+    l.strip() for l in _BLOCKLIST_PATH.read_text(encoding="utf-8").splitlines()
+    if l.strip() and not l.strip().startswith("#")
+] if _BLOCKLIST_PATH.exists() else []
+
+# 조사 제거용 (최장 일치 우선)
+_PARTICLES = sorted(
+    ["에서", "으로", "로", "은", "는", "이", "가", "을", "를", "의", "에", "와", "과", "도"],
+    key=len, reverse=True,
+)
+_PUNCT_RE = re.compile(r"[^\w\s가-힣]", re.UNICODE)
+_SLUG_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)+$")
+
+
+def _normalize_sim(s: str) -> str:
+    """유사도 비교용 정규화: 소문자 → 구두점 제거 → 토큰 끝 조사 제거 → 공백 없이 결합."""
+    s = s.lower()
+    s = _PUNCT_RE.sub(" ", s)
+    out: list[str] = []
+    for tok in s.split():
+        for p in _PARTICLES:
+            if len(tok) > len(p) + 1 and tok.endswith(p):
+                tok = tok[: -len(p)]
+                break
+        out.append(tok)
+    return "".join(out)
+
+
+def _bigrams(s: str) -> set[str]:
+    return {s[i : i + 2] for i in range(len(s) - 1)} if len(s) >= 2 else set()
+
+
+def _overlap(a: str, b: str) -> float:
+    """overlap coefficient = |A∩B| / min(|A|,|B|) — 포함 관계 탐지용."""
+    ga, gb = _bigrams(a), _bigrams(b)
+    if not ga or not gb:
+        return 0.0
+    return len(ga & gb) / min(len(ga), len(gb))
+
+
+def _jaccard(a: str, b: str) -> float:
+    ga, gb = _bigrams(a), _bigrams(b)
+    if not ga or not gb:
+        return 0.0
+    return len(ga & gb) / len(ga | gb)
+
+
+def check_p0(
+    issue: dict, prev: dict | None
+) -> tuple[list[str], list[str]]:
+    """P0 출력 정리 게이트. (errors, warnings) — errors는 발행 차단."""
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    briefing = issue.get("briefing") or []
+    analysis = issue.get("analysis") or []
+    tips = issue.get("tips") or []
+
+    # 내부 ID 레지스트리: 이번 호 + 이전 호 briefing ID
+    id_reg: set[str] = set()
+    for b in briefing:
+        if isinstance(b, dict) and b.get("id"):
+            id_reg.add(str(b["id"]))
+    if prev:
+        for b in prev.get("briefing") or []:
+            if isinstance(b, dict) and b.get("id"):
+                id_reg.add(str(b["id"]))
+
+    def is_internal_id(v: str) -> bool:
+        return bool(v) and v in id_reg
+
+    # TPL-001: 시사점·본문에 템플릿 문구
+    for i, a in enumerate(analysis):
+        if not isinstance(a, dict):
+            continue
+        text = str(a.get("takeaway") or "") + " " + " ".join(a.get("body") or [])
+        for ph in _TPL_PHRASES:
+            if ph and ph in text:
+                errors.append(f"TPL-001 analysis[{i}].takeaway/body: 템플릿 문구 '{ph[:30]}'")
+                break
+
+    # ID-001: mainEvent에 내부 ID
+    me = str(issue.get("mainEvent") or "")
+    if is_internal_id(me):
+        errors.append(f"ID-001 mainEvent: 내부 ID '{me}' 노출")
+    elif me and _SLUG_RE.match(me):
+        warnings.append(f"ID-001 mainEvent: slug 패턴 '{me}' (내부 ID 의심)")
+
+    # DUP-001: briefing summary ≒ headline
+    for i, b in enumerate(briefing):
+        if not isinstance(b, dict):
+            continue
+        h, s = str(b.get("headline") or ""), str(b.get("summary") or "")
+        nh, ns = _normalize_sim(h), _normalize_sim(s)
+        if len(nh) >= 8 and len(ns) >= 8:
+            if max(len(nh), len(ns)) / min(len(nh), len(ns)) <= 3:
+                if _overlap(nh, ns) >= 0.9:
+                    errors.append(f"DUP-001 briefing[{i}].summary: headline과 거의 동일")
+
+    # ID-002: tags에 내부 ID / 빈 원소
+    for i, a in enumerate(analysis):
+        if not isinstance(a, dict):
+            continue
+        for t in a.get("tags") or []:
+            ts = str(t or "")
+            if not ts.strip():
+                errors.append(f"ID-002 analysis[{i}].tags: 빈 태그")
+            elif is_internal_id(ts):
+                errors.append(f"ID-002 analysis[{i}].tags: 내부 ID '{ts}'")
+            elif _SLUG_RE.match(ts):
+                warnings.append(f"ID-002 analysis[{i}].tags: slug 패턴 '{ts}'")
+
+    # DUP-002: tips title ≒ body
+    for i, t in enumerate(tips):
+        if not isinstance(t, dict):
+            continue
+        ti, bo = str(t.get("title") or ""), str(t.get("body") or "")
+        nti, nbo = _normalize_sim(ti), _normalize_sim(bo)
+        if len(nti) >= 8 and len(nbo) >= 8:
+            if max(len(nti), len(nbo)) / min(len(nti), len(nbo)) <= 3:
+                if _overlap(nti, nbo) >= 0.9:
+                    errors.append(f"DUP-002 tips[{i}]: title과 body가 거의 동일")
+
+    # VIA-001: via 디버그 값 (허용: URL 도메인 또는 알려진 출처명)
+    _VIA_DEBUG = {"파이프라인", "pipeline", "auto", "draft", "normalize", "todo"}
+    for i, t in enumerate(tips):
+        if not isinstance(t, dict):
+            continue
+        via = str(t.get("via") or "").strip()
+        if not via:
+            errors.append(f"VIA-001 tips[{i}].via: 비어 있음")
+        elif via.lower() in _VIA_DEBUG:
+            errors.append(f"VIA-001 tips[{i}].via: 디버그 값 '{via}'")
+
+    # DUP-003: 섹션 간 문장 반복 (warning)
+    def split_sentences(text: str) -> list[str]:
+        parts = re.split(r"[.!?\n]+", text)
+        return [p.strip() for p in parts if len(p.strip()) >= 20]
+
+    seen_sents: list[tuple[str, str]] = []  # (norm, where)
+    for i, a in enumerate(analysis):
+        if not isinstance(a, dict):
+            continue
+        blob = " ".join(a.get("body") or []) + " " + str(a.get("takeaway") or "")
+        for s in split_sentences(blob):
+            ns = _normalize_sim(s)
+            if len(ns) < 20:
+                continue
+            for ps, where in seen_sents:
+                if _jaccard(ns, ps) >= 0.85:
+                    warnings.append(f"DUP-003: 문장 반복 ({where} ↔ analysis[{i}])")
+                    break
+            else:
+                seen_sents.append((ns, f"analysis[{i}]"))
+                continue
+            break
+
+    # RND-001: 빈 해시태그 렌더 (warning — 프론트 방어와 함께)
+    for i, a in enumerate(analysis):
+        if not isinstance(a, dict):
+            continue
+        tags = a.get("tags") or []
+        if isinstance(tags, list) and not any(str(t or "").strip() for t in tags):
+            warnings.append(f"RND-001 analysis[{i}].tags: 전부 비어 있음 (빈 해시태그 렌더)")
+
+    # EMPTY-001: 빈 시사점 (error — 템플릿 제거 후 빈값이 되면 발행 차단)
+    for i, a in enumerate(analysis):
+        if not isinstance(a, dict):
+            continue
+        if not str(a.get("takeaway") or "").strip():
+            errors.append(f"EMPTY-001 analysis[{i}].takeaway: 비어 있음")
+
+    # EMPTY-002: 빈 본문 (error)
+    for i, a in enumerate(analysis):
+        if not isinstance(a, dict):
+            continue
+        body = a.get("body") or []
+        btext = " ".join(body) if isinstance(body, list) else str(body)
+        if not btext.strip():
+            errors.append(f"EMPTY-002 analysis[{i}].body: 비어 있음")
+
+    return errors, warnings
 VOICE_BAN = (
     "하십시오",
     "칸에 적",
@@ -264,6 +449,11 @@ def check_quality(
             if bp in btext:
                 warnings.append(f"analysis[{i}].body: 금지 메타 문구 포함")
                 break
+
+    # 10. P0 출력 정리 게이트 (TPL/ID/DUP/VIA/RND)
+    p0_err, p0_warn = check_p0(issue, prev)
+    errors.extend(p0_err)
+    warnings.extend(p0_warn)
 
     return errors, warnings
 

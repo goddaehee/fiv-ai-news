@@ -201,9 +201,11 @@ export function ArticleView({
             <p>
               <strong>시사점:</strong> {sec.takeaway}
             </p>
-            <p>
-              <code>#{sec.tags.join(" #")}</code>
-            </p>
+            {sec.tags?.filter((t) => t?.trim()).length ? (
+              <p>
+                <code>#{sec.tags.filter((t) => t?.trim()).join(" #")}</code>
+              </p>
+            ) : null}
           </blockquote>
           <p className="src-row">
             <span className="src-lab">출처 {sec.sources.length}</span>
