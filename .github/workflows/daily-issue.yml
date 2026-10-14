@@ -63,14 +63,15 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git pull --rebase origin main || true
           git add "content/issues/${DATE}.json" 2>/dev/null || true
+          git add "public/img/${DATE}/" 2>/dev/null || true
           STAGED=$(git diff --cached --name-only)
           if [ -z "$STAGED" ]; then
             echo "no new issue file — published copy kept"
             exit 0
           fi
-          # 푸시 범위 제한: 오늘 호 파일 외에는 커밋하지 않음
+          # 푸시 범위 제한: 오늘 호 파일(이슈 JSON + 이미지) 외에는 커밋하지 않음
           case "$STAGED" in
-            "content/issues/"*) ;;
+            "content/issues/"*|"public/img/"*) ;;
             *)
               echo "::error::unexpected staged paths: $STAGED"
               exit 1

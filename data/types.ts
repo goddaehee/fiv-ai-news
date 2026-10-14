@@ -32,6 +32,15 @@ export type Analysis = {
   takeaway: string;
   tags: string[];
   sources: Source[];
+  images?: AnalysisImage[];
+};
+
+export type AnalysisImage = {
+  src: string;
+  caption: string;
+  alt: string;
+  width?: number;
+  height?: number;
 };
 
 export type Tip = {

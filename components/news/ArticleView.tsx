@@ -177,6 +177,22 @@ export function ArticleView({
               <li key={b}>{b}</li>
             ))}
           </ul>
+          {sec.images?.map((img) => (
+            <figure className="ai-fig" key={img.src}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                width={img.width}
+                height={img.height}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).closest("figure")?.remove();
+                }}
+              />
+              <figcaption className="ai-cap">{img.caption}</figcaption>
+            </figure>
+          ))}
           {sec.body.map((p) => (
             <p key={p.slice(0, 24)}>{p}</p>
           ))}

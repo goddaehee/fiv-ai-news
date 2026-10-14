@@ -1289,6 +1289,28 @@ html[data-theme="sepia"] {
   color:inherit;
   padding:0 3px;
 }
+.ai-fig {
+  margin:1.2em 0;
+  border:1px solid var(--color-line, #e5e5e5);
+  border-radius:8px;
+  overflow:hidden;
+  background:var(--color-bg-soft, #fafafa);
+}
+.ai-fig img {
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:16/9;
+  object-fit:cover;
+}
+.ai-cap {
+  padding:8px 12px;
+  font-size:12px;
+  line-height:1.5;
+  color:var(--color-fg-muted, #888);
+  background:var(--color-bg-soft, #fafafa);
+  border-top:1px dashed var(--color-line, #e5e5e5);
+}
 .bq-take {
   background:transparent;
   border:1.5px dashed var(--color-accent);
