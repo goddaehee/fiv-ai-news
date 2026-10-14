@@ -18,7 +18,51 @@ SCORE_CUTOFF = 5
 SOURCE_QUOTA = 0.25
 
 
+def _host(url: str) -> str:
+    """URL에서 호스트 추출 (서브도메인 오탐 방지)."""
+    from urllib.parse import urlparse
+    try:
+        return urlparse(url).hostname or ""
+    except Exception:
+        return ""
+
+
+OFFICIAL_HOSTS = {
+    "openai.com", "anthropic.com", "deepmind.google",
+    "blog.google", "googleblog.com", "blogs.nvidia.com", "nvidia.com",
+    "about.fb.com", "engineering.fb.com",
+}
+OFFICIAL_PREFIXES = ("huggingface.co/blog/",)  # HF는 /blog 경로만 1차 출처
+
+
+def _is_official(url: str) -> bool:
+    """1차 출처 판정: 호스트 단위 정확 일치 (substring 비교 아님).
+    서브도메인 허용: host == 공식도메인 또는 host가 '.' + 공식도메인으로 끝남.
+    예: www.openai.com → OK, blog.google.evil.com → NG.
+    """
+    host = _host(url).lower()
+    for dom in OFFICIAL_HOSTS:
+        if host == dom or host.endswith("." + dom):
+            return True
+    # HF: /blog 경로만 1차 출처. /blogger, /blog-spam은 제외.
+    if host == "huggingface.co":
+        from urllib.parse import urlparse
+        path = urlparse(url).path
+        if path == "/blog" or path.startswith("/blog/"):
+            return True
+    return False
+
+
 def _parse_date(s: str | None) -> datetime | None:
+    if not s:
+        return None
+    for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
+        try:
+            dt = datetime.strptime(s[:19], fmt)
+            return dt.replace(tzinfo=timezone.utc) if dt.tzinfo is None else dt
+        except ValueError:
+            continue
+    return None
     if not s:
         return None
     for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
@@ -58,9 +102,9 @@ def score_bucket(items: list[dict], now: datetime | None = None) -> dict:
 
     # 근거: 공식 출처 URL 포함 여부
     urls = [str(it.get("url") or "") for it in items]
-    has_official = any("openai.com" in u or "anthropic.com" in u or "deepmind" in u
-                       or "googleblog" in u or "nvidia.com" in u or "about.fb.com" in u
-                       for u in urls)
+    # 1차 출처 = 발표 주체 본인의 공식 채널 (2차 매체인 TechCrunch/Verge/Ars는 제외)
+    # 호스트 단위 판정 (_is_official) — substring 비교 아님
+    has_official = any(_is_official(u) for u in urls)
     has_url = any(u.startswith("http") and "example.com" not in u for u in urls)
     evidence = 2 if has_official else (1 if has_url else 0)
 
