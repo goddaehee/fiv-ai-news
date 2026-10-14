@@ -69,10 +69,23 @@ def test_no_sources_with_numbers():
     print("ok: numbers without sources = warning")
 
 
+def test_distinct3_threshold():
+    # 0.869 임계값 고정 (0주차 원본 실측 0.919 - 5%p)
+    # 반복 문장이 많은 기사는 warning
+    rep = " ".join(["같은 문장 반복입니다."] * 30)
+    a = good_analysis()
+    a["body"] = [rep, rep, rep]
+    a["takeaway"] = "중요한 내용입니다. " * 10
+    _, warnings = check_depth({"analysis": [a]})
+    assert any("distinct-3" in w for w in warnings), warnings
+    print("ok: distinct-3 threshold 0.869")
+
+
 if __name__ == "__main__":
     test_all_slots()
     test_missing_two_slots()
     test_missing_one_slot_warning()
     test_avg_omission_rate()
     test_no_sources_with_numbers()
+    test_distinct3_threshold()
     print("2주차 tests passed")

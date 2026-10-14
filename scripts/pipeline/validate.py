@@ -534,7 +534,9 @@ def check_depth(issue: dict) -> tuple[list[str], list[str]]:
         if nums and not sources:
             warnings.append(f"analysis[{i}].evidence: 수치 {len(nums)}개 있으나 sources 없음")
 
-    # 문체 패스: distinct-3 ≥ 0.869 (0주차 원본 실측 0.919 − 5%p)
+    # 문체 패스: distinct-3 ≥ 0.869
+    # 근거: 0주차 원본 실측 (fiv.co.kr 최근 3호 평균 0.919) − 5%p 허용 오차.
+    # 상세: ~/workspace/fiv-panel/q_baseline_0week.md
     all_text = " ".join(
         str(b.get("headline") or "") + " " + str(b.get("summary") or "")
         for b in (issue.get("briefing") or []) if isinstance(b, dict)

@@ -214,6 +214,7 @@ export function ArticleView({
           </blockquote>
           <p className="src-row">
             <span className="src-lab">출처 {sec.sources.length}</span>
+            {/* 1차 출처 = kind "doc" (공식 문서·발표). validate.py KINDS 참고 */}
             {sec.sources.some((s) => s.kind === "doc") ? (
               <span className="src-trust" title="공식 문서·발표 포함">1차 출처 포함</span>
             ) : null}
