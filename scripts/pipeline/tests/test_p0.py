@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from validate import check_p0, _normalize_sim, _overlap, _jaccard, check_depth
+from validate import check_p0, _normalize_sim, _overlap, _jaccard, check_depth, _input_number_count, url_core
 from draft import thicken_take, thicken_body, number_mentions
 
 PASS = 0
@@ -167,6 +167,77 @@ issue_3missing = {
 }
 derr3, _ = check_depth(issue_3missing)
 ok("depth 3개 생략 실패", any("전체 슬롯 생략" in e for e in derr3))
+
+# --- P2: 조건부 excused (패널 만장일치) ---
+# 입력 summary에 수치 후보가 2개 미만이면 numbers 슬롯을 생략률 계산에서 제외.
+# 조인 불가(--collected 없음·URL 불일치)면 None → fail-closed(제외 안 함).
+
+def _collected_map(*items):
+    """(url, summary) 튜플들을 collected_by_url 맵으로."""
+    m = {}
+    for url, summary in items:
+        m[url_core(url)] = {"url": url, "summary": summary}
+    return m
+
+def _analysis_with_source(url):
+    a = _make_analysis(0)  # numbers 슬롯 비어 있음
+    a["sources"] = [{"url": url}]
+    return a
+
+# 1. _input_number_count: 후보 수 반환
+cmap = _collected_map(
+    ("https://a.com/1", "매출이 2배로 뛰었고 30% 성장했다"),  # 2개
+    ("https://a.com/2", "매출이 2배로 뛰었다"),               # 1개
+    ("https://a.com/3", "숫자 없는 발표문이다"),               # 0개
+)
+ok("input_number 2개", _input_number_count(_analysis_with_source("https://a.com/1"), cmap) == 2)
+ok("input_number 1개", _input_number_count(_analysis_with_source("https://a.com/2"), cmap) == 1)
+ok("input_number 0개", _input_number_count(_analysis_with_source("https://a.com/3"), cmap) == 0)
+ok("input_number URL 불일치→None", _input_number_count(_analysis_with_source("https://b.com/x"), cmap) is None)
+ok("input_number map None→None", _input_number_count(_analysis_with_source("https://a.com/1"), None) is None)
+
+# 2. check_depth excused: numbers 미충족 + 입력 후보 1개 → error 없음 + warning 1개
+issue_excused = {
+    "date": "2026-10-15", "briefing": [],
+    "analysis": [_analysis_with_source("https://a.com/2")],  # 후보 1개 < 2
+}
+derr_e, dwarn_e = check_depth(issue_excused, cmap)
+ok("excused: numbers 제외로 error 없음", not any("numbers" in e and "미충족" in e for e in derr_e))
+ok("excused: 전체 생략 error 없음", not any("전체 슬롯 생략" in e for e in derr_e))
+ok("excused: warning 기록됨", any("numbers 슬롯 제외" in w and "1개 < 2" in w for w in dwarn_e))
+
+# 입력 후보 3개인데 미충족 → 제외 없이 기존 경로 (기사별 1개 생략 → warning만)
+cmap3 = _collected_map(("https://a.com/4", "2배 성장, 30% 증가, 10억 투자 유치"))
+issue_noexcuse = {
+    "date": "2026-10-15", "briefing": [],
+    "analysis": [_analysis_with_source("https://a.com/4")],  # 후보 3개 ≥ 2
+}
+derr_n, dwarn_n = check_depth(issue_noexcuse, cmap3)
+ok("후보 충분시 제외 안 됨", not any("numbers 슬롯 제외" in w for w in dwarn_n))
+ok("후보 충분시 1개 생략 warning", any("슬롯 1개 생략 (numbers)" in w for w in dwarn_n))
+
+# 3. 게이트 수학: 5개 analysis 중 3개 excused → 분모 22, 허용 3, 나머지 생략 1개 → PASS
+cmap5 = _collected_map(
+    ("https://a.com/1", "매출이 2배로 뛰었다"),  # 1개 → excused
+    ("https://a.com/2", "숫자 없는 발표문이다"),  # 0개 → excused
+    ("https://a.com/3", "정책 발표 소식이다"),    # 0개 → excused
+)
+analyses5 = [
+    _analysis_with_source("https://a.com/1"),
+    _analysis_with_source("https://a.com/2"),
+    _analysis_with_source("https://a.com/3"),
+    _make_analysis(2),  # numbers 충족
+    _make_analysis(0),  # numbers만 미충족 (sources 기본값 → 조인 불가 → 카운트됨)
+]
+issue5 = {"date": "2026-10-15", "briefing": [], "analysis": analyses5}
+derr5, dwarn5 = check_depth(issue5, cmap5)
+# 분모 25-3=22, 허용 max(2, ceil(22*0.1))=3. 카운트된 미충족: numbers 1개 ≤ 3 → PASS
+ok("게이트 수학: 5개 중 3개 excused → PASS", not any("전체 슬롯 생략" in e for e in derr5))
+ok("excused warning 3개", sum(1 for w in dwarn5 if "numbers 슬롯 제외" in w) == 3)
+
+# 4. 하위 호환: check_depth(issue) 인자 생략 → collected_by_url=None → 기존과 동일 동작
+derr_compat, _ = check_depth(issue_2missing)  # P1 테스트의 2개 생략 케이스
+ok("하위 호환: 인자 생략시 P1 동작 유지", not any("전체 슬롯 생략" in e for e in derr_compat))
 
 # 유사도 함수 ---
 ok("overlap 포함관계", _overlap(_normalize_sim("엔비디아가 새로운 AI 칩을 발표했다"), _normalize_sim("엔비디아가 새로운 AI 칩을 발표했다 추가")) > 0.8)
