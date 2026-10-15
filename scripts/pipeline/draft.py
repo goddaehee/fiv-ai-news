@@ -43,19 +43,27 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
 - briefing 5~7 (중요도 순 선정. 뉴스가 적은 날은 3~4개도 가능 — 억지 채우기 금지), analysis는 briefing 중 메인 3~5개 id와 1:1 (나머지는 단신, analysis 없음), bullets 3, body 3문단 기본(핵심 기사는 최대 4문단, 문단당 2~3문장), tips 4~5, keynums 4~6, timeline 4~6.
-- 깊이 슬롯 (analysis마다 5개 슬롯 필수, 최대 1개까지만 생략 가능 — 생략 시 사유 '근거 없음'):
-  1. 무슨 일인가 (body 첫 문단, 30자 이상)
-  2. 맥락 (body 둘째 문단, 30자 이상 — 배경·이전 흐름)
-  3. 수치 2개+ (본문+bullet에 수치 2개 이상, 각 수치에 출처 연결)
-  4. 한계·반론 (한계·하지만·단·주의·반론·불확실 중 1개 이상 포함)
-  5. 왜 중요한가 (takeaway 20자 이상, 중요·의미·영향 중 1개 이상 포함)
+- 깊이 슬롯: 기사마다 아래 5개를 출력 전에 스스로 셉니다. 한 기사에서 2개 이상 비우면 그 기사는 실패입니다.
+  전체 슬롯의 10%를 초과해 비우면 호 전체가 폐기됩니다. "근거 없음"이라고 적어도 슬롯을 통과시키지 못합니다.
+  1. what: body 첫 문단, 30자 이상.
+  2. context: body 둘째 문단, 30자 이상 (배경·이전 흐름).
+  3. numbers: bullets+body+takeaway 안에 "아라비아 숫자 + (%|배|달러|억|만|점|분|시간|일|명|개)" 꼴이 2개 이상.
+     예: 2배, 30%, 10억, 100명. 인정하지 않음: 두 배, 2024년, $2B, 2 million.
+     쓸 수 있는 숫자는 그 기사의 number_mentions뿐입니다. 후보가 2개 미만이면 숫자를 만들지 말고 이 슬롯을 비우세요.
+  4. limits: 한계, 하지만, 단,, 주의, 반론, 다만, 아직, 불확실, 검증되지 중 1개 이상 포함.
+  5. why: takeaway 60자 이상(두 문장), 입니다/됩니다 종결, 그리고 중요, 의미, 영향, 바뀐, 달라진 중 1개 이상 포함.
 - 선별 점수제: 각 기사를 영향도(0~2: 다룬 매체 수)·새로움(0~2: 24시간 이내=2)·관련성(0~2: 수치·고유명사)·근거(0~2: 공식 출처 URL) 로 채점, 총 8점 중 5점 미만은 제외.
 - 소스 쿼터: 단일 출처가 당일 전체 기사 수의 25%를 넘지 않게. 메인 기사는 출처당 1개까지.
 - 수치·주장·인용은 입력에 제공된 원문 요약(summary)과 URL 정보에서 확인된 사실만 씁니다. 해석·전망은 허용하되 사실과 구분하고, 확인 안 된 것은 '추정'·'미확정'으로 명시합니다. 이 규칙은 body뿐 아니라 intro·bullets·extra·tips·keynums·timeline 전체에 적용됩니다.
 - 각 analysis는 extra 필드를 가질 수 있습니다: '그 밖에: '로 시작하는 한 문단. 본문에서 못 다룬 관련 소식이 해당 항목의 sources에 있을 때만 2~3문장으로 짧게 쓰고, 없으면 빈 문자열로 둡니다. 본문·다른 항목과 겹치지 않게.
-- keynums의 sub에는 '초안', '교차검증 전' 같은 문구를 넣지 않습니다. 확인 안 된 수치는 keynums에 넣지 않습니다.
+- keynums는 3개 이상. number_mentions에서 확인된 수치만 넣습니다. sub에 '초안', '교차검증 전' 같은 문구를 적지 않습니다. 확인 안 된 수치는 keynums에 넣지 않습니다.
 - intro 첫 문장은 입력 JSON의 date_ko 값으로 시작합니다(예: '10월 15일 수요일 발행.'). 이어서 오늘 호 항목에서 나온 맥락 한 문장을 붙입니다. 맥락이 없으면 날짜만 씁니다.
-- timeline의 t는 "MM/DD HH:MM" 형식으로, 입력 items의 published_ko 값을 그대로 복사합니다. published_ko가 없는 항목은 "MM/DD"만 씁니다. 시각을 지어내지 않습니다.
+- timeline.t는 해당 item의 published_ko를 한 글자도 바꾸지 않고 복사합니다. 값이 없으면 그 칸을 생략합니다. "01", "02" 같은 순번을 만들지 않습니다. timeline은 3개 이상.
+[작성 예시 — 형식 참고용. 숫자와 시각은 입력에 있던 값만 씁니다]
+body: "A사가 새 모델을 공개했다. 응답은 2배 빨라지고 가격은 30% 내렸다.\n\n이전 모델이 기준선이었다. 다만 평가는 영어 과제뿐이라 한계가 있다."
+takeaway: "응답 속도와 가격이 함께 바뀐 점이 도입 비용 판단에 중요하다. 다음 분기 적용 전에 영어 외 과제 점수도 확인하면 됩니다."
+timeline: [{"t": "<그 item의 published_ko 그대로>", "d": "모델 공개"}]
+keynums: [{"val": "2배", "lab": "응답 속도", "sub": "A사 발표"}]
 - 전체 분량: briefMin 5, readMin은 실제 분량 기준이며 normalize에서 글자 수로 계산합니다.
 - 확인 안 된 인수는 미확정이라고 밝힙니다. 회사 자체 측정은 본문에 그 사실을 적습니다.
 - 과장 형용사(혁명, 폭발) 금지. 숫자로 강도를 전합니다.
@@ -313,7 +321,9 @@ def thicken_body(body: list[str], bullets: list[str]) -> list[str]:
 
 
 def thicken_take(take: str, bullets: list[str], title: str) -> str:
-    """P0: 템플릿 패딩 제거. 기준 미달이면 빈 문자열 — validate가 error로 잡는다."""
+    """P0: 삭제하지 않는다. 길이·어미 판정은 validator(check)의 몫이다.
+    60~69자 takeaway나 개조식 어미가 코드에 의해 지워지면 EMPTY-001이 되므로,
+    템플릿 문구(블록리스트·편집 메모)만 비우고 나머지는 그대로 둔다."""
     take = (take or "").strip().replace("하십시오", "하면 됩니다")
     # P0: 블록리스트 문구가 있으면 전체를 비운다 (기존 데이터의 템플릿 잔류 제거)
     _bl = Path(__file__).resolve().parent / "template_blocklist.txt"
@@ -324,13 +334,24 @@ def thicken_take(take: str, bullets: list[str], title: str) -> str:
             take = ""
     if any(bad in take for bad in ("내부 메모에", "칸에 적", "칸을 나눠", "example.com")):
         take = ""
-    # P0: "{title}은 오늘 확인할 변경입니다" 템플릿 생성 금지.
-    # 미달이면 빈 문자열로 두고, draft 단계에서 재생성 → 실패 시 항목 숨김.
-    if len(take) < 70 or take.count("다.") < 1:
-        return ""
-    if not take.endswith(("다.", "요.", "니다.", "습니다.")):
-        take = take.rstrip(".") + "입니다."
     return take
+
+
+# P0: 검증기와 동일한 수치 정규식 — number_mentions 후보는 이 패턴을 통과한 것만.
+# validate.check_depth의 numbers 슬롯과 정확히 일치해야 한다.
+NUM_RE = re.compile(r"\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)")
+
+
+def number_mentions(summary: str) -> list[str]:
+    """summary에서 검증기를 통과하는 수치 표면만 추출 (LLM 입력용 후보).
+    LLM의 수치 인식과 정규식의 차이를 메우기 위해 미리 뽑아 payload에 넣어준다.
+    예: "응답은 2배 빨라지고 가격은 30% 내렸다" → ["2배", "30%"]."""
+    seen: list[str] = []
+    for m in NUM_RE.findall(summary or ""):
+        s = m.strip()
+        if s and s not in seen:
+            seen.append(s)
+    return seen[:6]
 
 
 def normalize(issue: dict) -> dict:
@@ -470,16 +491,11 @@ def normalize(issue: dict) -> dict:
             if val in seen:
                 continue
             seen.add(val)
-            keynums.append({"val": val, "lab": "본문 수치", "sub": "초안 · 교차검증 전"})
+            keynums.append({"val": val, "lab": "본문 수치", "sub": "본문"})
             if len(keynums) >= 3:
                 break
-    while len(keynums) < 3 and brief:
-        b = brief[len(keynums) % len(brief)]
-        if any(k["lab"] == b["headline"][:24] for k in keynums):
-            break
-        keynums.append({"val": "—", "lab": b["headline"][:24], "sub": "교차검증 전"})
-    while len(timeline) < 3:
-        timeline.append({"t": f"0{len(timeline)+1}", "d": (brief[0]["headline"] if brief else "수집")[:80]})
+    # P0: 패딩 금지. 부족하면 그대로 두고 validator가 판단한다.
+    # "01"·"교차검증 전" 같은 가짜 값으로 fail-closed 게이트를 속이지 않는다.
     if not tips:
         tips.append(
             {
@@ -640,7 +656,7 @@ def main() -> int:
     ap.add_argument("--llm", action="store_true")
     ap.add_argument("--provider", choices=["xai", "glm", "openai"])
     ap.add_argument("--force-skeleton", action="store_true")
-    ap.add_argument("--temperature", type=float, default=0.7)
+    ap.add_argument("--temperature", type=float, default=0.2)
     ap.add_argument("--attempt", type=int, default=1)
     args = ap.parse_args()
     snap = json.loads(args.collected.read_text(encoding="utf-8"))
@@ -668,6 +684,20 @@ def main() -> int:
                 return None
             return f"{m.group(1)}/{m.group(2)} {m.group(3)}:{m.group(4)}"
 
+        def _item_payload(it: dict) -> dict:
+            summary = (it.get("summary") or "")[:180]
+            return {
+                "title": it["title"],
+                "url": it.get("url"),
+                "source": it["source"],
+                "summary": summary,
+                "published": it.get("published"),
+                "published_ko": _published_ko(it.get("published")),
+                # P0: LLM이 쓸 수 있는 수치 후보 — 검증기 numbers 정규식을 통과한 것만.
+                # 후보가 2개 미만이면 숫자를 만들지 말고 numbers 슬롯을 비운다 (프롬프트 명시).
+                "number_mentions": number_mentions(summary),
+            }
+
         payload = {
             "date": snap["date"],
             "date_ko": date_ko,
@@ -675,17 +705,7 @@ def main() -> int:
                 {
                     "topic": topic,
                     "n": len(items),
-                    "items": [
-                        {
-                            "title": it["title"],
-                            "url": it.get("url"),
-                            "source": it["source"],
-                            "summary": (it.get("summary") or "")[:180],
-                            "published": it.get("published"),
-                            "published_ko": _published_ko(it.get("published")),
-                        }
-                        for it in items[:3]
-                    ],
+                    "items": [_item_payload(it) for it in items[:3]],
                 }
                 for topic, items in buckets[:7]
             ],
