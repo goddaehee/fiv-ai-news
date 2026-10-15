@@ -640,7 +640,8 @@ def main() -> int:
     ap.add_argument("--llm", action="store_true")
     ap.add_argument("--provider", choices=["xai", "glm", "openai"])
     ap.add_argument("--force-skeleton", action="store_true")
-    ap.add_argument("--temperature", type=float, default=1.0)
+    ap.add_argument("--temperature", type=float, default=0.7)
+    ap.add_argument("--attempt", type=int, default=1)
     args = ap.parse_args()
     snap = json.loads(args.collected.read_text(encoding="utf-8"))
     out = args.out or (ISSUES / f"{snap['date']}.json")
@@ -695,9 +696,9 @@ def main() -> int:
         except TimeoutError as e:
             print(f"{e}; retrying with reasoning_effort=low", flush=True)
             raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False), effort="low", temperature=args.temperature)
-        # 디버깅용: 원시 LLM 응답 저장 (잘림 vs 나쁜 샘플 구분)
+        # 디버깅용: 원시 LLM 응답 저장 (시도별 분리, 잘림 vs 나쁜 샘플 구분)
         try:
-            raw_path = pipe / f"{snap['date']}.raw-llm.txt"
+            raw_path = pipe / f"{snap['date']}.raw-llm.attempt{args.attempt}.txt"
             raw_path.write_text(raw, encoding="utf-8")
         except Exception:
             pass

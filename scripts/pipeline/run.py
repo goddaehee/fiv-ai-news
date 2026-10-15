@@ -90,24 +90,24 @@ def main() -> int:
     max_attempts = 3 if args.llm else 1
     rc = 1
     for attempt in range(1, max_attempts + 1):
-        # 재시도부터는 temperature를 낮춰서 안정적인 샘플 유도
-        cmd = list(draft_cmd)
-        if attempt > 1:
-            cmd.extend(["--temperature", "0.7"])
+        cmd = list(draft_cmd) + ["--attempt", str(attempt)]
         print(f"[run] draft attempt {attempt}/{max_attempts}", file=sys.stderr)
         rc = sh(cmd)
         if rc != 0:
             print(f"[run] draft failed (rc={rc}) on attempt {attempt}", file=sys.stderr)
-            continue
-        if not issue.exists():
+        elif not issue.exists():
             print(f"[run] issue file not created on attempt {attempt}", file=sys.stderr)
             rc = 1
-            continue
-        v = run_validate()
-        if v == 0:
-            return 0
-        print(f"[run] validate failed on attempt {attempt} — retrying", file=sys.stderr)
-        rc = v
+        else:
+            v = run_validate()
+            if v == 0:
+                return 0
+            print(f"[run] validate failed on attempt {attempt} — retrying", file=sys.stderr)
+            rc = v
+        # 재시도 전 백오프 (rate limit 등 일시 장애 대응)
+        if attempt < max_attempts:
+            import time
+            time.sleep(10)
     print(f"[run] all {max_attempts} attempts failed — failing closed", file=sys.stderr)
     return rc
 
