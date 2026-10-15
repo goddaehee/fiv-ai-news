@@ -18,6 +18,21 @@ SCORE_CUTOFF = 5
 SOURCE_QUOTA = 0.25
 
 
+def bucket_domain(items: list[dict]) -> str:
+    """버킷 대표 아이템(items[0])의 URL에서 비교용 도메인 추출.
+    validate.extract_domain과 동일 규격: 소문자, www. 제거. 실패 시 빈 문자열."""
+    if not items:
+        return ""
+    from urllib.parse import urlparse
+    try:
+        host = (urlparse(str(items[0].get("url") or "")).hostname or "").lower().strip()
+        if host.startswith("www."):
+            host = host[4:]
+        return host
+    except Exception:
+        return ""
+
+
 def _host(url: str) -> str:
     """URL에서 호스트 추출 (서브도메인 오탐 방지)."""
     from urllib.parse import urlparse
@@ -130,6 +145,7 @@ def select_buckets(
     main: list[tuple[str, list[dict], dict]] = []
     rest: list[tuple[str, list[dict], dict]] = []
     used_sources: set[str] = set()
+    used_domains: set[str] = set()  # P4: 도메인 기준 중복 제거 (피드 라벨 필터와 병행)
     for name, items, s in scored:
         if len(main) >= MAX_MAIN:
             rest.append((name, items, s))
@@ -138,8 +154,29 @@ def select_buckets(
         if top_source in used_sources:
             rest.append((name, items, s))
             continue
+        dom = bucket_domain(items)
+        if dom and dom in used_domains:
+            rest.append((name, items, s))
+            continue
         main.append((name, items, s))
         used_sources.add(top_source)
+        if dom:
+            used_domains.add(dom)
+
+    # P4 fallback: MIN_MAIN 미달 시 도메인 규칙만 완화 (피드 라벨 필터는 유지)
+    if len(main) < MIN_MAIN:
+        for name, items, s in scored:
+            if len(main) >= MIN_MAIN:
+                break
+            if any(name == m[0] for m in main):
+                continue
+            top_source = str(items[0].get("source") or "")
+            if top_source in used_sources:
+                continue
+            main.append((name, items, s))
+            used_sources.add(top_source)
+        main_names = {m[0] for m in main}
+        rest = [t for t in rest if t[0] not in main_names]
 
     return main, rest
 

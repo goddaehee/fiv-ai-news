@@ -46,6 +46,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
 - briefing 5~7 (중요도 순 선정. 뉴스가 적은 날은 3~4개도 가능 — 억지 채우기 금지), analysis는 briefing 중 메인 3~5개 id와 1:1 (나머지는 단신, analysis 없음), bullets 3, body 3문단 기본(핵심 기사는 최대 4문단, 문단당 2~3문장), tips 4~5, keynums 4~6, timeline 4~6.
+- analysis는 입력의 main_topics 목록에 있는 토픽의 briefing id와 1:1로만 작성한다. main_topics에 없는 토픽으로는 analysis를 만들지 않는다 (도메인 다양성 확보).
 - 깊이 슬롯: 기사마다 아래 5개를 출력 전에 스스로 셉니다. 한 기사에서 2개 이상 비우면 그 기사는 실패입니다.
   전체 슬롯의 10%를 초과해 비우면 호 전체가 폐기됩니다. "근거 없음"이라고 적어도 슬롯을 통과시키지 못합니다.
   1. what: body 첫 문단, 30자 이상.
@@ -685,7 +686,11 @@ def main() -> int:
 
     if creds:
         name, key, url, model = creds
-        buckets = rank_buckets(cluster(snap["items"]))
+        ranked = rank_buckets(cluster(snap["items"]))
+        # P4: 프로덕션 LLM 경로에도 select_buckets 배선 (도메인 다양성 확보).
+        # 기존에는 skeleton() 폴백에서만 호출되어 LLM 경로에서는 선별이 동작하지 않았다.
+        main_buckets, rest_buckets = select_buckets(ranked)
+        buckets = [(t, items) for t, items, _s in main_buckets + rest_buckets]
         dt = datetime.strptime(snap["date"], "%Y-%m-%d")
         weekday_ko = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"][dt.weekday()]
         date_ko = f"{dt.month}월 {dt.day}일 {weekday_ko}"
@@ -718,6 +723,9 @@ def main() -> int:
         payload = {
             "date": snap["date"],
             "date_ko": date_ko,
+            # P4: analysis는 main_topics의 토픽(briefing id)과 1:1로만 작성.
+            # main이 먼저 오도록 buckets도 main+rest 순으로 정렬됨.
+            "main_topics": [topic for topic, _items, _s in main_buckets],
             "buckets": [
                 {
                     "topic": topic,
