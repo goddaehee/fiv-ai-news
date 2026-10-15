@@ -7,6 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from validate import check_p0, _normalize_sim, _overlap, _jaccard, check_depth, _input_number_count, url_core
+from validate import check_source_quota, extract_domain, check_takeaway_template, _takeaway_skeleton
 from draft import thicken_take, thicken_body, number_mentions
 
 PASS = 0
@@ -242,6 +243,58 @@ ok("하위 호환: 인자 생략시 P1 동작 유지", not any("전체 슬롯 �
 # 유사도 함수 ---
 ok("overlap 포함관계", _overlap(_normalize_sim("엔비디아가 새로운 AI 칩을 발표했다"), _normalize_sim("엔비디아가 새로운 AI 칩을 발표했다 추가")) > 0.8)
 ok("jaccard 다름", _jaccard(_normalize_sim("완전히 다른 문장입니다"), _normalize_sim("전혀 겹치지 않는 내용")) < 0.3)
+
+# --- P3: 소스 쿼터 게이트 ---
+ok("extract_domain www 제거", extract_domain("https://www.techcrunch.com/2026/10/15/x") == "techcrunch.com")
+ok("extract_domain 소문자화", extract_domain("https://TechCrunch.com/x") == "techcrunch.com")
+ok("extract_domain 실패시 빈 문자열", extract_domain("not a url") == "")
+
+def _quota_issue(domains):
+    return {"analysis": [
+        {"sources": [{"url": f"https://{d}/2026/10/15/a{i}"}]} for i, d in enumerate(domains)
+    ]}
+
+# 1. 통과: 4개 analysis, 도메인 각 1개씩 (최대 점유율 25%)
+qerr, qwarn = check_source_quota(_quota_issue(["a.com", "b.com", "c.com", "d.com"]))
+ok("quota 통과: 균등 분산", not qerr and not qwarn)
+
+# 2. 실패: 3개 analysis 전부 같은 도메인 (100% > 50%)
+qerr, qwarn = check_source_quota(_quota_issue(["a.com", "a.com", "a.com"]))
+ok("quota 실패: 3개 독점 → QUOTA-001", any("QUOTA-001" in e for e in qerr))
+
+# 3. 50% 경계: error 없음, QUOTA-002 warning만
+qerr, qwarn = check_source_quota(_quota_issue(["a.com", "a.com", "b.com", "b.com"]))
+ok("quota 50% 경계: error 없음", not qerr)
+ok("quota 50% 경계: QUOTA-002 warning", any("QUOTA-002" in w for w in qwarn))
+
+# 4. 실패: 75% 독점 (50% 초과)
+qerr, qwarn = check_source_quota(_quota_issue(["a.com", "a.com", "a.com", "b.com"]))
+ok("quota 실패: 75% 독점 → QUOTA-001", any("QUOTA-001" in e for e in qerr))
+
+# --- P3: 시사점 뼈대 템플릿 게이트 ---
+def _tpl_issue(takeaways):
+    return {"analysis": [{"takeaway": tw} for tw in takeaways]}
+
+TW_A1 = "응답 속도가 2배 빨라진 것이 이번 모델 경쟁의 의미입니다. 담당자는 영어 외 과제 점수를 잡아 보면 됩니다."
+TW_A2 = "가격이 30% 낮아진 것이 이번 시장 재편의 의미입니다. 기획자는 경쟁사 가격표를 올려 보면 됩니다."
+TW_A3 = "도입 사례가 늘어난 것이 이번 기술 확산의 의미입니다. 실무자는 사내 파일럿으로 시험해 보면 됩니다."
+TW_B = "시장이 빠르게 변하고 있습니다. 우리는 대응 전략을 세워야 합니다."
+
+ok("skeleton 추출", _takeaway_skeleton(TW_A1) == "것이이번□의의미입니다‖□보면됩니다")
+ok("skeleton 미매칭 → 빈 문자열", _takeaway_skeleton(TW_B) == "")
+
+# 1. 3개 반복 → error
+terr, twarn = check_takeaway_template(_tpl_issue([TW_A1, TW_A2, TW_A3]))
+ok("takeaway-tpl 3개 반복 → error", any("TAKEAWAY-TPL" in e for e in terr))
+
+# 2. 정상 통과
+terr, twarn = check_takeaway_template(_tpl_issue([TW_B, "완전히 다른 시사점입니다. 다른 행동을 해야 합니다."]))
+ok("takeaway-tpl 정상 통과", not terr and not any("TAKEAWAY-TPL" in w for w in twarn))
+
+# 3. 2개 반복 → warning
+terr, twarn = check_takeaway_template(_tpl_issue([TW_A1, TW_A2, TW_B]))
+ok("takeaway-tpl 2개 → error 없음", not terr)
+ok("takeaway-tpl 2개 → warning", any("TAKEAWAY-TPL" in w for w in twarn))
 
 print(f"\n{PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)

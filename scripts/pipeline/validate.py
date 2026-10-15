@@ -65,6 +65,47 @@ def _jaccard(a: str, b: str) -> float:
     return len(ga & gb) / len(ga | gb)
 
 
+_SENT1_FRAMES = [
+    (re.compile(r"것이\s*이번\s*(.+?)\s*의\s*(?:의미|영향|시사점|가치|효과)\s*입니다"), "것이이번□의의미입니다"),
+]
+_SENT2_FRAMES = [
+    (re.compile(r"[가-힣]+\s*보\s*면\s*됩?니다\s*$"), "□보면됩니다"),
+]
+
+
+def _takeaway_skeleton(tw: str) -> str:
+    sents = [s.strip() for s in re.split(r"[.!?\n]+", tw) if s.strip()]
+    if len(sents) < 2:
+        return ""
+    sk1 = next((tpl for pat, tpl in _SENT1_FRAMES if pat.search(sents[0])), "")
+    if not sk1:
+        return ""
+    sk2 = next((tpl for pat, tpl in _SENT2_FRAMES if pat.search(sents[1])), "")
+    if not sk2:
+        return ""
+    return sk1 + "‖" + sk2
+
+
+def check_takeaway_template(issue: dict) -> tuple[list[str], list[str]]:
+    errors, warnings = [], []
+    by_skel = {}
+    for i, a in enumerate(issue.get("analysis") or []):
+        if not isinstance(a, dict):
+            continue
+        tw = str(a.get("takeaway") or "").strip()
+        if not tw:
+            continue
+        skel = _takeaway_skeleton(tw)
+        if skel:
+            by_skel.setdefault(skel, []).append(i)
+    for skel, idxs in sorted(by_skel.items()):
+        if len(idxs) >= 3:
+            errors.append(f"TAKEAWAY-TPL: 시사점 {len(idxs)}개가 같은 뼈대({skel}) — 구조적 템플릿 반복 의심")
+        elif len(idxs) == 2:
+            warnings.append(f"TAKEAWAY-TPL: 시사점 2개가 같은 뼈대({skel}) — 템플릿 반복 주의")
+    return errors, warnings
+
+
 def check_p0(
     issue: dict, prev: dict | None
 ) -> tuple[list[str], list[str]]:
@@ -188,6 +229,11 @@ def check_p0(
                 max_cluster = max(max_cluster, len(cluster))
         if max_cluster >= 3:
             errors.append(f"TAKEAWAY-DUP: 시사점 {max_cluster}개가 서로 유사 — 템플릿 반복 의심")
+
+    # TAKEAWAY-TPL: 시사점 문장 뼈대(구조적 템플릿) 반복 방지 (Gemini안)
+    tpl_err, tpl_warn = check_takeaway_template(issue)
+    errors.extend(tpl_err)
+    warnings.extend(tpl_warn)
 
     # DUP-003: 섹션 간 문장 반복 (warning)
     def split_sentences(text: str) -> list[str]:
@@ -356,6 +402,9 @@ def check(issue: dict, collected_by_url: dict | None = None) -> list[str]:
     takes = [(a.get("takeaway") or "") for a in (issue.get("analysis") or []) if isinstance(a, dict)]
     if takes and len(takes) != len(set(takes)):
         err("analysis.takeaway", "시사점 복붙 금지", bag)
+    # 소스 쿼터: 단일 도메인이 analysis의 과반을 차지하면 발행 차단 (errors만)
+    quota_err, _ = check_source_quota(issue)
+    bag.extend(quota_err)
     return bag
 
 
@@ -373,6 +422,47 @@ def url_core(u: str) -> str:
         return f"{host}{path}"
     except Exception:
         return u.strip().rstrip("/")
+
+
+def extract_domain(u: str) -> str:
+    """URL에서 비교용 도메인 추출 (소문자, www. 제거). 실패 시 빈 문자열."""
+    try:
+        host = (urlparse(str(u or "")).hostname or "").lower().strip()
+        if host.startswith("www."):
+            host = host[4:]
+        return host
+    except Exception:
+        return ""
+
+
+QUOTA_ERR_RATIO = 0.50
+QUOTA_WARN_RATIO = 0.25
+
+
+def check_source_quota(issue: dict) -> tuple[list[str], list[str]]:
+    errors, warnings = [], []
+    analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
+    if len(analyses) < 2:
+        return errors, warnings
+    counts = {}
+    for i, a in enumerate(analyses):
+        doms = set()
+        for s in a.get("sources") or []:
+            d = extract_domain((s or {}).get("url") if isinstance(s, dict) else s)
+            if d:
+                doms.add(d)
+        if not doms:
+            warnings.append(f"analysis[{i}].sources: 추출 가능한 도메인 없음")
+        for d in doms:
+            counts[d] = counts.get(d, 0) + 1
+    n = len(analyses)
+    for d, c in sorted(counts.items(), key=lambda kv: -kv[1]):
+        share = c / n
+        if share > QUOTA_ERR_RATIO:
+            errors.append(f"QUOTA-001 {d}: 단일 도메인이 analysis {n}개 중 {c}개({share:.0%}) — 50% 초과 금지")
+        elif share > QUOTA_WARN_RATIO and c >= 2:
+            warnings.append(f"QUOTA-002 {d}: analysis {n}개 중 {c}개({share:.0%}) — 출처 다변화 권장")
+    return errors, warnings
 
 
 def check_quality(
