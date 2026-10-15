@@ -109,11 +109,11 @@ def pick_key(prefer: str | None = None) -> tuple[str, str, str, str] | None:
     return None
 
 
-def chat(url: str, key: str, model: str, user: str, *, effort: str | None = None) -> str:
+def chat(url: str, key: str, model: str, user: str, *, effort: str | None = None, temperature: float = 1.0) -> str:
     timeout = int(os.environ.get("LLM_TIMEOUT", "600"))
     payload = {
         "model": model,
-        "temperature": 1.0,
+        "temperature": temperature,
         "messages": [
             {"role": "system", "content": PROMPT},
             {"role": "user", "content": user},
@@ -640,9 +640,11 @@ def main() -> int:
     ap.add_argument("--llm", action="store_true")
     ap.add_argument("--provider", choices=["xai", "glm", "openai"])
     ap.add_argument("--force-skeleton", action="store_true")
+    ap.add_argument("--temperature", type=float, default=1.0)
     args = ap.parse_args()
     snap = json.loads(args.collected.read_text(encoding="utf-8"))
     out = args.out or (ISSUES / f"{snap['date']}.json")
+    pipe = args.collected.parent
 
     creds = None if args.force_skeleton else pick_key(args.provider)
     if args.llm and not creds:
@@ -687,12 +689,18 @@ def main() -> int:
                 for topic, items in buckets[:7]
             ],
         }
-        print(f"drafting provider={name} model={model} buckets={len(payload['buckets'])}", flush=True)
+        print(f"drafting provider={name} model={model} buckets={len(payload['buckets'])} temp={args.temperature}", flush=True)
         try:
-            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False))
+            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False), temperature=args.temperature)
         except TimeoutError as e:
             print(f"{e}; retrying with reasoning_effort=low", flush=True)
-            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False), effort="low")
+            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False), effort="low", temperature=args.temperature)
+        # 디버깅용: 원시 LLM 응답 저장 (잘림 vs 나쁜 샘플 구분)
+        try:
+            raw_path = pipe / f"{snap['date']}.raw-llm.txt"
+            raw_path.write_text(raw, encoding="utf-8")
+        except Exception:
+            pass
         issue = extract_json(raw)
         issue["date"] = snap["date"]
         issue = normalize(issue)

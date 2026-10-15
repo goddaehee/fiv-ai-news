@@ -68,8 +68,8 @@ def main() -> int:
         draft_cmd.append("--llm")
     if args.provider:
         draft_cmd.extend(["--provider", args.provider])
-    rc = sh(draft_cmd)
-    if issue.exists():
+
+    def run_validate() -> int:
         vcmd = [
             sys.executable,
             str(HERE / "validate.py"),
@@ -83,9 +83,32 @@ def main() -> int:
         prev_file = root / "content" / "issues" / f"{prev_date}.json"
         if prev_file.exists():
             vcmd.extend(["--prev", str(prev_file)])
-        v = sh(vcmd)
-        if v != 0:
-            return v
+        return sh(vcmd)
+
+    # 재시도: 나쁜 LLM 샘플 한 번에 하루치가 날아가지 않게 최대 3회 시도.
+    # 그래도 validate를 못 넘기면 fail-closed (AGENTS.md: 규칙 깨면 배포 안 함).
+    max_attempts = 3 if args.llm else 1
+    rc = 1
+    for attempt in range(1, max_attempts + 1):
+        # 재시도부터는 temperature를 낮춰서 안정적인 샘플 유도
+        cmd = list(draft_cmd)
+        if attempt > 1:
+            cmd.extend(["--temperature", "0.7"])
+        print(f"[run] draft attempt {attempt}/{max_attempts}", file=sys.stderr)
+        rc = sh(cmd)
+        if rc != 0:
+            print(f"[run] draft failed (rc={rc}) on attempt {attempt}", file=sys.stderr)
+            continue
+        if not issue.exists():
+            print(f"[run] issue file not created on attempt {attempt}", file=sys.stderr)
+            rc = 1
+            continue
+        v = run_validate()
+        if v == 0:
+            return 0
+        print(f"[run] validate failed on attempt {attempt} — retrying", file=sys.stderr)
+        rc = v
+    print(f"[run] all {max_attempts} attempts failed — failing closed", file=sys.stderr)
     return rc
 
 
