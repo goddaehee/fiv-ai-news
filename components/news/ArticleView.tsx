@@ -286,7 +286,8 @@ export function ArticleView({
               {i + 1}. {tip.title}
             </strong>
             <br />
-            {withCode(tip.body)} — ({tip.via})
+            {withCode(tip.body)}
+            {tip.via && !/^(파이프라인|pipeline|debug|test)$/i.test(tip.via.trim()) ? ` — (${tip.via})` : null}
           </p>
         ))}
       </section>
