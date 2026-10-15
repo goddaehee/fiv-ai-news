@@ -99,12 +99,12 @@ def check_p0(
                 errors.append(f"TPL-001 analysis[{i}].takeaway/body: 템플릿 문구 '{ph[:30]}'")
                 break
 
-    # ID-001: mainEvent에 내부 ID
+    # ID-001: mainEvent에 내부 ID (slug 패턴도 error로 승격)
     me = str(issue.get("mainEvent") or "")
     if is_internal_id(me):
         errors.append(f"ID-001 mainEvent: 내부 ID '{me}' 노출")
     elif me and _SLUG_RE.match(me):
-        warnings.append(f"ID-001 mainEvent: slug 패턴 '{me}' (내부 ID 의심)")
+        errors.append(f"ID-001 mainEvent: slug 패턴 '{me}' (내부 ID 의심)")
 
     # DUP-001: briefing summary ≒ headline
     for i, b in enumerate(briefing):
@@ -117,7 +117,7 @@ def check_p0(
                 if _overlap(nh, ns) >= 0.9:
                     errors.append(f"DUP-001 briefing[{i}].summary: headline과 거의 동일")
 
-    # ID-002: tags에 내부 ID / 빈 원소
+    # ID-002: tags에 내부 ID / 빈 원소 (slug 패턴도 error로 승격)
     for i, a in enumerate(analysis):
         if not isinstance(a, dict):
             continue
@@ -128,7 +128,7 @@ def check_p0(
             elif is_internal_id(ts):
                 errors.append(f"ID-002 analysis[{i}].tags: 내부 ID '{ts}'")
             elif _SLUG_RE.match(ts):
-                warnings.append(f"ID-002 analysis[{i}].tags: slug 패턴 '{ts}'")
+                errors.append(f"ID-002 analysis[{i}].tags: slug 패턴 '{ts}'")
 
     # DUP-002: tips title ≒ body
     for i, t in enumerate(tips):
@@ -151,6 +151,26 @@ def check_p0(
             errors.append(f"VIA-001 tips[{i}].via: 비어 있음")
         elif via.lower() in _VIA_DEBUG:
             errors.append(f"VIA-001 tips[{i}].via: 디버그 값 '{via}'")
+
+    # TAKEAWAY-DUP: 시사점 템플릿 반복 방지 (6개 중 3개 이상 유사하면 error)
+    takeaways = []
+    for i, a in enumerate(analysis):
+        if not isinstance(a, dict):
+            continue
+        tw = str(a.get("takeaway") or "").strip()
+        if tw:
+            takeaways.append((i, _normalize_sim(tw)))
+    if len(takeaways) >= 3:
+        # pairwise 유사도: 0.8 이상인 쌍이 전체의 절반을 넘으면 템플릿 의심
+        similar_pairs = 0
+        total_pairs = 0
+        for x in range(len(takeaways)):
+            for y in range(x + 1, len(takeaways)):
+                total_pairs += 1
+                if _overlap(takeaways[x][1], takeaways[y][1]) >= 0.8:
+                    similar_pairs += 1
+        if total_pairs > 0 and similar_pairs / total_pairs >= 0.5:
+            errors.append(f"TAKEAWAY-DUP: 시사점 {len(takeaways)}개 중 유사 쌍 {similar_pairs}/{total_pairs} — 템플릿 반복 의심")
 
     # DUP-003: 섹션 간 문장 반복 (warning)
     def split_sentences(text: str) -> list[str]:
@@ -272,6 +292,10 @@ def check(issue: dict) -> list[str]:
             continue
         require(b, ["id", "headline", "summary"], f"briefing[{i}]", bag)
         ids.append(b.get("id"))
+        # P0: 헤드라인 반말체 금지 (명사형 종결). "~했다/내놨다/줄였다" 등
+        hl = str(b.get("headline") or "")
+        if re.search(r"(했다|했다\.|내놨다|줄였다|늘렸다|낮췄다|높였다|도입했다|공개했다|발표했다|묶었다)\s*$", hl):
+            err(f"briefing[{i}].headline", "반말체 종결 금지 — 명사형으로", bag)
     for i, a in enumerate(issue.get("analysis") or []):
         p = f"analysis[{i}]"
         if not isinstance(a, dict):
