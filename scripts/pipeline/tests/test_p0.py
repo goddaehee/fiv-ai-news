@@ -7,7 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from validate import check_p0, _normalize_sim, _overlap, _jaccard
-from draft import thicken_take, thicken_body
+from draft import thicken_take, thicken_body, number_mentions
 
 PASS = 0
 FAIL = 0
@@ -78,11 +78,20 @@ ok("VIA-001 탐지", any("VIA-001" in e for e in check_p0(
 ok("VIA-001 빈값 탐지", any("VIA-001" in e for e in check_p0(
     base_issue(tips=[{"title": "t", "body": "b", "via": ""}]), None)[0]))
 
-# --- thicken_take: 템플릿 생성 금지 ---
+# --- thicken_take: 삭제 금지 (P0-1). 길이·어미 판정은 validator의 몫 ---
 ok("thicken_take 템플릿 없음", "오늘 확인할 변경입니다" not in thicken_take("", ["불릿"], "제목"))
-ok("thicken_take 미달은 빈값", thicken_take("짧음", ["불릿"], "제목") == "")
+ok("thicken_take 미달도 삭제 안 함", thicken_take("짧음", ["불릿"], "제목") == "짧음")
 good_take = "엔비디아의 새 AI 칩 발표는 데이터센터 시장에 직접 영향을 줍니다. 인프라 담당자는 이번 분기 안에 도입 타당성을 검토하면 됩니다. 추가로 가격 정책도 함께 확인합니다."
 ok("thicken_take 정상 유지", thicken_take(good_take, ["불릿"], "제목") == good_take)
+# 60~69자 takeaway가 코드에 의해 지워지면 안 됨 (이전 버그: 70자 미만 → "")
+sixty = "신형 칩은 데이터센터 비용 구조를 바꾸는 데 중요하다. 인프라 팀은 이번 분기 안에 도입 타당성을 검토하면 됩니다."
+ok("thicken_take 60자대 유지", 60 <= len(sixty) < 70 and thicken_take(sixty, ["불릿"], "제목") == sixty)
+
+# --- number_mentions: 검증기 numbers 정규식과 동일한 후보 추출 ---
+ok("number_mentions 기본", number_mentions("응답은 2배 빨라지고 가격은 30% 내렸다") == ["2배", "30%"])
+ok("number_mentions 불인정 제외", number_mentions("두 배 빨라졌다. 2024년에 출시. $2B 투자") == [])
+ok("number_mentions 중복 제거", number_mentions("30% 상승, 다시 30% 상승") == ["30%"])
+ok("number_mentions 빈 입력", number_mentions("") == [])
 
 # --- thicken_body: 패딩 없음 ---
 ok("thicken_body 패딩 없음", "조건과 분모는" not in " ".join(thicken_body(["짧은 본문"], ["불릿1"])))
