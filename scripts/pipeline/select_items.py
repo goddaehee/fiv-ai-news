@@ -20,12 +20,14 @@ SOURCE_QUOTA = 0.25
 
 def bucket_domain(items: list[dict]) -> str:
     """버킷 대표 아이템(items[0])의 URL에서 비교용 도메인 추출.
-    validate.extract_domain과 동일 규격: 소문자, www. 제거. 실패 시 빈 문자열."""
+    validate.extract_domain과 동일 규격: 소문자, www. 제거. 실패 시 빈 문자열.
+    P5: origin_url(Google News <source url>)이 있으면 그것을 우선 사용."""
     if not items:
         return ""
     from urllib.parse import urlparse
     try:
-        host = (urlparse(str(items[0].get("url") or "")).hostname or "").lower().strip()
+        url = items[0].get("origin_url") or items[0].get("url") or ""
+        host = (urlparse(str(url)).hostname or "").lower().strip()
         if host.startswith("www."):
             host = host[4:]
         return host

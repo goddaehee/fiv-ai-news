@@ -32,7 +32,7 @@ FEEDS = [
     ),
     (
         "Anthropic GNews",
-        "https://news.google.com/rss/search?q=site:anthropic.com+when:2d&hl=en-US&gl=US&ceid=US:en",
+        "https://news.google.com/rss/search?q=Anthropic+when:2d&hl=en-US&gl=US&ceid=US:en",
         "doc",
     ),
     ("Google Blog", "https://blog.google/rss/", "doc"),
@@ -60,6 +60,14 @@ AI_HINT = re.compile(
     re.I,
 )
 TAG = re.compile(r"<[^>]+>")
+
+# P5: 피드별 수집 상한. Google News AI는 limit=40이 수집의 60%를 폐기하므로 100으로 상향.
+FEED_LIMITS = {
+    "Google News AI": 100,
+}
+
+# P5: 신선도 필터 — 48시간 초과 기사는 제외 (데일리 다이제스트 기준)
+FRESHNESS_HOURS = 48
 
 
 def fetch(url: str, timeout: int = 22) -> bytes | None:
@@ -143,18 +151,25 @@ def parse_feed(xml: bytes, source: str, kind: str, limit: int = 40) -> list[dict
                         break
         summary = collapse(text_of(child(node, "description", "summary", "content")))[:420]
         published = parse_date(child(node, "pubdate", "published", "updated", "date", "created"))
+        # P5: Google News <source url="실발행처URL"> 파싱 — 불투명 리다이렉트 URL 대신
+        # 실제 발행처 도메인을 origin_url에 저장 (RSS 내부 데이터라 No-scrape 제약 위반 아님)
+        origin_url = None
+        source_el = child(node, "source")
+        if source_el is not None:
+            origin_url = (source_el.get("url") or "").strip() or None
         blob = f"{title} {summary}"
-        if source.startswith("Google News") or source.startswith("HN") or AI_HINT.search(blob):
-            items.append(
-                {
-                    "source": source,
-                    "kind": kind,
-                    "title": title,
-                    "url": link,
-                    "summary": summary,
-                    "published": published,
-                }
-            )
+        if source.startswith("Google News") or "GNews" in source or source.startswith("HN") or AI_HINT.search(blob):
+            item = {
+                "source": source,
+                "kind": kind,
+                "title": title,
+                "url": link,
+                "summary": summary,
+                "published": published,
+            }
+            if origin_url:
+                item["origin_url"] = origin_url
+            items.append(item)
         if len(items) >= limit:
             break
     return items
@@ -201,7 +216,7 @@ def collect() -> dict:
         if not raw:
             errors.append(name)
             continue
-        got = parse_feed(raw, name, kind)
+        got = parse_feed(raw, name, kind, limit=FEED_LIMITS.get(name, 40))
         items.extend(got)
         print(f"  {name:18} {len(got):3d}")
     hn = hn_algolia()
@@ -216,6 +231,44 @@ def collect() -> dict:
         seen.add(key)
         uniq.append(it)
     now = datetime.now(KST)
+    # P5: 48h 신선도 필터 — 너무 오래된 기사는 제외 (날짜 파싱 불가 시 유지)
+    cutoff = now - timedelta(hours=FRESHNESS_HOURS)
+    fresh: list[dict] = []
+    stale = 0
+    for it in uniq:
+        pub = it.get("published")
+        dt = None
+        if pub:
+            try:
+                dt = datetime.fromisoformat(pub)
+            except ValueError:
+                dt = None
+        if dt is None:
+            fresh.append(it)
+            continue
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=KST)
+        if dt >= cutoff:
+            fresh.append(it)
+        else:
+            stale += 1
+    if stale:
+        print(f"  stale(48h+) dropped: {stale}")
+    uniq = fresh
+    # P5: 도메인 분포 로그 — origin_url 우선으로 유효 도메인 확인
+    from urllib.parse import urlparse
+    from collections import Counter
+
+    def _dom(u: str) -> str:
+        try:
+            h = (urlparse(u or "").hostname or "").lower()
+            return h[4:] if h.startswith("www.") else h
+        except Exception:
+            return ""
+
+    dom_counts = Counter(_dom(it.get("origin_url") or it.get("url")) for it in uniq)
+    top = dict(dom_counts.most_common(8))
+    print(f"  domains: {top}")
     return {
         "collected_at": now.isoformat(timespec="minutes"),
         "date": now.strftime("%Y-%m-%d"),

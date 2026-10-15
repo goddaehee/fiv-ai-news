@@ -377,5 +377,83 @@ ok("LLM 경로 배선: main()에서 select_buckets 호출",
 ok("LLM 경로 배선: payload에 main_topics 포함", '"main_topics"' in _draft_src)
 ok("LLM 경로 배선: 프롬프트 하드 규칙 포함", "main_topics에 없는 토픽으로는 analysis를 만들지 않는다" in _draft_src)
 
+# ---------------------------------------------------------------------------
+# P5: 수집 단계 개선 — <source url> 파싱, origin_url 우선, 48h 신선도 필터
+# ---------------------------------------------------------------------------
+from collect import parse_feed, FRESHNESS_HOURS, FEED_LIMITS
+
+_GNEWS_XML = b"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel><title>Google News AI</title>
+<item>
+  <title>OpenAI launches new agent model with 70B parameters</title>
+  <link>https://news.google.com/rss/articles/CBMiXmh0dHBzOi8vd3d3LnRoZXZlcmdllmNvbS9hLXRlc3TSAQA?oc=5</link>
+  <source url="https://www.theverge.com/">The Verge</source>
+  <pubDate>Thu, 16 Oct 2026 00:30:00 GMT</pubDate>
+  <description>OpenAI announced a 70B parameter agent model today.</description>
+</item>
+<item>
+  <title>Anthropic news without source tag</title>
+  <link>https://news.google.com/rss/articles/CBMiYmh0dHBzOi8vYW50aHJvcGljLmNvbS9uZXdzL2E?oc=5</link>
+  <pubDate>Thu, 16 Oct 2026 01:00:00 GMT</pubDate>
+  <description>Anthropic published a safety update.</description>
+</item>
+</channel></rss>"""
+
+_gnews_items = parse_feed(_GNEWS_XML, "Google News AI", "doc")
+ok("P5: <source url> 파싱 — origin_url 저장",
+   len(_gnews_items) == 2 and _gnews_items[0].get("origin_url") == "https://www.theverge.com/")
+ok("P5: <source url> 없음 — origin_url 키 없음",
+   "origin_url" not in _gnews_items[1])
+
+# origin_url 우선 도메인 계산
+ok("P5: bucket_domain이 origin_url 우선",
+   bucket_domain([{"url": "https://news.google.com/rss/articles/xxx",
+                   "origin_url": "https://www.theverge.com/"}]) == "theverge.com")
+ok("P5: bucket_domain origin_url 없으면 url 사용",
+   bucket_domain([{"url": "https://openai.com/news/a"}]) == "openai.com")
+
+# check_source_quota: origin_url 기준 집계
+from validate import check_source_quota as _csq
+
+_q_issue = {"analysis": [
+    {"sources": [{"url": "https://news.google.com/rss/articles/a", "origin_url": "https://www.theverge.com/"}]},
+    {"sources": [{"url": "https://news.google.com/rss/articles/b", "origin_url": "https://techcrunch.com/2026/10/16/x"}]},
+    {"sources": [{"url": "https://openai.com/news/c"}]},
+]}
+_q_err, _q_warn = _csq(_q_issue)
+ok("P5: QUOTA — origin_url 기준이면 3개 도메인 분산으로 통과", not _q_err)
+
+_q_issue2 = {"analysis": [
+    {"sources": [{"url": "https://news.google.com/rss/articles/a", "origin_url": "https://openai.com/news/a"}]},
+    {"sources": [{"url": "https://news.google.com/rss/articles/b", "origin_url": "https://openai.com/news/b"}]},
+    {"sources": [{"url": "https://openai.com/news/c"}]},
+]}
+_q_err2, _ = _csq(_q_issue2)
+ok("P5: QUOTA — origin_url이 openai.com이면 3/3 독점으로 차단",
+   any("QUOTA-001" in e and "openai.com" in e for e in _q_err2))
+
+# collected_by_url 조인 fallback: origin_url이 source dict에 없어도 수집 스냅샷에서 해소
+from validate import url_core as _uc
+_cbu = {_uc("https://news.google.com/rss/articles/a"):
+        {"url": "https://news.google.com/rss/articles/a",
+         "origin_url": "https://www.theverge.com/"}}
+_q_err3, _ = _csq({"analysis": [
+    {"sources": [{"url": "https://news.google.com/rss/articles/a"}]},
+    {"sources": [{"url": "https://techcrunch.com/2026/10/16/y"}]},
+]}, _cbu)
+ok("P5: QUOTA — collected_by_url 조인으로 origin_url 해소", not _q_err3)
+
+# GNews 조건: "Anthropic GNews"도 AI 힌트 없이 수집 필터 통과 ("GNews" in source 분기)
+_gnews2 = parse_feed(
+    b'<rss version="2.0"><channel><item><title>Quarterly earnings beat expectations</title>'
+    b'<link>https://news.google.com/rss/articles/z</link>'
+    b'<description>Revenue grew last quarter.</description></item></channel></rss>',
+    "Anthropic GNews", "doc")
+ok("P5: 'Anthropic GNews'도 수집 필터 통과", len(_gnews2) == 1)
+
+# FEED_LIMITS: Google News AI 100
+ok("P5: Google News AI limit 100", FEED_LIMITS.get("Google News AI") == 100)
+ok("P5: FRESHNESS_HOURS 48", FRESHNESS_HOURS == 48)
+
 print(f"\n{PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)

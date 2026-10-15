@@ -222,13 +222,15 @@ def attach_sources(issue: dict, snap: dict, buckets: list | None = None) -> dict
             if not url.startswith("http") or "example.com" in url or url in used:
                 continue
             used.add(url)
-            picked.append(
-                {
-                    "handle": it.get("source") or "source",
-                    "url": url,
-                    "kind": it.get("kind") or "doc",
-                }
-            )
+            picked_src = {
+                "handle": it.get("source") or "source",
+                "url": url,
+                "kind": it.get("kind") or "doc",
+            }
+            # P5: Google News <source url> 실발행처 — 검증기의 도메인 계산에 사용
+            if it.get("origin_url"):
+                picked_src["origin_url"] = it["origin_url"]
+            picked.append(picked_src)
             if len(picked) >= 2:
                 break
         if picked:
