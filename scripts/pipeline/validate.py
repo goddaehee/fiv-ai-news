@@ -380,6 +380,7 @@ def check_quality(
     collected_urls: set[str] | None,
     prev: dict | None,
     date_str: str | None,
+    collected_by_url: dict | None = None,
 ) -> tuple[list[str], list[str]]:
     """내용 품질 게이트. (errors, warnings) — warnings는 실패시키지 않는다."""
     errors: list[str] = []
@@ -683,7 +684,7 @@ def main() -> int:
     for f in args.files:
         issue = json.loads(f.read_text(encoding="utf-8"))
         bag = check(issue, collected_by_url)
-        qerr, qwarn = check_quality(issue, collected_urls, prev, date_str)
+        qerr, qwarn = check_quality(issue, collected_urls, prev, date_str, collected_by_url)
         bag.extend(qerr)
         if bag:
             failed += 1
