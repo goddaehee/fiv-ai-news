@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-16",
+  "analysis": "nvidia-nemotron-super-vl",
+  "src": "/img/2026-10-16/nvidia-nemotron-super-vl-41a550fb.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration, strict 16:9 widescreen aspect ratio (2048x1152): an open geometric container releasing a stream of small modular interlocking shapes that flow into an orderly, efficient formation, symbolizing open building blocks assembling into capable autonomous agents; fresh mint and graphite palette, clean flat vector style; strictly no text, no numbers, no people, no faces, no logos, no charts, no graphs, no watermark.",
+  "prompt_hash": "41a550fb",
+  "alt": "열린 구성 요소가 모여 에이전트로 흐르는 모습을 형상화한 추상 일러스트"
+}
