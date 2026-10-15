@@ -22,6 +22,34 @@ def sh(args: list[str]) -> int:
     return subprocess.call(args)
 
 
+def draft_with_retry(draft_cmd: list[str], issue, run_validate, max_attempts: int = 3,
+                     sh_fn=None, sleep_fn=None) -> int:
+    """draft → validate 재시도 루프. 테스트 가능성을 위해 sh/sleep 주입 가능."""
+    import time
+    _sh = sh_fn or sh
+    _sleep = sleep_fn or time.sleep
+    rc = 1
+    for attempt in range(1, max_attempts + 1):
+        cmd = list(draft_cmd) + ["--attempt", str(attempt)]
+        print(f"[run] draft attempt {attempt}/{max_attempts}", file=sys.stderr)
+        rc = _sh(cmd)
+        if rc != 0:
+            print(f"[run] draft failed (rc={rc}) on attempt {attempt}", file=sys.stderr)
+        elif not issue.exists():
+            print(f"[run] issue file not created on attempt {attempt}", file=sys.stderr)
+            rc = 1
+        else:
+            v = run_validate()
+            if v == 0:
+                return 0
+            print(f"[run] validate failed on attempt {attempt} — retrying", file=sys.stderr)
+            rc = v
+        if attempt < max_attempts:
+            _sleep(10)
+    print(f"[run] all {max_attempts} attempts failed — failing closed", file=sys.stderr)
+    return rc
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date")
@@ -88,28 +116,7 @@ def main() -> int:
     # 재시도: 나쁜 LLM 샘플 한 번에 하루치가 날아가지 않게 최대 3회 시도.
     # 그래도 validate를 못 넘기면 fail-closed (AGENTS.md: 규칙 깨면 배포 안 함).
     max_attempts = 3 if args.llm else 1
-    rc = 1
-    for attempt in range(1, max_attempts + 1):
-        cmd = list(draft_cmd) + ["--attempt", str(attempt)]
-        print(f"[run] draft attempt {attempt}/{max_attempts}", file=sys.stderr)
-        rc = sh(cmd)
-        if rc != 0:
-            print(f"[run] draft failed (rc={rc}) on attempt {attempt}", file=sys.stderr)
-        elif not issue.exists():
-            print(f"[run] issue file not created on attempt {attempt}", file=sys.stderr)
-            rc = 1
-        else:
-            v = run_validate()
-            if v == 0:
-                return 0
-            print(f"[run] validate failed on attempt {attempt} — retrying", file=sys.stderr)
-            rc = v
-        # 재시도 전 백오프 (rate limit 등 일시 장애 대응)
-        if attempt < max_attempts:
-            import time
-            time.sleep(10)
-    print(f"[run] all {max_attempts} attempts failed — failing closed", file=sys.stderr)
-    return rc
+    return draft_with_retry(draft_cmd, issue, run_validate, max_attempts)
 
 
 if __name__ == "__main__":
