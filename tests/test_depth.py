@@ -49,7 +49,8 @@ def test_missing_one_slot_warning():
 
 
 def test_avg_omission_rate():
-    # 2개 기사, 각 2개 슬롯 미충족 → 평균 40% > 10% = error
+    # 2개 기사, 각 2개 슬롯 미충족 → 4개 > 허용 2개 = error
+    # P1 (Claude C-3): 임계값이 비율(10%)에서 절대개수(max(2, ceil(슬롯×0.10)))로 변경
     a1 = good_analysis()
     a1["body"] = ["짧은 문단."]
     a1["takeaway"] = ""
@@ -57,8 +58,8 @@ def test_avg_omission_rate():
     a2["body"] = ["짧은 문단."]
     a2["takeaway"] = ""
     errors, _ = check_depth({"analysis": [a1, a2]})
-    assert any("생략률" in e for e in errors), errors
-    print("ok: avg omission rate > 10% = error")
+    assert any("전체 슬롯 생략" in e for e in errors), errors
+    print("ok: avg omission > allowed = error")
 
 
 def test_no_sources_with_numbers():

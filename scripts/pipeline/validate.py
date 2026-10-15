@@ -507,12 +507,24 @@ def check_quality(
 # ---------------------------------------------------------------------------
 # 2주차: 깊이 슬롯 게이트 (품질 개선 계획 v5)
 # 슬롯 5개: 무슨 일인가 / 맥락 / 수치 2개+ / 한계·반론 / 왜 중요한가
-# 생략: 기사별 ≤1개, 전체 평균 ≤10%. 사유는 '근거 없음'으로 통일, 로그에 하위 사유.
+# 생략: 기사별 ≤1개, 전체 생략 ≤ max(2, ceil(전체슬롯×0.10)). P1에서 비율→절대개수로 변경.
+# 사유는 '근거 없음'으로 통일, 로그에 하위 사유.
 # ---------------------------------------------------------------------------
 
 DEPTH_SLOTS = ["what", "context", "numbers", "limits", "why"]
 LIMIT_MARKERS = ["한계", "하지만", "단,", "주의", "반론", "다만", "아직", "불확실", "검증되지"]
 WHY_MARKERS = ["중요", "의미", "영향", "바뀐", "달라진"]
+
+# P1 (Codex): draft.py의 NUM_RE와 동일한 패턴 (AI 뉴스 영어 단위 포함).
+# draft.py가 바뀌면 여기도 함께 바꿔야 한다.
+NUM_RE_VALIDATE = re.compile(
+    r"\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)"
+    r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|billion|million)?(?![0-9A-Za-z])"
+    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K)(?![0-9A-Za-z])"
+    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|thousand|times)(?![0-9A-Za-z])"
+    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?x(?![0-9A-Za-z])",
+    re.IGNORECASE,
+)
 
 
 def _slot_status(a: dict) -> dict[str, bool]:
@@ -530,7 +542,8 @@ def _slot_status(a: dict) -> dict[str, bool]:
     # context: body 2개 문단 이상 (첫 문단=what, 둘째=맥락)
     context = isinstance(body, list) and len(body) >= 2 and len(str(body[1])) >= 30
     # numbers: 본문+bullet에 수치 2개 이상
-    nums = re.findall(r"\d+(\.\d+)?\s*(%|배|달러|억|만|점|분|시간|일|명|개)", full)
+    # P1 (Codex): draft.py의 NUM_RE와 동일한 패턴 사용
+    nums = [m.group(0) for m in NUM_RE_VALIDATE.finditer(full)]
     numbers = len(nums) >= 2
     # limits: 한계·반론 마커 포함
     limits = any(m in full for m in LIMIT_MARKERS)
@@ -561,17 +574,23 @@ def check_depth(issue: dict) -> tuple[list[str], list[str]]:
         elif len(missing) == 1:
             warnings.append(f"analysis[{i}].depth: 슬롯 1개 생략 ({missing[0]}) — 사유 '근거 없음' 기록 필요")
 
-    # 전체 평균 생략률 ≤10%
-    avg_missing = total_missing / (len(analyses) * len(DEPTH_SLOTS))
-    if avg_missing > 0.10:
-        errors.append(f"depth: 전체 슬롯 생략률 {avg_missing:.0%} > 10%")
+    # 전체 평균 생략률 ≤10% — P1 (Claude C-3): 소수 analysis의 이산화 문제 해소.
+    # 비율이 아니라 절대 개수로: 허용 생략 = max(2, ceil(전체슬롯 × 0.10)).
+    # 15슬롯이면 2개 허용 → 13.3% 통과. 대량 생략 방지 의도는 유지.
+    total_slots = len(analyses) * len(DEPTH_SLOTS)
+    allowed_missing = max(2, -(-total_slots // 10))  # ceil(total_slots * 0.10)
+    avg_missing = total_missing / total_slots
+    if total_missing > allowed_missing:
+        errors.append(
+            f"depth: 전체 슬롯 생략 {total_missing}개 > 허용 {allowed_missing}개 ({avg_missing:.0%})"
+        )
 
     # 근거 연결: 출처 없는 수치 0건 — 수치 있는 문장에 출처 마커가 없으면 warning
     for i, a in enumerate(analyses):
         body = a.get("body") or []
         sources = a.get("sources") or []
         body_text = " ".join(str(x) for x in (body if isinstance(body, list) else [body]))
-        nums = re.findall(r"\d+(\.\d+)?\s*(%|배|달러|억|만|점)", body_text)
+        nums = [m.group(0) for m in NUM_RE_VALIDATE.finditer(body_text)]
         if nums and not sources:
             warnings.append(f"analysis[{i}].evidence: 수치 {len(nums)}개 있으나 sources 없음")
 

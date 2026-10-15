@@ -47,9 +47,11 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
   전체 슬롯의 10%를 초과해 비우면 호 전체가 폐기됩니다. "근거 없음"이라고 적어도 슬롯을 통과시키지 못합니다.
   1. what: body 첫 문단, 30자 이상.
   2. context: body 둘째 문단, 30자 이상 (배경·이전 흐름).
-  3. numbers: bullets+body+takeaway 안에 "아라비아 숫자 + (%|배|달러|억|만|점|분|시간|일|명|개)" 꼴이 2개 이상.
-     예: 2배, 30%, 10억, 100명. 인정하지 않음: 두 배, 2024년, $2B, 2 million.
-     쓸 수 있는 숫자는 그 기사의 number_mentions뿐입니다. 후보가 2개 미만이면 숫자를 만들지 말고 이 슬롯을 비우세요.
+  3. numbers: bullets+body+takeaway 안에 아라비아 숫자 + 단위 꼴이 2개 이상.
+     단위: %|배|달러|억|만|점|분|시간|일|명|개|B|M|K|million|billion|thousand|times|x.
+     예: 2배, 30%, 10억, 100명, 70B, $200, 2 million, 10x.
+     인정하지 않음: 두 배(한글 서수), 2024년(연도), GPT-4/Claude 3.5(모델명).
+     number_mentions 후보를 우선 사용하세요. 후보가 2개 미만이면 summary 안의 다른 숫자 표현을 찾아 쓰되, 없는 숫자는 만들지 마세요. 그래도 2개에 못 미치면 있는 것만 쓰세요.
   4. limits: 한계, 하지만, 단,, 주의, 반론, 다만, 아직, 불확실, 검증되지 중 1개 이상 포함.
   5. why: takeaway 60자 이상(두 문장), 입니다/됩니다 종결, 그리고 중요, 의미, 영향, 바뀐, 달라진 중 1개 이상 포함.
 - 선별 점수제: 각 기사를 영향도(0~2: 다룬 매체 수)·새로움(0~2: 24시간 이내=2)·관련성(0~2: 수치·고유명사)·근거(0~2: 공식 출처 URL) 로 채점, 총 8점 중 5점 미만은 제외.
@@ -339,16 +341,26 @@ def thicken_take(take: str, bullets: list[str], title: str) -> str:
 
 # P0: 검증기와 동일한 수치 정규식 — number_mentions 후보는 이 패턴을 통과한 것만.
 # validate.check_depth의 numbers 슬롯과 정확히 일치해야 한다.
-NUM_RE = re.compile(r"\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)")
+# P1 (Codex): AI 뉴스 실측 기반 확장. 모델명(GPT-4)·연도(2024년)는 제외.
+# \b 대신 (?![0-9A-Za-z]) 사용 — \b는 한글 조사 앞에서 단어 경계로 인식하지 않음.
+NUM_RE = re.compile(
+    r"\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)"  # 기존 한국어 단위
+    r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|billion|million)?(?![0-9A-Za-z])"  # $200, $300B
+    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K)(?![0-9A-Za-z])"  # 70B (GPT-4 제외)
+    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|thousand|times)(?![0-9A-Za-z])"
+    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?x(?![0-9A-Za-z])",  # 10x
+    re.IGNORECASE,
+)
 
 
 def number_mentions(summary: str) -> list[str]:
     """summary에서 검증기를 통과하는 수치 표면만 추출 (LLM 입력용 후보).
     LLM의 수치 인식과 정규식의 차이를 메우기 위해 미리 뽑아 payload에 넣어준다.
-    예: "응답은 2배 빨라지고 가격은 30% 내렸다" → ["2배", "30%"]."""
+    예: "응답은 2배 빨라지고 가격은 30% 내렸다" → ["2배", "30%"].
+    P1 (Codex): findall 대신 finditer 사용 — 그룹이 있는 패턴에서 튜플 반환 문제 방지."""
     seen: list[str] = []
-    for m in NUM_RE.findall(summary or ""):
-        s = m.strip()
+    for m in NUM_RE.finditer(summary or ""):
+        s = m.group(0).strip()
         if s and s not in seen:
             seen.append(s)
     return seen[:6]
@@ -685,7 +697,10 @@ def main() -> int:
             return f"{m.group(1)}/{m.group(2)} {m.group(3)}:{m.group(4)}"
 
         def _item_payload(it: dict) -> dict:
-            summary = (it.get("summary") or "")[:180]
+            # P1 (Codex): 후보는 420자 전체 summary에서 추출 (180자 잘림 전에).
+            # LLM에게는 180자만 보여주지만 쓸 수 있는 숫자는 전체에서 뽑는다.
+            full_summary = it.get("summary") or ""
+            summary = full_summary[:180]
             return {
                 "title": it["title"],
                 "url": it.get("url"),
@@ -694,8 +709,7 @@ def main() -> int:
                 "published": it.get("published"),
                 "published_ko": _published_ko(it.get("published")),
                 # P0: LLM이 쓸 수 있는 수치 후보 — 검증기 numbers 정규식을 통과한 것만.
-                # 후보가 2개 미만이면 숫자를 만들지 말고 numbers 슬롯을 비운다 (프롬프트 명시).
-                "number_mentions": number_mentions(summary),
+                "number_mentions": number_mentions(full_summary),
             }
 
         payload = {
