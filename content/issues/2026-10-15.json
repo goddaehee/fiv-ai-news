@@ -1,0 +1,179 @@
+{
+  "date": "2026-10-15",
+  "title": "5분 AI 뉴스 — 10월 15일 목요일",
+  "heroline": "에이전트가 며칠씩 일하고, 악성코드 분석이 주 단위에서 시간 단위로",
+  "dek": "OpenAI 생태계 파트너 3건이 하루에 몰렸습니다. 보안, 리서치, 개발 도구 모두에서 에이전트의 실제 운영 시간이 화두입니다.",
+  "tag": "ai-daily",
+  "briefMin": 3,
+  "readMin": 5,
+  "briefing": [
+    {
+      "id": "third-moment-10000-agents",
+      "headline": "Third Moment, 에이전트 1만 개 36시간 이상 연속 운영",
+      "summary": "AI 리서치 그룹 Third Moment가 GPT-6 Astra와 GPT-6.1 Sol, Codex, 사이버보안용 Daybreak 조합으로 장기 가동 에이전트 군을 구축한 사례입니다."
+    },
+    {
+      "id": "sentinelone-daybreak",
+      "headline": "SentinelOne, 악성코드 분석 몇 주에서 수 시간으로 단축",
+      "summary": "보안업체 SentinelOne이 OpenAI Daybreak를 써서 악성코드 분석 소요 시간을 주 단위에서 시간 단위로 줄였다고 밝혔습니다."
+    },
+    {
+      "id": "amp-beyond-coding",
+      "headline": "Amp, 코딩 밖 영역으로 에이전트 영역 확장",
+      "summary": "Amp가 GPT-6 Astra, Ultrafast, GPT-Live-1, Sign in with ChatGPT를 조합해 코드 수정 밖의 작업까지 에이전트에 맡기는 구성을 공유했습니다."
+    },
+    {
+      "id": "eu-agentic-adoption",
+      "headline": "EU 기업 에이전틱 AI 도입 분석 보고서 공개",
+      "summary": "OpenAI가 EU 기업과 중소사업자의 에이전틱 AI 도입 확대 흐름과 남은 가치 공간을 짚은 분석을 냈습니다."
+    }
+  ],
+  "keywords": [
+    "에이전트",
+    "GPT-6 Astra",
+    "Daybreak",
+    "악성코드 분석",
+    "EU"
+  ],
+  "mainEvent": "OpenAI 생태계 3곳의 에이전트 운영 사례 동시 공개",
+  "keynums": [
+    {
+      "val": "10,000개",
+      "lab": "동시 운영 에이전트",
+      "sub": "Third Moment 사례"
+    },
+    {
+      "val": "36시간+",
+      "lab": "에이전트 연속 가동",
+      "sub": "Third Moment 사례"
+    },
+    {
+      "val": "수 시간",
+      "lab": "악성코드 분석 소요",
+      "sub": "SentinelOne 발표, 이전엔 몇 주"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "10/14 09:00",
+      "d": "EU 에이전틱 AI 도입 분석 공개"
+    },
+    {
+      "t": "10/14 16:00",
+      "d": "Third Moment 에이전트 1만 개 운영 사례 공개"
+    },
+    {
+      "t": "10/14 21:00",
+      "d": "SentinelOne 분석 단축 사례 공개"
+    },
+    {
+      "t": "10/14 21:00",
+      "d": "Amp 코딩 외 확장 사례 공개"
+    }
+  ],
+  "intro": "10월 15일 목요일 발행. 전날 하루에 OpenAI 생태계 3곳의 에이전트 실전 사례가 몰려, '에이전트가 얼마나 오래, 어디까지 일하는가'가 오늘의 중심 질문입니다.",
+  "analysis": [
+    {
+      "id": "third-moment-10000-agents",
+      "n": 1,
+      "title": "1만 개 에이전트가 36시간 이상 버티는 구조",
+      "bullets": [
+        "동시 운영 에이전트 10,000개",
+        "연속 가동 36시간 이상, 사용할수록 개선",
+        "GPT-6 Astra·GPT-6.1 Sol·Codex·Daybreak 혼합 구성"
+      ],
+      "body": [
+        "Third Moment Research는 GPT-6 Astra와 GPT-6.1 Sol, Codex, 그리고 사이버보안용 Daybreak를 함께 써서 장기 가동 에이전트 군을 만들었다고 밝혔습니다. 이 그룹의 에이전트는 며칠간 집중 상태를 유지하고, 쓸수록 성능이 개선된다는 설명입니다.",
+        "지금까지 에이전트 도입의 걸림돌은 단일 과제 수준의 성능보다 장기 운영 안정성이었습니다. 이번 사례는 1만 개 규모와 36시간 이상 연속 가동이라는 숫자로 그 걸림돌을 넘어선 운영 단계에 진입했음을 보여줍니다. 다만 수치는 당사와 OpenAI가 공유한 사례 기준이고 독립 검증은 아직입니다."
+      ],
+      "extra": "그 밖에: 사이버보안 분야에도 같은 모델 조합이 쓰였다는 점에서, 보안 워크로드가 장기 에이전트의 첫 실전 배치 영역으로 떠오르고 있습니다.",
+      "takeaway": "에이전트의 경쟁력이 단일 과제 점수에서 연속 가동 시간과 운영 규모로 옮겨 가는 것이 이번 사례의 의미입니다. 대규모 자동화를 검토하는 팀은 파일럿 목표를 24시간 이상 무중단 가동으로 잡아 보면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/third-moment-research",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "sentinelone-daybreak",
+      "n": 2,
+      "title": "2. 악성코드 분석, 몇 주 걸리던 일이 수 시간으로",
+      "bullets": [
+        "분석 소요 시간: 몇 주 → 수 시간",
+        "같은 인력으로 조사 가능한 위협 수 증가",
+        "OpenAI Daybreak 기반"
+      ],
+      "body": [
+        "SentinelOne은 OpenAI Daybreak를 도입해 악성코드 분석에 걸리던 몇 주를 수 시간으로 줄였다고 발표했습니다. 그 결과 같은 인력으로 더 많은 위협을 조사할 여유가 생겼다고 설명합니다.",
+        "보안 분석은 반복적 문서 작업이 많아 모델 자동화의 수혜가 큰 영역으로 꾸준히 거론돼 왔습니다. 이번 발표는 그 예측이 실제 제품 수준에서 확인된 사례로 볼 수 있습니다. 다만 단축 폭은 SentinelOne 자체 측정이며, 위협 유형별 세부 수치는 공개되지 않았습니다."
+      ],
+      "extra": "",
+      "takeaway": "보안 운영에서 수작업 병목이 시간 단위로 압축된 것이 이번 발표가 주는 영향입니다. 분석 인력이 있는 조직은 1~2개 악성코드 샘플로 Daybreak 기반 파이프라인을 먼저 시험해 보면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/sentinelone",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "amp-beyond-coding",
+      "n": 3,
+      "title": "3. 코딩 에이전트, 이제 코드 밖 일도 맡습니다",
+      "bullets": [
+        "GPT-6 Astra·Ultrafast·GPT-Live-1 조합",
+        "Sign in with ChatGPT로 인증 연계",
+        "코드 수정 외 작업 영역으로 확장"
+      ],
+      "body": [
+        "Amp는 GPT-6 Astra, Ultrafast, GPT-Live-1, Sign in with ChatGPT를 조합해 코드 수정을 넘어선 작업까지 에이전트에 맡기는 구성을 공유했습니다. 개발 도구가 점차 범용 작업 수행 도구로 자리를 옮기는 흐름을 보여주는 사례입니다.",
+        "그동안 코딩 에이전트는 리포지토리 안의 작업에 묶여 있다는 인식이 강했습니다. Amp의 구성은 인증(Sign in with ChatGPT)과 실시간성(GPT-Live-1)까지 결합해 그 경계를 넓히고 있습니다. 다만 어느 작업까지 안정적으로 위임되는지에 대한 정량 평가는 이번 글에 포함되지 않았습니다."
+      ],
+      "extra": "",
+      "takeaway": "코딩 도구의 영역이 개발 업무 전반의 자동화 플랫폼으로 달라진 것이 이 사례가 갖는 의미입니다. 개발팀은 코드 리뷰 다음 단계로 회의록·문서·배포 준비 같은 반복 작업을 위임 목록에 올려 보면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/amp-beyond-coding",
+          "kind": "doc"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "에이전트 평가 기준이 점수에서 가동 시간으로 이동",
+    "grow": "보안·리서치 등 장기 워크로드의 자동화 수요 확대",
+    "caution": "발표 수치는 대부분 당사·OpenAI 자체 측정",
+    "heat": "OpenAI 생태계 3건이 같은 날 공개되며 화제 집중"
+  },
+  "tips": [
+    {
+      "title": "에이전트 파일럿 목표 재설정",
+      "body": "단일 과제 성공률만 재던 평가표에 24시간 이상 연속 가동 항목을 추가합니다. Third Moment 사례가 보여주듯 장기 안정성이 실제 도입의 결정 변수입니다.",
+      "via": "OpenAI News — Third Moment Research"
+    },
+    {
+      "title": "보안 분석 병목부터 자동화 실험",
+      "body": "악성코드 샘플 1~2건으로 수작업 분석과 자동 파이프라인의 소요 시간을 나란히 재 봅니다. SentinelOne은 몇 주를 수 시간으로 줄였다고 밝혔습니다.",
+      "via": "OpenAI News — SentinelOne"
+    },
+    {
+      "title": "코딩 에이전트 위임 목록 넓히기",
+      "body": "코드 수정 외에 회의록 정리, 문서 갱신, 배포 체크리스트 같은 반복 작업을 위임 후보로 정리합니다. Amp 사례가 그 경계 확장을 보여줍니다.",
+      "via": "OpenAI News — Amp"
+    },
+    {
+      "title": "EU 진출 검토 시 참고자료",
+      "body": "EU 시장을 검토 중이라면 이번 에이전틱 AI 도입 분석을 읽고 대상 업종의 도입 수준부터 확인합니다. 현지 중소사업자의 활용 사례도 함께 정리돼 있습니다.",
+      "via": "OpenAI News — EU agentic 분석"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": true
+}
