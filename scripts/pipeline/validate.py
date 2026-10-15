@@ -403,7 +403,8 @@ def check(issue: dict, collected_by_url: dict | None = None) -> list[str]:
     if takes and len(takes) != len(set(takes)):
         err("analysis.takeaway", "시사점 복붙 금지", bag)
     # 소스 쿼터: 단일 도메인이 analysis의 과반을 차지하면 발행 차단 (errors만)
-    quota_err, _ = check_source_quota(issue)
+    # P5: collected_by_url 전달 — origin_url 조인으로 불투명 Google News URL 해소
+    quota_err, _ = check_source_quota(issue, collected_by_url)
     bag.extend(quota_err)
     return bag
 
@@ -439,7 +440,22 @@ QUOTA_ERR_RATIO = 0.50
 QUOTA_WARN_RATIO = 0.25
 
 
-def check_source_quota(issue: dict) -> tuple[list[str], list[str]]:
+def _source_domain(s, collected_by_url: dict | None) -> str:
+    """source dict의 비교용 도메인. P5: origin_url(Google News <source url>) 우선,
+    없으면 수집 스냅샷 조인으로 origin_url 탐색, 최후는 url 자체."""
+    if not isinstance(s, dict):
+        return extract_domain(s)
+    ou = s.get("origin_url")
+    if ou:
+        return extract_domain(ou)
+    if collected_by_url:
+        it = collected_by_url.get(url_core(str(s.get("url") or "")))
+        if it and it.get("origin_url"):
+            return extract_domain(it["origin_url"])
+    return extract_domain(s.get("url"))
+
+
+def check_source_quota(issue: dict, collected_by_url: dict | None = None) -> tuple[list[str], list[str]]:
     errors, warnings = [], []
     analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
     if len(analyses) < 2:
@@ -448,7 +464,7 @@ def check_source_quota(issue: dict) -> tuple[list[str], list[str]]:
     for i, a in enumerate(analyses):
         doms = set()
         for s in a.get("sources") or []:
-            d = extract_domain((s or {}).get("url") if isinstance(s, dict) else s)
+            d = _source_domain(s, collected_by_url)
             if d:
                 doms.add(d)
         if not doms:
