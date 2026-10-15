@@ -256,7 +256,7 @@ def require(obj: dict, keys: list[str], path: str, bag: list[str]) -> None:
             err(path, f"missing {k}", bag)
 
 
-def check(issue: dict) -> list[str]:
+def check(issue: dict, collected_by_url: dict | None = None) -> list[str]:
     bag: list[str] = []
     require(
         issue,
@@ -497,7 +497,7 @@ def check_quality(
     warnings.extend(p0_warn)
 
     # 11. 2주차: 깊이 슬롯 게이트 + 근거 연결 + 문체 패스
-    d_err, d_warn = check_depth(issue)
+    d_err, d_warn = check_depth(issue, collected_by_url)
     errors.extend(d_err)
     warnings.extend(d_warn)
 
@@ -527,6 +527,30 @@ NUM_RE_VALIDATE = re.compile(
 )
 
 
+def _input_number_count(a: dict, collected_by_url: dict | None) -> int | None:
+    """analysis 입력(summary)에 있던 검증기 통과 수치 후보 수.
+
+    P2 (패널 만장일치): 입력에 숫자가 2개 미만이면 LLM이 numbers 슬롯을
+    채울 수 없으므로, 조건부로 생략률 계산에서 제외(excused)한다.
+    조인 불가(--collected 없음·URL 불일치)면 None → fail-closed(제외 안 함).
+    """
+    if not collected_by_url:
+        return None
+    cand: set[str] = set()
+    matched = False
+    for s in a.get("sources") or []:
+        if not isinstance(s, dict):
+            continue
+        it = collected_by_url.get(url_core(str(s.get("url") or "")))
+        if it is None:
+            continue
+        matched = True
+        cand.update(m.group(0) for m in NUM_RE_VALIDATE.finditer(it.get("summary") or ""))
+    if not matched:
+        return None
+    return len(cand)
+
+
 def _slot_status(a: dict) -> dict[str, bool]:
     """단일 analysis의 슬롯 충족 여부."""
     bullets = a.get("bullets") or []
@@ -552,8 +576,13 @@ def _slot_status(a: dict) -> dict[str, bool]:
     return {"what": what, "context": context, "numbers": numbers, "limits": limits, "why": why}
 
 
-def check_depth(issue: dict) -> tuple[list[str], list[str]]:
-    """깊이 슬롯 + 근거 연결 + 문체 패스. (errors, warnings)."""
+def check_depth(issue: dict, collected_by_url: dict | None = None) -> tuple[list[str], list[str]]:
+    """깊이 슬롯 + 근거 연결 + 문체 패스. (errors, warnings).
+
+    P2: numbers 슬롯이 missing이고 입력(summary)의 수치 후보가 2개 미만이면
+    해당 슬롯을 생략률 계산에서 제외(excused)한다. 입력에 없는 걸 요구하지 않는다.
+    조인 불가 시(collected_by_url=None·URL 불일치)는 기존 경로(fail-closed).
+    """
     errors: list[str] = []
     warnings: list[str] = []
 
@@ -561,11 +590,21 @@ def check_depth(issue: dict) -> tuple[list[str], list[str]]:
     if not analyses:
         return errors, warnings
 
-    # 깊이 슬롯: 기사별 생략 ≤1개
+    # 깊이 슬롯: 기사별 생략 ≤1개 (excused 제외 후 적용)
     total_missing = 0
+    total_excused = 0
     for i, a in enumerate(analyses):
         status = _slot_status(a)
         missing = [s for s in DEPTH_SLOTS if not status[s]]
+        # P2 조건부 제외: numbers 미충족 + 입력 수치 후보 2개 미만 → 제외
+        if "numbers" in missing:
+            n_cand = _input_number_count(a, collected_by_url)
+            if n_cand is not None and n_cand < 2:
+                missing.remove("numbers")
+                total_excused += 1
+                warnings.append(
+                    f"analysis[{i}].depth: numbers 슬롯 제외 (입력 수치 후보 {n_cand}개 < 2)"
+                )
         total_missing += len(missing)
         if len(missing) > 1:
             errors.append(
@@ -575,11 +614,11 @@ def check_depth(issue: dict) -> tuple[list[str], list[str]]:
             warnings.append(f"analysis[{i}].depth: 슬롯 1개 생략 ({missing[0]}) — 사유 '근거 없음' 기록 필요")
 
     # 전체 평균 생략률 ≤10% — P1 (Claude C-3): 소수 analysis의 이산화 문제 해소.
-    # 비율이 아니라 절대 개수로: 허용 생략 = max(2, ceil(전체슬롯 × 0.10)).
-    # 15슬롯이면 2개 허용 → 13.3% 통과. 대량 생략 방지 의도는 유지.
-    total_slots = len(analyses) * len(DEPTH_SLOTS)
+    # P2: excused된 슬롯은 분모에서도 제외 (적용 가능한 슬롯만 카운트).
+    # 비율이 아니라 절대 개수로: 허용 생략 = max(2, ceil(적용가능슬롯 × 0.10)).
+    total_slots = len(analyses) * len(DEPTH_SLOTS) - total_excused
     allowed_missing = max(2, -(-total_slots // 10))  # ceil(total_slots * 0.10)
-    avg_missing = total_missing / total_slots
+    avg_missing = total_missing / total_slots if total_slots else 0
     if total_missing > allowed_missing:
         errors.append(
             f"depth: 전체 슬롯 생략 {total_missing}개 > 허용 {allowed_missing}개 ({avg_missing:.0%})"
@@ -623,10 +662,15 @@ def main() -> int:
     args = ap.parse_args()
     date_str = args.date or datetime.now(KST).strftime("%Y-%m-%d")
     collected_urls: set[str] | None = None
+    collected_by_url: dict[str, dict] | None = None
     if args.collected and args.collected.exists():
         try:
             snap = json.loads(args.collected.read_text(encoding="utf-8"))
-            collected_urls = {url_core(str(it.get("url") or "")) for it in snap.get("items", []) if it.get("url")}
+            collected_by_url = {}
+            for it in snap.get("items", []):
+                if it.get("url"):
+                    collected_by_url.setdefault(url_core(str(it.get("url"))), it)
+            collected_urls = set(collected_by_url.keys())
         except Exception as e:
             print(f"WARN collected snapshot unreadable: {e}")
     prev: dict | None = None
@@ -638,7 +682,7 @@ def main() -> int:
     failed = 0
     for f in args.files:
         issue = json.loads(f.read_text(encoding="utf-8"))
-        bag = check(issue)
+        bag = check(issue, collected_by_url)
         qerr, qwarn = check_quality(issue, collected_urls, prev, date_str)
         bag.extend(qerr)
         if bag:
