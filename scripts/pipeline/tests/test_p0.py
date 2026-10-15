@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from validate import check_p0, _normalize_sim, _overlap, _jaccard, check_depth, _input_number_count, url_core
 from validate import check_source_quota, extract_domain, check_takeaway_template, _takeaway_skeleton
 from draft import thicken_take, thicken_body, number_mentions
+from select_items import bucket_domain, select_buckets, score_bucket, MIN_MAIN, MAX_MAIN
 
 PASS = 0
 FAIL = 0
@@ -295,6 +296,86 @@ ok("takeaway-tpl 정상 통과", not terr and not any("TAKEAWAY-TPL" in w for w 
 terr, twarn = check_takeaway_template(_tpl_issue([TW_A1, TW_A2, TW_B]))
 ok("takeaway-tpl 2개 → error 없음", not terr)
 ok("takeaway-tpl 2개 → warning", any("TAKEAWAY-TPL" in w for w in twarn))
+
+# --- P4: 도메인 기준 중복 제거 (select_buckets) ---
+from datetime import datetime, timezone, timedelta
+
+_P4_NOW = (datetime.now(timezone.utc) - timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%S+00:00")
+
+ok("bucket_domain: www 제거", bucket_domain([{"url": "https://www.openai.com/a"}]) == "openai.com")
+ok("bucket_domain: 서브도메인 유지", bucket_domain([{"url": "https://blog.openai.com/a"}]) == "blog.openai.com")
+ok("bucket_domain: 빈 items", bucket_domain([]) == "")
+ok("bucket_domain: URL 없음", bucket_domain([{"title": "t"}]) == "")
+ok("bucket_domain: validate.extract_domain과 동일",
+   bucket_domain([{"url": "https://WWW.Example.COM/x"}]) == extract_domain("https://WWW.Example.COM/x"))
+
+def _scored(name, url, source):
+    # score_bucket을 통과하도록(5점 이상) 현실적인 아이템 구성
+    items = [{"title": f"OpenAI GPT 발표 {name}", "summary": "성능이 30% 향상됨",
+              "url": url, "source": source, "published": _P4_NOW}]
+    return (name, items)
+
+# 도메인 중복 제거 (fallback 미발동: 도메인 필터 후 main >= MIN_MAIN)
+_mixed = [
+    _scored("a1", "https://openai.com/a", "라벨1"),
+    _scored("a2", "https://openai.com/b", "라벨2"),
+    _scored("a3", "https://openai.com/c", "라벨3"),
+    _scored("b1", "https://anthropic.com/x", "라벨4"),
+    _scored("c1", "https://google.com/y", "라벨5"),
+    _scored("d1", "https://nvidia.com/z", "라벨6"),
+]
+main, rest = select_buckets(_mixed)
+_main_names = {m[0] for m in main}
+ok("도메인 중복 제거: 같은 도메인은 1개만 main",
+   "a1" in _main_names and "a2" not in _main_names and "a3" not in _main_names)
+ok("도메인 중복 제거: 다른 도메인은 모두 main",
+   all(n in _main_names for n in ["b1", "c1", "d1"]))
+ok("도메인 중복 제거: 탈락분은 rest", len(rest) == 2)
+
+# fallback: 도메인이 부족하면 MIN_MAIN까지 채워짐 (도메인 규칙 완화)
+_same_dom = [
+    _scored("t1", "https://openai.com/a", "OpenAI Blog"),
+    _scored("t2", "https://openai.com/b", "OpenAI News"),
+    _scored("t3", "https://openai.com/c", "OpenAI Research"),
+]
+main, rest = select_buckets(_same_dom)
+ok("fallback: 도메인 부족 시 MIN_MAIN까지 채워짐", len(main) == MIN_MAIN)
+
+# 서로 다른 도메인 → 모두 main (최대 MAX_MAIN)
+_diff_dom = [
+    _scored("t1", "https://openai.com/a", "OpenAI"),
+    _scored("t2", "https://anthropic.com/b", "Anthropic"),
+    _scored("t3", "https://google.com/c", "Google"),
+    _scored("t4", "https://nvidia.com/d", "NVIDIA"),
+]
+main, rest = select_buckets(_diff_dom)
+ok("도메인 분산: 4개 도메인 모두 main", len(main) == 4 and not rest)
+ok("도메인 분산: score 포함 3-튜플", all(len(m) == 3 for m in main))
+
+# fallback: 도메인이 2개뿐이어도 MIN_MAIN(3)까지 채워짐
+main, rest = select_buckets(_same_dom)
+ok("fallback: MIN_MAIN까지 채워짐", len(main) == MIN_MAIN)
+
+# fallback: 피드 라벨 필터는 유지 (같은 라벨은 fallback에서도 제외)
+_label_same = [
+    _scored("t1", "https://openai.com/a", "동일라벨"),
+    _scored("t2", "https://openai.com/b", "동일라벨"),
+    _scored("t3", "https://openai.com/c", "동일라벨"),
+]
+main, rest = select_buckets(_label_same)
+ok("fallback: 피드 라벨 필터 유지", len(main) == 1)
+
+# MAX_MAIN 상한 유지
+_many = [_scored(f"t{i}", f"https://dom{i}.com/a", f"소스{i}") for i in range(8)]
+main, rest = select_buckets(_many)
+ok("MAX_MAIN 상한", len(main) == MAX_MAIN and len(rest) == 8 - MAX_MAIN)
+
+# LLM 경로 배선: draft.py main()이 select_buckets를 호출하는지 소스 레벨 확인
+_draft_src = (Path(__file__).resolve().parents[1] / "draft.py").read_text(encoding="utf-8")
+ok("LLM 경로 배선: main()에서 select_buckets 호출",
+   "main_buckets, rest_buckets = select_buckets(ranked)" in _draft_src)
+ok("LLM 경로 배선: payload에 main_topics 포함", '"main_topics"' in _draft_src)
+ok("LLM 경로 배선: 프롬프트 하드 규칙 포함", "main_topics에 없는 토픽으로는 analysis를 만들지 않는다" in _draft_src)
 
 print(f"\n{PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)
