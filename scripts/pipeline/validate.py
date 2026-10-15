@@ -294,10 +294,14 @@ def check(issue: dict) -> list[str]:
         ids.append(b.get("id"))
         # P0: 헤드라인 반말체 금지 (명사형 종결). "~했다/내놨다/줄였다" 등
         hl = str(b.get("headline") or "")
-        if re.search(r"(했다|했다\.|내놨다|줄였다|늘렸다|낮췄다|높였다|도입했다|공개했다|발표했다|묶었다)\s*$", hl):
+        if re.search(r"(했다|내놨다|줄였다|늘렸다|낮췄다|높였다|도입했다|공개했다|발표했다|묶었다|밝혔다|강조했다|됐다)(\.|\s)*$", hl):
             err(f"briefing[{i}].headline", "반말체 종결 금지 — 명사형으로", bag)
     for i, a in enumerate(issue.get("analysis") or []):
         p = f"analysis[{i}]"
+        # analysis title도 동일 검사 (Codex 지적)
+        at = str(a.get("title") or "")
+        if re.search(r"(했다|내놨다|줄였다|늘렸다|낮췄다|높였다|도입했다|공개했다|발표했다|묶었다|밝혔다|강조했다|됐다)(\.|\s)*$", at):
+            err(f"{p}.title", "반말체 종결 금지 — 명사형으로", bag)
         if not isinstance(a, dict):
             err(p, "must be object", bag)
             continue
