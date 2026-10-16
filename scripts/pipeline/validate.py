@@ -838,16 +838,37 @@ DEPTH_SLOTS = ["what", "context", "numbers", "limits", "why"]
 LIMIT_MARKERS = ["한계", "하지만", "단,", "주의", "반론", "다만", "아직", "불확실", "검증되지"]
 WHY_MARKERS = ["중요", "의미", "영향", "바뀐", "달라진"]
 
-# P1 (Codex): draft.py의 NUM_RE와 동일한 패턴 (AI 뉴스 영어 단위 포함).
-# draft.py가 바뀌면 여기도 함께 바꿔야 한다.
-NUM_RE_VALIDATE = re.compile(
-    r"\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)"
-    r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|billion|million)?(?![0-9A-Za-z])"
-    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K)(?![0-9A-Za-z])"
-    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|thousand|times)(?![0-9A-Za-z])"
-    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?x(?![0-9A-Za-z])",
-    re.IGNORECASE,
-)
+# P8: 정규식 단일 소스화 — draft.py의 NUM_RE를 직접 import.
+# 수동 복사본 동기화 깨짐 방지.
+try:
+    from draft import NUM_RE as NUM_RE_VALIDATE
+except ImportError:
+    # standalone 실행 시 fallback (draft.py와 동일한 패턴)
+    NUM_RE_VALIDATE = re.compile(
+        r"\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)"
+        r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|billion|million)?(?![0-9A-Za-z])"
+        r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K)(?![0-9A-Za-z])"
+        r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|thousand|times)(?![0-9A-Za-z])"
+        r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?x(?![0-9A-Za-z])",
+        re.IGNORECASE,
+    )
+
+
+def _canon_num(s: str) -> str:
+    """수치 표면을 정규화하여 비교 가능하게 만듦.
+
+    P8: 단위 통일.
+    - 영문 단위를 약어로 (`billion` → `b`, `million` → `m`, `thousand` → `k`)
+    - 소문자화, 공백 제거
+    예: "120 billion" → "120b", "2 Million" → "2m"
+    참고: 하이픈 전처리는 호출자(_numbers_grounded)에서 정규식 매칭 전에 수행
+    """
+    t = str(s or "").lower()
+    t = re.sub(r"\bbillions?\b", "b", t)
+    t = re.sub(r"\bmillions?\b", "m", t)
+    t = re.sub(r"\bthousands?\b", "k", t)
+    t = re.sub(r"\s+", "", t)
+    return t
 
 
 def _input_number_count(a: dict, collected_by_url: dict | None) -> int | None:
@@ -876,10 +897,16 @@ def _input_number_count(a: dict, collected_by_url: dict | None) -> int | None:
 
 def _numbers_grounded(a: dict, collected_by_url: dict | None) -> tuple[bool, list[str]]:
     """P7 (Claude Critical): 출력 수치가 입력 summary에 실제로 있는지 대조.
+    P8: grounding 범위 확장 + 단위 정규화.
 
     depth 슬롯의 numbers 조건은 "정규식 매칭 수치 2개 이상 존재"만 검사하므로,
     LLM이 입력에 없는 수치를 지어내도 정규식만 통과하면 발행되는 구멍이 있다.
     이 함수는 출력의 각 수치가 수집된 summary 안에 실제로 등장하는지 확인한다.
+
+    P8 변경사항:
+    - 입력 스캔에 title 추가 (payload에 title이 들어가므로)
+    - 출력 스캔에 extra 추가 (프롬프트의 grounding 범위와 일치)
+    - _canon_num()으로 단위 정규화 (billion→B, 하이픈 처리)
 
     반환: (grounded 여부, 입력에 없는 수치 목록).
     조인 불가(collected_by_url=None·URL 불일치)면 (True, []) → fail-open이 아니라
@@ -887,7 +914,8 @@ def _numbers_grounded(a: dict, collected_by_url: dict | None) -> tuple[bool, lis
     """
     if not collected_by_url:
         return True, []
-    # 입력 summary들의 수치 집합 (정규화: 공백 제거, 소문자)
+    # 입력 title+summary들의 수치 집합 (P8: _canon_num 정규화)
+    # P8: 하이픈을 공백으로 전처리한 뒤 매칭 (예: "120-billion" → "120 billion")
     input_nums: set[str] = set()
     matched = False
     for s in a.get("sources") or []:
@@ -897,21 +925,29 @@ def _numbers_grounded(a: dict, collected_by_url: dict | None) -> tuple[bool, lis
         if it is None:
             continue
         matched = True
-        for m in NUM_RE_VALIDATE.finditer(it.get("summary") or ""):
-            input_nums.add(re.sub(r"\s+", "", m.group(0)).lower())
+        # P8: title도 스캔 (payload에 title이 들어가므로)
+        title_text = re.sub(r"[-_]", " ", it.get("title") or "")
+        for m in NUM_RE_VALIDATE.finditer(title_text):
+            input_nums.add(_canon_num(m.group(0)))
+        summary_text = re.sub(r"[-_]", " ", it.get("summary") or "")
+        for m in NUM_RE_VALIDATE.finditer(summary_text):
+            input_nums.add(_canon_num(m.group(0)))
     if not matched:
         return True, []
-    # 출력 수치 추출
+    # 출력 수치 추출 (P8: extra 추가)
     bullets = a.get("bullets") or []
     body = a.get("body") or []
     takeaway = str(a.get("takeaway") or "")
+    extra = str(a.get("extra") or "")
     btext = " ".join(str(x) for x in (bullets if isinstance(bullets, list) else [bullets]))
     body_text = " ".join(str(x) for x in (body if isinstance(body, list) else [body]))
-    full = btext + " " + body_text + " " + takeaway
+    full = btext + " " + body_text + " " + takeaway + " " + extra
+    # P8: 출력도 하이픈 전처리
+    full = re.sub(r"[-_]", " ", full)
     ungrounded: list[str] = []
     for m in NUM_RE_VALIDATE.finditer(full):
         raw = m.group(0)
-        norm = re.sub(r"\s+", "", raw).lower()
+        norm = _canon_num(raw)
         if norm not in input_nums and raw not in ungrounded:
             ungrounded.append(raw)
     return (len(ungrounded) == 0), ungrounded
