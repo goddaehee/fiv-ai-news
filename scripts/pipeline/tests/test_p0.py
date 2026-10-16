@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from validate import check_p0, _normalize_sim, _overlap, _jaccard, check_depth, _input_number_count, url_core
 from validate import check_source_quota, extract_domain, check_takeaway_template, _takeaway_skeleton
 from validate import _numbers_grounded
+from validate import _canon_num
 from draft import thicken_take, thicken_body, number_mentions
 from select_items import bucket_domain, select_buckets, score_bucket, MIN_MAIN, MAX_MAIN
 from select_items import _parse_date
@@ -569,6 +570,63 @@ ok("P7: check_depth NUMBERS-UNGROUNDED error", any("NUMBERS-UNGROUNDED" in e for
 # grounded면 error 없음
 _p7issue_ok = base_issue(analysis=[_p7_analysis("120B", "2배")])
 ok("P7: check_depth grounded 통과", not any("NUMBERS-UNGROUNDED" in e for e in check_depth(_p7issue_ok, _p7_collected())[0]))
+
+# ============================================================
+# P8: 수치 환각 게이트 오탐 수정
+# ============================================================
+
+# P8-1: _canon_num 단위 정규화
+ok("P8: _canon_num billion→b", _canon_num("120 billion") == "120b")
+ok("P8: _canon_num Million→m", _canon_num("2 Million") == "2m")
+ok("P8: _canon_num thousand→k", _canon_num("5 thousand") == "5k")
+ok("P8: _canon_num % 유지", _canon_num("30%") == "30%")
+ok("P8: _canon_num 한글 단위 유지", _canon_num("2배") == "2배")
+
+# P8-2: 정규식 단일 소스화 (draft.NUM_RE와 동일)
+from draft import NUM_RE as _DRAFT_NUM_RE
+from validate import NUM_RE_VALIDATE as _VAL_NUM_RE
+ok("P8: 정규식 단일 소스", _DRAFT_NUM_RE.pattern == _VAL_NUM_RE.pattern)
+
+# P8-3: title 스캔 (400개가 title에만 있을 때)
+def _p8_collected_title():
+    from validate import url_core as _uc
+    return {_uc("https://example.com/a"): {
+        "url": "https://example.com/a",
+        "title": "400개의 보고서가 발행됐다",
+        "summary": "새 보고서가 나왔습니다.",
+    }}
+
+_p8a = _p7_analysis("400개")
+_p8a["sources"] = [{"url": "https://example.com/a", "kind": "doc"}]
+_g8, _bad8 = _numbers_grounded(_p8a, _p8_collected_title())
+ok("P8: title 스캔 (400개 grounded)", _g8 and not _bad8)
+
+# P8-4: 하이픈 단위 변환 (120-billion-parameter → 120B)
+def _p8_collected_hyphen():
+    from validate import url_core as _uc
+    return {_uc("https://example.com/b"): {
+        "url": "https://example.com/b",
+        "title": "새 모델 공개",
+        "summary": "120-billion-parameter 모델이 공개됐다.",
+    }}
+
+_p8b = _p7_analysis("120B")
+_p8b["sources"] = [{"url": "https://example.com/b", "kind": "doc"}]
+_g8b, _bad8b = _numbers_grounded(_p8b, _p8_collected_hyphen())
+ok("P8: 하이픈 단위 변환 (120B grounded)", _g8b and not _bad8b)
+
+# P8-5: extra 필드 스캔
+_p8c = _p7_analysis("불릿내용")
+_p8c["extra"] = "그 밖에: 500개의 추가 자료가 있습니다."
+_p8c["sources"] = [{"url": "https://openai.com/a", "kind": "doc"}]
+# summary에 500이 없으므로 ungrounded
+_g8c, _bad8c = _numbers_grounded(_p8c, _p7_collected())
+ok("P8: extra 필드 스캔 (500 ungrounded)", not _g8c and len(_bad8c) > 0)
+
+# P8-6: 진짜 환각은 여전히 차단 (200억)
+_p8d = _p7_analysis("200억")
+_g8d, _bad8d = _numbers_grounded(_p8d, _p7_collected())
+ok("P8: 진짜 환각 차단 (200억)", not _g8d and len(_bad8d) > 0)
 
 print(f"\n{PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)
