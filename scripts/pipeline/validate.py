@@ -404,7 +404,9 @@ def check(issue: dict, collected_by_url: dict | None = None) -> list[str]:
         err("analysis.takeaway", "시사점 복붙 금지", bag)
     # 소스 쿼터: 단일 도메인이 analysis의 과반을 차지하면 발행 차단 (errors만)
     # P5: collected_by_url 전달 — origin_url 조인으로 불투명 Google News URL 해소
-    quota_err, _ = check_source_quota(issue, collected_by_url)
+    # P6: 소스-주제 정합성에서 무관 판정된 소스는 분모에서 제외 (QUOTA 게이밍 방지)
+    rel_exclude = _irrelevant_source_domains(issue, collected_by_url)
+    quota_err, _ = check_source_quota(issue, collected_by_url, exclude=rel_exclude)
     bag.extend(quota_err)
     return bag
 
@@ -455,7 +457,8 @@ def _source_domain(s, collected_by_url: dict | None) -> str:
     return extract_domain(s.get("url"))
 
 
-def check_source_quota(issue: dict, collected_by_url: dict | None = None) -> tuple[list[str], list[str]]:
+def check_source_quota(issue: dict, collected_by_url: dict | None = None,
+                        exclude: set | None = None) -> tuple[list[str], list[str]]:
     errors, warnings = [], []
     analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
     if len(analyses) < 2:
@@ -465,7 +468,8 @@ def check_source_quota(issue: dict, collected_by_url: dict | None = None) -> tup
         doms = set()
         for s in a.get("sources") or []:
             d = _source_domain(s, collected_by_url)
-            if d:
+            # P6: 소스-주제 정합성에서 무관 판정된 소스는 분모에서 제외 (QUOTA 게이밍 방지)
+            if d and (exclude is None or (i, d) not in exclude):
                 doms.add(d)
         if not doms:
             warnings.append(f"analysis[{i}].sources: 추출 가능한 도메인 없음")
@@ -479,6 +483,211 @@ def check_source_quota(issue: dict, collected_by_url: dict | None = None) -> tup
         elif share > QUOTA_WARN_RATIO and c >= 2:
             warnings.append(f"QUOTA-002 {d}: analysis {n}개 중 {c}개({share:.0%}) — 출처 다변화 권장")
     return errors, warnings
+
+
+# ---------------------------------------------------------------------------
+# P6: 소스-주제 정합성 게이트 (SRC-REL)
+# 팩트 뉴스레터에서 주제와 무관한 출처가 붙는 것을 방지한다.
+# 설계 원칙 (4자 패널 합의):
+# - 오탐으로 정상 기사가 탈락하면 안 된다 → SRC-REL-001/101은 보류(holds),
+#   자동 탈락이 아니라 수동 검토 대상. warnings로만 노출된다.
+# - Grok의 우려 흡수: 게이트는 증상 완화용. 근본 치료(attach_sources
+#   아키텍처 수정)는 별도 티켓.
+# ---------------------------------------------------------------------------
+
+_COMPANY_DOMAINS: dict[str, set[str]] = {
+    "openai": {"openai.com"},
+    "google": {"google.com", "blog.google", "deepmind.google"},
+    "anthropic": {"anthropic.com"},
+    "meta": {"meta.com", "facebook.com", "about.fb.com", "instagram.com"},
+    "microsoft": {"microsoft.com", "azure.com"},
+    "xai": {"x.ai"},
+    "nvidia": {"nvidia.com", "blogs.nvidia.com"},
+    "apple": {"apple.com"},
+    "amazon": {"amazon.com", "aws.amazon.com"},
+    "tesla": {"tesla.com"},
+    "samsung": {"samsung.com"},
+    "perplexity": {"perplexity.ai"},
+    "cohere": {"cohere.com"},
+    "mistral": {"mistral.ai"},
+    "deepseek": {"deepseek.com"},
+    "stability": {"stability.ai"},
+    "midjourney": {"midjourney.com"},
+    "huggingface": {"huggingface.co"},
+}
+
+_COMPANY_ALIASES: dict[str, list[str]] = {
+    "openai": ["openai", "오픈ai", "chatgpt", "챗gpt"],
+    "google": ["google", "구글", "gemini", "제미나이", "deepmind", "딥마인드"],
+    "anthropic": ["anthropic", "앤스로픽", "claude", "클로드"],
+    "meta": ["meta", "메타", "facebook", "페이스북", "llama", "라마"],
+    "microsoft": ["microsoft", "마이크로소프트", "msft"],
+    "xai": ["xai", "x.ai", "그록"],
+    "nvidia": ["nvidia", "엔비디아"],
+    "apple": ["apple", "애플"],
+    "amazon": ["amazon", "아마존", "aws"],
+    "tesla": ["tesla", "테슬라"],
+    "samsung": ["samsung", "삼성"],
+    "perplexity": ["perplexity", "퍼플렉시티"],
+    "cohere": ["cohere", "코히어"],
+    "mistral": ["mistral", "미스트랄"],
+    "deepseek": ["deepseek", "딥시크"],
+    "stability": ["stability ai", "스태빌리티"],
+    "midjourney": ["midjourney", "미드저니"],
+    "huggingface": ["huggingface", "허깅페이스"],
+}
+
+# 주제 무관하게 통과하는 중립 매체 (Gemini Tier 1 화이트리스트)
+_NEUTRAL_MEDIA = {
+    "techcrunch.com", "theverge.com", "arstechnica.com", "wired.com",
+    "reuters.com", "bloomberg.com", "the-decoder.com", "venturebeat.com",
+    "finance.yahoo.com", "forbes.com", "theguardian.com", "nytimes.com",
+    "wsj.com", "ft.com", "bbc.com", "cnn.com", "theinformation.com",
+    "axios.com", "politico.com", "simonwillison.net",
+    "news.ycombinator.com", "reddit.com",
+}
+
+# 라벨이 명확한 사이트명인데 URL 도메인이 다르면 표기 오류 의심
+_LABEL_DOMAINS = {
+    "hacker news": "news.ycombinator.com",
+    "github": "github.com",
+    "reddit": "reddit.com",
+    "arxiv": "arxiv.org",
+    "youtube": "youtube.com",
+    "wikipedia": "wikipedia.org",
+}
+
+# X3 면제: 종합/동향형 제목 키워드
+_ROUNDUP_KEYWORDS = [
+    "동향", "종합", "라운드업", "브리핑", "주간", "월간", "정리",
+    "모음", "하이라이트", "결산", "다이제스트",
+]
+
+
+def _topic_companies(title: str) -> set[str] | None:
+    """제목에서 식별된 회사 키 집합. 면제(X1/X2/X3)에 해당하면 None."""
+    t = (title or "").lower()
+    # X3: 종합/동향형 제목은 판정 스킵
+    if any(k in t for k in _ROUNDUP_KEYWORDS):
+        return None
+    found: set[str] = set()
+    for comp, aliases in _COMPANY_ALIASES.items():
+        for al in aliases:
+            if al in t:
+                found.add(comp)
+                break
+    # X1: 회사명 0개, X2: 2개 이상(비교·파트너십 기사) → 스킵
+    if len(found) != 1:
+        return None
+    return found
+
+
+def _domain_owner(dom: str) -> str | None:
+    """도메인의 소유 회사 키. 추적 대상이 아니면 None."""
+    for comp, doms in _COMPANY_DOMAINS.items():
+        for cd in doms:
+            if dom == cd or dom.endswith("." + cd):
+                return comp
+    return None
+
+
+def _relevance_classify(a: dict, collected_by_url: dict | None) -> dict:
+    """analysis 한 개의 소스-주제 정합성 분류.
+    반환: {"topic", "skipped", "sources": [(domain, cls, handle)], "flag"}.
+    cls: topic | other | neutral | unknown."""
+    entry: dict = {"topic": None, "skipped": True, "sources": [], "flag": None}
+    topics = _topic_companies(str(a.get("title") or ""))
+    if not topics:
+        return entry
+    topic = next(iter(topics))
+    entry["topic"] = topic
+    entry["skipped"] = False
+    srcs: list[tuple[str, str, str]] = []
+    for s in a.get("sources") or []:
+        if not isinstance(s, dict):
+            continue
+        dom = _source_domain(s, collected_by_url)
+        if not dom:
+            continue
+        owner = _domain_owner(dom)
+        if owner == topic:
+            cls = "topic"
+        elif owner:
+            cls = "other"
+        elif dom in _NEUTRAL_MEDIA:
+            cls = "neutral"
+        else:
+            cls = "unknown"
+        srcs.append((dom, cls, str(s.get("handle") or "")))
+    entry["sources"] = srcs
+    if srcs:
+        classes = {c for _, c, _ in srcs}
+        # SRC-REL-001: 주제 회사 식별 + 전부 타 회사 도메인 + 중립 매체 없음
+        if classes == {"other"}:
+            entry["flag"] = "SRC-REL-001"
+        # SRC-REL-002: 무관 회사 도메인이 중립 매체와 혼재 (주제 출처 없음)
+        elif "other" in classes and "topic" not in classes and "neutral" in classes:
+            entry["flag"] = "SRC-REL-002"
+    return entry
+
+
+def check_source_relevance(
+    issue: dict, collected_by_url: dict | None = None
+) -> tuple[list[str], list[str]]:
+    """소스-주제 정합성 게이트. (holds, warnings)를 반환.
+    holds(SRC-REL-001/101)는 자동 탈락이 아니라 수동 검토 대상 —
+    호출자가 warnings로 노출한다."""
+    holds: list[str] = []
+    warnings: list[str] = []
+    analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
+    for i, a in enumerate(analyses):
+        # SRC-REL-101: 라벨이 명확한 사이트명인데 URL 도메인이 다름 (주제 식별 불필요)
+        for s in a.get("sources") or []:
+            if not isinstance(s, dict):
+                continue
+            h = str(s.get("handle") or "").strip().lower()
+            if h in _LABEL_DOMAINS:
+                dom = _source_domain(s, collected_by_url)
+                exp = _LABEL_DOMAINS[h]
+                if dom and dom != exp:
+                    holds.append(
+                        f"SRC-REL-101 analysis[{i}].sources: 라벨 '{s.get('handle')}'인데 "
+                        f"URL 도메인은 {dom} (예상 {exp}) — 출처 표기 오류 의심, 수동 확인 필요"
+                    )
+                    break
+        # 주제-출처 정합성 (면제 X1/X2/X3 적용)
+        entry = _relevance_classify(a, collected_by_url)
+        if entry["flag"] == "SRC-REL-001":
+            doms = sorted({d for d, _, _ in entry["sources"]})
+            holds.append(
+                f"SRC-REL-001 analysis[{i}]: 주제 '{entry['topic']}'인데 출처가 전부 "
+                f"타 회사 도메인({', '.join(doms)}) — 주제 무관 출처 의심, 수동 확인 필요"
+            )
+        elif entry["flag"] == "SRC-REL-002":
+            others = sorted({d for d, c, _ in entry["sources"] if c == "other"})
+            warnings.append(
+                f"SRC-REL-002 analysis[{i}]: 주제 '{entry['topic']}'와 무관한 회사 도메인 "
+                f"({', '.join(others)})이 중립 매체와 혼재 — 출처 적합성 확인 권장"
+            )
+    return holds, warnings
+
+
+def _irrelevant_source_domains(
+    issue: dict, collected_by_url: dict | None = None
+) -> set[tuple[int, str]]:
+    """소스-주제 정합성에서 무관 판정된 (analysis idx, domain) 집합.
+    QUOTA 분모에서 제외해 무관 소스 갖다붙이기로 쿼터를 채우는 게이밍을 방지.
+    조인 불가·면제·라벨 불일치(별도 문제)는 제외하지 않는다 (fail-closed)."""
+    out: set[tuple[int, str]] = set()
+    analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
+    for i, a in enumerate(analyses):
+        entry = _relevance_classify(a, collected_by_url)
+        if entry["skipped"]:
+            continue
+        for dom, cls, _h in entry["sources"]:
+            if cls == "other":
+                out.add((i, dom))
+    return out
 
 
 def check_quality(
@@ -607,6 +816,13 @@ def check_quality(
     d_err, d_warn = check_depth(issue, collected_by_url)
     errors.extend(d_err)
     warnings.extend(d_warn)
+
+    # 12. P6: 소스-주제 정합성 (SRC-REL)
+    # 보류(SRC-REL-001/101)는 자동 탈락이 아니라 수동 검토 대상 → warnings로 노출.
+    # QUOTA 분모 제외는 check()에서 처리 (게이밍 동기 제거).
+    rel_hold, rel_warn = check_source_relevance(issue, collected_by_url)
+    warnings.extend(rel_hold)
+    warnings.extend(rel_warn)
 
     return errors, warnings
 

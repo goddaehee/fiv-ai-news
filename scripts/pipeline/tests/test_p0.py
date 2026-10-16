@@ -455,5 +455,69 @@ ok("P5: 'Anthropic GNews'도 수집 필터 통과", len(_gnews2) == 1)
 ok("P5: Google News AI limit 100", FEED_LIMITS.get("Google News AI") == 100)
 ok("P5: FRESHNESS_HOURS 48", FRESHNESS_HOURS == 48)
 
+# --- P6: 소스-주제 정합성 (SRC-REL) ---
+from validate import check_source_relevance, _irrelevant_source_domains, _topic_companies
+
+
+def _rel(title, *srcs):
+    base = base_issue()["analysis"][0]
+    return {**base, "id": "r1", "title": title,
+            "sources": [{"handle": h, "url": u, "kind": "doc"} for h, u in srcs]}
+
+
+# 1. google-pilot 재현: 구글 주제 + openai.com 소스 전부 → SRC-REL-001 보류
+_p6a = base_issue(analysis=[_rel("구글, 뉴스 AI 파트너십 파일럿 400개 매체로 확대",
+    ("Google News AI", "https://openai.com/a"), ("OpenAI News", "https://openai.com/b"))])
+_p6h, _p6w = check_source_relevance(_p6a)
+ok("P6: SRC-REL-001 보류 발생", any("SRC-REL-001" in h for h in _p6h))
+ok("P6: SRC-REL-001은 holds (자동 탈락 아님)", len(_p6h) == 1 and not _p6w)
+
+# 2. 라벨 불일치: Hacker News 라벨 + github URL → SRC-REL-101 보류
+_p6b = base_issue(analysis=[_rel("AI 에이전트 프레임워크 비교",
+    ("Hacker News", "https://github.com/user/repo"))])
+_p6h2, _ = check_source_relevance(_p6b)
+ok("P6: SRC-REL-101 보류 발생", any("SRC-REL-101" in h for h in _p6h2))
+
+# 3. 정상 매칭: 구글 주제 + google.com/blog.google → 무플래그
+_p6c = base_issue(analysis=[_rel("구글, 제미나이 3 공개",
+    ("Google Blog", "https://blog.google/a"), ("Google", "https://google.com/b"))])
+ok("P6: 정상 매칭 통과", check_source_relevance(_p6c) == ([], []))
+
+# 4. 중립 매체: 구글 주제 + techcrunch → 무플래그
+_p6d = base_issue(analysis=[_rel("구글, 제미나이 3 공개",
+    ("TechCrunch", "https://techcrunch.com/a"))])
+ok("P6: 중립 매체 통과", check_source_relevance(_p6d) == ([], []))
+
+# 5. 비교 기사 면제: 회사 2개 → 스킵
+ok("P6: X2 면제 (2개 회사)", _topic_companies("OpenAI와 구글이 손잡았다") is None)
+_p6e = base_issue(analysis=[_rel("OpenAI와 구글이 손잡았다",
+    ("OpenAI", "https://openai.com/a"))])
+ok("P6: 비교 기사 무플래그", check_source_relevance(_p6e) == ([], []))
+
+# 6. X1/X3 면제: 회사명 없음·동향형 → 스킵
+ok("P6: X1 면제 (회사명 없음)", _topic_companies("AI 에이전트 시장 동향") is None)
+ok("P6: X3 면제 (동향형)", _topic_companies("구글발 AI 동향 정리") is None)
+
+# 7. 혼재: 구글 주제 + openai.com + techcrunch → SRC-REL-002 warning
+_p6f = base_issue(analysis=[_rel("구글, 제미나이 3 공개",
+    ("OpenAI", "https://openai.com/a"), ("TechCrunch", "https://techcrunch.com/b"))])
+_p6h7, _p6w7 = check_source_relevance(_p6f)
+ok("P6: SRC-REL-002 warning 발생", not _p6h7 and any("SRC-REL-002" in w for w in _p6w7))
+
+# 8. QUOTA 분모 제외: 무관 소스 제외 후 QUOTA-001 미발동
+_p6g = {"analysis": [
+    _rel("구글, 뉴스 AI 파트너십 확대", ("X", "https://openai.com/a")),
+    _rel("구글 클라우드 요금제 변경", ("X", "https://openai.com/b")),
+    _rel("구글 딥마인드 논문", ("X", "https://openai.com/c")),
+]}
+_ex8 = _irrelevant_source_domains(_p6g)
+ok("P6: 무관 도메인 3건 식별", len(_ex8) == 3)
+ok("P6: QUOTA — 제외 후 미발동", not _csq(_p6g, exclude=_ex8)[0])
+ok("P6: QUOTA — 제외 없으면 기존대로 발동", any("QUOTA-001" in e for e in _csq(_p6g)[0]))
+
+# 9. 라벨 불일치 소스는 QUOTA 제외 대상 아님 (별도 문제)
+_ex9 = _irrelevant_source_domains(_p6b)
+ok("P6: 라벨 불일치는 QUOTA 제외 안 함", len(_ex9) == 0)
+
 print(f"\n{PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)
