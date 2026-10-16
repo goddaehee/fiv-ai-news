@@ -8,8 +8,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from validate import check_p0, _normalize_sim, _overlap, _jaccard, check_depth, _input_number_count, url_core
 from validate import check_source_quota, extract_domain, check_takeaway_template, _takeaway_skeleton
+from validate import _numbers_grounded
 from draft import thicken_take, thicken_body, number_mentions
 from select_items import bucket_domain, select_buckets, score_bucket, MIN_MAIN, MAX_MAIN
+from select_items import _parse_date
 
 PASS = 0
 FAIL = 0
@@ -518,6 +520,55 @@ ok("P6: QUOTA — 제외 없으면 기존대로 발동", any("QUOTA-001" in e fo
 # 9. 라벨 불일치 소스는 QUOTA 제외 대상 아님 (별도 문제)
 _ex9 = _irrelevant_source_domains(_p6b)
 ok("P6: 라벨 불일치는 QUOTA 제외 안 함", len(_ex9) == 0)
+
+# --- P7-1: _parse_date KST 형식 파싱 (4자 패널 전원 지목 버그) ---
+from datetime import timezone as _tz
+_dt = _parse_date("2026-10-16T10:30+09:00")  # collect.py isoformat(timespec="minutes") 형식
+ok("P7: KST 형식 파싱 성공", _dt is not None)
+ok("P7: KST 오프셋 보존", _dt is not None and _dt.utcoffset() is not None and _dt.utcoffset().total_seconds() == 9 * 3600)
+ok("P7: 초 포함 형식", _parse_date("2026-10-16T10:30:00+09:00") is not None)
+ok("P7: UTC 형식", _parse_date("2026-10-16T01:30:00+00:00") is not None)
+ok("P7: 날짜만", _parse_date("2026-10-16") is not None)
+ok("P7: None/빈값", _parse_date(None) is None and _parse_date("") is None)
+ok("P7: 쓰레기값", _parse_date("garbage") is None)
+# novelty 점수에 실제로 반영되는지 (score_bucket 통합)
+from datetime import datetime as _dt_cls
+_now = _dt_cls(2026, 10, 16, 12, 0, tzinfo=_tz.utc)
+_sc = score_bucket([{"source": "s1", "published": "2026-10-16T10:30+09:00", "summary": "x" * 50, "url": "https://a.com/1", "title": "t"}], now=_now)
+ok("P7: 24시간 이내 novelty=2", _sc.get("novelty") == 2)
+
+# --- P7-2: 수치 근거 대조 게이트 (Claude Critical) ---
+def _p7_collected():
+    from validate import url_core as _uc
+    return {_uc("https://openai.com/a"): {"url": "https://openai.com/a", "summary": "120B 파라미터 모델을 공개했다. 이전 대비 2배 빠르다."}}
+
+def _p7_analysis(*nums_in_text):
+    txt = " ".join(nums_in_text)
+    return {
+        "id": "a1", "title": "t",
+        "bullets": ["불릿1", "불릿2"],
+        "body": [f"첫 번째 문단입니다. {txt} 내용이 충분합니다.", "두 번째 문단도 충분합니다."],
+        "takeaway": "판단 한 문장입니다. 다음 행동 한 문장이면 됩니다.",
+        "tags": ["AI"],
+        "sources": [{"url": "https://openai.com/a", "kind": "doc"}],
+    }
+
+# grounded: 출력 수치가 입력 summary에 있음 → 통과
+_g, _bad = _numbers_grounded(_p7_analysis("120B", "2배"), _p7_collected())
+ok("P7: grounded 수치 통과", _g and not _bad)
+# ungrounded: 입력에 없는 수치를 지어냄 → 차단
+_g2, _bad2 = _numbers_grounded(_p7_analysis("120B", "99%"), _p7_collected())
+ok("P7: ungrounded 수치 차단", not _g2 and "99%" in _bad2)
+# 조인 불가 시 검사 생략 (fail-closed 유지 — 기존 numbers 개수 검사가 담당)
+_g3, _ = _numbers_grounded(_p7_analysis("120B", "99%"), None)
+ok("P7: collected 없음 시 생략", _g3)
+# check_depth 통합: ungrounded 수치가 있으면 NUMBERS-UNGROUNDED error
+_p7issue = base_issue(analysis=[_p7_analysis("120B", "99%")])
+_p7err, _ = check_depth(_p7issue, _p7_collected())
+ok("P7: check_depth NUMBERS-UNGROUNDED error", any("NUMBERS-UNGROUNDED" in e for e in _p7err))
+# grounded면 error 없음
+_p7issue_ok = base_issue(analysis=[_p7_analysis("120B", "2배")])
+ok("P7: check_depth grounded 통과", not any("NUMBERS-UNGROUNDED" in e for e in check_depth(_p7issue_ok, _p7_collected())[0]))
 
 print(f"\n{PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)

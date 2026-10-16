@@ -874,6 +874,49 @@ def _input_number_count(a: dict, collected_by_url: dict | None) -> int | None:
     return len(cand)
 
 
+def _numbers_grounded(a: dict, collected_by_url: dict | None) -> tuple[bool, list[str]]:
+    """P7 (Claude Critical): 출력 수치가 입력 summary에 실제로 있는지 대조.
+
+    depth 슬롯의 numbers 조건은 "정규식 매칭 수치 2개 이상 존재"만 검사하므로,
+    LLM이 입력에 없는 수치를 지어내도 정규식만 통과하면 발행되는 구멍이 있다.
+    이 함수는 출력의 각 수치가 수집된 summary 안에 실제로 등장하는지 확인한다.
+
+    반환: (grounded 여부, 입력에 없는 수치 목록).
+    조인 불가(collected_by_url=None·URL 불일치)면 (True, []) → fail-open이 아니라
+    검사 생략 (기존 numbers 개수 검사는 그대로 동작하므로 fail-closed 유지).
+    """
+    if not collected_by_url:
+        return True, []
+    # 입력 summary들의 수치 집합 (정규화: 공백 제거, 소문자)
+    input_nums: set[str] = set()
+    matched = False
+    for s in a.get("sources") or []:
+        if not isinstance(s, dict):
+            continue
+        it = collected_by_url.get(url_core(str(s.get("url") or "")))
+        if it is None:
+            continue
+        matched = True
+        for m in NUM_RE_VALIDATE.finditer(it.get("summary") or ""):
+            input_nums.add(re.sub(r"\s+", "", m.group(0)).lower())
+    if not matched:
+        return True, []
+    # 출력 수치 추출
+    bullets = a.get("bullets") or []
+    body = a.get("body") or []
+    takeaway = str(a.get("takeaway") or "")
+    btext = " ".join(str(x) for x in (bullets if isinstance(bullets, list) else [bullets]))
+    body_text = " ".join(str(x) for x in (body if isinstance(body, list) else [body]))
+    full = btext + " " + body_text + " " + takeaway
+    ungrounded: list[str] = []
+    for m in NUM_RE_VALIDATE.finditer(full):
+        raw = m.group(0)
+        norm = re.sub(r"\s+", "", raw).lower()
+        if norm not in input_nums and raw not in ungrounded:
+            ungrounded.append(raw)
+    return (len(ungrounded) == 0), ungrounded
+
+
 def _slot_status(a: dict) -> dict[str, bool]:
     """단일 analysis의 슬롯 충족 여부."""
     bullets = a.get("bullets") or []
@@ -955,6 +998,20 @@ def check_depth(issue: dict, collected_by_url: dict | None = None) -> tuple[list
         nums = [m.group(0) for m in NUM_RE_VALIDATE.finditer(body_text)]
         if nums and not sources:
             warnings.append(f"analysis[{i}].evidence: 수치 {len(nums)}개 있으나 sources 없음")
+
+    # P7 (Claude Critical): 수치 근거 대조 — 출력 수치가 입력 summary에 실제로 있는지 검사.
+    # numbers 슬롯이 채워진 경우에만 검사 (비어 있으면 위 P2 excused 로직이 담당).
+    # 입력에 없는 수치를 지어내면 NUMBERS-UNGROUNDED error로 발행 차단.
+    for i, a in enumerate(analyses):
+        status = _slot_status(a)
+        if not status["numbers"]:
+            continue
+        grounded, bad = _numbers_grounded(a, collected_by_url)
+        if not grounded:
+            errors.append(
+                f"analysis[{i}].numbers: 입력에 없는 수치 {len(bad)}개 검출 "
+                f"({', '.join(bad[:5])}) — NUMBERS-UNGROUNDED"
+            )
 
     # 문체 패스: distinct-3 ≥ 0.869
     # 근거: 0주차 원본 실측 (fiv.co.kr 최근 3호 평균 0.919) − 5%p 허용 오차.
