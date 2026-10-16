@@ -1,285 +1,244 @@
 {
   "date": "2026-10-16",
-  "title": "5분 AI 뉴스",
-  "heroline": "구글 뉴스 AI 파트너 400개, 엔비디아 120B 오픈 모델, 앤스로픽 IPO 조정 국면",
-  "dek": "언론사 협력 확대와 로컬 AI용 오픈 모델이 같은 날 발표됐고, 투자자들은 앤스로픽 밸류에이션 기대치를 낮추는 흐름입니다.",
+  "title": "5분 AI 뉴스 — 10월 16일 금요일 호",
+  "heroline": "안전성 외부 평가 확대와 주가·모델 경쟁이 동시에 움직이는 날",
+  "dek": "앤스로픽이 비영리 평가기관 두 곳과 손잡고 리스크 점검 체계를 넓히는가 하면, 엔비디아는 120B 파라미터 오픈 모델과 로컬 AI PC 출시로 공급 경쟁에 나섰습니다.",
   "tag": "ai-daily",
   "briefMin": 3,
   "readMin": 6,
   "briefing": [
     {
-      "id": "google-news-pilot-400",
-      "headline": "언론사 400곳과 맺은 뉴스 AI 파트너십",
-      "summary": "구글이 뉴스 AI 파일럿 프로그램 참여 출판사를 400곳까지 확대했다고 밝혔습니다."
+      "id": "anthropic-metr",
+      "headline": "외부 비영리 두 곳이 모델 위험과 안전 관행을 검증하는 구조",
+      "summary": "앤스로픽이 비영리 평가기관 METR과 SecureBio를 독립 평가자로 활용해 위험도와 안전 관행을 점검한다고 밝혔습니다."
     },
     {
-      "id": "anthropic-ipo-valuation",
-      "headline": "매출 성장 둔화를 이유로 한 IPO 기대치 조정",
-      "summary": "로이터 보도에 따르면 투자자들이 매출 성장 둔화를 근거로 앤스로픽 IPO 밸류에이션 기대치를 낮추고 있습니다."
+      "id": "anthropic-ipo",
+      "headline": "투자자들이 기대 밸류를 낮춰 보는 흐름",
+      "summary": "로이터 보도에 따르면 투자자들이 매출 성장 둔화를 이유로 앤스로픽 IPO 밸류에이션 기대치를 낮추고 있습니다."
     },
     {
-      "id": "nvidia-nemotron-super-vl",
-      "headline": "데이터센터부터 데스크톱까지 120B 오픈 모델 확장",
-      "summary": "엔비디아가 1,200억 파라미터 규모의 오픈 모델 Nemotron 3.5 Super VL을 공개했습니다."
+      "id": "nemotron-35",
+      "headline": "상시 구동 에이전트용 오픈 모델 120B 공개",
+      "summary": "엔비디아가 데이터센터부터 데스크톱까지 Nemotron 계열을 확장하며 120B 규모의 오픈 모델을 내놨습니다."
     },
     {
-      "id": "meta-forum-ai-native",
-      "headline": "AI 중심 엔지니어링으로 만든 그룹 대화 앱",
-      "summary": "메타가 새 앱 Forum을 AI 네이티브 엔지니어링 방식으로 구축한 경험을 엔지니어링 블로그에서 공개했습니다."
+      "id": "rtx-spark",
+      "headline": "크리에이터·게이머·AI 에이전트 겨냥한 단일 PC 출격",
+      "summary": "엔비디아가 윈도우 PC용 RTX Spark를 정식 출시하며 로컬 AI 하드웨어 시장에 뛰어들었습니다."
     },
     {
-      "id": "openai-rosalind-academic",
-      "headline": "생명과학 연구실 대상 GPT-Rosalind 후원 접근",
-      "summary": "오픈AI가 자격을 갖춘 학술 연구실에 GPT-Rosalind 접근을 후원하는 Rosalind Academic Plan을 내놨습니다."
+      "id": "google-news-ai",
+      "headline": "출판사 400곳과 확대된 뉴스 AI 실험",
+      "summary": "구글이 뉴스 AI 파일럿 프로그램에 참여하는 출판사가 400곳에 이른다고 밝혔습니다."
     },
     {
-      "id": "ftc-ai-documents",
-      "headline": "최근 안전 사고를 둘러싼 FTC 문서 제출 요구",
-      "summary": "Axios 보도에 따르면 미국 FTC가 최근 안전 사고와 관련해 주요 AI 기업들에 문서 제출을 요구했습니다."
+      "id": "rosalind-academic",
+      "headline": "생명과학 연구실 대상 스폰서드 액세스 플랜",
+      "summary": "오픈AI가 자격을 갖춘 학술 연구실에 GPT-Rosalind 접근권을 후원하는 Rosalind Academic Plan을 발표했습니다."
     }
   ],
   "keywords": [
-    "구글",
-    "앤스로픽",
-    "엔비디아",
-    "오픈AI",
-    "메타"
+    "안전성 평가",
+    "오픈 모델",
+    "로컬 AI"
   ],
-  "mainEvent": "구글 뉴스 AI 파일럿 400개 출판사 파트너십 발표",
+  "mainEvent": "앤스로픽 외부 평가 체계 확대",
   "keynums": [
-    {
-      "val": "400개",
-      "lab": "뉴스 AI 파일럿 파트너 출판사",
-      "sub": "구글 블로그 발표"
-    },
     {
       "val": "120B",
       "lab": "Nemotron 3.5 Super VL 파라미터",
-      "sub": "엔비디아 발표"
+      "sub": "NVIDIA 발표"
     },
     {
       "val": "74B",
-      "lab": "Nemotron 관련 수치",
-      "sub": "엔비디아 발표 본문 언급"
+      "lab": "관련 모델 규모 언급",
+      "sub": "NVIDIA 발표"
+    },
+    {
+      "val": "400개",
+      "lab": "뉴스 AI 파일럿 제휴 출판사",
+      "sub": "구글 블로그"
     }
   ],
   "timeline": [
     {
-      "t": "10/15 18:04",
-      "d": "FTC의 AI 기업 문서 제출 요구 보도"
-    },
-    {
-      "t": "10/15 23:44",
-      "d": "앤스로픽 실적과 AI 업종 분석 보도"
-    },
-    {
-      "t": "10/16 00:00",
-      "d": "엔비디아 Nemotron 3.5 Super VL 공개"
-    },
-    {
       "t": "10/16 01:00",
-      "d": "구글 뉴스 AI 파일럿 400개 파트너 발표"
+      "d": "구글, 뉴스 AI 파일럿 제휴 400곳 발표"
+    },
+    {
+      "t": "10/16 02:00",
+      "d": "NVIDIA RTX Spark 출시"
     },
     {
       "t": "10/16 02:20",
       "d": "앤스로픽 독립 평가자 업데이트"
     },
     {
-      "t": "10/16 06:48",
-      "d": "앤스로픽 IPO 밸류에이션 기대치 조정 보도"
-    }
-  ],
-  "intro": "10월 16일 금요일 발행. 미디어 협력 확대, 초대형 오픈 모델 공개, IPO 기대치 조정까지 방향이 서로 다른 소식이 하루에 겹쳤습니다.",
-  "analysis": [
-    {
-      "id": "google-news-pilot-400",
-      "n": 1,
-      "title": "1. AI 시대 언론사 협력의 규모 변화",
-      "bullets": [
-        "뉴스 AI 파일럿 파트너 출판사가 400곳",
-        "구글이 프로그램 현황을 공식 블로그로 공개",
-        "파일럿 단계라는 점은 변하지 않았습니다"
-      ],
-      "body": [
-        "구글이 뉴스 AI 파일럿 프로그램의 파트너 출판사가 400곳에 달한다고 발표했습니다. 이 프로그램은 언론사와 AI 기능을 함께 실험하는 자리로, 이번 발표로 참여 규모가 세 자릿수를 크게 넘어섰습니다.",
-        "발표 전에도 구글은 출판사와 AI 요약·검색 연계를 두고 관계를 다듬어 왔습니다. 다만 400곳이라는 수치가 파일럿의 성공을 곧장 의미하지는 않으며, 참여 조건과 수익 배분 구조는 별도 확인이 필요합니다.",
-        "미디어 업계 입장에서는 검색 트래픽 감소 이후 AI 플랫폼과 맺는 관계가 사활적입니다. 이번 발표는 그 관계망이 어느 방향으로 확장되는지 보여주는 자료로 읽힙니다."
-      ],
-      "extra": "그 밖에: 같은 날 워싱턴포스트는 AI가 없던 기억을 만들어낼 수 있다는 연구 동향을 보도했습니다. 신뢰성 논란이 커지는 시점에 미디어 협력이 확대된다는 점에서 함께 읽을 만한 소식입니다.",
-      "takeaway": "언론사와 AI 플랫폼 사이의 협력 단위가 400곳 규모로 커진 점이 미디어 비즈니스 구조에 미칠 영향이 큽니다. 뉴스룸 담당자는 이번 파일럿의 참여 조건과 트래픽·수익 지표를 비교 기준으로 삼으면 됩니다.",
-      "tags": [],
-      "sources": [
-        {
-          "handle": "OpenAI News",
-          "url": "https://openai.com/index/teaching-students-to-think-and-learn-through-questions",
-          "kind": "doc"
-        },
-        {
-          "handle": "OpenAI News",
-          "url": "https://openai.com/index/the-eus-next-chapter-in-ai-is-agentic",
-          "kind": "doc"
-        }
-      ],
-      "images": [
-        {
-          "src": "/img/2026-10-16/google-news-pilot-400-ac1a8310.webp",
-          "caption": "AI 생성 일러스트 (실제 사진 아님)",
-          "alt": "확장되는 협력 네트워크를 형상화한 추상 일러스트",
-          "width": 1200,
-          "height": 675
-        }
-      ]
+      "t": "10/16 05:35",
+      "d": "METR·SecureBio 평가 위탁 보도"
     },
     {
-      "id": "anthropic-ipo-valuation",
-      "n": 2,
-      "title": "2. 성장 둔화가 먼저인가, 이익 안정이 먼저인가",
+      "t": "10/16 06:00",
+      "d": "IPO 밸류에이션 조정 관측 보도"
+    }
+  ],
+  "intro": "10월 16일 금요일 발행. 모델 안전성을 외부 기관에 맡기는 흐름과 로컬 AI 하드웨어·오픈 모델 확장 소식이 같은 날 겹쳤습니다.",
+  "analysis": [
+    {
+      "id": "anthropic-metr",
+      "n": 1,
+      "title": "1. 외부 평가기관 두 곳을 거치는 안전 점검",
       "bullets": [
-        "로이터가 투자자 기대치 하향을 단독 보도",
-        "근거는 매출 성장 둔화, 출처는 복수 관계자",
-        "블룸버그는 실적이 IPO에 도움이 될 수 있다는 해석도"
+        "평가 주체: 비영리 2곳(METR, SecureBio)",
+        "평가 대상: 모델 위험도와 안전 관행 전반",
+        "아직 결과 공개 범위는 미확정"
       ],
       "body": [
-        "로이터는 복수의 소식통을 인용해 투자자들이 앤스로픽의 매출 성장 둔화를 이유로 IPO 밸류에이션 기대치를 낮추고 있다고 보도했습니다. 구체적인 축소 폭은 전해지지 않았습니다.",
-        "앤스로픽은 최근 독립 평가자 관련 업데이트를 내는 등 거버넌스를 다지는 움직임을 보여 왔습니다. 다만 IPO 일정과 공개 가치평가 기준은 아직 미확정이며, 투자자 사이의 시각도 갈립니다.",
-        "같은 날 블룸버그는 실적이 IPO에는 도움이 될 수 있으나 AI 업종 전체에는 아니라는 애널리스트 분석을 전했습니다. 회사 하나의 등장 시점이 업종 흐름과 반드시 일치하지 않는다는 관점입니다."
+        "앤스로픽이 비영리기관 METR과 SecureBio를 독립 평가자로 들여 모델 리스크와 안전 관행을 점검한다고 발표했습니다. 이는 회사 내부 평가를 넘어 제3자 검증을 제도화하는 움직임입니다.",
+        "배경에는 안전 사고를 둘러싼 외부 압력이 있습니다. 앞서 FTC가 최근 안전 사고와 관련해 주요 AI 기업들에 자료를 요청했다는 보도가 나온 바 있어, 업계 전체가 검증 체계를 갖춰야 하는 상황입니다.",
+        "다만 평가 결과가 공개될 범위와 주기는 아직 명확하지 않습니다. 평가가 실질적 통제인지 홍보 수단인지는 결과물 공개 여부로 판가름됩니다. 아직 결과 공개 범위는 미확정"
       ],
-      "extra": "그 밖에: 앤스로픽은 이날 새벽 독립 평가자 제도에 대한 업데이트를 발표했습니다. IPO 논의와 겹쳐 거버넌스 정비가 동시에 진행되는 흐름으로 읽힙니다.",
-      "takeaway": "매출 성장률이 밸류에이션 논의의 중심으로 옮겨온 것이 앤스로픽 평가에서 달라진 지점입니다. 투자 검토 담당자는 실적 발표 때 공개되는 성장률과 마진 수치를 체크리스트에 넣어 두시면 됩니다.",
+      "extra": "그 밖에: FTC가 최근 안전 사고와 관련해 주요 AI 기업들에 문서를 요구했다는 Axios 보도가 같은 시기에 나왔습니다. 규제 기관의 시선이 강해지는 환경이라는 점에서 이번 외부 평가 확대와 함께 읽힙니다.",
+      "takeaway": "자체 평가에서 독립 평가로 무게가 옮겨가는 대목이고, 향후 업계 표준이 될 가능성이 있습니다. 평가 결과가 얼마나 공개되는지부터 확인하면 됩니다.",
       "tags": [],
       "sources": [
         {
           "handle": "Anthropic GNews",
-          "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQRW4tSGppV2U0ZWtvaXBsQmlyaDVVLVFCSmJNMWdmMHpod0FWd25kUXRNQzFvZXJPTmhoQUNvMlFrQzI3NjBQVG9McWFPRHdUODhMbVItOGg4S0N3ZmJ4R2psZVd1aWFZM2M0aEY4R3VaYnFZWUxhOFZiRXAxTnc5UG9hMm1ERGpKbURkX3BWYzQ5UWl3THBFTDhWUWR0SVhUSWJsekpMZjM4OUZRQl9BVmY2djVKRENDSldCSUpOWmdvbHVK?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOdTIyNURFZndfMmRpN0liM2l3eE9Rb3pncXlkaGRDUExCemNqQldWUmlLcVhEWHhwYXlOVHFxSlpuLWVUXzV0eHoxcjdsVXAxVTJ0X3FFVGFscldqY0lnbVVxNlhxWWZ4QUZNUmYyc1dSWHpHSl9XdXNaMEVONm5SVXd5ODM2VFFEa2fSAY8BQVVfeXFMUGdJcmpnY21LbUlicTI5OEZXSzB2UE1SclB6TDZWRDdNd0luMEpaY1o3a3podTZLQ3hFZUVpSUpKaEtqWlNETUhZYXUyLWFqdTJhSGoyVXF3ejFCNldkMHJnYjJCbmRFLVlKeGo3OFFOQUNSUDRJRzNfaVlSb3p4NGl4eWE3TFNFR0tUNHNxa0k?oc=5",
           "kind": "doc",
-          "origin_url": "https://www.reuters.com"
+          "origin_url": "https://www.cnbc.com"
         },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/teaching-students-to-think-and-learn-through-questions",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-ipo",
+      "n": 2,
+      "title": "2. IPO 기대치 낮추는 투자자들",
+      "bullets": [
+        "매출 성장 둔화 관측이 기대치 조정의 이유",
+        "출처는 로이터의 소식통 기반 보도",
+        "공식 매출 수치는 아직 미확정"
+      ],
+      "body": [
+        "로이터가 복수의 소식통을 인용해 보도하기로, 투자자들이 매출 성장 둔화를 이유로 앤스로픽 IPO 밸류에이션 기대치를 낮추고 있습니다. 구체적인 밸류에이션 수치는 이번 보도에서 확인되지 않습니다.",
+        "지금까지 앤스로픽은 업계에서 가장 빠른 성장 구간 중 하나로 평가받아 왔습니다. 그 성장률이 꺾이는지 여부가 상장 규모와 시점을 좌우합니다. 출처는 로이터의 소식통 기반 보도",
+        "다만 이는 소식통 기반 보도라 회사 공식 입장은 아직 없습니다. 분기별 매출 흐름이 공식적으로 확인되기 전까지는 추정으로 봐야 합니다. 공식 매출 수치는 아직 미확정"
+      ],
+      "extra": "",
+      "takeaway": "성장 서사에 의존해 온 AI 기업 밸류에이션의 기준이 달라진 지점입니다. 상장 전 공식 매출 공개 시점을 비교 기준으로 삼으면 됩니다.",
+      "tags": [],
+      "sources": [
         {
           "handle": "Anthropic GNews",
           "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE8zZVFudWFYcC04RHNOZHI0cGhuSXBUTlk2RWZsUnFkY2MzeWZRY0NVaV9OSTJHbDVkc3BBTHBWd1FKUDVCbjdYLTQtN2tGNUZXdnFYRmt2OUZTTzRoRVZNeWNteUE1Vy1DSXBGTTUxSFJqVmRf?oc=5",
           "kind": "doc",
           "origin_url": "https://www.anthropic.com"
-        }
-      ],
-      "images": [
+        },
         {
-          "src": "/img/2026-10-16/anthropic-ipo-valuation-68eeecf4.webp",
-          "caption": "AI 생성 일러스트 (실제 사진 아님)",
-          "alt": "둔화하는 성장과 안정의 저울질을 형상화한 추상 일러스트",
-          "width": 1200,
-          "height": 675
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQRW4tSGppV2U0ZWtvaXBsQmlyaDVVLVFCSmJNMWdmMHpod0FWd25kUXRNQzFvZXJPTmhoQUNvMlFrQzI3NjBQVG9McWFPRHdUODhMbVItOGg4S0N3ZmJ4R2psZVd1aWFZM2M0aEY4R3VaYnFZWUxhOFZiRXAxTnc5UG9hMm1ERGpKbURkX3BWYzQ5UWl3THBFTDhWUWR0SVhUSWJsekpMZjM4OUZRQl9BVmY2djVKRENDSldCSUpOWmdvbHVK?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.reuters.com"
         }
       ]
     },
     {
-      "id": "nvidia-nemotron-super-vl",
+      "id": "nemotron-35",
       "n": 3,
-      "title": "3. 오픈 모델로 만든 에이전트용 선택지",
+      "title": "3. 데이터센터에서 데스크톱까지, Nemotron 확장",
       "bullets": [
-        "1,200억 파라미터 오픈 모델 Nemotron 3.5 Super VL 공개",
-        "상시 구동 에이전트 대상 최고 효율 주장은 자체 측정",
-        "본문에는 74B 수치도 함께 언급"
+        "파라미터 규모: 120B 오픈 모델",
+        "용도: 상시 구동형 특화 에이전트 과제",
+        "성능 수치는 자체 측정 기준"
       ],
       "body": [
-        "엔비디아가 데이터센터부터 데스크톱까지 아우르는 Nemotron 계열을 확장하며 1,200억 파라미터의 Nemotron 3.5 Super VL을 오픈으로 공개했습니다. 발표문에는 74B 수치도 함께 언급되며 계열 내 모델 구성이 여러 크기로 짜여 있습니다.",
-        "엔비디아는 이 모델이 상시 구동형 에이전트 과제에서 가장 빠른 작업 완료와 높은 정확도를 낸다고 설명하지만, 이는 회사 자체 측정 기준입니다. 같은 날 RTX Spark 런칭 행사 안내도 나오며 로컬 AI 하드웨어와 오픈 모델 전략이 함께 움직입니다.",
-        "오픈 웨이트 대형 모델은 자체 인프라에서 에이전트를 구동하려는 팀에게 라이선스 비용 없이 쓸 수 있는 대안이 됩니다. 단, 효율 수치는 독립 검증 전이라 추정으로 봐야 합니다."
+        "엔비디아가 Nemotron 계열을 확장하며 120B 파라미터의 오픈 모델 Super VL과 Bolt 모델을 공개했습니다. 상시 구동형 전용 에이전트 작업에서 빠른 완료 속도와 높은 정확도를 목표로 한다고 밝혔습니다.",
+        "기존 Nemotron 계열이 범용 과제 중심이었다면, 이번 release는 특화 에이전트에 초점을 맞춘 차이가 있습니다. 오픈 가중치라는 점에서 자체 인프라로 쓰려는 기업의 선택지가 늘어납니다.",
+        "다만 성능 주장은 회사 자체 측정입니다. 독립 벤치마크 결과가 나오기 전까지는 발표 수치를 그대로 믿기 어렵습니다. 성능 수치는 자체 측정 기준"
       ],
-      "extra": "그 밖에: 엔비디아는 같은 주 UK 스타트업 생태계에 2억 5,000만 달러 규모 투자 계획도 발표했습니다. 하드웨어·모델·생태계 투자가 동시에 진행되는 흐름입니다.",
-      "takeaway": "1,200억 파라미터 모델을 오픈으로 푼 점이 자체 호스팅 에이전트 비용 구조에서 중요해진 이유입니다. 도입 검토 팀은 74B 구성 모델과의 정확도·추론 비용부터 확인하면 됩니다.",
+      "extra": "그 밖에: 같은 날 엔비디아는 RTX Spark 출시 행사 초청 안내도 게시했습니다. 모델과 하드웨어를 같은 날 움직인다는 점에서 로컬 AI 전략의 일환으로 읽힙니다.",
+      "takeaway": "오픈 웨이트 대형 모델의 활용처가 범용에서 상시 에이전트로 좁혀진 것이 중요한 변화입니다. 독립 벤치마크 결과가 나오면 같은 과제의 클로즈드 모델과 비교해 두면 됩니다.",
       "tags": [],
       "sources": [
-        {
-          "handle": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/nemotron-3-5-super-vl/",
-          "kind": "doc"
-        },
         {
           "handle": "NVIDIA Blog",
           "url": "https://blogs.nvidia.com/blog/local-ai-rtx-spark-launch-event-invite/",
           "kind": "doc"
-        }
-      ],
-      "images": [
+        },
         {
-          "src": "/img/2026-10-16/nvidia-nemotron-super-vl-41a550fb.webp",
-          "caption": "AI 생성 일러스트 (실제 사진 아님)",
-          "alt": "열린 구성 요소가 모여 에이전트로 흐르는 모습을 형상화한 추상 일러스트",
-          "width": 1200,
-          "height": 675
+          "handle": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/nemotron-3-5-super-vl/",
+          "kind": "doc"
         }
       ]
     },
     {
-      "id": "meta-forum-ai-native",
+      "id": "google-news-ai",
       "n": 4,
-      "title": "4. AI로 앱 전체를 만드는 개발 방식의 사례",
+      "title": "4. 출판사 400곳 규모로 커지는 뉴스 AI 실험",
       "bullets": [
-        "메타가 새 앱 Forum 구축 과정을 공개",
-        "AI 네이티브 엔지니어링이라는 새 작업 방식 도입",
-        "페이스북 그룹 대화 심화용 앱"
+        "제휴 출판사 400곳 돌파",
+        "뉴스 AI 파일럿 형태로 진행",
+        "개별 제휴 조건은 미공개"
       ],
       "body": [
-        "메타가 페이스북 그룹 대화를 더 깊게 들여다보는 앱 Forum을 내놓으며, 이를 AI 네이티브 엔지니어링 방식으로 구축한 경험을 공유했습니다. 엔지니어링 블로그 글은 개발 과정 자체를 문서화한 것입니다.",
-        "AI 도구가 코드 생성을 넘어 설계·검토까지 아우르는 흐름은 이미 여러 기업에서 나타났습니다. 메타의 사례는 대형 플랫폼 기업이 하나의 제품을 통째로 이 방식으로 만들었는지를 보여준다는 점에서 차이가 있습니다.",
-        "다만 글은 성과 수치를 구체적으로 제시하지 않아, 생산성 향상 폭은 미확정입니다. 참고 사례로 읽되 재현 가능성은 각 팀 상황에 따라 다릅니다. 페이스북 그룹 대화 심화용 앱"
+        "구글이 뉴스 AI 파일럿 프로그램의 제휴 출판사가 400곳에 이른다고 발표했습니다. 파일럿 초기 소수 매체에서 시작한 실험이 질적으로 확대된 결과입니다. 제휴 출판사 400곳 돌파",
+        "미디어 업계는 AI가 뉴스 소비와 저작권 구도를 어떻게 바꾸는지 민감한 시기입니다. 제휴 규모 확대는 출판사들이 AI 도구를 수용하는 흐름이 커지고 있음을 보여줍니다.",
+        "다만 400곳이 실제로 어떤 도구를 쓰고 있는지, 조건은 무엇인지는 이번 발표만으로 확인되지 않습니다. 파일럿이라는 이름이 붙은 만큼 아직 실험 단계라는 한계도 있습니다."
       ],
       "extra": "",
-      "takeaway": "제품 단위 전체를 AI 중심 개발로 옮긴 사례가 공개된 것이 엔지니어링 조직 운영에서 바뀐 대목입니다. 개발 리드는 이 문서의 작업 분업 방식을 팀 회고 안건에 반영해 두면 됩니다.",
+      "takeaway": "미디어와 AI 플랫폼의 관계가 대결에서 공동 실험으로 옮겨가는 흐름에 미칠 영향이 큽니다. 자체 매체가 쓸 AI 도구 선정 기준에 이 제휴 조건을 체크리스트에 넣어 두시면 됩니다.",
       "tags": [],
       "sources": [
         {
-          "handle": "Meta Eng",
-          "url": "https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/",
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/sullivan-cromwell",
           "kind": "doc"
         },
         {
-          "handle": "Hacker News",
-          "url": "https://github.com/brodsh/brod",
-          "kind": "talk"
-        }
-      ],
-      "images": [
-        {
-          "src": "/img/2026-10-16/meta-forum-ai-native-7dfe1fff.webp",
-          "caption": "AI 생성 일러스트 (실제 사진 아님)",
-          "alt": "빛의 흐름이 쌓아 올리는 새로운 제작 방식을 형상화한 추상 일러스트",
-          "width": 1200,
-          "height": 675
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/amp-beyond-coding",
+          "kind": "doc"
         }
       ]
     }
   ],
   "mood": {
-    "shift": "언론사 협력이 400곳 규모로 확대되며 플랫폼-미디어 관계가 재편되는 흐름입니다.",
-    "grow": "오픈 대형 모델과 로컬 AI 하드웨어 발표가 이어지며 자체 인프라 선택지가 늘었습니다.",
-    "caution": "앤스로픽 밸류에이션 기대치 하향과 FTC 문서 요구로 규제·투자 리스크가 함께 커진 국면입니다.",
-    "heat": "에이전트 최적화 모델 경쟁이 데이터센터와 데스크톱 양쪽에서 동시에 달아오르고 있습니다."
+    "shift": "안전 검증의 무게중심이 내부에서 외부로",
+    "grow": "오픈 모델·로컬 하드웨어 공급 확대",
+    "caution": "AI 기업 밸류에이션 성장 서사 흔들림",
+    "heat": "에이전트 특화 모델 경쟁 가속"
   },
   "tips": [
     {
-      "title": "뉴스 AI 파트너십 현황 확인",
-      "body": "구글 뉴스 AI 파일럿의 400곳 파트너 발표문에서 참여 조건과 배분 구조를 확인해 두면 유사 프로그램 비교에 쓸 수 있습니다.",
-      "via": "Google Blog"
+      "title": "외부 평가 결과 공개 여부 확인",
+      "body": "METR·SecureBio 평가의 결과 공개 범위가 정해지는지 지켜보세요. 공개 여부가 다른 모델 도입 심사 기준의 실질적 차이를 만듭니다.",
+      "via": "CNBC"
     },
     {
-      "title": "오픈 대형 모델 실험",
-      "body": "Nemotron 3.5 Super VL이 오픈으로 풀렸으니 자체 인프라에서 에이전트 과제 벤치마크를 돌려 두면 도입 판단 자료가 됩니다.",
+      "title": "오픈 모델 vs 클로즈드 모델 비교 준비",
+      "body": "Nemotron 3.5 Super VL처럼 120B급 오픈 모델이 늘면 자체 인프라 비용과 API 비용 비교가 필요해집니다. 같은 에이전트 과제로 양쪽을 재는 항목을 정해 두세요.",
       "via": "NVIDIA Blog"
     },
     {
-      "title": "IPO 관련 수치 정리",
-      "body": "앤스로픽 IPO 기대치 조정 보도를 정리해 두면 다음 실적 발표 때 성장률 논의를 빠르게 대조할 수 있습니다.",
-      "via": "Reuters"
+      "title": "로컬 AI PC 사양 요구사항 점검",
+      "body": "RTX Spark 같은 로컬 AI 하드웨어가 늘면 구형 워크스테이션 재고가 언제까지 버티는지 따져야 합니다. 에이전트 워크로드의 최소 사양을 미리 정리해 두면 교체 시점 판단이 쉬워집니다.",
+      "via": "NVIDIA Blog"
     },
     {
-      "title": "AI 네이티브 개발 사례 읽기",
-      "body": "메타의 Forum 구축 문서는 제품 단위 AI 개발 프로세스를 정리한 사례로, 팀 작업 방식 점검에 참고할 만합니다.",
-      "via": "Meta Engineering"
+      "title": "뉴스 AI 제휴 조건 비교",
+      "body": "구글 뉴스 AI 파일럿이 400곳 규모가 된 만큼, 참여 매체의 이용 사례에서 조건과 실익을 수집해 두면 자체 매체의 협상 카드가 됩니다.",
+      "via": "Google Blog"
     },
     {
-      "title": "학술 접근 프로그램 검토",
-      "body": "생명과학 연구실이라면 Rosalind Academic Plan의 자격 요건을 확인해 후원 접근 신청 여부를 정하면 됩니다.",
+      "title": "학술 라이선스 자격 요건 확인",
+      "body": "Rosalind Academic Plan은 자격 요건을 충족하는 연구실에 후원 접근권을 줍니다. 생명과학 관련 팀이라면 지원 자격과 제공 도구 목록을 먼저 확인해 보세요.",
       "via": "OpenAI News"
     }
   ],
