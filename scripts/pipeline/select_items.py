@@ -73,15 +73,16 @@ def _is_official(url: str) -> bool:
 def _parse_date(s: str | None) -> datetime | None:
     if not s:
         return None
-    for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
-        try:
-            dt = datetime.strptime(s[:19], fmt)
-            return dt.replace(tzinfo=timezone.utc) if dt.tzinfo is None else dt
-        except ValueError:
-            continue
-    return None
-    if not s:
-        return None
+    # P7: ISO 8601 전체 파싱 (타임존 오프셋 포함, 초 없는 형식도 처리)
+    # collect.py는 "2026-10-16T10:30+09:00" 형식으로 저장 (초 없음, KST 오프셋)
+    try:
+        dt = datetime.fromisoformat(s)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt
+    except ValueError:
+        pass
+    # 폴백: 기존 형식들
     for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
         try:
             dt = datetime.strptime(s[:19], fmt)

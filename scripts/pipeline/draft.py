@@ -123,8 +123,11 @@ def pick_key(prefer: str | None = None) -> tuple[str, str, str, str] | None:
     return None
 
 
-def chat(url: str, key: str, model: str, user: str, *, effort: str | None = None, temperature: float = 1.0) -> str:
-    timeout = int(os.environ.get("LLM_TIMEOUT", "600"))
+def chat(url: str, key: str, model: str, user: str, *, effort: str | None = None, temperature: float = 1.0, timeout: int | None = None) -> str:
+    # P7 (Grok C1): 기본 타임아웃 600 → 300으로 하향.
+    # GitHub Actions step timeout(20분) 안에 3회 재시도가 들어가도록.
+    # attempt별로는 main()에서 더 짧게 지정할 수 있음 (1차 300s → 2차 240s → 3차 180s).
+    timeout = timeout if timeout is not None else int(os.environ.get("LLM_TIMEOUT", "300"))
     payload = {
         "model": model,
         "temperature": temperature,
@@ -738,11 +741,16 @@ def main() -> int:
             ],
         }
         print(f"drafting provider={name} model={model} buckets={len(payload['buckets'])} temp={args.temperature}", flush=True)
+        # P7: attempt별 타임아웃 단축 — 3회가 20분 step 안에 들어가도록.
+        # 1차 300s, 2차 240s, 3차 180s. LLM_TIMEOUT 환경변수가 설정되면 그것을 우선 사용.
+        _attempt_timeouts = {1: 300, 2: 240, 3: 180}
+        _env_to = os.environ.get("LLM_TIMEOUT")
+        _to = int(_env_to) if _env_to else _attempt_timeouts.get(args.attempt, 180)
         try:
-            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False), temperature=args.temperature)
+            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False), temperature=args.temperature, timeout=_to)
         except TimeoutError as e:
             print(f"{e}; retrying with reasoning_effort=low", flush=True)
-            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False), effort="low", temperature=args.temperature)
+            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False), effort="low", temperature=args.temperature, timeout=_to)
         # 디버깅용: 원시 LLM 응답 저장 (시도별 분리, 잘림 vs 나쁜 샘플 구분)
         try:
             raw_path = pipe / f"{snap['date']}.raw-llm.attempt{args.attempt}.txt"
