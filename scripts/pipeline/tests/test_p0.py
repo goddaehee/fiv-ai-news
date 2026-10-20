@@ -628,5 +628,86 @@ _p8d = _p7_analysis("200억")
 _g8d, _bad8d = _numbers_grounded(_p8d, _p7_collected())
 ok("P8: 진짜 환각 차단 (200억)", not _g8d and len(_bad8d) > 0)
 
+# ============================================================
+# P9: 피드백 주입 루프 (10/19·10/20 연속 발행 실패 처방)
+from validate import collect_structured_errors, _numbers_grounded_detail
+from draft import render_feedback
+from run import draft_with_retry
+
+# P9-1: 구조화 에러 리포트 (feedback sidecar 소스)
+_p9_issue = base_issue(analysis=[_p7_analysis("120B", "99%")])
+_p9_rep = collect_structured_errors(_p9_issue, _p7_collected())
+ok("P9: 구조화 에러 1건", len(_p9_rep) == 1)
+ok("P9: code NUMBERS-UNGROUNDED", len(_p9_rep) == 1 and _p9_rep[0]["code"] == "NUMBERS-UNGROUNDED")
+ok("P9: analysis_index/id", len(_p9_rep) == 1 and _p9_rep[0]["analysis_index"] == 0 and _p9_rep[0]["analysis_id"] == "a1")
+ok("P9: bad에 99% 포함", len(_p9_rep) == 1 and any("99%" in b for b in _p9_rep[0]["bad"]))
+ok("P9: allowed_raw에 120B 포함", len(_p9_rep) == 1 and any("120B" in a for a in _p9_rep[0]["allowed_raw"]))
+ok("P9: fields에 body 포함", len(_p9_rep) == 1 and "body" in _p9_rep[0]["fields"])
+ok("P9: domains에 openai.com", len(_p9_rep) == 1 and "openai.com" in _p9_rep[0]["domains"])
+# grounded면 빈 리스트
+ok("P9: grounded면 빈 리포트",
+   collect_structured_errors(base_issue(analysis=[_p7_analysis("120B", "2배")]), _p7_collected()) == [])
+# _numbers_grounded_detail / wrapper 호환
+_d9 = _numbers_grounded_detail(_p7_analysis("120B", "99%"), _p7_collected())
+ok("P9: detail grounded=False + joined", not _d9["grounded"] and _d9["joined"])
+ok("P9: wrapper 호환 (False, ['99%'])",
+   _numbers_grounded(_p7_analysis("120B", "99%"), _p7_collected()) == (False, ["99%"]))
+ok("P9: detail 조인 불가 시 생략", _numbers_grounded_detail(_p7_analysis("99%"), None)["joined"] is False)
+
+# P9-2: 피드백 렌더링 — 차단 수치가 포함되지 않는다 (앵커 금지)
+import json as _p9json, tempfile as _p9tf
+_p9f = _p9tf.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8")
+_p9json.dump({"file": "x", "date": "2026-10-14", "failed": True, "errors": _p9_rep}, _p9f)
+_p9f.close()
+_fb = render_feedback(_p9f.name)
+ok("P9: 피드백 블록 존재", "[직전 시도 검증 결과" in _fb)
+ok("P9: 차단 수치 앵커 금지 (99% 미포함)", "99%" not in _fb)
+ok("P9: 허용 목록 포함 (120B)", "120B" in _fb)
+ok("P9: analysis id 포함", "a1" in _fb)
+ok("P9: 고칠 위치 포함", "body" in _fb)
+# 에러 없으면 빈 문자열
+_p9f2 = _p9tf.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8")
+_p9json.dump({"errors": []}, _p9f2)
+_p9f2.close()
+ok("P9: 에러 없으면 빈 피드백", render_feedback(_p9f2.name) == "")
+ok("P9: sidecar 없으면 빈 피드백", render_feedback("/nonexistent/p9-feedback.json") == "")
+
+# P9-3: run.draft_with_retry 피드백 배선 — attempt 2부터 --feedback 전달
+def _p9_wire():
+    calls: list = []
+    d = Path(_p9tf.mkdtemp())
+    date = "2026-10-14"
+    issue_file = d / "issue.json"
+
+    def fake_sh(cmd):
+        calls.append(cmd)
+        if "--attempt" in cmd:
+            if "--feedback" in cmd:
+                fi = cmd.index("--feedback")
+                assert Path(cmd[fi + 1]).exists(), "--feedback 파일이 존재해야 함"
+            issue_file.write_text("{}", encoding="utf-8")
+            return 0
+        return 0
+
+    def fake_validate(json_out):
+        if json_out is not None:
+            json_out.write_text(
+                _p9json.dumps({"errors": [{"code": "NUMBERS-UNGROUNDED"}]}), encoding="utf-8"
+            )
+        return 1  # 항상 실패 → 3회 시도
+
+    rc = draft_with_retry(["draft"], issue_file, fake_validate, max_attempts=3,
+                          sh_fn=fake_sh, sleep_fn=lambda s: None, pipe_dir=d, date=date)
+    draft_cmds = [c for c in calls if "--attempt" in c]
+    ok("P9: 3회 시도", len(draft_cmds) == 3)
+    ok("P9: attempt1에 --feedback 없음", "--feedback" not in draft_cmds[0])
+    ok("P9: attempt2에 --feedback 전달", "--feedback" in draft_cmds[1])
+    ok("P9: attempt3에 --feedback 전달", "--feedback" in draft_cmds[2])
+    ok("P9: attempt2 피드백이 attempt1 sidecar", str(d / f"{date}.validate-errors.attempt1.json") in draft_cmds[1])
+    ok("P9: sidecar 파일 생성", (d / f"{date}.validate-errors.attempt1.json").exists())
+    ok("P9: rc=1 (3회 모두 실패)", rc == 1)
+
+_p9_wire()
+
 print(f"\n{PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)

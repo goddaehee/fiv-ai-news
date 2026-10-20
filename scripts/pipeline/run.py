@@ -23,14 +23,24 @@ def sh(args: list[str]) -> int:
 
 
 def draft_with_retry(draft_cmd: list[str], issue, run_validate, max_attempts: int = 3,
-                     sh_fn=None, sleep_fn=None) -> int:
-    """draft → validate 재시도 루프. 테스트 가능성을 위해 sh/sleep 주입 가능."""
+                     sh_fn=None, sleep_fn=None, pipe_dir=None, date: str | None = None) -> int:
+    """draft → validate 재시도 루프. 테스트 가능성을 위해 sh/sleep 주입 가능.
+
+    P9: 피드백 없는 재시도는 같은 환각을 반복한다 (10/19·10/20 연속 발행 실패).
+    직전 attempt의 validate 에러 리포트를 sidecar 파일로 받아,
+    다음 attempt의 draft 호출 시 --feedback으로 주입한다.
+    """
     import time
     _sh = sh_fn or sh
     _sleep = sleep_fn or time.sleep
     rc = 1
     for attempt in range(1, max_attempts + 1):
         cmd = list(draft_cmd) + ["--attempt", str(attempt)]
+        # P9: 피드백 주입 — attempt 2부터 직전 시도 검증 리포트 전달
+        if attempt > 1 and pipe_dir is not None and date:
+            prev_sidecar = Path(pipe_dir) / f"{date}.validate-errors.attempt{attempt - 1}.json"
+            if prev_sidecar.exists():
+                cmd += ["--feedback", str(prev_sidecar)]
         print(f"[run] draft attempt {attempt}/{max_attempts}", file=sys.stderr)
         rc = _sh(cmd)
         if rc != 0:
@@ -39,7 +49,11 @@ def draft_with_retry(draft_cmd: list[str], issue, run_validate, max_attempts: in
             print(f"[run] issue file not created on attempt {attempt}", file=sys.stderr)
             rc = 1
         else:
-            v = run_validate()
+            # P9: validate 에러 리포트를 sidecar로 저장 (다음 attempt의 --feedback 소스)
+            sidecar = None
+            if pipe_dir is not None and date:
+                sidecar = Path(pipe_dir) / f"{date}.validate-errors.attempt{attempt}.json"
+            v = run_validate(sidecar)
             if v == 0:
                 return 0
             print(f"[run] validate failed on attempt {attempt} — retrying", file=sys.stderr)
@@ -97,7 +111,7 @@ def main() -> int:
     if args.provider:
         draft_cmd.extend(["--provider", args.provider])
 
-    def run_validate() -> int:
+    def run_validate(json_out: Path | None = None) -> int:
         vcmd = [
             sys.executable,
             str(HERE / "validate.py"),
@@ -107,6 +121,8 @@ def main() -> int:
             str(collected),
             str(issue),
         ]
+        if json_out is not None:
+            vcmd.extend(["--json-out", str(json_out)])
         prev_date = (datetime.strptime(date, "%Y-%m-%d") - timedelta(days=1)).strftime("%Y-%m-%d")
         prev_file = root / "content" / "issues" / f"{prev_date}.json"
         if prev_file.exists():
@@ -115,8 +131,10 @@ def main() -> int:
 
     # 재시도: 나쁜 LLM 샘플 한 번에 하루치가 날아가지 않게 최대 3회 시도.
     # 그래도 validate를 못 넘기면 fail-closed (AGENTS.md: 규칙 깨면 배포 안 함).
+    # P9: sidecar 피드백 주입 (pipe_dir/date 전달 → attempt 2+에 --feedback).
     max_attempts = 3 if args.llm else 1
-    return draft_with_retry(draft_cmd, issue, run_validate, max_attempts)
+    return draft_with_retry(draft_cmd, issue, run_validate, max_attempts,
+                            pipe_dir=pipe, date=date)
 
 
 if __name__ == "__main__":
