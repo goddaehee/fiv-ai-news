@@ -32,7 +32,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - 남의 문장을 베끼지 말고, 공개된 회사·수치·날짜만 사실로 삼아 우리 문장으로 씁니다. 영어 직역 금지.
 - 제목은 명사형 종결 ("Grok Voice 3.0, 음성 대화 1위", "Gemini 4 Argon 일반 공개"). 반말체("~했다/내놨다/줄였다") 금지. 같은 줄에 숫자를 넣습니다.
 - 헤드라인은 명사형 종결. 올바른 예: "1만 개 에이전트가 36시간 이상 버티는 구조", "악성코드 분석 업무의 시간 단축 효과". 잘못된 예: "수 시간으로" (부사격 종결), "맡습니다" (동사 종결).
-- 시사점은 두 문장(판단 + 숫자 있는 다음 행동). 입니다/됩니다. '하십시오' 금지. 칸에 적으면/내부 메모 금지.
+- 시사점은 두 문장(판단 + 다음 행동). 입니다/됩니다. '하십시오' 금지. 칸에 적으면/내부 메모 금지. 다음 행동에 숫자를 쓸 때는 그 기사의 number_mentions에 있는 값만 쓰고, 맞는 값이 없으면 숫자 없이 씁니다.
 - 시사점에 템플릿 문구를 쓰지 않습니다. '오늘 확인할 변경입니다', '숫자·적용 범위·분모는 출처 문서에서 다시 보고' 같은 메타 지시문은 절대 포함하지 않습니다. 누가 무엇을 확인·결정해야 하는지 구체적인 독자와 상황으로 씁니다.
 - 시사점의 문장 뼈대는 호 안에서 항목마다 다르게 만듭니다. 첫 문장(판단)은 다음 중 매번 다른 패턴을 골라 씁니다: "…가 달라진 지점입니다", "…에서 읽히는 의미는 …입니다", "…에 미칠 영향이 큽니다", "…가 중요해진 이유는 …입니다", "…가 바뀐 대목입니다". "…것이 …의미/영향입니다" 형태의 종결은 호당 1회를 넘지 않습니다.
 - 둘째 문장(다음 행동)은 "…보면 됩니다"를 반복하지 않습니다. "…부터 확인하면 됩니다", "…에 반영해 두면 됩니다", "…를 비교 기준으로 삼으면 됩니다", "…를 체크리스트에 넣어 두시면 됩니다" 중 상황에 맞는 표현을 골라 씁니다. "잡아 보면 됩니다/올려 보면 됩니다/시험해 보면 됩니다" 같은 관용적 종결은 호당 1회를 넘지 않습니다.
@@ -158,6 +158,37 @@ def chat(url: str, key: str, model: str, user: str, *, effort: str | None = None
         raise TimeoutError(f"LLM timed out after {timeout}s ({url.split('?')[0]} model={model})") from e
     msg = data["choices"][0]["message"]
     return msg.get("content") or msg.get("reasoning_content") or ""
+
+
+def render_feedback(sidecar) -> str:
+    """P9: validate 에러 sidecar를 LLM 피드백 블록으로 렌더링.
+
+    Claude안: 차단된 수치는 넣지 않고 **허용 목록**만 제시한다.
+    차단 수치를 명시하면 역설적으로 앵커가 되어 같은 환각을 또 쓰게 된다.
+    sidecar가 없거나 NUMBERS-UNGROUNDED 에러가 없으면 빈 문자열.
+    """
+    try:
+        rep = json.loads(Path(sidecar).read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+    blocks: list[str] = []
+    for e in rep.get("errors") or []:
+        if not isinstance(e, dict) or e.get("code") != "NUMBERS-UNGROUNDED":
+            continue
+        aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+        fields = ", ".join(e.get("fields") or []) or "본문"
+        domains = ", ".join(e.get("domains") or []) or "미상"
+        allowed = e.get("allowed_raw") or []
+        allowed_str = ", ".join(allowed) if allowed else "없음"
+        blocks.append(
+            f'- analysis id "{aid}" (출처: {domains}) — 문제 위치: {fields}\n'
+            f"  이 기사에서 쓸 수 있는 수치는 다음 {len(allowed)}개뿐입니다: {allowed_str}\n"
+            "  bullets·body·takeaway·extra의 모든 '숫자+단위'는 이 목록에서 표기 그대로 골라 씁니다. "
+            "목록에 맞는 값이 없으면 그 문장에서 숫자를 빼고 씁니다."
+        )
+    if not blocks:
+        return ""
+    return "[직전 시도 검증 결과 — 이번 출력에서 고칠 것]\n" + "\n".join(blocks)
 
 
 def extract_json(text: str) -> dict:
@@ -681,6 +712,7 @@ def main() -> int:
     ap.add_argument("--force-skeleton", action="store_true")
     ap.add_argument("--temperature", type=float, default=0.2)
     ap.add_argument("--attempt", type=int, default=1)
+    ap.add_argument("--feedback", type=Path, help="P9: 직전 attempt의 validate 에러 sidecar (피드백 주입용)")
     args = ap.parse_args()
     snap = json.loads(args.collected.read_text(encoding="utf-8"))
     out = args.out or (ISSUES / f"{snap['date']}.json")
@@ -748,11 +780,19 @@ def main() -> int:
         _attempt_timeouts = {1: 300, 2: 240, 3: 180}
         _env_to = os.environ.get("LLM_TIMEOUT")
         _to = int(_env_to) if _env_to else _attempt_timeouts.get(args.attempt, 180)
+        # P9: 직전 시도의 검증 에러를 user 메시지 맨 끝(payload JSON 뒤)에 피드백으로 주입.
+        # 차단 수치는 넣지 않고 허용 목록만 제시 (역설적 앵커 방지).
+        user_text = json.dumps(payload, ensure_ascii=False)
+        if args.feedback:
+            fb = render_feedback(args.feedback)
+            if fb:
+                user_text += "\n" + fb
+                print(f"[draft] feedback injected from {args.feedback}", flush=True)
         try:
-            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False), temperature=args.temperature, timeout=_to)
+            raw = chat(url, key, model, user_text, temperature=args.temperature, timeout=_to)
         except TimeoutError as e:
             print(f"{e}; retrying with reasoning_effort=low", flush=True)
-            raw = chat(url, key, model, json.dumps(payload, ensure_ascii=False), effort="low", temperature=args.temperature, timeout=_to)
+            raw = chat(url, key, model, user_text, effort="low", temperature=args.temperature, timeout=_to)
         # 디버깅용: 원시 LLM 응답 저장 (시도별 분리, 잘림 vs 나쁜 샘플 구분)
         try:
             raw_path = pipe / f"{snap['date']}.raw-llm.attempt{args.attempt}.txt"
