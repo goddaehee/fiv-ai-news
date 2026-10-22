@@ -1000,6 +1000,18 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
     """
     errors: list[dict] = []
     analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
+    # P10c: sources 누락 — 재시도 피드백용. LLM이 sources 키를 통째로 생략하는
+    # 회귀(10/22: 3회 시도 전부 need ≥1 탈락)에 대응. hollow는 검증 실패이므로
+    # 다음 시도에서 고치도록 피드백에 포함한다.
+    for i, a in enumerate(analyses):
+        srcs = [s for s in (a.get("sources") or [])
+                if isinstance(s, dict) and str(s.get("url") or "").startswith("http")]
+        if not srcs:
+            errors.append({
+                "code": "SOURCES-MISSING",
+                "analysis_index": i,
+                "analysis_id": a.get("id"),
+            })
     for i, a in enumerate(analyses):
         status = _slot_status(a)
         if not status["numbers"]:

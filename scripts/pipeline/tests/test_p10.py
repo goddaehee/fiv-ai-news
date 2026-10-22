@@ -151,6 +151,26 @@ with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="ut
 fb = render_feedback(Path(fp))
 ok("feedback SCHEMA-001 렌더링", "스키마 오류" in fb and "summary 누락" in fb)
 
+# --- P10c: SOURCES-MISSING 피드백 ---
+from validate import collect_structured_errors
+iss_sm = {"analysis": [
+    {"id": "x1", "title": "t", "bullets": ["b"], "body": ["x" * 90, "y" * 90],
+     "takeaway": "중요합니다. 확인하면 됩니다. " + "가" * 60, "sources": []},
+    {"id": "x2", "title": "t", "bullets": ["b"], "body": ["x" * 90, "y" * 90],
+     "takeaway": "중요합니다. 확인하면 됩니다. " + "가" * 60,
+     "sources": [{"url": "https://blog.a.com/post1"}]},
+]}
+errs = collect_structured_errors(iss_sm, None)
+sm = [e for e in errs if e.get("code") == "SOURCES-MISSING"]
+ok("SOURCES-MISSING 1건", len(sm) == 1 and sm[0]["analysis_id"] == "x1")
+
+import json as _json, tempfile as _tf
+with _tf.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as f:
+    _json.dump({"errors": [{"code": "SOURCES-MISSING", "analysis_index": 0, "analysis_id": "x1"}]}, f)
+    fp3 = f.name
+fb3 = render_feedback(Path(fp3))
+ok("feedback SOURCES-MISSING 렌더링", "sources가 비어 있습니다" in fb3 and "x1" in fb3)
+
 # --- P0-2: 피드백 문구 (한국어 표기 허용) ---
 with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as f:
     json.dump({"errors": [{"code": "NUMBERS-UNGROUNDED", "analysis_index": 0,
