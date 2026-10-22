@@ -20,7 +20,7 @@ from pathlib import Path
 
 from cluster import cluster, rank_buckets
 from select_items import select_buckets
-from validate import KINDS, check
+from validate import KINDS, check, url_core
 
 KST = timezone(timedelta(hours=9))
 ROOT = Path(__file__).resolve().parents[2]
@@ -41,11 +41,11 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - mainEvent는 사람이 읽는 이벤트명 (내부 ID 금지).
 - tips의 title과 body는 서로 다르게 씁니다. via는 실제 출처명 (디버그 값 금지).
 - 같은 시사점을 여러 칸에 복붙하지 않습니다.
-- sources.url 은 입력 buckets에 있는 실제 http(s) 링크만. example.com 금지.
+- sources는 입력 buckets의 ref 번호로만 적는다 ([{"ref": 12}, {"ref": 45}] 형태, URL 직접 기입 금지). example.com 금지.
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
-- briefing 5~7 (중요도 순 선정. 뉴스가 적은 날은 3~4개도 가능 — 억지 채우기 금지), analysis는 briefing 중 메인 3~5개 id와 1:1 (나머지는 단신, analysis 없음), bullets 3, body 3문단 기본(핵심 기사는 최대 4문단, 문단당 2~3문장), tips 4~5, keynums 4~6, timeline 4~6.
+- briefing 5~7 (중요도 순 선정. 뉴스가 적은 날은 3~4개도 가능 — 억지 채우기 금지), analysis는 briefing 중 메인 3~5개 id와 1:1 (나머지는 단신, analysis 없음), bullets 3, body 3문단 기본(핵심 기사는 최대 4문단, 문단당 2~3문장, 각 문단 80자 이상), tips 4~5, keynums 4~6, timeline 4~6.
 - analysis는 입력의 main_topics 목록에 있는 토픽의 briefing id와 1:1로만 작성한다. main_topics에 없는 토픽으로는 analysis를 만들지 않는다 (도메인 다양성 확보).
 - 깊이 슬롯: 기사마다 아래 5개를 출력 전에 스스로 셉니다. 한 기사에서 2개 이상 비우면 그 기사는 실패입니다.
   전체 슬롯의 10%를 초과해 비우면 호 전체가 폐기됩니다. "근거 없음"이라고 적어도 슬롯을 통과시키지 못합니다.
@@ -62,7 +62,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
   5. why: takeaway 60자 이상(두 문장), 입니다/됩니다 종결, 그리고 중요, 의미, 영향, 바뀐, 달라진 중 1개 이상 포함.
 - 선별 점수제: 각 기사를 영향도(0~2: 다룬 매체 수)·새로움(0~2: 24시간 이내=2)·관련성(0~2: 수치·고유명사)·근거(0~2: 공식 출처 URL) 로 채점, 총 8점 중 5점 미만은 제외.
 - 소스 쿼터: 단일 출처가 당일 전체 기사 수의 25%를 넘지 않게. 메인 기사는 출처당 1개까지. analysis 선정 시 출처 도메인이 서로 다른 기사를 우선하고, 같은 도메인이 과반을 차지하면 다른 출처의 대체 기사로 교체하라.
-- 수치·주장·인용은 입력에 제공된 원문 요약(summary)과 URL 정보에서 확인된 사실만 씁니다. 해석·전망은 허용하되 사실과 구분하고, 확인 안 된 것은 '추정'·'미확정'으로 명시합니다. 이 규칙은 body뿐 아니라 intro·bullets·extra·tips·keynums·timeline 전체에 적용됩니다.
+- 수치·주장·인용은 입력에 제공된 원문 요약(summary)과 ref 번호로 연결된 원문에서 확인된 사실만 씁니다. 해석·전망은 허용하되 사실과 구분하고, 확인 안 된 것은 '추정'·'미확정'으로 명시합니다. 이 규칙은 body뿐 아니라 intro·bullets·extra·tips·keynums·timeline 전체에 적용됩니다.
 - 각 analysis는 extra 필드를 가질 수 있습니다: '그 밖에: '로 시작하는 한 문단. 본문에서 못 다룬 관련 소식이 해당 항목의 sources에 있을 때만 2~3문장으로 짧게 쓰고, 없으면 빈 문자열로 둡니다. 본문·다른 항목과 겹치지 않게.
 - keynums는 3개 이상. number_mentions에서 확인된 수치만 넣습니다. sub에 '초안', '교차검증 전' 같은 문구를 적지 않습니다. 확인 안 된 수치는 keynums에 넣지 않습니다.
 - intro 첫 문장은 입력 JSON의 date_ko 값으로 시작합니다(예: '10월 15일 수요일 발행.'). 이어서 오늘 호 항목에서 나온 맥락 한 문장을 붙입니다. 맥락이 없으면 날짜만 씁니다.
@@ -160,6 +160,12 @@ def chat(url: str, key: str, model: str, user: str, *, effort: str | None = None
     return msg.get("content") or msg.get("reasoning_content") or ""
 
 
+class SchemaError(ValueError):
+    """P10 (Gemini안): 필수 키 누락 등 스키마 위반.
+    normalize가 값을 합성(예: summary→headline 복제)하는 대신 명시적 에러로
+    재시도 루프에 알린다. DUP-001 유령 에러 원천 제거."""
+
+
 def render_feedback(sidecar) -> str:
     """P9: validate 에러 sidecar를 LLM 피드백 블록으로 렌더링.
 
@@ -173,7 +179,16 @@ def render_feedback(sidecar) -> str:
         return ""
     blocks: list[str] = []
     for e in rep.get("errors") or []:
-        if not isinstance(e, dict) or e.get("code") != "NUMBERS-UNGROUNDED":
+        if not isinstance(e, dict):
+            continue
+        # P10: 스키마 에러도 피드백에 포함 (normalize 합성 금지의 반대급부).
+        if e.get("code") == "SCHEMA-001":
+            blocks.append(
+                f'- 스키마 오류: {e.get("message") or "필수 키 누락"}\n'
+                "  없는 값을 지어내거나 다른 키에서 복제하지 말고, 입력에 있는 값으로만 채웁니다."
+            )
+            continue
+        if e.get("code") != "NUMBERS-UNGROUNDED":
             continue
         aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
         fields = ", ".join(e.get("fields") or []) or "본문"
@@ -183,12 +198,30 @@ def render_feedback(sidecar) -> str:
         blocks.append(
             f'- analysis id "{aid}" (출처: {domains}) — 문제 위치: {fields}\n'
             f"  이 기사에서 쓸 수 있는 수치는 다음 {len(allowed)}개뿐입니다: {allowed_str}\n"
-            "  bullets·body·takeaway·extra의 모든 '숫자+단위'는 이 목록에서 표기 그대로 골라 씁니다. "
+            "  bullets·body·takeaway·extra의 '숫자+단위'는 이 목록에서 고르되, **값이 같은 한국어 표기를 써도 됩니다** "
+            "(예: `$80B`→`800억`). 단, 크기가 달라지면 안 됩니다. "
             "목록에 맞는 값이 없으면 그 문장에서 숫자를 빼고 씁니다."
         )
     if not blocks:
         return ""
     return "[직전 시도 검증 결과 — 이번 출력에서 고칠 것]\n" + "\n".join(blocks)
+
+
+def _write_schema_sidecar(pipe: Path, date: str, attempt: int, message: str) -> None:
+    """P10: normalize의 SchemaError를 validate sidecar와 같은 형식으로 저장.
+    다음 attempt의 --feedback (--json-out sidecar와 동일 포맷)으로 주입된다."""
+    try:
+        path = pipe / f"{date}.validate-errors.attempt{attempt}.json"
+        rep = {
+            "file": None,
+            "date": date,
+            "failed": True,
+            "errors": [{"code": "SCHEMA-001", "message": message}],
+        }
+        path.write_text(json.dumps(rep, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(f"[draft] schema sidecar written: {path}", flush=True)
+    except Exception as e:
+        print(f"WARN schema sidecar failed: {e}", file=sys.stderr)
 
 
 def extract_json(text: str) -> dict:
@@ -210,57 +243,57 @@ def slug(s: str) -> str:
     return (s[:36] or "s")
 
 
-def _hit(items: list[dict], title: str) -> dict | None:
-    words = [w for w in re.split(r"\W+", (title or "").lower()) if len(w) > 3][:8]
-    if not words:
-        return None
-    best, score = None, 0
-    for it in items:
-        blob = f"{it.get('title') or ''} {it.get('summary') or ''}".lower()
-        sc = sum(1 for w in words if w in blob)
-        if sc > score:
-            best, score = it, sc
-    return best if score >= 2 else None
-
-
-def attach_sources(issue: dict, snap: dict, buckets: list | None = None) -> dict:
-    pool: list[dict] = []
-    for pair in buckets or []:
-        items = pair[1] if isinstance(pair, (list, tuple)) and len(pair) == 2 else []
-        pool.extend(items)
-    pool.extend(snap.get("items") or [])
+def _ref_table(snap: dict) -> list[dict]:
+    """P10 (Codex안): ref → 수집 아이템의 결정적 테이블.
+    스냅샷 순서대로 URL 중복 제거. LLM payload의 ref와 attach_sources의
+    ref→URL 재조립이 같은 테이블을 공유한다."""
     seen: set[str] = set()
-    uniq: list[dict] = []
-    for it in pool:
+    table: list[dict] = []
+    for it in snap.get("items") or []:
         url = it.get("url") or ""
-        if not url.startswith("http") or "example.com" in url or url in seen:
+        if not url.startswith("http") or "example.com" in url:
             continue
-        seen.add(url)
-        uniq.append(it)
+        key = url_core(url)
+        if key in seen:
+            continue
+        seen.add(key)
+        table.append(it)
+    return table
 
+
+def attach_sources(issue: dict, snap: dict, buckets: list | None = None,
+                   ref_table: list[dict] | None = None) -> dict:
+    """P10 (Codex안): ref 기반 결정적 소스 조립.
+    LLM은 sources를 ref 번호([{"ref": 12}, {"ref": 45}])로만 적고,
+    실제 URL은 스냅샷 테이블에서 결정적으로 재조립한다.
+    위치 기반(bucket_list[i])·퍼지 매칭(_hit)은 폐지 — 주제 무관 출처가
+    붙어도 통과하던 문제를 원천 제거. 검증기 수정 불필요
+    (재조립된 URL은 전부 수집 URL이므로 '수집되지 않은 URL' 게이트 통과).
+    """
+    table = ref_table if ref_table is not None else _ref_table(snap)
+    ref_by_core = {url_core(it.get("url") or ""): i for i, it in enumerate(table)}
     analyses = issue.get("analysis") or []
-    bucket_list = list(buckets or [])
-    for i, a in enumerate(analyses):
-        srcs = a.get("sources") or []
-        hollow = not srcs or all("example.com" in (s.get("url") or "") for s in srcs)
-        if not hollow:
-            continue
-        candidates: list[dict] = []
-        if i < len(bucket_list):
-            candidates.extend(bucket_list[i][1][:4])
-        hit = _hit(uniq, a.get("title") or "") or _hit(uniq, " ".join(a.get("bullets") or []))
-        if hit:
-            candidates.insert(0, hit)
+    for a in analyses:
         picked = []
-        used: set[str] = set()
-        for it in candidates + uniq[:12]:
-            url = it.get("url") or ""
-            if not url.startswith("http") or "example.com" in url or url in used:
+        used: set[int] = set()
+        for s in a.get("sources") or []:
+            ref = None
+            if isinstance(s, dict):
+                ref = s.get("ref")
+                if ref is None:
+                    # 구형/직접 URL 표기 호환: 테이블에서 역조회
+                    url = _text(s.get("url") or s.get("href") or s.get("link"))
+                    if url.startswith("http") and "example.com" not in url:
+                        ref = ref_by_core.get(url_core(url))
+            elif isinstance(s, (int, float)):
+                ref = int(s)
+            if not isinstance(ref, int) or ref in used or not (0 <= ref < len(table)):
                 continue
-            used.add(url)
+            used.add(ref)
+            it = table[ref]
             picked_src = {
                 "handle": it.get("source") or "source",
-                "url": url,
+                "url": it.get("url"),
                 "kind": it.get("kind") or "doc",
             }
             # P5: Google News <source url> 실발행처 — 검증기의 도메인 계산에 사용
@@ -269,8 +302,7 @@ def attach_sources(issue: dict, snap: dict, buckets: list | None = None) -> dict
             picked.append(picked_src)
             if len(picked) >= 2:
                 break
-        if picked:
-            a["sources"] = picked
+        a["sources"] = picked
     return issue
 
 
@@ -336,7 +368,15 @@ def _sources(v) -> list[dict]:
             if url.startswith("http"):
                 out.append({"handle": "source", "url": url, "kind": "doc"})
             continue
+        if isinstance(s, (int, float)):
+            # P10: ref 번호 직접 표기
+            out.append({"ref": int(s)})
+            continue
         if not isinstance(s, dict):
+            continue
+        # P10: ref 기반 표기 — attach_sources가 URL로 재조립한다
+        if "ref" in s and isinstance(s.get("ref"), (int, float)):
+            out.append({"ref": int(s["ref"])})
             continue
         url = _text(s.get("url") or s.get("href") or s.get("link"))
         if not url.startswith("http") or "example.com" in url:
@@ -385,8 +425,9 @@ def thicken_take(take: str, bullets: list[str], title: str) -> str:
 # validate.check_depth의 numbers 슬롯과 정확히 일치해야 한다.
 # P1 (Codex): AI 뉴스 실측 기반 확장. 모델명(GPT-4)·연도(2024년)는 제외.
 # \b 대신 (?![0-9A-Za-z]) 사용 — \b는 한글 조사 앞에서 단어 경계로 인식하지 않음.
+# P10: 첫 분기에도 lookbehind 추가 (S-1 오탐: "v2배"·"a1개" 같은 영숫자 접미사 제외).
 NUM_RE = re.compile(
-    r"\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)"  # 기존 한국어 단위
+    r"(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)"  # 기존 한국어 단위
     r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|billion|million)?(?![0-9A-Za-z])"  # $200, $300B
     r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K)(?![0-9A-Za-z])"  # 70B (GPT-4 제외)
     r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|thousand|times)(?![0-9A-Za-z])"
@@ -395,21 +436,34 @@ NUM_RE = re.compile(
 )
 
 
+def normalize_num_text(text: str) -> str:
+    """수치 매칭 전 하이픈 전처리. P10 (Codex안): 숫자-문자 사이 하이픈만 공백으로.
+    "120-billion" → "120 billion" (매칭용). "GPT-4"는 유지 (lookbehind가 제외).
+    validate.py와 공유 (단일 소스)."""
+    return re.sub(r"(?<=\d)[-_](?=[A-Za-z])", " ", text or "")
+
+
 def number_mentions(summary: str) -> list[str]:
     """summary에서 검증기를 통과하는 수치 표면만 추출 (LLM 입력용 후보).
     LLM의 수치 인식과 정규식의 차이를 메우기 위해 미리 뽑아 payload에 넣어준다.
     예: "응답은 2배 빨라지고 가격은 30% 내렸다" → ["2배", "30%"].
-    P1 (Codex): findall 대신 finditer 사용 — 그룹이 있는 패턴에서 튜플 반환 문제 방지."""
+    P1 (Codex): findall 대신 finditer 사용 — 그룹이 있는 패턴에서 튜플 반환 문제 방지.
+    P10: validate와 동일한 하이픈 전처리 적용."""
     seen: list[str] = []
-    for m in NUM_RE.finditer(summary or ""):
+    for m in NUM_RE.finditer(normalize_num_text(summary or "")):
         s = m.group(0).strip()
         if s and s not in seen:
             seen.append(s)
     return seen[:6]
 
 
-def normalize(issue: dict) -> dict:
-    """Coerce sloppy LLM JSON into the house schema so check() does not crash."""
+def normalize(issue: dict, snap: dict | None = None) -> dict:
+    """Coerce sloppy LLM JSON into the house schema so check() does not crash.
+
+    P10: snap을 받으면 keynums 폴백을 수집 전체에서 채운다.
+    P10 (Gemini안): summary→headline 복제 폴백 제거. 필수 키가 없으면
+    합성 대신 SchemaError를 던져 재시도 피드백에 포함시킨다
+    (DUP-001 유령 에러 원천 제거)."""
     brief = []
     for i, b in enumerate(_list(issue.get("briefing")), start=1):
         if isinstance(b, str):
@@ -421,11 +475,14 @@ def normalize(issue: dict) -> dict:
         if not hid or hid.isdigit() or len(hid) < 3:
             hid = slug(headline or f"s{i}")
         hid = hid.replace(" ", "-")[:40]
+        summary = _text(b.get("summary") or b.get("dek"))
+        if not summary:
+            raise SchemaError(f"briefing[{i}] (id={hid}): summary 누락 — headline 복제 금지")
         brief.append(
             {
                 "id": hid,
                 "headline": headline or hid,
-                "summary": _text(b.get("summary") or b.get("dek") or headline)[:400],
+                "summary": summary[:400],
             }
         )
     ids = {b["id"] for b in brief}
@@ -538,16 +595,32 @@ def normalize(issue: dict) -> dict:
     if keynums and all(str(k["val"]).isdigit() and str(k["lab"]).isdigit() for k in keynums):
         keynums = []
     if len(keynums) < 3:
-        blob = " ".join(f"{b['headline']} {b['summary']}" for b in brief)
+        # P10 (Codex안): keynums 폴백을 수집 전체 스냅샷으로 확장.
+        # 브리핑 blob의 좁은 정규식 대신 NUM_RE로 수집 title+summary를 스캔한다.
         seen = {k["val"] for k in keynums}
-        for m in re.finditer(r"(\$[\d,.]+|\d+(?:\.\d+)?%|\d{1,3}(?:,\d{3})+)", blob):
-            val = m.group(1)
-            if val in seen:
-                continue
-            seen.add(val)
-            keynums.append({"val": val, "lab": "본문 수치", "sub": "본문"})
-            if len(keynums) >= 3:
-                break
+        if snap:
+            for it in snap.get("items") or []:
+                text = f"{it.get('title') or ''} {it.get('summary') or ''}"
+                for m in NUM_RE.finditer(normalize_num_text(text)):
+                    val = m.group(0).strip()
+                    if val in seen:
+                        continue
+                    seen.add(val)
+                    keynums.append({"val": val, "lab": it.get("source") or "수집", "sub": "수집 요약"})
+                    if len(keynums) >= 3:
+                        break
+                if len(keynums) >= 3:
+                    break
+        if len(keynums) < 3:
+            blob = " ".join(f"{b['headline']} {b['summary']}" for b in brief)
+            for m in re.finditer(r"(\$[\d,.]+|\d+(?:\.\d+)?%|\d{1,3}(?:,\d{3})+)", blob):
+                val = m.group(1)
+                if val in seen:
+                    continue
+                seen.add(val)
+                keynums.append({"val": val, "lab": "본문 수치", "sub": "본문"})
+                if len(keynums) >= 3:
+                    break
     # P0: 패딩 금지. 부족하면 그대로 두고 validator가 판단한다.
     # "01"·"교차검증 전" 같은 가짜 값으로 fail-closed 게이트를 속이지 않는다.
     if not tips:
@@ -743,14 +816,27 @@ def main() -> int:
                 return None
             return f"{m.group(1)}/{m.group(2)} {m.group(3)}:{m.group(4)}"
 
+        # P10 (Codex안): ref 기반 결정적 소스 조립.
+        # payload에는 URL 대신 스냅샷 인덱스(ref)를 노출하고, attach_sources가
+        # 같은 테이블로 ref→canonical URL을 재조립한다.
+        ref_table = _ref_table(snap)
+        ref_of = {url_core(it.get("url") or ""): i for i, it in enumerate(ref_table)}
+
         def _item_payload(it: dict) -> dict:
             # P1 (Codex): 후보는 420자 전체 summary에서 추출 (180자 잘림 전에).
             # LLM에게는 180자만 보여주지만 쓸 수 있는 숫자는 전체에서 뽑는다.
             full_summary = it.get("summary") or ""
             summary = full_summary[:180]
+            key = url_core(it.get("url") or "")
+            ref = ref_of.get(key)
+            if ref is None:
+                # 방어: 테이블에 없는 아이템이면 추가 (인덱스 일관성 유지)
+                ref = len(ref_table)
+                ref_table.append(it)
+                ref_of[key] = ref
             return {
                 "title": it["title"],
-                "url": it.get("url"),
+                "ref": ref,
                 "source": it["source"],
                 "summary": summary,
                 "published": it.get("published"),
@@ -801,9 +887,16 @@ def main() -> int:
             pass
         issue = extract_json(raw)
         issue["date"] = snap["date"]
-        issue = normalize(issue)
+        try:
+            issue = normalize(issue, snap)
+        except SchemaError as e:
+            # P10 (Gemini안): 합성 대신 명시적 스키마 에러 → sidecar로 남겨
+            # 다음 attempt의 피드백에 포함시킨다.
+            print(f"schema error: {e}", file=sys.stderr)
+            _write_schema_sidecar(pipe, snap["date"], args.attempt, str(e))
+            return 4
         issue["date"] = snap["date"]
-        issue = attach_sources(issue, snap, buckets)
+        issue = attach_sources(issue, snap, buckets, ref_table)
         issue["draft"] = True
     else:
         print("no API key — writing skeleton for the editor")

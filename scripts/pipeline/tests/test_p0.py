@@ -576,11 +576,19 @@ ok("P7: check_depth grounded 통과", not any("NUMBERS-UNGROUNDED" in e for e in
 # ============================================================
 
 # P8-1: _canon_num 단위 정규화
-ok("P8: _canon_num billion→b", _canon_num("120 billion") == "120b")
-ok("P8: _canon_num Million→m", _canon_num("2 Million") == "2m")
-ok("P8: _canon_num thousand→k", _canon_num("5 thousand") == "5k")
-ok("P8: _canon_num % 유지", _canon_num("30%") == "30%")
-ok("P8: _canon_num 한글 단위 유지", _canon_num("2배") == "2배")
+# P10: 크기(magnitude) 기반 통일로 변경 ($80B/80 billion/800억 → 동일).
+ok("P10: _canon_num 120 billion", _canon_num("120 billion") == "mag:120000000000")
+ok("P10: _canon_num 2 Million", _canon_num("2 Million") == "mag:2000000")
+ok("P10: _canon_num 5 thousand", _canon_num("5 thousand") == "mag:5000")
+ok("P10: _canon_num $80B", _canon_num("$80B") == "mag:80000000000")
+ok("P10: _canon_num 80 billion", _canon_num("80 billion") == "mag:80000000000")
+ok("P10: _canon_num 800억", _canon_num("800억") == "mag:80000000000")
+ok("P10: _canon_num $80B==800억", _canon_num("$80B") == _canon_num("800억") == _canon_num("80 billion"))
+ok("P10: _canon_num 80억 != $80B (10배 차이 차단)", _canon_num("80억") != _canon_num("$80B"))
+ok("P10: _canon_num % 유지", _canon_num("30%") == "30%")
+ok("P10: _canon_num 한글 단위 유지", _canon_num("2배") == "2배")
+ok("P10: _canon_num 명 유지", _canon_num("100명") == "100명")
+ok("P10: _canon_num 10x 유지", _canon_num("10x") == "10x")
 
 # P8-2: 정규식 단일 소스화 (draft.NUM_RE와 동일)
 from draft import NUM_RE as _DRAFT_NUM_RE
