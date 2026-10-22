@@ -840,12 +840,14 @@ WHY_MARKERS = ["중요", "의미", "영향", "바뀐", "달라진"]
 
 # P8: 정규식 단일 소스화 — draft.py의 NUM_RE를 직접 import.
 # 수동 복사본 동기화 깨짐 방지.
+# P10: normalize_num_text도 공유 (숫자-문자 사이 하이픈만 공백으로).
 try:
     from draft import NUM_RE as NUM_RE_VALIDATE
+    from draft import normalize_num_text as _normalize_num_text
 except ImportError:
     # standalone 실행 시 fallback (draft.py와 동일한 패턴)
     NUM_RE_VALIDATE = re.compile(
-        r"\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)"
+        r"(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)"
         r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|billion|million)?(?![0-9A-Za-z])"
         r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K)(?![0-9A-Za-z])"
         r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|thousand|times)(?![0-9A-Za-z])"
@@ -853,21 +855,47 @@ except ImportError:
         re.IGNORECASE,
     )
 
+    def _normalize_num_text(text: str) -> str:
+        return re.sub(r"(?<=\d)[-_](?=[A-Za-z])", " ", text or "")
+
+
+# P10: 크기(magnitude) 단위 → 10의 거듭제곱 지수.
+_MAG_UNIT = {
+    "b": 9, "billion": 9, "billions": 9,
+    "m": 6, "million": 6, "millions": 6,
+    "k": 3, "thousand": 3, "thousands": 3,
+    "억": 8, "만": 4, "천": 3,
+}
+
 
 def _canon_num(s: str) -> str:
     """수치 표면을 정규화하여 비교 가능하게 만듦.
 
-    P8: 단위 통일.
-    - 영문 단위를 약어로 (`billion` → `b`, `million` → `m`, `thousand` → `k`)
-    - 소문자화, 공백 제거
-    예: "120 billion" → "120b", "2 Million" → "2m"
-    참고: 하이픈 전처리는 호출자(_numbers_grounded)에서 정규식 매칭 전에 수행
+    P10: 크기(magnitude) 기반 통일.
+    - $80B / 80 billion / 800억 → 전부 "mag:80000000000"
+    - 통화기호($·달러) 제거, 숫자 사이 콤마 제거
+    - %, 배, 명, 개 등 크기 단위가 아닌 것은 기존처럼 표면 비교 유지
+    - 80억($80B의 1/10)은 여전히 차단됨 (크기가 다름)
     """
-    t = str(s or "").lower()
+    from decimal import Decimal, InvalidOperation
+
+    t = str(s or "").strip().lower()
+    t = t.replace("$", "").replace("달러", "")
+    t = re.sub(r",(?=\d)", "", t)  # 숫자 사이 콤마 제거 ("1,200" → "1200")
+    t = re.sub(r"\s+", "", t)
+    m = re.match(r"^(\d+(?:\.\d+)?)([a-z가-힣]*)$", t)
+    if m:
+        num, unit = m.group(1), m.group(2)
+        if unit in _MAG_UNIT:
+            try:
+                val = Decimal(num) * (Decimal(10) ** _MAG_UNIT[unit])
+                return f"mag:{int(val.to_integral_value())}"
+            except InvalidOperation:
+                pass
+    # 크기 단위가 아니면 기존 동작: 영문 단위 약어화 + 소문자 + 공백 제거
     t = re.sub(r"\bbillions?\b", "b", t)
     t = re.sub(r"\bmillions?\b", "m", t)
     t = re.sub(r"\bthousands?\b", "k", t)
-    t = re.sub(r"\s+", "", t)
     return t
 
 
@@ -889,7 +917,7 @@ def _input_number_count(a: dict, collected_by_url: dict | None) -> int | None:
         if it is None:
             continue
         matched = True
-        cand.update(m.group(0) for m in NUM_RE_VALIDATE.finditer(it.get("summary") or ""))
+        cand.update(m.group(0) for m in NUM_RE_VALIDATE.finditer(_normalize_num_text(it.get("summary") or "")))
     if not matched:
         return None
     return len(cand)
@@ -925,7 +953,7 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
         matched = True
         # P8: title도 스캔 (payload에 title이 들어가므로)
         for text in (it.get("title") or "", it.get("summary") or ""):
-            text = re.sub(r"[-_]", " ", text)
+            text = _normalize_num_text(text)
             for m in NUM_RE_VALIDATE.finditer(text):
                 raw = m.group(0)
                 norm = _canon_num(raw)
@@ -944,7 +972,7 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
         return str(v or "")
     bad_map: dict[str, dict] = {}
     for field in ("bullets", "body", "takeaway", "extra"):
-        ftext = re.sub(r"[-_]", " ", _field_text(field))
+        ftext = _normalize_num_text(_field_text(field))
         for m in NUM_RE_VALIDATE.finditer(ftext):
             raw = m.group(0)
             norm = _canon_num(raw)
