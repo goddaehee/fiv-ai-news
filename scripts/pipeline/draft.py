@@ -41,7 +41,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - mainEvent는 사람이 읽는 이벤트명 (내부 ID 금지).
 - tips의 title과 body는 서로 다르게 씁니다. via는 실제 출처명 (디버그 값 금지).
 - 같은 시사점을 여러 칸에 복붙하지 않습니다.
-- sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. example.com 금지.
+- sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. analysis마다 2개 필수이며, 비어 있으면 호 전체가 폐기된다. example.com 금지.
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
@@ -72,6 +72,7 @@ body: "A사가 새 모델을 공개했다. 응답은 2배 빨라지고 가격은
 takeaway: "응답 속도와 가격이 함께 바뀐 점이 도입 비용 판단에 중요하다. 다음 분기 적용 전에 영어 외 과제 점수도 확인하면 됩니다."
 timeline: [{"t": "<그 item의 published_ko 그대로>", "d": "모델 공개"}]
 keynums: [{"val": "2배", "lab": "응답 속도", "sub": "A사 발표"}]
+sources: [{"url": "<입력 buckets의 실제 링크 그대로>"}, {"url": "<입력 buckets의 실제 링크 그대로>"}]  # analysis마다 필수 2개. 비우면 호 폐기.
 - 전체 분량: briefMin 5, readMin은 실제 분량 기준이며 normalize에서 글자 수로 계산합니다.
 - 확인 안 된 인수는 미확정이라고 밝힙니다. 회사 자체 측정은 본문에 그 사실을 적습니다.
 - 과장 형용사(혁명, 폭발) 금지. 숫자로 강도를 전합니다.
@@ -186,6 +187,16 @@ def render_feedback(sidecar) -> str:
             blocks.append(
                 f'- 스키마 오류: {e.get("message") or "필수 키 누락"}\n'
                 "  없는 값을 지어내거나 다른 키에서 복제하지 말고, 입력에 있는 값으로만 채웁니다."
+            )
+            continue
+        # P10c: sources 누락 피드백 (10/22 회귀 대응).
+        if e.get("code") == "SOURCES-MISSING":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            blocks.append(
+                f'- analysis id "{aid}"의 sources가 비어 있습니다. 비어 있으면 호 전체가 폐기됩니다.\n'
+                '  입력 buckets에서 이 기사와 같은 주제의 아이템 2개를 골라\n'
+                '  sources에 [{"url": "<실제 링크>"}, {"url": "<실제 링크>"}] 형태로 넣으세요.\n'
+                "  URL은 입력에 있는 것을 한 글자도 바꾸지 않고 그대로 복사하고, 지어내지 마세요."
             )
             continue
         if e.get("code") != "NUMBERS-UNGROUNDED":
