@@ -41,7 +41,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - mainEvent는 사람이 읽는 이벤트명 (내부 ID 금지).
 - tips의 title과 body는 서로 다르게 씁니다. via는 실제 출처명 (디버그 값 금지).
 - 같은 시사점을 여러 칸에 복붙하지 않습니다.
-- sources는 입력 buckets의 ref 번호로만 적는다 ([{"ref": 12}, {"ref": 45}] 형태, URL 직접 기입 금지). example.com 금지.
+- sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. example.com 금지.
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
@@ -62,7 +62,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
   5. why: takeaway 60자 이상(두 문장), 입니다/됩니다 종결, 그리고 중요, 의미, 영향, 바뀐, 달라진 중 1개 이상 포함.
 - 선별 점수제: 각 기사를 영향도(0~2: 다룬 매체 수)·새로움(0~2: 24시간 이내=2)·관련성(0~2: 수치·고유명사)·근거(0~2: 공식 출처 URL) 로 채점, 총 8점 중 5점 미만은 제외.
 - 소스 쿼터: 단일 출처가 당일 전체 기사 수의 25%를 넘지 않게. 메인 기사는 출처당 1개까지. analysis 선정 시 출처 도메인이 서로 다른 기사를 우선하고, 같은 도메인이 과반을 차지하면 다른 출처의 대체 기사로 교체하라.
-- 수치·주장·인용은 입력에 제공된 원문 요약(summary)과 ref 번호로 연결된 원문에서 확인된 사실만 씁니다. 해석·전망은 허용하되 사실과 구분하고, 확인 안 된 것은 '추정'·'미확정'으로 명시합니다. 이 규칙은 body뿐 아니라 intro·bullets·extra·tips·keynums·timeline 전체에 적용됩니다.
+- 수치·주장·인용은 입력에 제공된 원문 요약(summary)과 URL 정보에서 확인된 사실만 씁니다. 해석·전망은 허용하되 사실과 구분하고, 확인 안 된 것은 '추정'·'미확정'으로 명시합니다. 이 규칙은 body뿐 아니라 intro·bullets·extra·tips·keynums·timeline 전체에 적용됩니다.
 - 각 analysis는 extra 필드를 가질 수 있습니다: '그 밖에: '로 시작하는 한 문단. 본문에서 못 다룬 관련 소식이 해당 항목의 sources에 있을 때만 2~3문장으로 짧게 쓰고, 없으면 빈 문자열로 둡니다. 본문·다른 항목과 겹치지 않게.
 - keynums는 3개 이상. number_mentions에서 확인된 수치만 넣습니다. sub에 '초안', '교차검증 전' 같은 문구를 적지 않습니다. 확인 안 된 수치는 keynums에 넣지 않습니다.
 - intro 첫 문장은 입력 JSON의 date_ko 값으로 시작합니다(예: '10월 15일 수요일 발행.'). 이어서 오늘 호 항목에서 나온 맥락 한 문장을 붙입니다. 맥락이 없으면 날짜만 씁니다.
@@ -263,13 +263,13 @@ def _ref_table(snap: dict) -> list[dict]:
 
 def attach_sources(issue: dict, snap: dict, buckets: list | None = None,
                    ref_table: list[dict] | None = None) -> dict:
-    """P10 (Codex안): ref 기반 결정적 소스 조립.
-    LLM은 sources를 ref 번호([{"ref": 12}, {"ref": 45}])로만 적고,
-    실제 URL은 스냅샷 테이블에서 결정적으로 재조립한다.
+    """P10: 결정적 소스 조립.
+    LLM이 쓴 sources의 URL을 스냅샷 테이블에서 역조회해 canonical URL로
+    재조립한다. 수집에 없는 URL(환각)은 버린다. ref 번호 표기도 받는다.
     위치 기반(bucket_list[i])·퍼지 매칭(_hit)은 폐지 — 주제 무관 출처가
-    붙어도 통과하던 문제를 원천 제거. 검증기 수정 불필요
-    (재조립된 URL은 전부 수집 URL이므로 '수집되지 않은 URL' 게이트 통과).
-    """
+    붙어도 통과하던 문제를 원천 제거. hollow는 빈 채로 둔다 (검증기가 판단).
+    검증기 수정 불필요 (재조립된 URL은 전부 수집 URL이므로
+    '수집되지 않은 URL' 게이트 통과)."""
     table = ref_table if ref_table is not None else _ref_table(snap)
     ref_by_core = {url_core(it.get("url") or ""): i for i, it in enumerate(table)}
     analyses = issue.get("analysis") or []
@@ -816,27 +816,20 @@ def main() -> int:
                 return None
             return f"{m.group(1)}/{m.group(2)} {m.group(3)}:{m.group(4)}"
 
-        # P10 (Codex안): ref 기반 결정적 소스 조립.
-        # payload에는 URL 대신 스냅샷 인덱스(ref)를 노출하고, attach_sources가
-        # 같은 테이블로 ref→canonical URL을 재조립한다.
+        # P10: 결정적 소스 조립용 테이블. attach_sources가 LLM이 쓴 URL을
+        # 이 테이블에서 역조회해 canonical URL로 재조립한다 (환각 URL 차단).
+        # payload에는 LLM이 복사하기 쉬운 URL을 그대로 노출한다
+        # (ref 번호 방식은 LLM이 sources를 생략하는 회귀를 일으켜 폐기).
         ref_table = _ref_table(snap)
-        ref_of = {url_core(it.get("url") or ""): i for i, it in enumerate(ref_table)}
 
         def _item_payload(it: dict) -> dict:
             # P1 (Codex): 후보는 420자 전체 summary에서 추출 (180자 잘림 전에).
             # LLM에게는 180자만 보여주지만 쓸 수 있는 숫자는 전체에서 뽑는다.
             full_summary = it.get("summary") or ""
             summary = full_summary[:180]
-            key = url_core(it.get("url") or "")
-            ref = ref_of.get(key)
-            if ref is None:
-                # 방어: 테이블에 없는 아이템이면 추가 (인덱스 일관성 유지)
-                ref = len(ref_table)
-                ref_table.append(it)
-                ref_of[key] = ref
             return {
                 "title": it["title"],
-                "ref": ref,
+                "url": it.get("url"),
                 "source": it["source"],
                 "summary": summary,
                 "published": it.get("published"),
