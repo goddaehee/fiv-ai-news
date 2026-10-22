@@ -88,6 +88,34 @@ ok("무효 ref 제거", out["analysis"][1]["sources"] == [])
 ok("구형 URL 역조회", out["analysis"][2]["sources"][0]["url"] == "https://blog.a.com/post1")
 ok("hollow 빈 채", out["analysis"][3]["sources"] == [])
 
+# P10b: URL 기반 표기 (LLM이 실제로 쓰는 경로) — 테이블 역조회로 재조립
+# 실제 파이프라인 흐름: normalize(_sources) → attach_sources
+def _pipe(iss):
+    n = normalize(iss, SNAP)
+    return attach_sources(n, SNAP, None, _ref_table(SNAP))
+
+issue_u = {"briefing": [{"id": "b1", "headline": "H1", "summary": "S1"}],
+    "analysis": [
+    {"id": "b1", "title": "1. T", "bullets": ["b1", "b2"], "body": ["x" * 90, "y" * 90],
+     "takeaway": "중요합니다. 확인하면 됩니다. " + "가" * 60, "tags": ["t1", "t2", "t3"],
+     "sources": [
+        {"url": "https://blog.a.com/post1", "handle": "A"},
+        {"url": "https://news.google.com/rss/articles/CBMix", "handle": "B"}]},
+    {"id": "b1", "title": "2. T", "bullets": ["b1", "b2"], "body": ["x" * 90, "y" * 90],
+     "takeaway": "중요합니다. 확인하면 됩니다. " + "가" * 60, "tags": ["t1", "t2", "t3"],
+     "sources": [{"url": "https://hallucinated.example.net/x"}]},  # 환각 URL → 버림
+    {"id": "b1", "title": "3. T", "bullets": ["b1", "b2"], "body": ["x" * 90, "y" * 90],
+     "takeaway": "중요합니다. 확인하면 됩니다. " + "가" * 60, "tags": ["t1", "t2", "t3"],
+     "sources": ["https://blog.a.com/post1"]},  # 문자열 URL
+], "keynums": [], "timeline": [], "tips": [{"title": "t", "body": "b", "via": ""}],
+    "keywords": ["a", "b", "c"]}
+out_u = _pipe(issue_u)
+ok("URL 역조회 재조립", out_u["analysis"][0]["sources"][0]["url"] == "https://blog.a.com/post1")
+ok("URL origin_url 유지",
+   out_u["analysis"][0]["sources"][1].get("origin_url") == "https://tech.example.org/b-analysis")
+ok("환각 URL 버림", out_u["analysis"][1]["sources"] == [])
+ok("문자열 URL 처리", out_u["analysis"][2]["sources"][0]["url"] == "https://blog.a.com/post1")
+
 # --- P0-5: keynums 폴백 수집 전체 확장 ---
 snap_nums = {"date": "2026-10-22", "items": [
     {"title": "t1", "url": "https://x.com/1", "source": "S1", "summary": "가격이 30% 내리고 2배 빨라졌다."},
