@@ -92,7 +92,7 @@ ok("hollow 빈 채", out["analysis"][3]["sources"] == [])
 # 실제 파이프라인 흐름: normalize(_sources) → attach_sources
 def _pipe(iss):
     n = normalize(iss, SNAP)
-    return attach_sources(n, SNAP, None, _ref_table(SNAP))
+    return attach_sources(n, SNAP, ref_table=_ref_table(SNAP))
 
 issue_u = {"briefing": [{"id": "b1", "headline": "H1", "summary": "S1"}],
     "analysis": [

@@ -8,6 +8,7 @@ import json
 import re
 import sys
 from datetime import datetime, timedelta, timezone
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -876,9 +877,12 @@ def _canon_num(s: str) -> str:
     - 통화기호($·달러) 제거, 숫자 사이 콤마 제거
     - %, 배, 명, 개 등 크기 단위가 아닌 것은 기존처럼 표면 비교 유지
     - 80억($80B의 1/10)은 여전히 차단됨 (크기가 다름)
-    """
-    from decimal import Decimal, InvalidOperation
 
+    P11 문서화 (Claude 권장): 통화는 grounding하지 않는다.
+    - $·달러를 제거하고 크기만 비교하므로 "$80B"(달러)와 "800억"(원)이
+      같은 크기로 통과한다. 달러↔원 단위 오기(예: $80B를 800억원으로 씀)는
+      이 게이트가 잡지 못한다 — 통화를 검증하려면 별도 통화 게이트가 필요하다.
+    """
     t = str(s or "").strip().lower()
     t = t.replace("$", "").replace("달러", "")
     t = re.sub(r",(?=\d)", "", t)  # 숫자 사이 콤마 제거 ("1,200" → "1200")
@@ -997,6 +1001,8 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
 
     반환 형식: [{code, analysis_index, analysis_id, fields, bad, allowed_raw, domains}]
     - bad: 차단된 수치 (피드백 렌더링 시에는 앵커 방지용으로 제외하고 allowed만 사용)
+    P11: SOURCES-MISSING · NUMBERS-UNGROUNDED 외에 EMPTY-001 · TPL-001 ·
+    TAKEAWAY-DUP · TAKEAWAY-TPL · QUOTA-001도 수집한다.
     """
     errors: list[dict] = []
     analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
@@ -1034,6 +1040,28 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
             "allowed_raw": d["allowed_raw"],
             "domains": domains,
         })
+    # P11 (Grok 권장): 피드백 커버리지 확대 — EMPTY-001 / TPL-001 /
+    # TAKEAWAY-DUP / TAKEAWAY-TPL / QUOTA-001도 sidecar에 싣는다.
+    # 판정은 기존 게이트(check_p0 / check_source_quota)를 그대로 재사용해
+    # 게이트와 피드백이 어긋나지 않게 하고, 에러 문자열에서 코드·위치만 구조화한다.
+    # 앵커 방지: TPL-001의 해당 문구는 sidecar에 싣지 않는다 (render_feedback도 인용 안 함).
+    p0_errors, _ = check_p0(issue, None)
+    for line in p0_errors:
+        m = re.match(r"(EMPTY-001|TPL-001) analysis\[(\d+)\]\.", line)
+        if m:
+            idx = int(m.group(2))
+            errors.append({
+                "code": m.group(1),
+                "analysis_index": idx,
+                "analysis_id": analyses[idx].get("id") if idx < len(analyses) else None,
+            })
+        elif line.startswith(("TAKEAWAY-DUP", "TAKEAWAY-TPL")):
+            errors.append({"code": line.split(":", 1)[0]})
+    quota_errors, _ = check_source_quota(issue, collected_by_url)
+    for line in quota_errors:
+        m = re.match(r"QUOTA-001 (\S+):", line)
+        if m:
+            errors.append({"code": "QUOTA-001", "domain": m.group(1)})
     return errors
 
 

@@ -34,7 +34,9 @@ jobs:
           GLM_BASE_URL: ${{ secrets.GLM_BASE_URL }}
           GLM_MODEL: ${{ secrets.GLM_MODEL }}
           GLM_REASONING: low
-          LLM_TIMEOUT: "600"
+          # P11: LLM_TIMEOUT 고정(600) 제거 — draft.py의 attempt별 타임아웃
+          # (P7: 1차 300s → 2차 240s → 3차 180s)이 env 고정에 무력화되던 문제 수정.
+          # env가 없으면 attempt별 기본값이 적용된다.
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
           GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

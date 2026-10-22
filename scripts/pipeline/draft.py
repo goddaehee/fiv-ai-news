@@ -172,7 +172,10 @@ def render_feedback(sidecar) -> str:
 
     Claude안: 차단된 수치는 넣지 않고 **허용 목록**만 제시한다.
     차단 수치를 명시하면 역설적으로 앵커가 되어 같은 환각을 또 쓰게 된다.
-    sidecar가 없거나 NUMBERS-UNGROUNDED 에러가 없으면 빈 문자열.
+    P11 (Grok 권장): 커버리지 확대 — SCHEMA-001 · SOURCES-MISSING ·
+    NUMBERS-UNGROUNDED 외에 EMPTY-001 · TPL-001 · TAKEAWAY-DUP ·
+    TAKEAWAY-TPL · QUOTA-001도 렌더링한다.
+    sidecar가 없거나 커버 대상 에러가 없으면 빈 문자열.
     """
     try:
         rep = json.loads(Path(sidecar).read_text(encoding="utf-8"))
@@ -197,6 +200,37 @@ def render_feedback(sidecar) -> str:
                 '  입력 buckets에서 이 기사와 같은 주제의 아이템 2개를 골라\n'
                 '  sources에 [{"url": "<실제 링크>"}, {"url": "<실제 링크>"}] 형태로 넣으세요.\n'
                 "  URL은 입력에 있는 것을 한 글자도 바꾸지 않고 그대로 복사하고, 지어내지 마세요."
+            )
+            continue
+        # P11: 빈 시사점 피드백 (EMPTY-001).
+        if e.get("code") == "EMPTY-001":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            blocks.append(
+                f'- analysis id "{aid}"의 takeaway(시사점)가 비어 있습니다. 비어 있으면 호 전체가 폐기됩니다.\n'
+                "  입력에 있는 사실만으로 두 문장(판단 + 다음 행동)을 채우세요. 없는 값은 지어내지 마세요."
+            )
+            continue
+        # P11: 템플릿 문구 피드백 (TPL-001) — 해당 문구는 앵커 방지를 위해 인용하지 않는다.
+        if e.get("code") == "TPL-001":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            blocks.append(
+                f'- analysis id "{aid}"의 takeaway/body에 정형화된 템플릿 문구가 들어갔습니다.\n'
+                "  그 문장을 지우고, 이 기사의 입력 내용에 근거한 구체적인 문장으로 다시 쓰세요."
+            )
+            continue
+        # P11: 시사점 반복 피드백 (TAKEAWAY-DUP / TAKEAWAY-TPL).
+        if e.get("code") in ("TAKEAWAY-DUP", "TAKEAWAY-TPL"):
+            blocks.append(
+                "- 여러 기사의 takeaway(시사점)가 서로 비슷하거나 같은 구조로 반복됐습니다.\n"
+                "  각 시사점을 그 기사만의 판단과 다음 행동으로, 문장 구조도 서로 다르게 다시 쓰세요."
+            )
+            continue
+        # P11: 출처 도메인 편중 피드백 (QUOTA-001).
+        if e.get("code") == "QUOTA-001":
+            dom = e.get("domain") or "특정 도메인"
+            blocks.append(
+                f"- 출처 도메인 {dom}이(가) 전체 분석의 절반을 넘게 쓰였습니다.\n"
+                "  일부 기사는 입력 buckets의 다른 도메인 출처로 교체하세요. 한 도메인이 절반을 넘으면 호 전체가 폐기됩니다."
             )
             continue
         if e.get("code") != "NUMBERS-UNGROUNDED":
@@ -255,9 +289,10 @@ def slug(s: str) -> str:
 
 
 def _ref_table(snap: dict) -> list[dict]:
-    """P10 (Codex안): ref → 수집 아이템의 결정적 테이블.
-    스냅샷 순서대로 URL 중복 제거. LLM payload의 ref와 attach_sources의
-    ref→URL 재조립이 같은 테이블을 공유한다."""
+    """P10b: 수집 아이템의 결정적 테이블 (URL 역조회용).
+    스냅샷 순서대로 url_core 기준 URL 중복 제거. attach_sources가
+    LLM이 쓴 URL을 이 테이블에서 역조회해 canonical URL로 재조립한다.
+    (LLM에게 ref 번호를 노출하는 방식은 sources 생략 회귀를 일으켜 P10b에서 폐기)"""
     seen: set[str] = set()
     table: list[dict] = []
     for it in snap.get("items") or []:
@@ -272,7 +307,7 @@ def _ref_table(snap: dict) -> list[dict]:
     return table
 
 
-def attach_sources(issue: dict, snap: dict, buckets: list | None = None,
+def attach_sources(issue: dict, snap: dict,
                    ref_table: list[dict] | None = None) -> dict:
     """P10: 결정적 소스 조립.
     LLM이 쓴 sources의 URL을 스냅샷 테이블에서 역조회해 canonical URL로
@@ -290,6 +325,8 @@ def attach_sources(issue: dict, snap: dict, buckets: list | None = None,
         for s in a.get("sources") or []:
             ref = None
             if isinstance(s, dict):
+                # legacy 호환: ref 키 직접 표기 (P10b 이후 프롬프트 금지 —
+                # 프로덕션 LLM 경로에서는 도달하지 않음)
                 ref = s.get("ref")
                 if ref is None:
                     # 구형/직접 URL 표기 호환: 테이블에서 역조회
@@ -380,12 +417,14 @@ def _sources(v) -> list[dict]:
                 out.append({"handle": "source", "url": url, "kind": "doc"})
             continue
         if isinstance(s, (int, float)):
-            # P10: ref 번호 직접 표기
+            # legacy 호환: P10b 이후 프롬프트가 ref 사용을 금지하므로
+            # 프로덕션 LLM 경로에서는 도달하지 않음 (외부 호출자·구 데이터용)
             out.append({"ref": int(s)})
             continue
         if not isinstance(s, dict):
             continue
-        # P10: ref 기반 표기 — attach_sources가 URL로 재조립한다
+        # legacy 호환: ref 기반 표기 — attach_sources가 URL로 재조립한다.
+        # P10b 이후 프롬프트가 금지하므로 프로덕션 LLM 경로에서는 도달하지 않음.
         if "ref" in s and isinstance(s.get("ref"), (int, float)):
             out.append({"ref": int(s["ref"])})
             continue
@@ -900,7 +939,7 @@ def main() -> int:
             _write_schema_sidecar(pipe, snap["date"], args.attempt, str(e))
             return 4
         issue["date"] = snap["date"]
-        issue = attach_sources(issue, snap, buckets, ref_table)
+        issue = attach_sources(issue, snap, ref_table=ref_table)
         issue["draft"] = True
     else:
         print("no API key — writing skeleton for the editor")
