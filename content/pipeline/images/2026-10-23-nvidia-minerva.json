@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-23",
+  "analysis": "nvidia-minerva",
+  "src": "/img/2026-10-23/nvidia-minerva-dd5a3343.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract flat vector illustration, wide 16:9 composition: a vast grid of geometric server-rack blocks with glowing telemetry waves flowing between them, one block highlighted by a ripple-ring early-warning beacon pulse radiating outward. Deep indigo and electric green palette, clean vector style. Strictly no text, no numbers, no people, no faces, no logos, no charts or graphs.",
+  "prompt_hash": "dd5a3343",
+  "alt": "AI 데이터센터 장애 조기 감지 관측 플랫폼을 상징하는 서버 그리드와 경고 파동의 추상 일러스트"
+}
