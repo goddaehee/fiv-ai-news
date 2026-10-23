@@ -487,10 +487,16 @@ NUM_RE = re.compile(
 
 
 def normalize_num_text(text: str) -> str:
-    """수치 매칭 전 하이픈 전처리. P10 (Codex안): 숫자-문자 사이 하이픈만 공백으로.
+    """수치 매칭 전 전처리. validate.py와 공유 (단일 소스).
+
+    P10 (Codex안): 숫자-문자 사이 하이픈만 공백으로.
     "120-billion" → "120 billion" (매칭용). "GPT-4"는 유지 (lookbehind가 제외).
-    validate.py와 공유 (단일 소스)."""
-    return re.sub(r"(?<=\d)[-_](?=[A-Za-z])", " ", text or "")
+    P12b: 천 단위 콤마를 병합한다. "30,000" → "30000". NUM_RE가 콤마를 숫자
+    일부로 못 잡아 입력에서 "30"만 추출되고, 출력 "3만"과 어긋나던 오탐 수정.
+    숫자-숫자 사이의 콤마만 건드리므로 문장 콤마("사과, 배")는 영향 없다.
+    """
+    t = re.sub(r"(?<=\d)[-_](?=[A-Za-z])", " ", text or "")
+    return re.sub(r"(?<=\d),(?=\d)", "", t)
 
 
 def number_mentions(summary: str) -> list[str]:

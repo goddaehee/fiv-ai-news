@@ -893,7 +893,8 @@ except ImportError:
     )
 
     def _normalize_num_text(text: str) -> str:
-        return re.sub(r"(?<=\d)[-_](?=[A-Za-z])", " ", text or "")
+        t = re.sub(r"(?<=\d)[-_](?=[A-Za-z])", " ", text or "")
+        return re.sub(r"(?<=\d),(?=\d)", "", t)
 
 
 # P10: 크기(magnitude) 단위 → 10의 거듭제곱 지수.
@@ -1008,6 +1009,15 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
                 if norm not in input_nums:
                     input_nums.add(norm)
                     allowed_raw.append(raw)
+            # P12b: 단위 없는 큰 수 보강. 영어 입력 "30,000 employees"는 단위가
+            # 없어 NUM_RE에 안 잡히지만, LLM이 "3만"으로 변환해 쓰면 근거가
+            # 있는데도 오탐됐다. 입력 스캔에서만 4자리 이상 순수 숫자를
+            # 크기 값으로 추가한다 (출력 쪽 패턴은 건드리지 않는다).
+            for m in re.finditer(r"(?<![\d.,])\d{4,}(?![\d.,])", text):
+                norm = _canon_num(m.group(0))
+                if norm not in input_nums:
+                    input_nums.add(norm)
+                    allowed_raw.append(m.group(0))
     if not matched:
         return out
     out["joined"] = True
