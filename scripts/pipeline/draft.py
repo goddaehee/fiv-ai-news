@@ -466,10 +466,13 @@ def attach_sources(issue: dict, snap: dict,
     ref_by_core = {url_core(it.get("url") or ""): i for i, it in enumerate(table)}
     title_df, n_snap = _title_df(snap)  # P16b: 희귀 토큰 판정용
     analyses = issue.get("analysis") or []
-    # P17b: QUOTA-001(단일 도메인이 분석 과반 등장 시 차단)과의 충돌 방지용
-    # 카운터. 보충 단계에서 도메인별 등장 분석 수와 cap을 공유한다.
-    domain_counts: dict[str, int] = {}
     quota_cap = max(1, len(analyses) // 2)
+    # P17c: 2패스 구조 — 1차 선택(LLM sources 조립 + 정합 필터)을 전부 끝낸
+    # 뒤 도메인 카운트를 시드하고, 그다음에 보충한다. 1패스로 보충하던
+    # 시절에는 앞 분석에 붙인 보충 뒤에 뒤 분석의 1차 선택이 같은
+    # 도메인으로 겹쳐 QUOTA-001을 넘겼다 (run 39901814043 실측:
+    # BleepingComputer 보충 2건 + 1차 선택 2건 = 7개 중 4개, 57%).
+    states: list[tuple[dict, list, list]] = []
     for a in analyses:
         picked = []
         picked_items: list[dict] = []
@@ -522,18 +525,24 @@ def attach_sources(issue: dict, snap: dict,
                 print(f"attach_sources: '{a.get('id')}' 무관 출처 제거: {dropped}")
                 picked = [picked[i] for i in kept]
                 picked_items = [picked_items[i] for i in kept]
+        states.append((a, picked, picked_items))
+    # QUOTA-001 시드: 1차 선택만으로 이미 등장한 분석 수를 도메인별로 집계
+    domain_counts: dict[str, int] = {}
+    for _a, _picked, _items in states:
+        for d in {_item_domain(it) for it in _items if _item_domain(it)}:
+            domain_counts[d] = domain_counts.get(d, 0) + 1
+    for a, picked, picked_items in states:
+        counted = {_item_domain(it) for it in picked_items if _item_domain(it)}
         # P17: 출처 밀도 회복 — 같은 이야기의 다른 매체 아이템으로 보충.
         # P16의 패딩 금지가 과하게 작동해 출처가 분석당 1.0개까지 떨어졌다
         # (원본 6.8개, 3차 평가). '같은 이야기'의 다른 매체 보도는 패딩이
         # 아니라 교차보도 출처다. 그룹 판정은 story_groups(조립 테이블
         # 기준), 후보는 정합 필터와 같은 기준(본문 겹침 또는 첫 출처와
         # 희귀 토큰 공유)을 통과하고 매체가 겹치지 않는 것부터 넣는다.
-        # P17b: QUOTA-001과의 충돌 방지 — 보충이 단일 도메인을 분석 과반에
-        # 등장시키는 marginal 원인이 되지 않게, 도메인별 등장 분석 수를
-        # cap(전체 분석의 절반)으로 제한하고 등장 수가 적은 도메인부터
-        # 채운다. 보안 위주인 날은 BleepingComputer 같은 전문 매체가 여러
-        # 사건을 동시에 커버해 LLM 1차 선택만으로도 쿼터에 근접한다
-        # (run 39899940662 attempt 2 실측: BC 4/6 중 보충 기여 1건).
+        # P17b/c: QUOTA-001과의 충돌 방지 — 보충이 단일 도메인을 분석 과반에
+        # 등장시키는 marginal 원인이 되지 않게, 도메인별 등장 분석 수(1차
+        # 선택 시드 포함)를 cap(전체 분석의 절반)으로 제한하고 등장 수가
+        # 적은 도메인부터 채운다. LLM 1차 선택 자체는 제한하지 않는다.
         if picked_items and len(picked) < 4:
             have = {url_core(str(it.get("url") or "")) for it in picked_items}
             outlets = {_outlet_key(it) for it in picked_items}
@@ -579,11 +588,9 @@ def attach_sources(issue: dict, snap: dict,
                 print(f"attach_sources: '{a.get('id')}' 같은 이야기 출처 보충: "
                       f"{str(cand.get('title') or '')[:50]}")
         a["sources"] = picked
-        # QUOTA 카운트 갱신: 이 분석에 등장한 도메인 집합
-        for it in picked_items:
-            d = _item_domain(it)
-            if d:
-                domain_counts[d] = domain_counts.get(d, 0) + 1
+        # QUOTA 카운트 갱신: 보충으로 새로 들어온 도메인만 반영 (1차분은 시드済)
+        for d in {_item_domain(it) for it in picked_items if _item_domain(it)} - counted:
+            domain_counts[d] = domain_counts.get(d, 0) + 1
     return issue
 
 
