@@ -1,300 +1,259 @@
 {
   "date": "2026-10-23",
-  "title": "10월 23일 AI 데일리: OpenAI 모델의 Google Cloud 입점, NVIDIA Minerva, AT&T·Uber 도입 사례",
-  "heroline": "유통 지형이 흔들리는 날",
-  "dek": "OpenAI 모델이 Gemini Model Garden에 들어가고, NVIDIA는 AI 데이터센터 관제 플랫폼 Minerva를 공개했습니다. 기업 도입 사례와 보안 사고 소식이 함께 나왔습니다.",
-  "tag": "ai-daily",
+  "title": "클로드 듀에트 vs 뮈스, 에이전트 대전 개막",
+  "heroline": "앤스로픽 에이전트 앱 출격, OpenAI 30B 달러 라운드, LiteLLM 공급망 해킹까지",
+  "dek": "10월 23일 호는 에이전트 경쟁이 주류 언론까지 장악한 날입니다. 커버리지 6개 매체가 동시에 짚은 앤스로픽 클로드 듀에트를 시작으로, OpenAI의 대형 투자 라운드, AI 인프라 운영 도구, 공급망 보안 사고까지 하루 동안 쏟아진 이야기를 정리했습니다.",
+  "tag": "AI 데일리",
   "briefMin": 3,
-  "readMin": 9,
+  "readMin": 8,
   "briefing": [
     {
-      "id": "openai-google-cloud",
-      "headline": "경쟁 클라우드에 프론티어 모델·Codex 워크플로 공개",
-      "summary": "OpenAI와 Google Cloud가 손을 잡아 OpenAI 프론티어 모델과 Codex 워크플로를 Gemini Model Garden에서 Google Cloud Marketplace로 내놓습니다."
-    },
-    {
-      "id": "minerva",
-      "headline": "인프라·모델·애플리케이션 텔레메트리 통합 관찰",
-      "summary": "AIOps 플랫폼 Minerva가 인프라부터 애플리케이션까지의 계측 데이터를 한데 모아 문제를 조기에 잡아내고 AI 데이터센터 가동률을 지키는 구조입니다."
-    },
-    {
-      "id": "ms-diagnostic",
-      "headline": "Science 논문 게재, 일반의 상대 성능 우위 보고",
-      "summary": "무스타파 술레이만 CEO가 '의료 초지능' 추진 중이라 밝혔고, Science 지 연구는 어려운 진단 케이스에서 일반의를 앞선다고 전합니다."
-    },
-    {
-      "id": "connectwise-breach",
-      "headline": "중국 쪽 해커 집단, 수천 개 기업 추가 표적화",
-      "summary": "Microsoft는 ConnectWise 침해 배후를 중국 계열 해커로 지목했고, 공격자가 AI 에이전트를 활용해 고객사 수천 곳을 신속히 해킹했다고 봅니다."
-    },
-    {
       "id": "claude-duet",
-      "headline": "대화형 협업 중심 신규 앱 베팅",
-      "summary": "Anthropic이 에이전트 경험을 앱 형태로 묶은 Claude Duet을 내놓으며 소비자·업무용 접점 확대를 노립니다."
+      "headline": "클로드 듀에트 공개, 에이전트 앱 경쟁 본격화 — 커버리지 6개 매체",
+      "summary": "앤스로픽이 내놓은 에이전트 앱 '클로드 듀에트'를 배런스와 테크크런치 등 여러 매체가 같은 날 분석했습니다."
     },
     {
-      "id": "uber-chatgpt-work",
-      "headline": "리서치·데이터 분석·프레젠테이션 업무 전면 적용",
-      "summary": "Uber가 30,000명 넘는 직원에게 ChatGPT Work를 배포해 조사, 데이터 분석, 발표 자료 제작, 복잡한 워크플로 수행에 씁니다."
+      "id": "litellm-hack",
+      "headline": "LiteLLM 릴리스 파이프라인 해킹, 정보탈취 악성코드 유포",
+      "summary": "LiteLLM의 PyPI 패키지와 도커 이미지가 도청되어 자격증명·시크릿·환경변수를 훔치는 페이로드가 배포됐습니다."
     },
     {
-      "id": "mit-island-agents",
-      "headline": "할 일 없는 에이전트들의 놀이 발명과 성과 변화",
-      "summary": "MIT 연구진이 13개 AI를 가상 섬에 두고 관찰한 결과, 에이전트들이 놀이를 만들고 잃어버린 반지를 애도하다가 결국 본업 성적이 나아졌다고 합니다."
+      "id": "uber-chatgpt",
+      "headline": "우버, 전 직원 3만 명 대상 ChatGPT Work 전면 도입",
+      "summary": "우버가 3만 명 이상 직원에게 ChatGPT Work를 배포하며 조사·데이터 분석·프레젠테이션 업무에 AI를 붙였습니다."
+    },
+    {
+      "id": "openai-raise",
+      "headline": "OpenAI, IPO 전 30B 달러 조달 논의 — 1.25조 달러 밸류에이션",
+      "summary": "OpenAI가 IPO를 앞두고 1조 달러를 넘는 밸류에이션으로 신규 투자 라운드를 준비 중이라는 보도입니다."
+    },
+    {
+      "id": "nvidia-minerva",
+      "headline": "엔비디아 미네르바, 초대형 AI 데이터센터 부품 장애 조기 포착",
+      "summary": "엔비디아가 거대 AI 데이터센터에서 고장 나는 부품을 잡아내는 운영 도구 '미네르바'를 내놨습니다."
+    },
+    {
+      "id": "onepassword-agents",
+      "headline": "1Password, 비밀번호 노출 없는 AI 에이전트 로그인 기능 출시",
+      "summary": "AI 에이전트가 사용자 계정에 대신 로그인하되 자격증명은 보는 못 하게 하는 기능이 나왔습니다."
     }
   ],
   "keywords": [
-    "Google Cloud",
-    "NVIDIA Minerva",
-    "Claude Duet",
+    "클로드 듀에트",
+    "LiteLLM",
     "ChatGPT Work",
-    "AI 진단"
+    "OpenAI 투자",
+    "엔비디아 미네르바"
   ],
-  "mainEvent": "OpenAI-Google Cloud 모델 유통 제휴 발표",
+  "mainEvent": "앤스로픽 클로드 듀에트 출시와 에이전트 경쟁 격화",
   "keynums": [
     {
-      "val": "30,000명",
-      "lab": "ChatGPT Work 배포 대상 Uber 직원",
-      "sub": "OpenAI 발표"
+      "val": "3만 명",
+      "lab": "ChatGPT Work 도입 우버 직원",
+      "sub": "OpenAI 공식 발표"
     },
     {
-      "val": "13개",
-      "lab": "가상 섬 실험에 쓰인 AI 수",
-      "sub": "MIT 연구"
+      "val": "30B 달러",
+      "lab": "OpenAI 신규 조달 규모",
+      "sub": "테크크런치 보도"
     },
     {
-      "val": "77%",
-      "lab": "어휘 특화로 줄인 추론 비용",
-      "sub": "Dharma-AI 발표"
+      "val": "1.25조 달러",
+      "lab": "OpenAI 목표 밸류에이션",
+      "sub": "테크크런치 보도"
     }
   ],
   "timeline": [
     {
-      "t": "10/21 21:00",
-      "d": "OpenAI 모델의 Google Cloud 입점 발표"
+      "t": "10/21 23:00",
+      "d": "PHP, 치명적 취약점 2건 긴급 패치(PHP 8.5.12 등) 발표"
     },
     {
       "t": "10/22 09:00",
-      "d": "Uber ChatGPT Work 전사 확대 공지"
+      "d": "우버 ChatGPT Work 전 직원 배포 발표"
     },
     {
-      "t": "10/22 22:53",
-      "d": "Claude Duet 앱 관련 보도"
+      "t": "10/23 02:25",
+      "d": "배런스, 클로드 듀에트 vs 메타 뮈스 비교 분석"
     },
     {
-      "t": "10/23 00:00",
-      "d": "NVIDIA Minerva 플랫폼 공개"
+      "t": "10/23 04:07",
+      "d": "1Password 에이전트 로그인 기능 공개"
     },
     {
-      "t": "10/23 03:43",
-      "d": "Microsoft AI 진단 시스템 논문 보도"
+      "t": "10/23 04:12",
+      "d": "LiteLLM 공급망 해킹 사고 보도"
     },
     {
-      "t": "10/23 09:45",
-      "d": "MIT 에이전트 섬 실험 소식"
+      "t": "10/23 07:08",
+      "d": "OpenAI 30B 달러 라운드 준비 보도"
     }
   ],
-  "intro": "10월 23일 금요일 발행. OpenAI 모델이 경쟁 클라우드인 Google Cloud에 들어가는 유통 변화가 오늘 호의 중심이고, NVIDIA의 AI 팩토리 관제 플랫폼과 기업·의료 도입 사례, 보안 사고 소식이 뒤를 잇습니다.",
+  "intro": "10월 23일 금요일 발행. 여러 매체가 동시에 다룬 앤스로픽의 에이전트 앱 소식을 필두로, 대형 투자 라운드와 공급망 해킹 사고까지 하루 분량이 무거운 날입니다. 에이전트 경쟁이 소비자 앱 무대로 옮겨 갔고, 그 뒤를 잇는 보안·인프라 이야기를 6건으로 추렸습니다.",
   "analysis": [
     {
-      "id": "openai-google-cloud",
+      "id": "claude-duet",
       "n": 1,
-      "title": "1. OpenAI 모델의 Google Cloud 입점, 유통 질서가 달라진 지점",
+      "title": "1. 관리형 대화 앱이라는 새 무대, 소유권 논쟁을 벗어난 차별화",
       "bullets": [
-        "OpenAI와 Google Cloud의 유통 제휴 발표",
-        "Gemini Model Garden과 Google Cloud Marketplace 경유 제공",
-        "Codex 워크플로까지 함께 들어옴"
+        "배런스는 클로드 듀에트와 메타 뮈스의 에이전트 설계 차이를 비교하며 두 회사의 전략적 방향이 갈라지는 지점을 짚었습니다.",
+        "테크크런치는 듀에트를 앤스로픽의 에이전트 전략을 건 승부라고 평가했습니다.",
+        "커버리지가 6개 매체에 이르러 이번 발표가 이번 주 에이전트 경쟁의 중심 화제임을 보여줍니다."
       ],
       "body": [
-        "OpenAI가 자사 프론티어 모델과 Codex 워크플로를 Google Cloud에 내놓는다고 밝혔습니다. Gemini의 Model Garden에 올라가고 Google Cloud Marketplace를 통해 구매할 수 있는 구조입니다.",
-        "지금까지 주요 모델사는 자사 계열 클라우드와 강하게 묶여 왔습니다. 이번 조치는 그 경계를 스스로 여는 것으로, 기업 고객 입장에서는 클라우드 선택과 모델 선택을 따로 할 수 있는 여지가 생깁니다.",
-        "다만 어떤 모델 버전이 어떤 조건·가격으로 제공되는지 세부 사항은 발표문만으로는 다 확인되지 않습니다. 출시 일정도 아직 명시된 범위가 좁습니다. Codex 워크플로까지 함께 들어옴",
-        "모델 유통이 멀티클라우드로 흐르면 도입 검토의 비교 대상이 늘어납니다. 향후 다른 모델사들의 유사한 제휴가 이어질지가 관전 포인트입니다. Codex 워크플로까지 함께 들어옴"
+        "앤스로픽이 에이전트 중심 앱 '클로드 듀에트'를 내놓았고, 배런스와 테크크런치를 비롯한 여러 매체가 같은 날 이 앱의 의미를 분석했습니다. 핵심은 앱 자체보다 에이전트가 일을 대신 수행하는 방식을 두고 메타의 '뮈스'와 어떻게 다른가입니다.",
+        "배경을 보면, 에이전트 경쟁은 그동안 개발자 도구와 API 영역에서 벌어졌습니다. 이번에 두 회사가 일반 사용자용 앱이라는 같은 무대에 오르면서, 에이전트 설계 철학의 차이가 소비자에게 직접 보이는 제품 차이로 번역되는 국면이 열렸습니다. 배런스가 주목한 것도 바로 이 지점, 즉 듀에트와 뮈스가 에이전트 경주에서 선택한 길이 다르다는 점입니다.",
+        "다만 아직 초기 출시 단계라 실사용 환경에서 어느 설계가 우위인지는 확인되지 않았습니다. 매체들의 분석도 제품 발표 자료와 시연을 바탕으로 한 것이어서, 장기 업무 시나리오에서의 안정성은 미확정입니다."
       ],
       "extra": "",
-      "takeaway": "모델과 클라우드의 묶음이 풀리는 대목이어서 조달 전략에 미칠 영향이 큽니다. 도입 검토 중인 팀은 Google Cloud 상의 제공 모델 목록과 가격 조건을 기존 계약과 비교 기준으로 삼으면 됩니다.",
+      "takeaway": "에이전트 경쟁의 무대가 개발자 도구에서 소비자 앱으로 옮겨온 것이 이번 발표에서 읽히는 의미입니다. 듀에트와 뮈스를 같은 업무 시나리오에 놓고 직접 비교해 두면 다음 제품 선택의 기준이 됩니다.",
       "tags": [],
       "sources": [
         {
-          "handle": "OpenAI News",
-          "url": "https://openai.com/index/openai-models-google-cloud",
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQTHp3Y2NHeEJpRWJZb3NBV3ljWjNDVDMtNE55Vjc2VS00SWJNUmY0dkw0UkwzUjU0RVZDQUprRnZINURJVFVfNTB6SV9FOUIzWFJhY1ltdEdfVS12QU5NZFNXbkpBQktEYUQ3a2lZUXpqLXNiY3R1MzZFWTQxNlJ6UzlXLVdQdWUzR0I4?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.barrons.com"
+        }
+      ]
+    },
+    {
+      "id": "litellm-hack",
+      "n": 2,
+      "title": "2. AI 도구의 설치 경로 자체가 표적, 자격증명 유출의 확산 경로",
+      "bullets": [
+        "공격자가 LiteLLM의 PyPI 패키지와 도커 이미지 배포 채널을 장악했습니다.",
+        "악성 페이로드는 자격증명, 시크릿, 환경변수를 훔치도록 설계됐습니다.",
+        "LiteLLM은 LLM API를 통합해 주는 오픈소스 라이브러리로, AI 개발 환경에 널리 쓰입니다."
+      ],
+      "body": [
+        "오픈소스 프로젝트 LiteLLM의 릴리스 파이프라인이 해킹당해 정보탈취 악성코드가 배포된 사실이 블리핑컴퓨터 보도로 확인됐습니다. 공격자는 PyPI 패키지와 악성 도커 이미지를 통해 자격증명과 시크릿, 환경변수를 훔치는 페이로드를 유포했습니다.",
+        "LiteLLM은 여러 LLM 제공사의 API를 하나의 인터페이스로 묶어 주는 도구라, AI 개발 환경에서 의존성으로 널리 들어가 있습니다. 환경변수에 API 키가 담기는 일이 많다는 점이 이번 공격 표적 선정과 정확히 맞물립니다. 배포 채널 자체가 오염되면 사용자는 최신 버전 설치라는 정상 절차를 통해 악성코드를 받게 됩니다.",
+        "다만 오염된 버전의 노출 기간과 실제 피해 규모는 아직 집계 중으로 파악되지 않았습니다. 복구된 패키지로 업데이트했다고 해도 이미 유출된 키는 무효화하지 않으면 남아 있다는 점이 주의할 대목입니다."
+      ],
+      "extra": "",
+      "takeaway": "AI 도구망의 배포 경로 자체가 표적이 된 것이 이번 사고에서 달라진 지점입니다. LiteLLM을 쓰는 팀은 사용 중인 버전과 노출 기간을 확인하고, 해당 환경의 API 키를 일괄 교체해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/litellm-release-pipeline-hacked-to-distribute-info-stealer-malware/",
           "kind": "doc"
-        },
+        }
+      ]
+    },
+    {
+      "id": "uber-chatgpt",
+      "n": 3,
+      "title": "3만 명 전사 배포, 도구 도입에서 업무 표준으로 넘어가는 신호",
+      "bullets": [
+        "우버가 3만 명 이상의 직원에게 ChatGPT Work를 배포한다고 OpenAI가 발표했습니다.",
+        "용도는 조사, 데이터 분석, 프레젠테이션 제작, 복합 워크플로 수행입니다.",
+        "부서별 시범 도입이 아니라 전 직원 대상이라는 점이 이전 사례들과 다릅니다."
+      ],
+      "body": [
+        "우버가 ChatGPT Work를 3만 명 이상의 전 직원에게 배포한다고 OpenAI가 공식 발표했습니다. 팀들이 조사하고, 데이터를 분석하고, 프레젠테이션을 만들고, 복잡한 워크플로를 완수하는 데 이 도구를 쓴다는 설명입니다.",
+        "기업용 AI 도입은 그동안 일부 부서의 파일럿 단계에 머무는 경우가 많았습니다. 전 직원 배포는 도구 선택이 개인 재량에서 표준 업무 환경으로 넘어갔음을 뜻하며, 규모 면에서도 대형 기업 사례로 꼽힙니다.",
+        "다만 발표 자료는 OpenAI 측이 작성한 것이어서 실제 사용률이나 업무 효과 수치는 포함되지 않았습니다. 3만 명 배포가 완료된 상태인지 단계적 롤아웃인지도 문서만으로는 확인되지 않습니다."
+      ],
+      "extra": "",
+      "takeaway": "AI 협업 도구가 파일럿을 넘어 대기업 전 직원의 기본 환경으로 자리 잡는 흐름에 미칠 영향이 큽니다. 자사의 도구 표준화 논의에 우버 사례의 배포 조건과 지원 범위를 비교 기준으로 삼으면 됩니다.",
+      "tags": [],
+      "sources": [
         {
           "handle": "OpenAI News",
           "url": "https://openai.com/index/uber-chatgpt-work-rollout",
           "kind": "doc"
-        },
+        }
+      ]
+    },
+    {
+      "id": "openai-raise",
+      "n": 4,
+      "title": "1조 달러 벽을 넘는 밸류에이션, 사모 시장의 상한선 갱신",
+      "bullets": [
+        "OpenAI가 IPO를 앞두고 30B 달러 규모의 신규 조달을 논의 중이라고 테크크런치가 보도했습니다.",
+        "목표 밸류에이션은 1.25조 달러로 알려졌습니다.",
+        "이번 라운드가 성사되면 사모 기업 사상 최고 밸류에이션 기록이 깨집니다."
+      ],
+      "body": [
+        "OpenAI가 IPO에 앞서 30B 달러를 조달하는 라운드를 준비 중이며, 논의된 밸류에이션은 1.25조 달러에 이른다고 테크크런치가 보도했습니다. 1조 달러를 넘는 밸류에이션이 확정되면 비상장 기업으로는 최고 기록입니다.",
+        "OpenAI의 자금 조달은 최근 수년간 계속 규모가 커져 왔고, 이번 라운드는 상장 직전의 마지막 대형 사모 조달이라는 점에서 이전 라운드들과 결이 다릅니다. 투자자 입장에서는 상장 후 밸류에이션의 기준점이 될 숫자라는 의미가 붙습니다.",
+        "다만 이 수치는 아직 진행 중인 협상 값이라 최종 확정이 아니라는 점을 테크크런치 보도도 함께 전하고 있습니다. 조달 규모와 밸류에이션은 라운드 마감 전까지 달라질 수 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "사모 시장에서 AI 기업 가치의 상한선이 1조 달러 선으로 올라간 것이 이번 보도의 핵심입니다. 최종 확정 발표 전까지는 30B 달러와 1.25조 달러를 협상 중인 값으로 구분해 두면 됩니다.",
+      "tags": [],
+      "sources": [
         {
-          "handle": "OpenAI News",
-          "url": "https://openai.com/index/forward-deployed-engineering-means",
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/10/22/openai-working-on-new-30b-raise-at-1-25t-valuation-ahead-of-ipo/",
           "kind": "doc"
         }
       ]
     },
     {
-      "id": "minerva",
-      "n": 2,
-      "title": "2. NVIDIA Minerva, AI 데이터센터 관찰의 새 축",
+      "id": "nvidia-minerva",
+      "n": 5,
+      "title": "5. 부품 단위 장애 예측, GPU 규모가 커질수록 커지는 운영 문제",
       "bullets": [
-        "AI 팩토리 대상 엔드투엔드 관찰 플랫폼",
-        "인프라와 애플리케이션 계층 텔레메트리 통합",
-        "문제 조기 발견과 가동률 유지 목표"
+        "엔비디아가 초대형 AI 데이터센터에서 고장 나는 부품을 잡아내는 도구 '미네르바'를 출시했습니다.",
+        "대상은 부품 단위의 예측·감지로, 데이터센터 전체 운영(AIOps) 영역입니다.",
+        "AI 인프라가 '공장'처럼 운영되는 흐름에서 나온 도구라는 점이 배경입니다."
       ],
       "body": [
-        "NVIDIA가 AI 데이터센터, 즉 'AI 팩토리'를 위한 AIOps 플랫폼 Minerva를 공개했습니다. 인프라에서 모델, 애플리케이션까지 흩어져 있던 텔레메트리를 한곳에 모아 장애를 일찍 잡아내는 것이 목적입니다.",
-        "AI 데이터센터는 GPU 클러스터, 학습·추론 작업, 서비스 애플리케이션이 맞물려 돌아가기 때문에 어느 층에서 병목이 생겼는지 찾기가 까다롭습니다. Minerva는 이 계층 사이의 관측 간극을 메우는 관제 반에 해당합니다.",
-        "다만 성능 개선 폭을 수치로 보여준 발표는 아니어서, 실제 운영 환경에서 어느 정도 장애 대응 시간을 줄이는지는 도입 사례가 쌓여야 확인됩니다. NVIDIA 자체 설명이라는 점도 감안해야 합니다.",
-        "같은 날 NVIDIA는 카자흐스탄의 AI 컴퓨팅 확장 소식도 전하며 국가 단위 인프라 사업에도 계속 힘을 싣고 있습니다. 문제 조기 발견과 가동률 유지 목표"
+        "엔비디아가 거대 AI 데이터센터에서 고장 나는 부품을 조기에 잡아내는 운영 도구 '미네르바'를 내놨다고 디넥스트웹이 보도했습니다. 초대형 규모의 AI 인프라에서 부품 하나의 장애가 전체 학습·추론 작업에 미치는 영향이 커진 만큼, 이를 미리 포착하는 것이 도구의 목적입니다.",
+        "엔비디아는 최근 AI 데이터센터를 'AI 팩토리'로 부르며 인프라에서 모델, 애플리케이션까지 전 스택을 아우르는 생태계 전략을 펼쳐 왔습니다. 미네르바는 그중 운영 계층에 해당하는 도구로, 같은 날 공식 블로그에 올라온 카자흐스탄 AI 인프라 확장 소식과 함께 보면 인프라 구축 다음 단계인 운영 단계로 무게가 옮겨가는 흐름이 보입니다.",
+        "다만 이번 보도만으로는 미네르바가 어떤 지표로 고장을 예측하는지, 어떤 규모의 데이터센터부터 적용되는지 같은 세부 조건은 확인되지 않습니다. 벤치마크 수치도 공개된 바 없어 효과 크기는 미확정입니다."
       ],
-      "extra": "그 밖에: NVIDIA 블로그는 유럽 금융권이 GTC Berlin에서 오픈 모델 기반 자체 인텔리전스 구축 사례를 공유했다고 전합니다. 은행·결제사·금융데이터 제공사가 프로덕션 규모로 오픈 모델을 쓰고 있다는 내용입니다.",
-      "takeaway": "AI 인프라 운영의 병목이 모델 성능보다 관찰·대응 쪽으로 옮겨오고 있다는 신호로 읽는 편이 맞습니다. 데이터센터 운영 담당자는 기존 모니터링 도구와 Minerva의 계층 커버리지 차이부터 확인하면 됩니다.",
+      "extra": "그 밖에: 엔비디아 공식 블로그는 같은 날 카자흐스탄의 AI 컴퓨트 생태계가 인프라 계획 단계를 넘어 배포 단계로 이동했다는 글을 올렸습니다. 인프라에서 모델, 애플리케이션까지 전 스택에서 이동이 보인다는 내용으로, 미네르바와 함께 읽으면 회사의 생태계 전략 방향이 짐작됩니다.",
+      "takeaway": "AI 인프라의 병목이 설치에서 운영으로 넘어가고 있다는 점이 이 도구 출시에서 읽히는 의미입니다. 자체 GPU 클러스터 운영자라면 미네르바의 예측 지표와 적용 조건을 공식 문서에서부터 확인하면 됩니다.",
       "tags": [],
       "sources": [
         {
-          "handle": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/minerva-platform-infrastructure/",
-          "kind": "doc"
+          "handle": "HN AI",
+          "url": "https://thenextweb.com/news/nvidia-minerva-aiops-ai-factory-monitoring",
+          "kind": "talk"
         },
         {
           "handle": "NVIDIA Blog",
           "url": "https://blogs.nvidia.com/blog/kazakhstan-ai-compute-ecosystem/",
-          "kind": "doc"
-        },
-        {
-          "handle": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/european-financial-services-organizations-open-models-proprietary-intelligence/",
-          "kind": "doc"
-        }
-      ]
-    },
-    {
-      "id": "ms-diagnostic",
-      "n": 3,
-      "title": "3. Microsoft AI 진단 시스템, '의료 초지능' 선언의 무게",
-      "bullets": [
-        "무스타파 술레이만 CEO의 '의료 초지능' 추진 선언",
-        "Science 지 연구에서 어려운 진단 케이스 성능 비교",
-        "개선 상당분이 하부 AI 모델에서 온다는 분석"
-      ],
-      "body": [
-        "Microsoft의 술레이만 CEO는 자사 AI 진단 시스템이 어려운 케이스에서 일반의를 앞선다고 말하며 '의료 초지능'을 향한 로드맵을 강조했습니다. 근거로 삼은 것은 Science 지에 게재된 연구입니다.",
-        "AI 진단 시스템은 증상과 검사 정보를 받아 감별진단을 세우는 도구로, 이번 연구는 일반의가 어려워하는 사례 묶음에서 상대 성능을 비교했습니다. 전문의가 아닌 일반의와의 비교라는 점이 성격을 규정합니다.",
-        "다만 보도에 따르면 성능 향상의 상당 부분이 이미 존재하는 하부 AI 모델에서 나온다는 지적이 붙습니다. 시스템 고유의 기여가 얼마인지는 아직 불확실하고, 임상 현장 적용 조건과 안전장치도 논문 밖의 문제입니다.",
-        "의료 AI가 진단 보조를 넘어 자율성을 얼마나 가질지는 규제 논의와 맞물립니다. '초지능'이라는 표현은 목표 선언이지 검증된 성능 서술이 아닙니다. 개선 상당분이 하부 AI 모델에서 온다는 분석"
-      ],
-      "extra": "",
-      "takeaway": "의료 AI가 일반의 대비 우위를 학술지에 올렸다는 점에서 읽히는 의미는 검증의 무게입니다. 의료 정보를 다루는 팀은 해당 논문의 비교 조건과 전문의 기준 성적이 있는지를 체크리스트에 넣어 두시면 됩니다.",
-      "tags": [],
-      "sources": [
-        {
-          "handle": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/10/22/microsofts-mustafa-suleyman-says-its-ai-outperforms-doctors-on-hard-cases-as-he-chases-medical-superintelligence/",
-          "kind": "doc"
-        },
-        {
-          "handle": "HN AI",
-          "url": "https://www.mixtureofexperts.co/p/the-next-bottleneck-in-ai-for-science",
-          "kind": "talk"
-        }
-      ]
-    },
-    {
-      "id": "claude-duet",
-      "n": 4,
-      "title": "4. Claude Duet 앱, 채팅 너머의 에이전트 접점 실험",
-      "bullets": [
-        "Anthropic의 에이전트 전용 애플리케이션 베팅",
-        "대화형 인터페이스를 넘어선 상호작용 설계",
-        "소비자·업무용 접점 확대 의도"
-      ],
-      "body": [
-        "Anthropic이 에이전트 경험을 앱으로 묶은 Claude Duet을 선보였다는 보도가 나왔습니다. 기존 채팅 창을 넘어 에이전트가 사용자와 함께 일하는 형태를 실험하는 시도로 읽힙니다.",
-        "주요 모델사들이 앱·운영체제·브라우저까지 접점을 넓히는 흐름 속에서, Anthropic은 그간 기업 API와 업무용 제품 중심이었습니다. Duet은 이 균형을 소비자 쪽으로 조정하려는 움직임입니다.",
-        "다만 앱의 구체적 기능 범위, 출시 시점, 가격 정책은 보도 수준에서는 아직 불확실합니다. '에이전트 앱'이라는 범주 자체가 경쟁사들과 겹치기 때문에 차별점 판별도 쉽지 않습니다.",
-        "동시에 Anthropic 주변에선 IPO 관련 보도와 음악 저작권 소송 소식이 함께 나오고 있어, 회사의 우선순위가 여러 방향으로 늘어난 상태입니다. 소비자·업무용 접점 확대 의도"
-      ],
-      "extra": "그 밖에: Anthropic 관련 소식으로 로이터는 시장 불안 속에서 Anthropic IPO가 유일하게 움직이는 규모 있는 상장 후보로 보도했고, 빌룸버그는 아이코닉·스파크·GIC 등 초기 투자자들의 평가익 전망을 전했습니다. 빌보드는 레저버아가 Suno와 Anthropic을 상대로 음악 저작권 소송을 제기했다고 밝혔습니다.",
-      "takeaway": "모델 경쟁이 접점 경쟁으로 옮겨가는 흐름에서 Anthropic의 첫 본격 대응이라는 점이 중요합니다. Claude를 업무에 쓰는 팀은 Duet이 기존 워크플로를 대체할지를 출시 정보가 나오는 대로 반영해 두면 됩니다.",
-      "tags": [],
-      "sources": [
-        {
-          "handle": "Anthropic GNews",
-          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNX2RHNFI2M0VmLTVfUGwyWjBzTFZwcHBoNlFwZEttM3NHOHBVQzJmZmp0YV81V1lyX2VCWFZGMENVZzRhV3lPbVYzQWE1cHIwejVtbzlGR1hmMWpPTUlhM2pObDMyM1ZBMmEtbm14QXVnMUkzRnZvY25sTHlXM0hmTnNwbGx4SjNGaVhseGNHUVVQb0VzaVFVWTdVTUVMWkRVMS1JaFZWbDkzNmF5UEtWWWs2TEZxdjA?oc=5",
-          "kind": "doc",
-          "origin_url": "https://www.reuters.com"
-        },
-        {
-          "handle": "Anthropic GNews",
-          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQRWU0S2RSc3UweGd3OGdmMlF0VVNnQ3paTmp3SjhrT0hxMUU2eXdDRGp2cXl6S043dFJ0Z0Z6RnhQb3g0NjJTRWtDYWx1YzJJTFdkemRIbkFHY2Yybi1WUjc0Sk5aX1NEblZBUURoakwxUEFCdUVmRFRlbnF3blhpczNwLVlzZERvVnpZaVIxa2hCdk1za0VJTnFoQjZxc1BvZ1NWSElxWVlJUlpnalFrc1lB?oc=5",
-          "kind": "doc",
-          "origin_url": "https://www.bloomberg.com"
-        }
-      ]
-    },
-    {
-      "id": "connectwise-breach",
-      "n": 5,
-      "title": "5. ConnectWise 침해, AI 에이전트가 공격 도구가 된 사건",
-      "bullets": [
-        "Microsoft가 배후를 중국 계열 해커로 지목",
-        "AI 에이전트 활용해 고가사 수천 곳 신속 침해",
-        "공급망 경유 공격의 전형적 확산 구조"
-      ],
-      "body": [
-        "IT 관리 기업 ConnectWise가 침해당한 뒤 중국 쪽과 연결된 해커가 수천 개 기업을 추가로 표삼했다는 보도가 나왔습니다. Microsoft는 이 공격에서 AI 에이전트가 빠른 대규모 침해에 동원됐다고 지목합니다.",
-        "ConnectWise 같은 원격 IT 관리 도구는 고객사 시스템에 넓은 권한으로 접근하는 구조라, 한 번 뚫리면 피해가 사업자를 타고 퍼지는 공급망 공격이 됩니다. 여기에 AI 에이전트가 더해지면 침해 속도와 폭이 커진다는 것이 이번 사건의 핵심 경고입니다.",
-        "다만 피해 기업 수는 '수천 개'라는 보도 표현이며 정확한 집계는 아직 확인되지 않습니다. 배후 지목도 Microsoft의 분석에 기반한 것이라 독립 검증은 진행형입니다.",
-        "공격에 AI가 쓰였다는 점은 방어 쪽에서도 자동화 대응의 필요성을 키웁니다. 같은 날 1Password가 AI 에이전트가 비밀번호를 보지 않고 대신 로그인하는 기능을 내놓은 것도 이 흐름 속에서 읽을 수 있습니다."
-      ],
-      "extra": "그 밖에: 같은 TechCrunch 보도 묶음에는 1Password가 에이전트가 비밀번호를 열람하지 못하게 한 채 사용자 계정에 로그인하는 기능을 출시했다는 소식이 있습니다. 자격 증명 보호와 위임 접근을 분리한 설계입니다.",
-      "takeaway": "AI 에이전트가 방어뿐 아니라 공격의 도구로 등장했다는 점이 위협 모델이 달라진 지점입니다. 보안 담당자는 조직이 쓰는 원격 관리 도구의 권한 범위와 최근 패치 이력부터 확인하면 됩니다.",
-      "tags": [],
-      "sources": [
-        {
-          "handle": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/10/22/chinese-hackers-spied-on-thousands-of-companies-after-breaching-it-giant-connectwise/",
-          "kind": "doc"
-        },
-        {
-          "handle": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/10/22/1password-launches-a-way-for-ai-agents-to-log-in-on-your-behalf-without-seeing-your-password/",
-          "kind": "doc"
-        },
-        {
-          "handle": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/10/22/left-alone-with-nothing-to-do-ai-agents-started-playing/",
           "kind": "doc"
         }
       ]
     }
   ],
   "mood": {
-    "shift": "모델 유통이 클라우드 경계를 넘기 시작",
-    "grow": "Uber·AT&T 등 대규모 기업 도입 사례 확산",
-    "caution": "AI 에이전트가 공격 도구로 쓰인 공급망 침해",
-    "heat": "Anthropic IPO 관련 시장 관심"
+    "shift": "에이전트 경쟁이 소비자 앱 무대로 옮겨온 날",
+    "grow": "우버 3만 명 배포 등 기업 도입이 표준화 국면으로",
+    "caution": "LiteLLM 공급망 해킹으로 AI 도구 설치 경로 경계 필요",
+    "heat": "OpenAI 1.25조 달러 밸류에이션 논의가 시장 관심을 끌며"
   },
   "tips": [
     {
-      "title": "클라우드별 모델 목록 갱신",
-      "body": "Google Cloud Marketplace에 어떤 OpenAI 모델이 어떤 가격으로 오르는지 확인해 두면 도입 비교가 쉬워집니다.",
+      "title": "LiteLLM 사용 환경 점검 순서",
+      "body": "설치 시점과 버전을 먼저 확인하고, 오염 기간에 해당하면 API 키와 시크릿을 전량 교체한 뒤 도커 이미지를 공식 저장소에서 다시 받는 순서로 진행합니다.",
+      "via": "BleepingComputer"
+    },
+    {
+      "title": "에이전트 로그인 권한 설계",
+      "body": "1Password가 내놓은 방식처럼 에이전트에게 비밀번호 자체를 주지 않고 세션 수준 권한만 주는 구조를 사내 도구 선택 기준에 넣어 둡니다.",
+      "via": "TechCrunch"
+    },
+    {
+      "title": "전사 AI 도구 배포 전 확인 목록",
+      "body": "우버 사례처럼 전 직원 배포를 검토할 때는 지원 범위와 교육, 그리고 실제 사용률을 잴 지표를 배포 전에 정해 두는 편이 좋습니다.",
       "via": "OpenAI News"
     },
     {
-      "title": "원격 관리 도구 권한 점검",
-      "body": "ConnectWise류 도구의 계정 권한과 최근 보안 패치 이력을 점검해 두면 됩니다.",
-      "via": "TechCrunch AI"
+      "title": "투자 뉴스의 숫자 읽기",
+      "body": "라운드 규모와 밸류에이션은 협상 중인 값과 확정 값을 구분해 메모해 두면, 상장 후 기준점 비교에 오해가 줄어듭니다.",
+      "via": "TechCrunch"
     },
     {
-      "title": "의료 AI 성적 비교 조건 읽기",
-      "body": "논문의 비교 대상이 일반의인지 전문의인지, 과제 묶음이 어떤 조건인지를 먼저 확인해 두시면 됩니다.",
-      "via": "TechCrunch AI"
-    },
-    {
-      "title": "에이전트 자격 증명 위임 방식 살피기",
-      "body": "1Password의 비밀번호 비노출 로그인처럼 위임과 열람을 분리한 방식을 보안 정책 검토에 참고하면 됩니다.",
-      "via": "TechCrunch AI"
+      "title": "GPU 클러스터 운영 지표 정비",
+      "body": "부품 단위 장애 예측 도구가 늘어나는 흐름이니, 자체 클러스터의 장애 이력과 교체 주기 데이터를 미리 정리해 두면 도입 비교가 쉬워집니다.",
+      "via": "The Next Web"
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
