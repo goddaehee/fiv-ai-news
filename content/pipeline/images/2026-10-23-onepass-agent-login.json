@@ -1,9 +1,0 @@
-{
-  "date": "2026-10-23",
-  "analysis": "onepass-agent-login",
-  "src": "/img/2026-10-23/onepass-agent-login-2cfb6178.webp",
-  "model": "media.generate_image",
-  "prompt": "Abstract flat vector illustration, wide 16:9 composition: a floating geometric orb approaching a grand keyhole-shaped gate, a translucent shield barrier between them filtering glowing credential tokens that dissolve mid-air before reaching the orb. Dark navy background with teal and violet accents, clean geometric minimal style. Strictly no text, no numbers, no people, no faces, no logos, no charts or graphs.",
-  "prompt_hash": "2cfb6178",
-  "alt": "자격 증명을 열람하지 않고 위임 로그인하는 AI 에이전트를 상징하는 열쇠구멍·방패·다각체 오브의 추상 일러스트"
-}
