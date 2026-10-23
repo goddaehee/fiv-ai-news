@@ -146,6 +146,15 @@
           "kind": "doc",
           "origin_url": "https://www.reuters.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-16/anthropic-ipo-68eeecf4.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "둔화하는 성장과 안정의 저울질을 형상화한 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -176,6 +185,15 @@
           "url": "https://blogs.nvidia.com/blog/nemotron-3-5-super-vl/",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-16/nemotron-35-41a550fb.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "열린 구성 요소가 모여 에이전트로 흐르는 모습을 형상화한 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -205,6 +223,15 @@
           "handle": "OpenAI News",
           "url": "https://openai.com/index/amp-beyond-coding",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-16/google-news-ai-ac1a8310.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "확장되는 협력 네트워크를 형상화한 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }
