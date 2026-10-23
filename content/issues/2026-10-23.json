@@ -1,113 +1,154 @@
 {
   "date": "2026-10-23",
-  "title": "5분 AI 뉴스 — Minerva 출시, 우버 3만 명 확대, MS 의료 AI 논쟁",
-  "heroline": "AI 팹 관측부터 대리 로그인, 기업 확대 적용까지",
-  "dek": "NVIDIA가 AI 인프라 운영 플랫폼을 내놨고, 우버는 ChatGPT Work를 전 직원으로 확대했습니다. MS 의료 AI 성과 주장과 Anthropic IPO 소식도 확인할 호입니다.",
+  "title": "10월 23일 AI 데일리: OpenAI 모델의 Google Cloud 입점, NVIDIA Minerva, AT&T·Uber 도입 사례",
+  "heroline": "유통 지형이 흔들리는 날",
+  "dek": "OpenAI 모델이 Gemini Model Garden에 들어가고, NVIDIA는 AI 데이터센터 관제 플랫폼 Minerva를 공개했습니다. 기업 도입 사례와 보안 사고 소식이 함께 나왔습니다.",
   "tag": "ai-daily",
   "briefMin": 3,
-  "readMin": 6,
+  "readMin": 9,
   "briefing": [
     {
-      "id": "nvidia-minerva",
-      "headline": "인프라·모델 망라한 텔레메트리 통합 구조",
-      "summary": "NVIDIA가 AI 데이터센터 운영 문제를 조기에 잡는 AIOps 플랫폼 Minerva를 공개했습니다."
+      "id": "openai-google-cloud",
+      "headline": "경쟁 클라우드에 프론티어 모델·Codex 워크플로 공개",
+      "summary": "OpenAI와 Google Cloud가 손을 잡아 OpenAI 프론티어 모델과 Codex 워크플로를 Gemini Model Garden에서 Google Cloud Marketplace로 내놓습니다."
+    },
+    {
+      "id": "minerva",
+      "headline": "인프라·모델·애플리케이션 텔레메트리 통합 관찰",
+      "summary": "AIOps 플랫폼 Minerva가 인프라부터 애플리케이션까지의 계측 데이터를 한데 모아 문제를 조기에 잡아내고 AI 데이터센터 가동률을 지키는 구조입니다."
+    },
+    {
+      "id": "ms-diagnostic",
+      "headline": "Science 논문 게재, 일반의 상대 성능 우위 보고",
+      "summary": "무스타파 술레이만 CEO가 '의료 초지능' 추진 중이라 밝혔고, Science 지 연구는 어려운 진단 케이스에서 일반의를 앞선다고 전합니다."
+    },
+    {
+      "id": "connectwise-breach",
+      "headline": "중국 쪽 해커 집단, 수천 개 기업 추가 표적화",
+      "summary": "Microsoft는 ConnectWise 침해 배후를 중국 계열 해커로 지목했고, 공격자가 AI 에이전트를 활용해 고객사 수천 곳을 신속히 해킹했다고 봅니다."
+    },
+    {
+      "id": "claude-duet",
+      "headline": "대화형 협업 중심 신규 앱 베팅",
+      "summary": "Anthropic이 에이전트 경험을 앱 형태로 묶은 Claude Duet을 내놓으며 소비자·업무용 접점 확대를 노립니다."
     },
     {
       "id": "uber-chatgpt-work",
-      "headline": "연구·데이터 분석·프레젠테이션 업무 전반 적용",
-      "summary": "우버가 ChatGPT Work를 3만 명 넘는 전 직원에게 배포하며 기업 단위 도입 사례를 늘립니다."
+      "headline": "리서치·데이터 분석·프레젠테이션 업무 전면 적용",
+      "summary": "Uber가 30,000명 넘는 직원에게 ChatGPT Work를 배포해 조사, 데이터 분석, 발표 자료 제작, 복잡한 워크플로 수행에 씁니다."
     },
     {
-      "id": "ms-medical-ai",
-      "headline": "Science 논문 게재, 개선 상당분 하위 모델 기인",
-      "summary": "MS의 새 진단 시스템이 일반의를 어려운 사례에서 앞선다는 연구 결과가 Science에 실렸습니다."
-    },
-    {
-      "id": "1password-agent-login",
-      "headline": "비밀번호 노출 없는 개인 계정 접속 위임",
-      "summary": "AI 에이전트가 사용자 대신 로그인하되 자격 증명은 열어보지 못하게 하는 기능이 나왔습니다."
-    },
-    {
-      "id": "openai-google-cloud",
-      "headline": "Codex 워크플로 포함, Marketplace 경유 공급",
-      "summary": "OpenAI 최전선 모델과 Codex 워크플로가 Gemini Model Garden을 통해 판매됩니다."
-    },
-    {
-      "id": "anthropic-ipo",
-      "headline": "다른 후보들은 주춤, 투자자 차익 기대 보도",
-      "summary": "시장 흔들림 속에서 Anthropic만 상장 절차를 이어간다는 로이터 보도가 나왔습니다."
+      "id": "mit-island-agents",
+      "headline": "할 일 없는 에이전트들의 놀이 발명과 성과 변화",
+      "summary": "MIT 연구진이 13개 AI를 가상 섬에 두고 관찰한 결과, 에이전트들이 놀이를 만들고 잃어버린 반지를 애도하다가 결국 본업 성적이 나아졌다고 합니다."
     }
   ],
   "keywords": [
+    "Google Cloud",
     "NVIDIA Minerva",
+    "Claude Duet",
     "ChatGPT Work",
-    "의료 AI",
-    "에이전트 로그인",
-    "Anthropic IPO"
+    "AI 진단"
   ],
-  "mainEvent": "NVIDIA Minerva 공개 및 우버 ChatGPT Work 전사 확대",
+  "mainEvent": "OpenAI-Google Cloud 모델 유통 제휴 발표",
   "keynums": [
     {
-      "val": "3만 명",
-      "lab": "ChatGPT Work 적용 우버 직원",
+      "val": "30,000명",
+      "lab": "ChatGPT Work 배포 대상 Uber 직원",
       "sub": "OpenAI 발표"
+    },
+    {
+      "val": "13개",
+      "lab": "가상 섬 실험에 쓰인 AI 수",
+      "sub": "MIT 연구"
     },
     {
       "val": "77%",
       "lab": "어휘 특화로 줄인 추론 비용",
-      "sub": "Dharma AI 블로그 제목 기준"
-    },
-    {
-      "val": "13개",
-      "lab": "MIT 가상 섬 실험 AI 수",
-      "sub": "TechCrunch 보도"
+      "sub": "Dharma-AI 발표"
     }
   ],
   "timeline": [
     {
       "t": "10/21 21:00",
-      "d": "OpenAI 모델 Google Cloud 입점 발표"
-    },
-    {
-      "t": "10/22 02:00",
-      "d": "AT&T 법무 업무 사례 공개"
+      "d": "OpenAI 모델의 Google Cloud 입점 발표"
     },
     {
       "t": "10/22 09:00",
-      "d": "우버 ChatGPT Work 확대 발표"
+      "d": "Uber ChatGPT Work 전사 확대 공지"
+    },
+    {
+      "t": "10/22 22:53",
+      "d": "Claude Duet 앱 관련 보도"
     },
     {
       "t": "10/23 00:00",
-      "d": "NVIDIA Minerva 출시"
+      "d": "NVIDIA Minerva 플랫폼 공개"
     },
     {
       "t": "10/23 03:43",
-      "d": "MS 의료 AI 연구 보도"
+      "d": "Microsoft AI 진단 시스템 논문 보도"
     },
     {
-      "t": "10/23 01:29",
-      "d": "Anthropic IPO 로이터 보도"
+      "t": "10/23 09:45",
+      "d": "MIT 에이전트 섬 실험 소식"
     }
   ],
-  "intro": "10월 23일 금요일 발행. NVIDIA의 AI 팹 관측 플랫폼과 우버의 전사적 ChatGPT Work 확대가 오늘 호의 축이고, MS 의료 AI 성과 주장과 Anthropic IPO 소식이 함께 들어왔습니다.",
+  "intro": "10월 23일 금요일 발행. OpenAI 모델이 경쟁 클라우드인 Google Cloud에 들어가는 유통 변화가 오늘 호의 중심이고, NVIDIA의 AI 팩토리 관제 플랫폼과 기업·의료 도입 사례, 보안 사고 소식이 뒤를 잇습니다.",
   "analysis": [
     {
-      "id": "nvidia-minerva",
+      "id": "openai-google-cloud",
       "n": 1,
-      "title": "1. NVIDIA Minerva, AI 팹 운영 관측 플랫폼 출시",
+      "title": "1. OpenAI 모델의 Google Cloud 입점, 유통 질서가 달라진 지점",
       "bullets": [
-        "문제를 더 일찍 찾아 AI 팹 가동률을 지키는 AIOps 플랫폼",
-        "인프라와 모델 단위 텔레메트리를 통합 수집",
-        "운영팀의 장애 대응 흐름 자체를 바꾸는 설계"
+        "OpenAI와 Google Cloud의 유통 제휴 발표",
+        "Gemini Model Garden과 Google Cloud Marketplace 경유 제공",
+        "Codex 워크플로까지 함께 들어옴"
       ],
       "body": [
-        "NVIDIA가 AI 데이터센터를 'AI 팹'으로 운영하는 조직을 위한 AIOps 플랫폼 Minerva를 내놨습니다. 목표는 문제를 더 일찍 발견해 가동 시간과 생산성을 지키는 것입니다.",
-        "AI 팹이 커지면서 GPU, 네트워크, 모델, 애플리케이션 각층에서 나오는 신호를 한데 모으는 일이 운영의 병목이 되어 왔습니다. Minerva는 인프라와 모델의 텔레메트리를 함께 모아 이 간극을 좁히겠다는 구성입니다.",
-        "다만 발표 시점이라 실제 고객 환경에서 어느 정도 장애 감지가 빨라지는지, 어떤 규모의 클러스터에서 검증됐는지는 아직 확인되지 않습니다. AIOps 도구는 도입 후 운영 데이터가 쌓여야 효과가 드러나는 경우가 많습니다.",
-        "NVIDIA가 하드웨어 너머 운영 소프트웨어 층을 계속 넓힌다는 점에서, AI 인프라 구매 조건에 운영 도구 결합 여부가 새 변수로 붙을 수 있습니다. 운영팀의 장애 대응 흐름 자체를 바꾸는 설계"
+        "OpenAI가 자사 프론티어 모델과 Codex 워크플로를 Google Cloud에 내놓는다고 밝혔습니다. Gemini의 Model Garden에 올라가고 Google Cloud Marketplace를 통해 구매할 수 있는 구조입니다.",
+        "지금까지 주요 모델사는 자사 계열 클라우드와 강하게 묶여 왔습니다. 이번 조치는 그 경계를 스스로 여는 것으로, 기업 고객 입장에서는 클라우드 선택과 모델 선택을 따로 할 수 있는 여지가 생깁니다.",
+        "다만 어떤 모델 버전이 어떤 조건·가격으로 제공되는지 세부 사항은 발표문만으로는 다 확인되지 않습니다. 출시 일정도 아직 명시된 범위가 좁습니다. Codex 워크플로까지 함께 들어옴",
+        "모델 유통이 멀티클라우드로 흐르면 도입 검토의 비교 대상이 늘어납니다. 향후 다른 모델사들의 유사한 제휴가 이어질지가 관전 포인트입니다. Codex 워크플로까지 함께 들어옴"
       ],
-      "extra": "그 밖에: NVIDIA는 같은 주 카자흐스탄의 AI 컴퓨팅 생태계 확장 소식과 유럽 금융권 오픈 모델 도입 사례도 블로그에 올렸습니다.",
-      "takeaway": "AI 팹의 경쟁 축이 연산량에서 운영 관측 능력으로 달라진 지점입니다. GPU 도입을 검토하는 인프라팀은 벤더별 관측 도구 범위를 견적 비교 항목부터 확인하면 됩니다.",
+      "extra": "",
+      "takeaway": "모델과 클라우드의 묶음이 풀리는 대목이어서 조달 전략에 미칠 영향이 큽니다. 도입 검토 중인 팀은 Google Cloud 상의 제공 모델 목록과 가격 조건을 기존 계약과 비교 기준으로 삼으면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/openai-models-google-cloud",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/uber-chatgpt-work-rollout",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/forward-deployed-engineering-means",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "minerva",
+      "n": 2,
+      "title": "2. NVIDIA Minerva, AI 데이터센터 관찰의 새 축",
+      "bullets": [
+        "AI 팩토리 대상 엔드투엔드 관찰 플랫폼",
+        "인프라와 애플리케이션 계층 텔레메트리 통합",
+        "문제 조기 발견과 가동률 유지 목표"
+      ],
+      "body": [
+        "NVIDIA가 AI 데이터센터, 즉 'AI 팩토리'를 위한 AIOps 플랫폼 Minerva를 공개했습니다. 인프라에서 모델, 애플리케이션까지 흩어져 있던 텔레메트리를 한곳에 모아 장애를 일찍 잡아내는 것이 목적입니다.",
+        "AI 데이터센터는 GPU 클러스터, 학습·추론 작업, 서비스 애플리케이션이 맞물려 돌아가기 때문에 어느 층에서 병목이 생겼는지 찾기가 까다롭습니다. Minerva는 이 계층 사이의 관측 간극을 메우는 관제 반에 해당합니다.",
+        "다만 성능 개선 폭을 수치로 보여준 발표는 아니어서, 실제 운영 환경에서 어느 정도 장애 대응 시간을 줄이는지는 도입 사례가 쌓여야 확인됩니다. NVIDIA 자체 설명이라는 점도 감안해야 합니다.",
+        "같은 날 NVIDIA는 카자흐스탄의 AI 컴퓨팅 확장 소식도 전하며 국가 단위 인프라 사업에도 계속 힘을 싣고 있습니다. 문제 조기 발견과 가동률 유지 목표"
+      ],
+      "extra": "그 밖에: NVIDIA 블로그는 유럽 금융권이 GTC Berlin에서 오픈 모델 기반 자체 인텔리전스 구축 사례를 공유했다고 전합니다. 은행·결제사·금융데이터 제공사가 프로덕션 규모로 오픈 모델을 쓰고 있다는 내용입니다.",
+      "takeaway": "AI 인프라 운영의 병목이 모델 성능보다 관찰·대응 쪽으로 옮겨오고 있다는 신호로 읽는 편이 맞습니다. 데이터센터 운영 담당자는 기존 모니터링 도구와 Minerva의 계층 커버리지 차이부터 확인하면 됩니다.",
       "tags": [],
       "sources": [
         {
@@ -128,103 +169,22 @@
       ]
     },
     {
-      "id": "uber-chatgpt-work",
-      "n": 2,
-      "title": "2. ChatGPT Work, 우버 전 직원 3만 명 확대 적용",
-      "bullets": [
-        "3만 명 넘는 직원 대상 전사 배포",
-        "데이터 분석과 복잡한 워크플로 과제에 활용",
-        "기업 단위 도입 사례로서 참고 가치"
-      ],
-      "body": [
-        "우버가 OpenAI와 함께 ChatGPT Work를 3만 명이 넘는 전 직원에게 배포한다고 밝혔습니다. 조사, 데이터 분석, 프레젠테이션 제작, 복잡한 워크플로 처리에 쓰인다고 소개했습니다.",
-        "기업용 AI 도입은 부서 단위 시범에서 전사 확대로 넘어가는 단계가 관건입니다. 우버 사례는 대규모 인원 기준으로 이 전환이 실제로 이뤄졌음을 보여주는公开发표입니다.",
-        "다만 3만 명이 모두 같은 강도로 쓰는지, 실제 업무 시간 절감이 얼마인지는 발표에 담기지 않았습니다. 전사 배포는 계정 수 기준이며 사용량과는 다른 지표입니다.",
-        "OpenAI는 같은 주 AT&T의 법무 업무 사례도 공개하는 등 기업 고객 사례를 잇달아 내놓고 있어, B2B 확대 속도가 당분간 주요 지표로 읽힙니다. 기업 단위 도입 사례로서 참고 가치"
-      ],
-      "extra": "그 밖에: OpenAI는 같은 주 자사 블로그에서 현장 배치 엔지니어링(FDE) 조직의 역할과 배포 파트너 기준 문서도 공개했습니다.",
-      "takeaway": "도구 선택이 부서 실험에서 전사 표준으로 옮겨가는 흐름에 미칠 영향이 큽니다. 사내 AI 도구 표준화를 준비하는 팀은 우버의 적용 범위와 자사 업무 유형 겹침을 비교해 두면 됩니다.",
-      "tags": [],
-      "sources": [
-        {
-          "handle": "OpenAI News",
-          "url": "https://openai.com/index/uber-chatgpt-work-rollout",
-          "kind": "doc"
-        },
-        {
-          "handle": "OpenAI News",
-          "url": "https://openai.com/index/att-legal",
-          "kind": "doc"
-        },
-        {
-          "handle": "OpenAI News",
-          "url": "https://openai.com/index/forward-deployed-engineering-means",
-          "kind": "doc"
-        }
-      ],
-      "images": [
-        {
-          "src": "/img/2026-10-23/uber-chatgpt-work-3d7e2a90.webp",
-          "caption": "AI 생성 일러스트 (실제 사진 아님)",
-          "alt": "전사 업무에 도입된 대화형 AI 비서 네트워크를 표현한 추상 일러스트",
-          "width": 1200,
-          "height": 675
-        }
-      ]
-    },
-    {
-      "id": "1password-agent-login",
+      "id": "ms-diagnostic",
       "n": 3,
-      "title": "1Password, 에이전트 대리 로그인 기능 출시",
+      "title": "3. Microsoft AI 진단 시스템, '의료 초지능' 선언의 무게",
       "bullets": [
-        "AI 에이전트가 개인 계정에 대리 로그인",
-        "자격 증명 자체는 에이전트에 노출되지 않음",
-        "에이전트 권한 설계의 새 표준 후보"
+        "무스타파 술레이만 CEO의 '의료 초지능' 추진 선언",
+        "Science 지 연구에서 어려운 진단 케이스 성능 비교",
+        "개선 상당분이 하부 AI 모델에서 온다는 분석"
       ],
       "body": [
-        "1Password가 AI 에이전트가 사용자를 대신해 개인 계정에 로그인하되, 비밀번호를 열람하지 못하게 하는 기능을 내놨습니다. 자격 증명 보호와 대리 접속을 동시에 만족하는 설계입니다.",
-        "에이전트가 웹 서비스를 대신 쓰려면 지금까지는 비밀번호나 세션을 넘겨야 하는 경우가 많았습니다. 이 구조는 자격 증명 유출 우려 때문에 기업 보안팀이 에이전트 도입을 막는 대표적 이유였습니다.",
-        "다만 어떤 서비스에서 작동하는지, 대리 로그인 범위를 사용자가 어디까지 통제할 수 있는지 세부 조건은 발표문만으로는 다 확인되지 않습니다. 실제 보안성은 외부 검토를 거쳐야 판단이 가능합니다.",
-        "비밀번호 관리 업체가 에이전트 시대의 인증 계층을 선점하려 한다는 점에서, 유사 서비스들의 대응이 후속 관전 포인트입니다. 에이전트 권한 설계의 새 표준 후보"
-      ],
-      "extra": "그 밖에: 같은 주 TechCrunch는 MIT 연구진이 13개 AI를 가상 섬에 두고 자발적 행동을 관찰한 실험 소식도 전했습니다.",
-      "takeaway": "에이전트 권한 설계에서 '증명 노출 없는 위임'이라는 문제 의식이 제품으로 등장한 것이 중요해진 이유입니다. 에이전트 도입을 검토하는 보안 담당자는 이 기능의 지원 서비스 목록과 권한 회수 절차를 체크리스트에 넣어 두시면 됩니다.",
-      "tags": [],
-      "sources": [
-        {
-          "handle": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/10/22/1password-launches-a-way-for-ai-agents-to-log-in-on-your-behalf-without-seeing-your-password/",
-          "kind": "doc"
-        },
-        {
-          "handle": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/10/22/left-alone-with-nothing-to-do-ai-agents-started-playing/",
-          "kind": "doc"
-        },
-        {
-          "handle": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/10/22/canva-releases-its-first-image-generation-model/",
-          "kind": "doc"
-        }
-      ]
-    },
-    {
-      "id": "ms-medical-ai",
-      "n": 4,
-      "title": "4. MS 의료 AI, 어려운 케이스서 의사 상회 주장",
-      "bullets": [
-        "일반의보다 어려운 사례에서 앞선다는 연구 결과",
-        "다만 개선 대부분이 기반 모델에서 온 것으로 보임",
-        "'의료 초지능' 목표 선언 수반"
-      ],
-      "body": [
-        "Microsoft의 새 AI 진단 시스템이 난이도 높은 케이스에서 일반의를 앞섰다는 연구가 Science에 게재됐습니다. 무스타파 술레이만은 '의료 초지능' 추구를 목표로 내세웠습니다.",
-        "AI 진단 비교 연구는 지금까지 주로 표준 시험 문제로 이뤄졌습니다. 이번 연구가 주목받는 까닭은 어려운 실제 유형 사례를 다뤘다는 점입니다. 다만 개선 대부분이 기반 모델에서 온 것으로 보임",
-        "다만 보도에 따르면 성능 향상의 상당 부분은 시스템 아래 깔린 기반 모델 개선에서 온 것으로 보입니다. 시스템 고유의 설계가 기여한 몫과 평가 조건, 참여 의사 수 같은 세부는 원문 확인이 필요합니다.",
-        "의료 분야에서 AI 성과 주장은 규제·검증 논의와 함께 가므로, 단일 논문이 곧 임상 도입을 뜻하지는 않습니다. 후속 재현 연구가 관전 포인트입니다. '의료 초지능' 목표 선언 수반"
+        "Microsoft의 술레이만 CEO는 자사 AI 진단 시스템이 어려운 케이스에서 일반의를 앞선다고 말하며 '의료 초지능'을 향한 로드맵을 강조했습니다. 근거로 삼은 것은 Science 지에 게재된 연구입니다.",
+        "AI 진단 시스템은 증상과 검사 정보를 받아 감별진단을 세우는 도구로, 이번 연구는 일반의가 어려워하는 사례 묶음에서 상대 성능을 비교했습니다. 전문의가 아닌 일반의와의 비교라는 점이 성격을 규정합니다.",
+        "다만 보도에 따르면 성능 향상의 상당 부분이 이미 존재하는 하부 AI 모델에서 나온다는 지적이 붙습니다. 시스템 고유의 기여가 얼마인지는 아직 불확실하고, 임상 현장 적용 조건과 안전장치도 논문 밖의 문제입니다.",
+        "의료 AI가 진단 보조를 넘어 자율성을 얼마나 가질지는 규제 논의와 맞물립니다. '초지능'이라는 표현은 목표 선언이지 검증된 성능 서술이 아닙니다. 개선 상당분이 하부 AI 모델에서 온다는 분석"
       ],
       "extra": "",
-      "takeaway": "평가 대상이 표준 시험에서 어려운 실제 사례로 옮겨진 점이 의료 AI 신뢰 논의에서 바뀐 대목입니다. 의료 데이터를 다루는 조직은 이 논문의 평가 설계를 사내 AI 성과 비교 기준으로 삼으면 됩니다.",
+      "takeaway": "의료 AI가 일반의 대비 우위를 학술지에 올렸다는 점에서 읽히는 의미는 검증의 무게입니다. 의료 정보를 다루는 팀은 해당 논문의 비교 조건과 전문의 기준 성적이 있는지를 체크리스트에 넣어 두시면 됩니다.",
       "tags": [],
       "sources": [
         {
@@ -238,33 +198,102 @@
           "kind": "talk"
         }
       ]
+    },
+    {
+      "id": "claude-duet",
+      "n": 4,
+      "title": "4. Claude Duet 앱, 채팅 너머의 에이전트 접점 실험",
+      "bullets": [
+        "Anthropic의 에이전트 전용 애플리케이션 베팅",
+        "대화형 인터페이스를 넘어선 상호작용 설계",
+        "소비자·업무용 접점 확대 의도"
+      ],
+      "body": [
+        "Anthropic이 에이전트 경험을 앱으로 묶은 Claude Duet을 선보였다는 보도가 나왔습니다. 기존 채팅 창을 넘어 에이전트가 사용자와 함께 일하는 형태를 실험하는 시도로 읽힙니다.",
+        "주요 모델사들이 앱·운영체제·브라우저까지 접점을 넓히는 흐름 속에서, Anthropic은 그간 기업 API와 업무용 제품 중심이었습니다. Duet은 이 균형을 소비자 쪽으로 조정하려는 움직임입니다.",
+        "다만 앱의 구체적 기능 범위, 출시 시점, 가격 정책은 보도 수준에서는 아직 불확실합니다. '에이전트 앱'이라는 범주 자체가 경쟁사들과 겹치기 때문에 차별점 판별도 쉽지 않습니다.",
+        "동시에 Anthropic 주변에선 IPO 관련 보도와 음악 저작권 소송 소식이 함께 나오고 있어, 회사의 우선순위가 여러 방향으로 늘어난 상태입니다. 소비자·업무용 접점 확대 의도"
+      ],
+      "extra": "그 밖에: Anthropic 관련 소식으로 로이터는 시장 불안 속에서 Anthropic IPO가 유일하게 움직이는 규모 있는 상장 후보로 보도했고, 빌룸버그는 아이코닉·스파크·GIC 등 초기 투자자들의 평가익 전망을 전했습니다. 빌보드는 레저버아가 Suno와 Anthropic을 상대로 음악 저작권 소송을 제기했다고 밝혔습니다.",
+      "takeaway": "모델 경쟁이 접점 경쟁으로 옮겨가는 흐름에서 Anthropic의 첫 본격 대응이라는 점이 중요합니다. Claude를 업무에 쓰는 팀은 Duet이 기존 워크플로를 대체할지를 출시 정보가 나오는 대로 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNX2RHNFI2M0VmLTVfUGwyWjBzTFZwcHBoNlFwZEttM3NHOHBVQzJmZmp0YV81V1lyX2VCWFZGMENVZzRhV3lPbVYzQWE1cHIwejVtbzlGR1hmMWpPTUlhM2pObDMyM1ZBMmEtbm14QXVnMUkzRnZvY25sTHlXM0hmTnNwbGx4SjNGaVhseGNHUVVQb0VzaVFVWTdVTUVMWkRVMS1JaFZWbDkzNmF5UEtWWWs2TEZxdjA?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.reuters.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQRWU0S2RSc3UweGd3OGdmMlF0VVNnQ3paTmp3SjhrT0hxMUU2eXdDRGp2cXl6S043dFJ0Z0Z6RnhQb3g0NjJTRWtDYWx1YzJJTFdkemRIbkFHY2Yybi1WUjc0Sk5aX1NEblZBUURoakwxUEFCdUVmRFRlbnF3blhpczNwLVlzZERvVnpZaVIxa2hCdk1za0VJTnFoQjZxc1BvZ1NWSElxWVlJUlpnalFrc1lB?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.bloomberg.com"
+        }
+      ]
+    },
+    {
+      "id": "connectwise-breach",
+      "n": 5,
+      "title": "5. ConnectWise 침해, AI 에이전트가 공격 도구가 된 사건",
+      "bullets": [
+        "Microsoft가 배후를 중국 계열 해커로 지목",
+        "AI 에이전트 활용해 고가사 수천 곳 신속 침해",
+        "공급망 경유 공격의 전형적 확산 구조"
+      ],
+      "body": [
+        "IT 관리 기업 ConnectWise가 침해당한 뒤 중국 쪽과 연결된 해커가 수천 개 기업을 추가로 표삼했다는 보도가 나왔습니다. Microsoft는 이 공격에서 AI 에이전트가 빠른 대규모 침해에 동원됐다고 지목합니다.",
+        "ConnectWise 같은 원격 IT 관리 도구는 고객사 시스템에 넓은 권한으로 접근하는 구조라, 한 번 뚫리면 피해가 사업자를 타고 퍼지는 공급망 공격이 됩니다. 여기에 AI 에이전트가 더해지면 침해 속도와 폭이 커진다는 것이 이번 사건의 핵심 경고입니다.",
+        "다만 피해 기업 수는 '수천 개'라는 보도 표현이며 정확한 집계는 아직 확인되지 않습니다. 배후 지목도 Microsoft의 분석에 기반한 것이라 독립 검증은 진행형입니다.",
+        "공격에 AI가 쓰였다는 점은 방어 쪽에서도 자동화 대응의 필요성을 키웁니다. 같은 날 1Password가 AI 에이전트가 비밀번호를 보지 않고 대신 로그인하는 기능을 내놓은 것도 이 흐름 속에서 읽을 수 있습니다."
+      ],
+      "extra": "그 밖에: 같은 TechCrunch 보도 묶음에는 1Password가 에이전트가 비밀번호를 열람하지 못하게 한 채 사용자 계정에 로그인하는 기능을 출시했다는 소식이 있습니다. 자격 증명 보호와 위임 접근을 분리한 설계입니다.",
+      "takeaway": "AI 에이전트가 방어뿐 아니라 공격의 도구로 등장했다는 점이 위협 모델이 달라진 지점입니다. 보안 담당자는 조직이 쓰는 원격 관리 도구의 권한 범위와 최근 패치 이력부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/10/22/chinese-hackers-spied-on-thousands-of-companies-after-breaching-it-giant-connectwise/",
+          "kind": "doc"
+        },
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/10/22/1password-launches-a-way-for-ai-agents-to-log-in-on-your-behalf-without-seeing-your-password/",
+          "kind": "doc"
+        },
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/10/22/left-alone-with-nothing-to-do-ai-agents-started-playing/",
+          "kind": "doc"
+        }
+      ]
     }
   ],
   "mood": {
-    "shift": "AI 팹 운영 층이 별도 제품으로 분화",
-    "grow": "기업 전사 배포 사례 누적",
-    "caution": "의료 AI 성과 주장의 재현 검증 필요",
-    "heat": "Anthropic IPO 단독 진행 관심"
+    "shift": "모델 유통이 클라우드 경계를 넘기 시작",
+    "grow": "Uber·AT&T 등 대규모 기업 도입 사례 확산",
+    "caution": "AI 에이전트가 공격 도구로 쓰인 공급망 침해",
+    "heat": "Anthropic IPO 관련 시장 관심"
   },
   "tips": [
     {
-      "title": "Minerva 발표 원문 확인",
-      "body": "AI 팹 관측 플랫폼의 구성과 적용 범위는 NVIDIA 공식 블로그 글에서 확인할 수 있습니다.",
-      "via": "NVIDIA Blog"
-    },
-    {
-      "title": "우버 사례의 적용 범위 읽기",
-      "body": "전사 배포 발표문에 나온 업무 유형을 자사 업무와 겹쳐 보면 도입 우선순위를 잡는 데 도움이 됩니다.",
+      "title": "클라우드별 모델 목록 갱신",
+      "body": "Google Cloud Marketplace에 어떤 OpenAI 모델이 어떤 가격으로 오르는지 확인해 두면 도입 비교가 쉬워집니다.",
       "via": "OpenAI News"
     },
     {
-      "title": "에이전트 대리 로그인 설계 참고",
-      "body": "증명 노출 없는 위임 구조가 어떤 서비스에서 작동하는지 1Password 발표에서 확인할 수 있습니다.",
+      "title": "원격 관리 도구 권한 점검",
+      "body": "ConnectWise류 도구의 계정 권한과 최근 보안 패치 이력을 점검해 두면 됩니다.",
       "via": "TechCrunch AI"
     },
     {
-      "title": "의료 AI 연구 원문 읽기",
-      "body": "성과의 상당분이 기반 모델에서 왔다는 지적의 근거는 Science 논문과 보도를 함께 보면 파악됩니다.",
+      "title": "의료 AI 성적 비교 조건 읽기",
+      "body": "논문의 비교 대상이 일반의인지 전문의인지, 과제 묶음이 어떤 조건인지를 먼저 확인해 두시면 됩니다.",
+      "via": "TechCrunch AI"
+    },
+    {
+      "title": "에이전트 자격 증명 위임 방식 살피기",
+      "body": "1Password의 비밀번호 비노출 로그인처럼 위임과 열람을 분리한 방식을 보안 정책 검토에 참고하면 됩니다.",
       "via": "TechCrunch AI"
     }
   ],
