@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-20",
+  "analysis": "openai-fundraising-race",
+  "title": "2. 상장 경쟁 겹친 조달 속도전, 미확정 금액 주의",
+  "src": "/img/2026-10-20/openai-fundraising-race-0a656278.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration of a fundraising race: several glowing runners of light streaking toward a finish gate, speed lines and rising momentum, competing beams in orange and cyan, geometric abstraction, wide 16:9 composition, no text, no letters, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "0a656278",
+  "alt": "피니시 게이트를 향해 질주하는 빛의 주자들이 자금 조달 속도전을 상징하는 추상 일러스트"
+}

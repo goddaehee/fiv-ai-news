@@ -125,6 +125,15 @@
           "url": "https://blog.google/products-and-platforms/products/gemini/stylist-outfit-tips-gemini/",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-20/nscale-anthropic-cloud-3942b0fe.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛의 점선 다리로 연결된 두 개의 기둥이 미체결 대형 계약의 협상을 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -154,6 +163,15 @@
           "handle": "NVIDIA Blog",
           "url": "https://blogs.nvidia.com/blog/media-agentic-security-european-public-service-broadcasting-global-content-production/",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-20/openai-fundraising-race-0a656278.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "피니시 게이트를 향해 질주하는 빛의 주자들이 자금 조달 속도전을 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -186,6 +204,15 @@
           "kind": "doc",
           "origin_url": "https://thenextweb.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-20/cognizant-gemini-agents-b6b9dac6.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "중앙 허브에서 사방으로 뻗어나가는 경로와 불꽃이 에이전트 유통망을 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -216,6 +243,15 @@
           "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPZHQyOU05TVZ4RVNpTGdJX18zeHlMZ1pGOGdNeGFmRnFMNERObThVUTl2Ny1CVGU1Vm5IMF9aSS1qaWpOTWlFdDBLeHZIa1lkYnltX1pnU1BLbGdGM3duM1FJZDhocndUWGlUZ0pSaEV6U2RUdzgwX1FaY2s2YllieUo3cTBSWVUtRzJEczR3YXliUzB0d0dRQkRsWjlaQ0FCeXBKM1A2MjlaYzdZa0E?oc=5",
           "kind": "doc",
           "origin_url": "https://www.reuters.com"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-20/amazon-torchneuron-0c9f0f16.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛나는 칩 코어와 맞물린 도구 기어들이 개발자 생태계를 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }

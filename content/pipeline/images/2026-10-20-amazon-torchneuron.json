@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-20",
+  "analysis": "amazon-torchneuron",
+  "title": "4. 도구 생태 공략, 칩 우위를 흔드는 두 번째 경로",
+  "src": "/img/2026-10-20/amazon-torchneuron-0c9f0f16.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration of a developer ecosystem bridging to chip hardware: layered tool gears meshing with a glowing silicon chip core, flowing circuit-like patterns, purple and copper tones, geometric abstraction, wide 16:9 composition, no text, no letters, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "0c9f0f16",
+  "alt": "빛나는 칩 코어와 맞물린 도구 기어들이 개발자 생태계를 상징하는 추상 일러스트"
+}

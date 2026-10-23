@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-20",
+  "analysis": "nscale-anthropic-cloud",
+  "title": "1. 미체결 대형 계약, 확정 발표 전까지 추정으로 읽기",
+  "src": "/img/2026-10-20/nscale-anthropic-cloud-3942b0fe.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration of a large unsigned contract in negotiation: two distant pillars reaching toward each other across a gap, connected by faint dotted bridges of light, tentative and unfinished, slate blue and gold tones, geometric abstraction, wide 16:9 composition, no text, no letters, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "3942b0fe",
+  "alt": "빛의 점선 다리로 연결된 두 개의 기둥이 미체결 대형 계약의 협상을 상징하는 추상 일러스트"
+}
