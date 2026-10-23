@@ -31,7 +31,7 @@ ok("canon $80B==800억==80 billion",
 ok("canon 80억 != $80B (크기 다름 차단)", _canon_num("80억") != _canon_num("$80B"))
 ok("canon 80억 == 8 billion", _canon_num("80억") == _canon_num("8 billion") == "mag:8000000000")
 ok("canon 콤마 제거", _canon_num("$1,200M") == _canon_num("1.2B") == "mag:1200000000")
-ok("canon $200 == 200달러", _canon_num("$200") == _canon_num("200달러") == "200")
+ok("canon $200 == 200달러", _canon_num("$200") == _canon_num("200달러") == "mag:200")
 ok("canon 5만 == 50000", _canon_num("5만") == "mag:50000")
 ok("canon 3천 == 3000", _canon_num("3천") == "mag:3000")
 ok("canon % 유지", _canon_num("30%") == "30%")
