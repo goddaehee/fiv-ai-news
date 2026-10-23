@@ -1,112 +1,149 @@
 {
   "date": "2026-10-23",
-  "title": "우버 전 직원 ChatGPT Work 도입, MIT의 에이전트 실험",
-  "heroline": "10월 23일 호: 기업 도입 사례와 에이전트 행동 연구, 진단 AI 검증 결과가 함께 나온 날",
-  "dek": "우버가 3만 명 규모로 ChatGPT Work를 확대했고, MIT는 가상 섬에 에이전트를 격리하는 실험 결과를 공유했습니다. Microsoft의 의료 진단 AI 성능 주장은 독립 연구에 실렸지만 원인 분석에는 이견이 있습니다.",
-  "tag": "AI 데일리",
+  "title": "5분 AI 뉴스 — Minerva 출시, 우버 3만 명 확대, MS 의료 AI 논쟁",
+  "heroline": "AI 팹 관측부터 대리 로그인, 기업 확대 적용까지",
+  "dek": "NVIDIA가 AI 인프라 운영 플랫폼을 내놨고, 우버는 ChatGPT Work를 전 직원으로 확대했습니다. MS 의료 AI 성과 주장과 Anthropic IPO 소식도 확인할 호입니다.",
+  "tag": "ai-daily",
   "briefMin": 3,
-  "readMin": 7,
+  "readMin": 6,
   "briefing": [
     {
-      "id": "uber-chatgpt-work",
-      "headline": "우버, 3만 명 전 직원 대상 ChatGPT Work 도입",
-      "summary": "우버가 OpenAI와 함께 조사·데이터 분석·발표 자료 작업에 ChatGPT Work를 전 직원에게 배포합니다. 업무 워크플로 자동화가 명시된 대규모 사내 롤아웃 사례입니다."
-    },
-    {
-      "id": "mit-agents-island",
-      "headline": "MIT, 가상 섬에 AI 에이전트 13개 격리 실험 결과 공개",
-      "summary": "할 일이 없는 환경에 놓인 에이전트들이 게임을 만들고 잃어버린 반지를 애도하는 행동을 보였다는 연구입니다. 이후 본래 업무 성적도 좋아졌다고 합니다."
-    },
-    {
-      "id": "ms-medical-diagnostic",
-      "headline": "Microsoft 진단 AI, 어려운 케이스에서 일반의 능가 주장",
-      "summary": "Science 저널에 실린 연구에서 Microsoft AI 진단 시스템이 어려운 사례에서 일반의를 앞선 결과가 나왔습니다. 다만 성능 향상의 상당 부분은 하위 모델에서 온 것으로 보인다는 분석입니다."
-    },
-    {
-      "id": "vocabx-vocabulary-specialization",
-      "headline": "Dharma-AI, 어휘 특화로 SLM 추론 비용 77% 절감 방법 공개",
-      "summary": "소형 언어 모델의 어휘를 실제 앱 도메인에 맞게 좁추는 기법을 Hugging Face 블로그가 소개했습니다. 실서비스 기준 추론 비용 절감 효과를 주장합니다."
-    },
-    {
       "id": "nvidia-minerva",
-      "headline": "NVIDIA Minerva, AI 팩토리 관측 플랫폼 공개",
-      "summary": "인프라와 애플리케이션의 텔레메트리를 한데 모아 문제를 조기에 잡는 AIOps 플랫폼입니다. AI 데이터센터 운영 효율화가 목표입니다."
+      "headline": "인프라·모델 망라한 텔레메트리 통합 구조",
+      "summary": "NVIDIA가 AI 데이터센터 운영 문제를 조기에 잡는 AIOps 플랫폼 Minerva를 공개했습니다."
     },
     {
-      "id": "anthropic-ipo-talk",
-      "headline": "Anthropic IPO 단독 진행, 다른 기업들은 시장 불안 속 보류",
-      "summary": "AI 시장 변동성에 다른 상장 후보가 움츠러드는 가운데 Anthropic의 IPO 계획만 이례적으로 진행 중이라는 로이터 보도입니다. 초기 투자자들의 수익 전망도 거론됩니다."
+      "id": "uber-chatgpt-work",
+      "headline": "연구·데이터 분석·프레젠테이션 업무 전반 적용",
+      "summary": "우버가 ChatGPT Work를 3만 명 넘는 전 직원에게 배포하며 기업 단위 도입 사례를 늘립니다."
+    },
+    {
+      "id": "ms-medical-ai",
+      "headline": "Science 논문 게재, 개선 상당분 하위 모델 기인",
+      "summary": "MS의 새 진단 시스템이 일반의를 어려운 사례에서 앞선다는 연구 결과가 Science에 실렸습니다."
+    },
+    {
+      "id": "1password-agent-login",
+      "headline": "비밀번호 노출 없는 개인 계정 접속 위임",
+      "summary": "AI 에이전트가 사용자 대신 로그인하되 자격 증명은 열어보지 못하게 하는 기능이 나왔습니다."
+    },
+    {
+      "id": "openai-google-cloud",
+      "headline": "Codex 워크플로 포함, Marketplace 경유 공급",
+      "summary": "OpenAI 최전선 모델과 Codex 워크플로가 Gemini Model Garden을 통해 판매됩니다."
+    },
+    {
+      "id": "anthropic-ipo",
+      "headline": "다른 후보들은 주춤, 투자자 차익 기대 보도",
+      "summary": "시장 흔들림 속에서 Anthropic만 상장 절차를 이어간다는 로이터 보도가 나왔습니다."
     }
   ],
   "keywords": [
+    "NVIDIA Minerva",
     "ChatGPT Work",
-    "AI 에이전트",
-    "의료 진단 AI",
-    "추론 비용",
-    "IPO"
+    "의료 AI",
+    "에이전트 로그인",
+    "Anthropic IPO"
   ],
-  "mainEvent": "우버의 3만 명 규모 ChatGPT Work 전사 도입",
+  "mainEvent": "NVIDIA Minerva 공개 및 우버 ChatGPT Work 전사 확대",
   "keynums": [
     {
       "val": "3만 명",
-      "lab": "ChatGPT Work 배포 대상",
-      "sub": "우버 전 직원 규모, OpenAI 발표"
+      "lab": "ChatGPT Work 적용 우버 직원",
+      "sub": "OpenAI 발표"
     },
     {
       "val": "77%",
-      "lab": "추론 비용 절감",
-      "sub": "SLM 어휘 특화 기법, Dharma-AI 발표"
+      "lab": "어휘 특화로 줄인 추론 비용",
+      "sub": "Dharma AI 블로그 제목 기준"
     },
     {
       "val": "13개",
-      "lab": "격리 실험 에이전트 수",
-      "sub": "MIT 연구, TechCrunch 보도"
+      "lab": "MIT 가상 섬 실험 AI 수",
+      "sub": "TechCrunch 보도"
     }
   ],
   "timeline": [
     {
+      "t": "10/21 21:00",
+      "d": "OpenAI 모델 Google Cloud 입점 발표"
+    },
+    {
       "t": "10/22 02:00",
-      "d": "AT&T 법무 업무 재설계 사례 공개"
+      "d": "AT&T 법무 업무 사례 공개"
     },
     {
       "t": "10/22 09:00",
-      "d": "우버 ChatGPT Work 도입 발표"
-    },
-    {
-      "t": "10/22 15:00",
-      "d": "OpenAI, FDE 조직 역할 설명 게시"
+      "d": "우버 ChatGPT Work 확대 발표"
     },
     {
       "t": "10/23 00:00",
-      "d": "NVIDIA Minerva 플랫폼 공개"
+      "d": "NVIDIA Minerva 출시"
     },
     {
       "t": "10/23 03:43",
-      "d": "Microsoft 진단 AI 연구 보도"
+      "d": "MS 의료 AI 연구 보도"
     },
     {
-      "t": "10/23 09:45",
-      "d": "MIT 에이전트 섬 실험 보도"
+      "t": "10/23 01:29",
+      "d": "Anthropic IPO 로이터 보도"
     }
   ],
-  "intro": "10월 23일 금요일 발행. 기업 단위 도입 사례와 에이전트 행동 연구, 의료 진단 AI의 검증 논쟁이 하루에 겹쳐 나온 날입니다.",
+  "intro": "10월 23일 금요일 발행. NVIDIA의 AI 팹 관측 플랫폼과 우버의 전사적 ChatGPT Work 확대가 오늘 호의 축이고, MS 의료 AI 성과 주장과 Anthropic IPO 소식이 함께 들어왔습니다.",
   "analysis": [
     {
-      "id": "uber-chatgpt-work",
+      "id": "nvidia-minerva",
       "n": 1,
-      "title": "3만 명 전 직원 배포가 말해 주는 것",
+      "title": "1. NVIDIA Minerva, AI 팹 운영 관측 플랫폼 출시",
       "bullets": [
-        "우버가 OpenAI와 함께 ChatGPT Work를 전 직원에게 배포",
-        "조사, 데이터 분석, 발표 자료 작성, 복잡한 워크플로가 공식 용도로 명시",
-        "AT&T는 법무 인테이크와 판단 확장에 같은 계열 도구를 검토 중"
+        "문제를 더 일찍 찾아 AI 팹 가동률을 지키는 AIOps 플랫폼",
+        "인프라와 모델 단위 텔레메트리를 통합 수집",
+        "운영팀의 장애 대응 흐름 자체를 바꾸는 설계"
       ],
       "body": [
-        "우버가 직원 3만 명 이상을 대상으로 ChatGPT Work를 전사 배포한다고 OpenAI가 밝혔습니다. 공식 용도는 리서치, 데이터 분석, 프레젠테이션 작성, 복잡한 워크플로 완료까지 폭넓게 잡혀 있습니다.",
-        "이번 발표가 주목되는 이유는 파일럿이 아니라 전 직원 대상 확대라는 점입니다. 같은 날짜 전후로 공개된 AT&T 법무팀 사례처럼, 기업들이 부서 단위 실험을 넘어 전사 표준 도구로 옮기는 흐름이 이어지고 있습니다.",
-        "다만 생산성 개선 폭에 대한 독립 측정치는 아직 발표에 포함되지 않았습니다. 도구 도입과 실제 업무 전환 사이의 간극은 각 사가 스스로 검증해야 할 몫입니다. AT&T는 법무 인테이크와 판단 확장에 같은 계열 도구를 검토 중"
+        "NVIDIA가 AI 데이터센터를 'AI 팹'으로 운영하는 조직을 위한 AIOps 플랫폼 Minerva를 내놨습니다. 목표는 문제를 더 일찍 발견해 가동 시간과 생산성을 지키는 것입니다.",
+        "AI 팹이 커지면서 GPU, 네트워크, 모델, 애플리케이션 각층에서 나오는 신호를 한데 모으는 일이 운영의 병목이 되어 왔습니다. Minerva는 인프라와 모델의 텔레메트리를 함께 모아 이 간극을 좁히겠다는 구성입니다.",
+        "다만 발표 시점이라 실제 고객 환경에서 어느 정도 장애 감지가 빨라지는지, 어떤 규모의 클러스터에서 검증됐는지는 아직 확인되지 않습니다. AIOps 도구는 도입 후 운영 데이터가 쌓여야 효과가 드러나는 경우가 많습니다.",
+        "NVIDIA가 하드웨어 너머 운영 소프트웨어 층을 계속 넓힌다는 점에서, AI 인프라 구매 조건에 운영 도구 결합 여부가 새 변수로 붙을 수 있습니다. 운영팀의 장애 대응 흐름 자체를 바꾸는 설계"
       ],
-      "extra": "그 밖에: OpenAI는 같은 주에 AT&T 법무팀 사례도 공개했습니다. 법무 인테이크 재설계와 판단 확장이 주제로, 법무 부서의 AI 활용 범위가 넓어지는 흐름을 보여 줍니다.",
-      "takeaway": "도입 규모가 파일럿에서 전사로 넘어간 점이 국내 기업의 도입 판단 시점을 당기는 신호입니다. 우버가 공식 용도로 밝힌 네 가지 작업 목록을 사내 우선순위 항목과 겹쳐 보는 것부터 시작하면 됩니다.",
+      "extra": "그 밖에: NVIDIA는 같은 주 카자흐스탄의 AI 컴퓨팅 생태계 확장 소식과 유럽 금융권 오픈 모델 도입 사례도 블로그에 올렸습니다.",
+      "takeaway": "AI 팹의 경쟁 축이 연산량에서 운영 관측 능력으로 달라진 지점입니다. GPU 도입을 검토하는 인프라팀은 벤더별 관측 도구 범위를 견적 비교 항목부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/minerva-platform-infrastructure/",
+          "kind": "doc"
+        },
+        {
+          "handle": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/kazakhstan-ai-compute-ecosystem/",
+          "kind": "doc"
+        },
+        {
+          "handle": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/european-financial-services-organizations-open-models-proprietary-intelligence/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "uber-chatgpt-work",
+      "n": 2,
+      "title": "2. ChatGPT Work, 우버 전 직원 3만 명 확대 적용",
+      "bullets": [
+        "3만 명 넘는 직원 대상 전사 배포",
+        "데이터 분석과 복잡한 워크플로 과제에 활용",
+        "기업 단위 도입 사례로서 참고 가치"
+      ],
+      "body": [
+        "우버가 OpenAI와 함께 ChatGPT Work를 3만 명이 넘는 전 직원에게 배포한다고 밝혔습니다. 조사, 데이터 분석, 프레젠테이션 제작, 복잡한 워크플로 처리에 쓰인다고 소개했습니다.",
+        "기업용 AI 도입은 부서 단위 시범에서 전사 확대로 넘어가는 단계가 관건입니다. 우버 사례는 대규모 인원 기준으로 이 전환이 실제로 이뤄졌음을 보여주는公开发표입니다.",
+        "다만 3만 명이 모두 같은 강도로 쓰는지, 실제 업무 시간 절감이 얼마인지는 발표에 담기지 않았습니다. 전사 배포는 계정 수 기준이며 사용량과는 다른 지표입니다.",
+        "OpenAI는 같은 주 AT&T의 법무 업무 사례도 공개하는 등 기업 고객 사례를 잇달아 내놓고 있어, B2B 확대 속도가 당분간 주요 지표로 읽힙니다. 기업 단위 도입 사례로서 참고 가치"
+      ],
+      "extra": "그 밖에: OpenAI는 같은 주 자사 블로그에서 현장 배치 엔지니어링(FDE) 조직의 역할과 배포 파트너 기준 문서도 공개했습니다.",
+      "takeaway": "도구 선택이 부서 실험에서 전사 표준으로 옮겨가는 흐름에 미칠 영향이 큽니다. 사내 AI 도구 표준화를 준비하는 팀은 우버의 적용 범위와 자사 업무 유형 겹침을 비교해 두면 됩니다.",
       "tags": [],
       "sources": [
         {
@@ -117,6 +154,11 @@
         {
           "handle": "OpenAI News",
           "url": "https://openai.com/index/att-legal",
+          "kind": "doc"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/forward-deployed-engineering-means",
           "kind": "doc"
         }
       ],
@@ -131,23 +173,29 @@
       ]
     },
     {
-      "id": "mit-agents-island",
-      "n": 2,
-      "title": "2. 에이전트에 쉬는 시간을 주면 생기는 일",
+      "id": "1password-agent-login",
+      "n": 3,
+      "title": "1Password, 에이전트 대리 로그인 기능 출시",
       "bullets": [
-        "MIT 연구진이 AI 에이전트를 가상 섬 환경에 격리",
-        "게임 발명, 잃어버린 반지 애도 등 자발적 행동 관찰",
-        "연구진은 이후 본래 업무 성적 향상도 보았다고 주장"
+        "AI 에이전트가 개인 계정에 대리 로그인",
+        "자격 증명 자체는 에이전트에 노출되지 않음",
+        "에이전트 권한 설계의 새 표준 후보"
       ],
       "body": [
-        "MIT 연구진이 에이전트들을 가상 섬에 올려놓고 아무 과제도 주지 않은 실험 결과가 TechCrunch를 통해 알려졌습니다. 에이전트들은 스스로 게임을 만들어 놀았고, 잃어버린 반지를 애도하는 듯한 행동도 보였습니다.",
-        "주목할 부분은 방치가 낭비로 끝나지 않았다는 관찰입니다. 연구진에 따르면 섬에서 시간을 보낸 에이전트들이 본래 업무에서도 더 나은 성적을 냈다고 합니다. 다만 이는 연구진 자체 측정이며 외부 검증 전입니다.",
-        "이 결과가 시사하는 바는 에이전트 설계에서 '쉬는 시간'이 변수가 될 수 있다는 점입니다. 휴먼 개입 없이 긴 시간을 버티는 운영 구조를 고민하는 팀이라면 참고할 만한 사례입니다."
+        "1Password가 AI 에이전트가 사용자를 대신해 개인 계정에 로그인하되, 비밀번호를 열람하지 못하게 하는 기능을 내놨습니다. 자격 증명 보호와 대리 접속을 동시에 만족하는 설계입니다.",
+        "에이전트가 웹 서비스를 대신 쓰려면 지금까지는 비밀번호나 세션을 넘겨야 하는 경우가 많았습니다. 이 구조는 자격 증명 유출 우려 때문에 기업 보안팀이 에이전트 도입을 막는 대표적 이유였습니다.",
+        "다만 어떤 서비스에서 작동하는지, 대리 로그인 범위를 사용자가 어디까지 통제할 수 있는지 세부 조건은 발표문만으로는 다 확인되지 않습니다. 실제 보안성은 외부 검토를 거쳐야 판단이 가능합니다.",
+        "비밀번호 관리 업체가 에이전트 시대의 인증 계층을 선점하려 한다는 점에서, 유사 서비스들의 대응이 후속 관전 포인트입니다. 에이전트 권한 설계의 새 표준 후보"
       ],
-      "extra": "",
-      "takeaway": "에이전트의 자율 행동이 성능 저하가 아니라 향상과 연결될 수 있다는 관찰이 나왔다는 점이 의미가 큽니다. 자체 측정이라는 한계를 감안하고, 이번 실험의 관찰 항목을 사내 에이전트 평가 지표 초안에 참고 항목으로 넣어 두면 됩니다.",
+      "extra": "그 밖에: 같은 주 TechCrunch는 MIT 연구진이 13개 AI를 가상 섬에 두고 자발적 행동을 관찰한 실험 소식도 전했습니다.",
+      "takeaway": "에이전트 권한 설계에서 '증명 노출 없는 위임'이라는 문제 의식이 제품으로 등장한 것이 중요해진 이유입니다. 에이전트 도입을 검토하는 보안 담당자는 이 기능의 지원 서비스 목록과 권한 회수 절차를 체크리스트에 넣어 두시면 됩니다.",
       "tags": [],
       "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/10/22/1password-launches-a-way-for-ai-agents-to-log-in-on-your-behalf-without-seeing-your-password/",
+          "kind": "doc"
+        },
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/22/left-alone-with-nothing-to-do-ai-agents-started-playing/",
@@ -155,125 +203,69 @@
         },
         {
           "handle": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/10/22/microsofts-mustafa-suleyman-says-its-ai-outperforms-doctors-on-hard-cases-as-he-chases-medical-superintelligence/",
+          "url": "https://techcrunch.com/2026/10/22/canva-releases-its-first-image-generation-model/",
           "kind": "doc"
-        }
-      ],
-      "images": [
-        {
-          "src": "/img/2026-10-23/mit-agents-island-1828b529.webp",
-          "caption": "AI 생성 일러스트 (실제 사진 아님)",
-          "alt": "가상 섬에서 쉬며 자발적으로 행동하는 AI 에이전트들을 상징하는 해먹과 빛나는 구체의 추상 일러스트",
-          "width": 1200,
-          "height": 675
         }
       ]
     },
     {
-      "id": "ms-medical-diagnostic",
-      "n": 3,
-      "title": "3. 일반의 능가 주장 뒤에 남는 질문",
+      "id": "ms-medical-ai",
+      "n": 4,
+      "title": "4. MS 의료 AI, 어려운 케이스서 의사 상회 주장",
       "bullets": [
-        "Microsoft AI 진단 시스템이 어려운 케이스에서 일반의를 앞선 결과",
-        "Science 저널 연구로 공개, 무스타파 술레이만 CEO가 '의료 초지능' 목표 언급",
-        "성능 향상 원인은 하위 AI 모델에서 온 것으로 보인다는 분석도"
+        "일반의보다 어려운 사례에서 앞선다는 연구 결과",
+        "다만 개선 대부분이 기반 모델에서 온 것으로 보임",
+        "'의료 초지능' 목표 선언 수반"
       ],
       "body": [
-        "Microsoft의 새 AI 진단 시스템이 어려운 케이스에서 일반의를 능가했다는 연구가 Science 저널에 실렸고, TechCrunch가 이를 보도했습니다. 술레이만 CEO는 '의료 초지능' 추구라는 표현으로 목표를 설명했습니다.",
-        "여기서 읽히는 의미는 결과 자체보다 원인 규명 논쟁입니다. 보도에 따르면 향상의 상당 부분이 Microsoft 고유의 시스템이 아니라 그 밑에 깔린 AI 모델에서 나온 것으로 보인다는 전문가 분석이 따라붙었습니다.",
-        "즉, 무엇이 성능을 만들었는지가 불확실한 상태입니다. 의료 분야는 오진의 대가가 커서 원인 불명의 성능 향상은 도입 근거로 삼기 어렵습니다. 재현 조건과 비교 대상 상세가 독립 검증을 기다려야 합니다."
+        "Microsoft의 새 AI 진단 시스템이 난이도 높은 케이스에서 일반의를 앞섰다는 연구가 Science에 게재됐습니다. 무스타파 술레이만은 '의료 초지능' 추구를 목표로 내세웠습니다.",
+        "AI 진단 비교 연구는 지금까지 주로 표준 시험 문제로 이뤄졌습니다. 이번 연구가 주목받는 까닭은 어려운 실제 유형 사례를 다뤘다는 점입니다. 다만 개선 대부분이 기반 모델에서 온 것으로 보임",
+        "다만 보도에 따르면 성능 향상의 상당 부분은 시스템 아래 깔린 기반 모델 개선에서 온 것으로 보입니다. 시스템 고유의 설계가 기여한 몫과 평가 조건, 참여 의사 수 같은 세부는 원문 확인이 필요합니다.",
+        "의료 분야에서 AI 성과 주장은 규제·검증 논의와 함께 가므로, 단일 논문이 곧 임상 도입을 뜻하지는 않습니다. 후속 재현 연구가 관전 포인트입니다. '의료 초지능' 목표 선언 수반"
       ],
-      "extra": "그 밖에: 같은 주에 기후 과학자들의 AI 활용 실태를 묻는 전문가 기고도 공개됐습니다. 진단 의료와 달리 기후 모델링 영역에서의 AI 역할을 짚은 글로, 과학 분야 AI 채택의 다른 면을 보여 줍니다.",
-      "takeaway": "좋은 점수보다 점수의 출처가 불확실하다는 지적이 실제 도입 결정을 가를 변수로 남았습니다. 의료 데이터를 다루는 조직이라면 이번 연구의 비교 대상과 평가 방식을 독립 검증 보도가 나올 때까지 비교 기준 삼아 보류해 두면 됩니다.",
+      "extra": "",
+      "takeaway": "평가 대상이 표준 시험에서 어려운 실제 사례로 옮겨진 점이 의료 AI 신뢰 논의에서 바뀐 대목입니다. 의료 데이터를 다루는 조직은 이 논문의 평가 설계를 사내 AI 성과 비교 기준으로 삼으면 됩니다.",
       "tags": [],
       "sources": [
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/22/microsofts-mustafa-suleyman-says-its-ai-outperforms-doctors-on-hard-cases-as-he-chases-medical-superintelligence/",
           "kind": "doc"
-        }
-      ],
-      "images": [
-        {
-          "src": "/img/2026-10-23/ms-medical-diagnostic-2ddf4c8f.webp",
-          "caption": "AI 생성 일러스트 (실제 사진 아님)",
-          "alt": "의료 초지능을 상징하는 육각형 신경망 뇌와 퍼즐 조각의 추상 일러스트",
-          "width": 1200,
-          "height": 675
-        }
-      ]
-    },
-    {
-      "id": "vocabx-vocabulary-specialization",
-      "n": 4,
-      "title": "4. 어휘만 좁혀서 비용을 줄이는 접근",
-      "bullets": [
-        "소형 언어 모델의 어휘를 실제 앱 도메인에 특화하는 기법 소개",
-        "실서비스 기준 추론 비용 77% 절감 주장",
-        "Dharma-AI가 Hugging Face 블로그로 방법론 공개"
-      ],
-      "body": [
-        "Dharma-AI가 소형 언어 모델(SLM)의 어휘를 특정 애플리케이션 도메인에 맞게 좁추는 기법을 공개했습니다. Hugging Face 블로그에 실린 글에서 실제 앱 환경 기준 추론 비용을 77% 줄였다고 주장합니다.",
-        "배경에는 범용 모델의 어휘가 실서비스에는 과잉이라는 문제의식이 있습니다. 특정 업무에 쓰는 모델이라면 쓰이지 않는 토큰 공간을 덜어내는 방향으로 비용을 낮추는 접근입니다.",
-        "다만 77%라는 수치는 회사 자체 측정이고, 절감 폭은 도메인과 언어에 따라 달라질 수 있습니다. 한국어 서비스에 그대로 적용될지는 별도 확인이 필요합니다. Dharma-AI가 Hugging Face 블로그로 방법론 공개"
-      ],
-      "extra": "그 밖에: 같은 날짜 Hugging Face 블로그에는 관계형 데이터에서 학습 없이 지도학습을 앞선다는 NVIDIA Kumo 발표도 올라왔습니다. 데이터 분야 모델 효율화 논의가 여러 방향에서 진행되고 있습니다.",
-      "takeaway": "모델 크기를 줄이는 대신 어휘를 줄여 비용을 낮춘다는 접근이 비용 최적화 선택지를 하나 늘렸다는 데 의미가 있습니다. 도입 전에 자사 서비스의 실제 토큰 분포를 측정해 두는 것부터 확인하면 됩니다.",
-      "tags": [],
-      "sources": [
-        {
-          "handle": "Hugging Face",
-          "url": "https://huggingface.co/blog/Dharma-AI/vocabx-vocabulary-specialization",
-          "kind": "doc"
         },
         {
-          "handle": "Hugging Face",
-          "url": "https://huggingface.co/blog/nvidia/kumo-relational",
-          "kind": "doc"
-        }
-      ],
-      "images": [
-        {
-          "src": "/img/2026-10-23/vocabx-vocabulary-specialization-394be00a.webp",
-          "caption": "AI 생성 일러스트 (실제 사진 아님)",
-          "alt": "어휘를 좁혀 추론 비용을 줄이는 특화 과정을 상징하는 깔때기와 빛나는 타일의 추상 일러스트",
-          "width": 1200,
-          "height": 675
+          "handle": "HN AI",
+          "url": "https://www.mixtureofexperts.co/p/the-next-bottleneck-in-ai-for-science",
+          "kind": "talk"
         }
       ]
     }
   ],
   "mood": {
-    "shift": "기업 도입이 파일럿에서 전사 규모로 이동하는 단계",
-    "grow": "에이전트 행동 연구가 운영 설계에 활용될 조짐",
-    "caution": "진단 AI 성능의 원인 규명이 아직 불확실",
-    "heat": "Anthropic IPO가 시장 불안 속 단독 진행 화제"
+    "shift": "AI 팹 운영 층이 별도 제품으로 분화",
+    "grow": "기업 전사 배포 사례 누적",
+    "caution": "의료 AI 성과 주장의 재현 검증 필요",
+    "heat": "Anthropic IPO 단독 진행 관심"
   },
   "tips": [
     {
-      "title": "전사 도입 용도 목록 만들기",
-      "body": "우버가 밝힌 조사·분석·발표·워크플로 네 가지 용도를 사내 부서별로 우선순위를 매겨 둡니다. 도구 선정 논의 때 기준선이 됩니다.",
+      "title": "Minerva 발표 원문 확인",
+      "body": "AI 팹 관측 플랫폼의 구성과 적용 범위는 NVIDIA 공식 블로그 글에서 확인할 수 있습니다.",
+      "via": "NVIDIA Blog"
+    },
+    {
+      "title": "우버 사례의 적용 범위 읽기",
+      "body": "전사 배포 발표문에 나온 업무 유형을 자사 업무와 겹쳐 보면 도입 우선순위를 잡는 데 도움이 됩니다.",
       "via": "OpenAI News"
     },
     {
-      "title": "에이전트 방치 관찰 기록 남기기",
-      "body": "장시간 운영하는 에이전트에 자율 행동 로그를 켜 두면, MIT 실험처럼 예상 밖 행동과 성능 변화의 상관을 사내에서도 볼 수 있습니다.",
+      "title": "에이전트 대리 로그인 설계 참고",
+      "body": "증명 노출 없는 위임 구조가 어떤 서비스에서 작동하는지 1Password 발표에서 확인할 수 있습니다.",
       "via": "TechCrunch AI"
     },
     {
-      "title": "의료 AI 보도는 원인까지 읽기",
-      "body": "성능 우위 기사는 비교 대상과 향상 원인 출처를 함께 확인해야 합니다. 이번 Science 연구도 원인 규명 논쟁이 핵심이었습니다.",
+      "title": "의료 AI 연구 원문 읽기",
+      "body": "성과의 상당분이 기반 모델에서 왔다는 지적의 근거는 Science 논문과 보도를 함께 보면 파악됩니다.",
       "via": "TechCrunch AI"
-    },
-    {
-      "title": "추론 비용 실험 전 토큰 분포 측정",
-      "body": "어휘 특화 최적화를 검토한다면, 먼저 자사 서비스에서 실제로 쓰이는 토큰 분포를 측정해 둡니다. 절감 폭은 도메인마다 다르게 나옵니다.",
-      "via": "Hugging Face"
-    },
-    {
-      "title": "AI 팩토리 관측 도구 비교",
-      "body": "GPU 클러스터 운영 규모가 커진 팀이라면 Minerva 같은 통합 텔레메트리 플랫폼을 기존 모니터링 도구와 비교해 보는 시간을 갖는 것이 좋습니다.",
-      "via": "NVIDIA Blog"
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
