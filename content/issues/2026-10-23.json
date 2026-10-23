@@ -119,6 +119,15 @@
           "url": "https://openai.com/index/att-legal",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-23/uber-chatgpt-work-3d7e2a90.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "전사 업무에 도입된 대화형 AI 비서 네트워크를 표현한 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -149,6 +158,15 @@
           "url": "https://techcrunch.com/2026/10/22/microsofts-mustafa-suleyman-says-its-ai-outperforms-doctors-on-hard-cases-as-he-chases-medical-superintelligence/",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-23/mit-agents-island-1828b529.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "가상 섬에서 쉬며 자발적으로 행동하는 AI 에이전트들을 상징하는 해먹과 빛나는 구체의 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -173,6 +191,15 @@
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/22/microsofts-mustafa-suleyman-says-its-ai-outperforms-doctors-on-hard-cases-as-he-chases-medical-superintelligence/",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-23/ms-medical-diagnostic-2ddf4c8f.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "의료 초지능을 상징하는 육각형 신경망 뇌와 퍼즐 조각의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -203,6 +230,15 @@
           "handle": "Hugging Face",
           "url": "https://huggingface.co/blog/nvidia/kumo-relational",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-23/vocabx-vocabulary-specialization-394be00a.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "어휘를 좁혀 추론 비용을 줄이는 특화 과정을 상징하는 깔때기와 빛나는 타일의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }
