@@ -1,181 +1,304 @@
 {
   "date": "2026-10-23",
-  "title": "5분 AI 뉴스 — 뒤엣 대결, 1.25조 달러 라운드, 공급망 해킹",
-  "heroline": "에이전트 앱 경쟁과 초대형 투자 라운드, 그리고 개발 도구 공급망을 노린 해킹이 같은 날 겹쳤습니다.",
-  "dek": "Anthropic의 클로드 뒤엣이 에이전트 시장에서 메타 뮤즈와 맞서고, OpenAI는 IPO를 앞두고 300억 달러 규모 유치를 추진합니다. 한편 LiteLLM 배포 파이프라인 해킹과 VeloCloud 제로데이처럼 실제 공격으로 이어지는 보안 이슈도 하루에 몰렸습니다.",
-  "tag": "AI 데일리",
+  "title": "10월 23일 AI 데일리: 클로드 듀엇, 보안 3연속 악재",
+  "heroline": "앤스로픽 에이전트 앱에 도전, 공급망·제로데이 공격은 계속",
+  "dek": "Claude Duet 공개가 에이전트 경쟁의 새 국면. LiteLLM 공급망 해킹, Arista VeloCloud 제로데이, PHP 긴급 패치로 보안 이슈가 하루를 장식했습니다.",
+  "tag": "AI 뉴스 브리핑",
   "briefMin": 3,
-  "readMin": 8,
+  "readMin": 7,
   "briefing": [
     {
       "id": "claude-duet",
-      "headline": "클로드 뒤엣, 메타 뮤즈 맞선 에이전트 승부수",
-      "summary": "Anthropic가 에이전트 전용 앱 뒤엣을 내놓으며 소비자 에이전트 시장에서 메타 뮤즈와 정면 경쟁에 나섰다는 보도가 여러 매체에서 동시에 나왔습니다."
+      "headline": "Anthropic, 에이전트 전용 앱 'Claude Duet' 공개",
+      "summary": "TechCrunch와 Barron's 등이 동시에 다룬 앤스로픽의 신규 앱. 에이전트 시장 선점을 노린 승수로 읽힙니다."
     },
     {
       "id": "openai-funding",
-      "headline": "OpenAI, 1.25조 달러 밸류에이션 유치 협의",
-      "summary": "IPO를 앞두고 300억 달러 규모 신규 투자 유치를 추진 중이며, 성사되면 사상 최고 밸류에이션 비상장 기록이 깨집니다."
-    },
-    {
-      "id": "uber-chatgpt",
-      "headline": "Uber, 3만 명 전직원 챗GPT 워크 도입",
-      "summary": "Uber가 조사·데이터 분석·프레젠테이션 제작 등 업무에 챗GPT 워크를 전 직원에게 확대 적용합니다."
+      "headline": "OpenAI, $1.25T 밸류에이션 $30B 조달 추진",
+      "summary": "IPO를 앞두고 역대 최고 민간 기업 밸류에이션이 거론됩니다."
     },
     {
       "id": "litellm-supply-chain",
-      "headline": "LiteLLM 배포 채널 해킹, 정보 탈취 악성코드 유포",
-      "summary": "PyPI 패키지와 도커 이미지에 자격 증명·시크릿·환경변수를 훔치는 페이로드가 심어져 유통됐습니다."
+      "headline": "LiteLLM 릴리스 파이프라인 해킹, 정보 탈취 악성코드 유포",
+      "summary": "PyPI 패키지와 Docker 이미지에 자격증명·시크릿을 훔치는 페이로드가 심어졌습니다."
     },
     {
-      "id": "velocloud-zeroday",
-      "headline": "아리스타 VeloCloud 제로데이, 실제 공격에 악용",
-      "summary": "SD-WAN 중앙 관리 콘솔의 SQL 인젝션 취약점이 패치 전 공격에 이미 활용되고 있다고 아리스타가 경고했습니다."
+      "id": "arista-velocloud",
+      "headline": "Arista VeloCloud SQL 인젝션 제로데이, 실제 공격 확인",
+      "summary": "SD-WAN 중앙 관리 시스템인 VCO의 치명적 취약점이 악용 중입니다."
     },
     {
-      "id": "canva-image-model",
-      "headline": "캔바, 자체 이미지 생성 모델 전체 공개",
-      "summary": "첫 자체 이미지 모델을 모든 사용자에게 열고 낮은 비용과 높은 커스터마이징을 내세웠습니다."
+      "id": "php-emergency-patch",
+      "headline": "PHP, 치명적 RCE 취약점 2건 긴급 패치 발표",
+      "summary": "PHP 8.5.12 등 비상 업데이트로 계정 없이도 서버 코드 실행이 가능한 결함을 막았습니다."
     },
     {
-      "id": "1password-agent-auth",
-      "headline": "1Password, 비밀번호 노출 없는 에이전트 로그인",
-      "summary": "AI 에이전트가 사용자 계정에 대신 로그인하면서도 실제 비밀번호는 보지 못하게 하는 기능을 내놨습니다."
+      "id": "uber-chatgpt-work",
+      "headline": "Uber, 직원 30,000명 전체에 ChatGPT Work 도입",
+      "summary": "OpenAI 공식 발표로 확인된 기업 전면 배포 사례입니다."
     },
     {
-      "id": "opencode-mcp-flaw",
-      "headline": "OpenCode 결함, 로그인 순간 코드 실행 가능",
-      "summary": "악성 MCP 서버가 개발자의 윈도우·WSL 환경에서 로그인 시점에 코드를 실행할 수 있는 문제가 확인됐습니다."
+      "id": "barclays-ai-jobs",
+      "headline": "Barclays, 5,000명 감원과 AI 확대 병행 발표",
+      "summary": "AI 도입과 인력 구조조정이 함께 거론된 금융권 사례입니다."
+    },
+    {
+      "id": "capcom-breach",
+      "headline": "Capcom, 회원 11.7 million 계정 유출 확인",
+      "summary": "CAPCOM ID 멤버십 서비스 침해로 이메일 주소와 관련 정보가 노출됐습니다."
     }
   ],
   "keywords": [
-    "클로드 뒤엣",
-    "OpenAI 투자 유치",
-    "공급망 해킹",
-    "제로데이",
-    "AI 에이전트"
+    "Claude Duet",
+    "OpenAI",
+    "LiteLLM",
+    "VeloCloud",
+    "PHP"
   ],
-  "mainEvent": "클로드 뒤엣 공개와 OpenAI 대형 라운드 소식",
+  "mainEvent": "Anthropic Claude Duet 앱 공개",
   "keynums": [
     {
-      "val": "300억 달러",
-      "lab": "OpenAI 신규 유치 추진 규모",
+      "val": "$30B",
+      "lab": "OpenAI 신규 조달 규모",
       "sub": "TechCrunch 보도"
     },
     {
-      "val": "1.25조 달러",
-      "lab": "OpenAI 목표 밸류에이션",
+      "val": "$1.25T",
+      "lab": "목표 밸류에이션",
       "sub": "IPO 전 라운드"
     },
     {
-      "val": "3만 명",
-      "lab": "챗GPT 워크 도입 Uber 직원",
-      "sub": "OpenAI 발표"
+      "val": "30,000명",
+      "lab": "ChatGPT Work 배포 대상",
+      "sub": "Uber 전 직원"
     }
   ],
   "timeline": [
     {
-      "t": "10/22 09:00",
-      "d": "Uber 전 직원 챗GPT 워크 적용 발표"
-    },
-    {
-      "t": "10/22 19:44",
-      "d": "OpenCode MCP 서버 취약점 보도"
+      "t": "10/21 23:00",
+      "d": "PHP 긴급 보안 업데이트 발표"
     },
     {
       "t": "10/22 22:53",
-      "d": "클로드 뒤엣 관련 보도 확산"
-    },
-    {
-      "t": "10/23 02:25",
-      "d": "뒤엣 vs 뮤즈 비교 분석 보도"
+      "d": "Claude Duet 보도"
     },
     {
       "t": "10/23 04:05",
-      "d": "VeloCloud 제로데이 경고"
+      "d": "Arista VeloCloud 제로데이 경고"
+    },
+    {
+      "t": "10/23 04:12",
+      "d": "LiteLLM 파이프라인 해킹 보도"
+    },
+    {
+      "t": "10/23 05:22",
+      "d": "Capcom 데이터 유출 확인"
     },
     {
       "t": "10/23 07:08",
-      "d": "OpenAI 300억 달러 라운드 보도"
+      "d": "OpenAI 조달 뉴스"
     }
   ],
-  "intro": "10월 23일 금요일 발행. 에이전트 앱 경쟁이 안팎으로 달아오른 날입니다. Anthropic의 클로드 뒤엣이 메타 뮤즈와 겹치며 여러 매체의 주목을 받는가 하면, OpenAI는 IPO 전 대형 자금 조달 협의 소식이 나왔습니다. 한편 LiteLLM 공급망 해킹과 VeloCloud 제로데이처럼 지금 진행 중인 보안 사고도 함께 확인해야 하는 하루입니다.",
+  "intro": "10월 23일 금요일 발행. 앤스로픽의 에이전트 앱 Claude Duet이 여러 매체를 장식한 가운데, 오픈소스 공급망과 네트워크 장비 제로데이 등 보안 소식이 하루에 몰렸습니다.",
   "analysis": [
     {
       "id": "claude-duet",
       "n": 1,
-      "title": "1. 에이전트 앱 시대의 첫 정면 대결",
+      "title": "1. 에이전트 앱 '듀엣'으로 경쟁 구도를 바꾸는 Anthropic",
       "bullets": [
-        "Anthropic가 에이전트 전용 앱 뒤엣을 승부수로 내세움",
-        "메타 뮤즈와의 차이를 짚는 비교 분석이 주류",
-        "여러 매체가 동시에 다루며 경쟁 구도가 뚜렷해짐"
+        "TechCrunch는 Claude Duet을 앤스로픽의 에이전트 행보로 소개했습니다.",
+        "Barron's는 메타 Muse와의 비교 관점에서 차이를 짚었습니다.",
+        "여러 매체가 동시에 다룬 만큼 당일 최대 화제입니다."
       ],
       "body": [
-        "Anthropic가 에이전트 중심 앱 '클로드 뒤엣'을 앞세워 소비자 에이전트 시장에 베팅했습니다. 기존 챗봇이 아니라 사용자를 대신해 일을 처리하는 에이전트를 별도 앱으로 꺼냈다는 점이 핵심입니다.",
-        "배경에는 메타의 '뮤즈'가 있습니다. 양사가 비슷한 시기에 에이전트 앱을 내놓으면서, 챗봇을 넘어선 다음 단계 제품을 누가 잡을지에 대한 비교 보도가 여러 매체에서 동시에 나왔습니다. 에이전트는 모델 성능만이 아니라 신뢰와 통제 방식이 제품을 가르는 요소로 떠오르고 있습니다.",
-        "다만 뒤엣의 구체적 기능 범위와 요금 체계, 지원 지역 같은 세부 사항은 아직 확인된 바가 제한적입니다. 뮤즈와의 차이를 설명하는 글들도 회사가 내세우는 방향성 수준이어서, 실사용 기준 비교는 더 지켜봐야 합니다.",
-        "경쟁이 격화되면 소비자 입장에서는 선택지가 늘어나는 셈입니다. 어떤 에이전트가 어떤 권한을 요구하는지를 따져보는 눈이 그만큼 중요해질 전망입니다. 여러 매체가 동시에 다루며 경쟁 구도가 뚜렷해짐"
+        "앤스로픽이 에이전트 중심의 새 앱 Claude Duet을 내놨다는 보도가 TechCrunch를 통해 나왔습니다. Barron's는 같은 날 메타의 Muse와 비교하며 에이전트 경쟁에서의 위치를 분석했습니다.",
+        "기존 챗봇 UI가 아닌 전용 앱 형태라는 점에서, 이 회사가 에이전트를 핵심 제품으로 밀고 있다는 방향성이 읽힙니다. 경쟁사들이 비슷한 시기에 에이전트 경험을 앱으로 옮기고 있어 시장 자체가 이동 중입니다. 다만 구체적인 기능 범위와 가격, 지원 지역은 아직 보도로 확인된 수준이며 세부는 공식 자료에서 다듬어질 것으로 보입니다."
       ],
-      "extra": "",
-      "takeaway": "챗봇에서 에이전트로 무게중심이 옮겨가는 흐름이 뒤엣과 뮤즈의 맞대결로 확인되는 지점이 중요합니다. 에이전트 도입을 검토하는 팀이라면 두 제품의 권한 위임 방식과 통제 장치를 비교 기준으로 삼으면 됩니다.",
+      "extra": "그 밖에: 같은 소식을 다룬 여러 매체 보도에서 법률 이슈로 보이는 상표 등록 지연 이야기도 함께 거론되었으나, 별개 사안이라 혼동하지 않는 것이 좋습니다.",
+      "takeaway": "챗 인터페이스에서 에이전트 전용 앱으로 무게가 옮겨가는 흐름이 오늘 확인된 대목입니다. 기업 도입 담당자는 기존 API 워크플로와 이 앱의 역할 분담부터 정리해 두면 됩니다.",
       "tags": [],
       "sources": [
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQUmgyb1ZobDFPVTdQcnNCbTIwR2EzODI3TmRwUGEyWl92eDY3OV83UVh3LXVfekJpNldLdlBXSW1oQlN0Z0MyRTNvUG1NSHRnTGg0NzBhSUFXbm41NFRIQjNObVNCV0xQS2xxWi1YaHpxN1dEOWtLZnUxRzBNMlJCc3lSTXI?oc=5",
+          "kind": "doc",
+          "origin_url": "https://techcrunch.com"
+        },
         {
           "handle": "Anthropic GNews",
           "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQTHp3Y2NHeEJpRWJZb3NBV3ljWjNDVDMtNE55Vjc2VS00SWJNUmY0dkw0UkwzUjU0RVZDQUprRnZINURJVFVfNTB6SV9FOUIzWFJhY1ltdEdfVS12QU5NZFNXbkpBQktEYUQ3a2lZUXpqLXNiY3R1MzZFWTQxNlJ6UzlXLVdQdWUzR0I4?oc=5",
           "kind": "doc",
           "origin_url": "https://www.barrons.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQMU1UUHJzQzRhdmIwWUxYZUpCRGk5bDBDeXpwZmFoYU43Mk9iRmZvYWYwbFBGZXZpMUtZSUhIVmhSUEpkby1NVEgzLXJ5S2UyQXNfRmtMYnRLblV1aUltcmswc3NvQy0xQnFwQmRlVnB6eG54WXl6LU5tMlhZR3hpa19RdXFlWUt1VXF1Ni1nVkZ1ZmNCTTJwZ0pEd2s?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.cnet.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQZktXSVlYU0o4REc3S09jeXZBZkx3M0NZSElBS05HMTNaZXlVcDFHeWZYR29uck80X3pZYWw5MmtiOEFfbER1RUV6aWhHOEl5eTZZdnZzZ2RfeEM3cTlVMTlxajNzRUE5LXZVcDB3R1RkWmZfQUJDMUNVZndjc2VuYXJxQ2s5U09UenhJVmFpb0Vmc2RFLVRjYzI2d19odGxKMzNDbEZyZXZRYWJianc?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.rdworldonline.com"
+        }
+      ]
+    },
+    {
+      "id": "litellm-supply-chain",
+      "n": 2,
+      "title": "2. LiteLLM 릴리스 파이프라인 침해로 정보 탈취 악성코드 확산",
+      "bullets": [
+        "PyPI 패키지가 침해되어 악성 Docker 이미지가 배포됐습니다.",
+        "페이로드는 자격증명, 시크릿, 환경변수를 훔치는 정보 탈취형입니다.",
+        "AI 인프라 도구의 공급망이 직접 공격 대상이 된 사례입니다."
+      ],
+      "body": [
+        "LiteLLM 프로젝트의 릴리스 파이프라인이 해킹되어 정보 탈취 악성코드가 유통됐다고 BleepingComputer가 보도했습니다. PyPI 패키지와 함께 게시된 악성 Docker 이미지에 자격증명과 시크릿, 환경변수를 훔치는 페이로드가 담겼습니다.",
+        "LiteLLM은 여러 LLM API를 하나의 게이트웨이로 묶어 쓰는 오픈소스로, AI 서비스 운영 조직에 널리 쓰입니다. 그래서 이 침해는 일반 라이브러리 사고가 아니라 AI 인프라 자체를 노린 공격이라는 점에서 무게가 다릅니다. 다만 어떤 버전부터 오염됐는지, 피해 범위가 얼마인지는 아직 보도로 확인되지 않았습니다."
+      ],
+      "extra": "",
+      "takeaway": "AI 도구 체인이 공급망 공격의 표적이 된 것이 오늘의 큰 변화입니다. LiteLLM을 쓰는 팀은 설치 시점과 다운로드한 이미지 해시, 노출된 API 키 회전부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/litellm-release-pipeline-hacked-to-distribute-info-stealer-malware/",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNeDRyenppemRjendmY0ZULXRYTi1ZbTZvQ0hwQ290RmI4cGhvcmlrd3lIZzJ0d0xjbHNPdWtsRDZZWWxHeUIybk5mMnpoNW1GX1kyUS02QlhvSnYyLXF0Mk5oSFBlcmVvcUZsRFlscmsxLWh6VkZ6YTZvYmF4MmxMYnVuanREeC1vejVLQk1nU1REVEpjVC1UUFY4NUpHVEZGd0ZCcFY0UUlMLU8tSFRPaWlqT3NmV2dRNFFUbw?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.csoonline.com"
+        }
+      ]
+    },
+    {
+      "id": "arista-velocloud",
+      "n": 3,
+      "title": "3. Arista VeloCloud 오케스트레이터 제로데이, 악용 이미 시작",
+      "bullets": [
+        "SQL 인젝션 제로데이가 중앙 관리 콘솔에서 악용 중입니다.",
+        "표적은 SD-WAN 전체를 통제하는 VCO입니다.",
+        "회사가 직접 경고를 발표한 실공격 사례입니다."
+      ],
+      "body": [
+        "Arista가 자사 VeloCloud Orchestrator(VCO)의 SQL 인젝션 취약점이 실제 공격에 쓰이고 있다고 경고했습니다. The Hacker News 보도에 따르면 이 취약점은 치명적 등급으로 분류된 제로데이입니다.",
+        "VCO는 VeloCloud SD-WAN 네트워크의 중앙 관리 시스템입니다. 여기가 뚫리면 개별 장비가 아니라 네트워크 전체 설정이 위험해진다는 점이 이 사건의 핵심입니다. 다만 정확한 패치 버전과 공격자 정보는 회사 공지에서 확인해야 하며, 보도만으로는 피해 규모가 정리되지 않았습니다."
+      ],
+      "extra": "",
+      "takeaway": "관리 콘솔 하나가 네트워크 전체의 사활을 가르는 구조가 위협의 본질입니다. VeloCloud 운영자는 오늘 안에 VCO 버전과 패치 가용 여부를 점검하고 관리 콘솔의 외부 노출을 줄이는 조치부터 적용하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/arista-warns-of-critical-velocloud-sql.html",
+          "kind": "doc"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/arista-patches-new-velocloud-orchestrator-zero-day-exploited-in-attacks/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "php-emergency-patch",
+      "n": 4,
+      "title": "4. PHP 언어 자체의 RCE 결함 2건, 긴급 패치로 봉쇄",
+      "bullets": [
+        "비상 업데이트로 치명적 취약점 두 건이 수정됐습니다.",
+        "계정 없이도 웹 서버에서 코드 실행이 가능한 결함입니다.",
+        "이미 익스플로잇 시도가 포착된 상태로 알려졌습니다."
+      ],
+      "body": [
+        "PHP가 언어 자체의 치명적 원격 코드 실행 취약점 두 건을 고치는 비상 업데이트를 발표했습니다. The Hacker News에 따르면 수정은 PHP 8.5.12 등에 반영됐고, 인증 없는 공격자가 웹 서버에서 코드를 실행할 수 있는 결함이었습니다.",
+        "언어 코어의 결함이라는 점이 특히 중요합니다. 특정 애플리케이션이 아니라 PHP를 쓰는 서비스 전반이 영향권에 들기 때문입니다. 익스플로잇 시도가 이미 관측됐다는 점에서 이론적 위협이 아닙니다.",
+        "다만 각 취약점의 세부 조건과 영향 버전 목록은 원문 공지 기준으로 확인이 필요하며, 구버전 사용 환경의 대응 여부는 아직 정리되지 않았습니다."
+      ],
+      "extra": "",
+      "takeaway": "특정 프레임워크가 아니라 언어 엔진 수준의 패치라서 영향 범위가 넓은 것이 이 사안의 무게입니다. PHP 서비스 운영팀은 오늘 배포된 버전으로 업그레이드하고, 워크로드별 호환성 점검을 체크리스트에 넣어 두시면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/php-issues-emergency-patches-for-two.html",
+          "kind": "doc"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/php-ships-emergency-patches-for-critical-php2shell-flaws/",
+          "kind": "doc"
+        },
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/php2shell-two-unpatched-critical-php.html",
+          "kind": "doc"
         }
       ]
     },
     {
       "id": "openai-funding",
-      "n": 2,
-      "title": "2. IPO를 앞둔 초대형 라운드의 무게",
+      "n": 5,
+      "title": "5. IPO 전 OpenAI, $1.25T 밸류에이션 $30B 라운드",
       "bullets": [
-        "300억 달러 규모 신규 유치를 협의 중",
-        "목표 밸류에이션은 1.25조 달러",
-        "성사 시 비상장 기업 최고 기록 경신 전망"
+        "TechCrunch는 $30B 규모 조달 추진을 보도했습니다.",
+        "목표 밸류에이션은 $1.25T로 알려졌습니다.",
+        "조건이 성립하면 민간 기업 최고 기록입니다."
       ],
       "body": [
-        "OpenAI가 IPO 준비 분위기 속에 300억 달러 규모의 신규 투자 유치를 추진하고 있다는 보도가 나왔습니다. 이번 라운드에서 제시된 밸류에이션은 1.25조 달러로 알려졌습니다.",
-        "상장 전 마지막 대형 라운드라는 점에서 의미가 남다릅니다. 보도에 따르면 1조 달러를 넘는 밸류에이션이 확정되면 비상장 기업으로는 사상 최고치라는 설명입니다. 최근 AI 업계는 모델 경쟁과 함께 자금 규모 자체가 커지는 국면을 걷고 있습니다.",
-        "다만 이는 협의 중인 안이라는 점에 주의가 필요합니다. 최종 조건과 참여 투자자, 상장 일정은 아직 공식 확정된 바 없어 미확정 상태입니다. 밸류에이션 추정치도 시장 상황에 따라 달라질 수 있습니다.",
-        "결론이 나면 AI 부문 투자 흐름을 읽는 기준점이 될 가능성이 큽니다. 후속 라운드와 상장 계획의 공식 발표 여부를 함께 지켜보면 그림이 더 선명해집니다. 성사 시 비상장 기업 최고 기록 경신 전망"
+        "OpenAI가 IPO에 앞서 $1.25T 밸류에이션으로 $30B 규모의 신규 조달을 준비 중이라고 TechCrunch가 보도했습니다. 1조 달러를 넘는 밸류가 확정되면 민간 기업 사상 최고치가 됩니다.",
+        "최근 AI 업계에서 거대 기업들이 공모 직전 대규모 자금을 확보하는 흐름이 이어지고 있는데, 이번 라운드도 같은 맥락에서 읽힙니다. 컴퓨팅 인프라 투자에 필요한 자금 규모가 커진 것이 배경입니다. 다만 이 수치는 아직 협상 중인 값이라는 점에 주의가 필요합니다. 최종 금액과 참여 투자자 구성은 확정 전까지 바뀔 수 있습니다."
       ],
       "extra": "",
-      "takeaway": "이번 라운드에서 읽히는 의미는 AI 리더사의 자금 조달이 상장이라는 출구 전에 한층 커진 규모로 진행되고 있다는 점입니다. AI 관련 투자 판단을 하는 분들은 최종 조건 확정 발표와 참여 투자자 명단부터 확인하면 됩니다.",
+      "takeaway": "민간 AI 기업 밸류에이션의 척도 자체가 바뀔 가능성이 있다는 점에서 시장 전체에 미칠 영향이 큽니다. AI 관련 투자·파트너십을 검토하는 팀은 최종 확정 발표를 비교 기준으로 삼으면 됩니다.",
       "tags": [],
       "sources": [
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/22/openai-working-on-new-30b-raise-at-1-25t-valuation-ahead-of-ipo/",
           "kind": "doc"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxNaXJKX0VKeUZUZTJTXzdWTHhRODhSZW52RUJHdk5sd1ZIbTBWbkdoZVpTSHpZYzdodlQ2LUVjd2tmVWxTejA1VnJpdEw2V25MOXNTa29yTU9DTzlNNGZKSmhONWRIcWJqS0JvN2o2MHNvR3dPX0tRZ0hpeG00VDlSaURSWXgyNUNQSkxWV2FwLWZvdmpMdzlmbUZMWmdPSmNYSnVUekJkSm9wVGJ2ajFuVVBsZjNDamxTNEN1VExtWmpUbU82U2tkM0tKbXE4OUlRcWVPNHZXSTBtQWdpaVF2aVBBel9pcVUwSzA2NW5Fdm1hZ9IB9wFBVV95cUxOb0ZQajNmaWhDN0lWcjdNX0Z5NlUxZ3ZUdm1sY1FrSXZRdVFwZlduZUpIcHZWY2laaFVfa1o1WkFhYWFoa2puaHhYMFZpa0ZjVjNBZVVVSjZUZWVSLXhNMlRmSTFFX3VBd0ZFSzc1bG5vdlQwMzROUDlNZXp4LTctUUQtMjVDbzRkdEZhc3dHQUZMVDYwT0ZsZmdidUZBRzEtdnh0QmMzQ3BEM0hyWXlIejlRbDFBUVA3dFNpbGpTdF9CMU1qcWRjM3RvQy1NSWt6cXF0cWhGV2tIbnRyYkJoSjhwS1V5SmZXVm5GNGVicnB2NDlhY29r?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.business-standard.com"
         }
       ]
     },
     {
-      "id": "uber-chatgpt",
-      "n": 3,
-      "title": "3. 기업 전사 도입의 새 사례",
+      "id": "uber-chatgpt-work",
+      "n": 6,
+      "title": "6. Uber 전 직원 30,000명 대상 ChatGPT Work 전면 배포",
       "bullets": [
-        "Uber가 챗GPT 워크를 전 직원으로 확대",
-        "3만 명 이상이 조사·분석·프레젠테이션 제작에 활용",
-        "복잡한 워크플로 완성까지 지원한다는 안내"
+        "OpenAI 공식 블로그가 발표한 기업 배포 사례입니다.",
+        "리서치, 데이터 분석, 프레젠테이션 등 업무에 활용됩니다.",
+        "대규모 일반 기업의 전사 도입 사례라 참고 가치가 있습니다."
       ],
       "body": [
-        "Uber가 OpenAI와 함께 챗GPT 워크를 전 직원에게 도입한다고 발표했습니다. 대상은 3만 명 이상으로, 조사와 데이터 분석, 프레젠테이션 제작 같은 일상 업무에 쓰입니다.",
-        "주목할 점은 파일럿이 아니라 전사 확대라는 방향입니다. 회사 안내에 따르면 여러 단계로 이어지는 복잡한 워크플로 완성까지 지원하는 것을 목표로 삼고 있어, 단순 질의응답을 넘어선 업무 재설계의 성격을 담고 있습니다.",
-        "다만 도입 효과에 대한 정량적 성과 지표는 아직 발표에 포함되지 않았습니다. 생산성 향상 폭이나 비용 절감 규모는 실제 사용 데이터가 쌓여야 확인할 수 있어, 지금 시점에서는 계획과 목표 수준이라는 한계가 있습니다.",
-        "대기업 전사 도입 사례가 쌓이면 도입 검토 중인 조직에 실무 참고 자료가 됩니다. 보안·교육·권한 정책을 어떻게 짰는지 후속 발표가 나오면 더 유용해질 전망입니다."
+        "Uber가 OpenAI와 함께 ChatGPT Work를 30,000명이 넘는 직원 전체에 배포한다고 OpenAI가 공식 발표했습니다. 조사, 데이터 분석, 프레젠테이션 제작 등 팀 업무에 활용된다고 합니다.",
+        "특정 부서 시범 도입이 아니라 전 직원 대상이라는 점이 이번 사례의 차이입니다. 대규모 이동·물류 기업이 일반 업무용으로 도구를 깔았다는 것은 기업 AI 도입이 실험 단계를 지났다는 신호로 읽힙니다. 다만 도입 효과에 대한 정량 지표는 발표에 포함되지 않았습니다. 실제 생산성 변화는 앞으로 나올 사례 비교로 판단해야 합니다."
       ],
       "extra": "",
-      "takeaway": "이미 3만 명 규모의 전사 도입이 진행된다는 사실은 기업용 AI 확산 속도에 미칠 영향이 큽니다. 도입 검토 중인 조직이라면 Uber가 밝힌 활용 범위를 사내 업무 목록에 대응시켜 반영해 두면 됩니다.",
+      "takeaway": "전 직원 배포라는 규모가 도구가 아닌 표준 업무 환경으로 자리 잡았다는 의미입니다. 사내 AI 도입을 계획하는 조직은 이 사례의 대상 업무 목록을 자사 직무와 겹치는 부분부터 매핑해 보면 됩니다.",
       "tags": [],
       "sources": [
         {
           "handle": "OpenAI News",
           "url": "https://openai.com/index/uber-chatgpt-work-rollout",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9ubVA5TkNEazRqUUVKU1NmNmQtLWM0N2hTVDUzdFgxVEdPLXE2WFlhazcybmVhWmM2eG5CaHF3YlVhVG1wbkVwZS1RSXFrdWFhWWpZV2hfcXZvUFlOdzlOcmZEOHJCWHVNZjVubDF3?oc=5",
+          "kind": "doc",
+          "origin_url": "https://thenextweb.com"
+        },
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/10/22/uber-puts-all-30000-employees-on-chatgpt-work/",
           "kind": "doc"
         }
       ],
@@ -188,86 +311,34 @@
           "height": 675
         }
       ]
-    },
-    {
-      "id": "litellm-supply-chain",
-      "n": 4,
-      "title": "4. AI 도구가 열어준 침투 경로",
-      "bullets": [
-        "LiteLLM의 PyPI 패키지가 해킹당함",
-        "악성 도커 이미지까지 유포된 것으로 확인",
-        "페이로드는 자격 증명·시크릿·환경변수 탈취 목적"
-      ],
-      "body": [
-        "오픈소스 프로젝트 LiteLLM의 릴리스 파이프라인이 해킹당해 정보 탈취 악성코드가 배포된 사실이 확인됐습니다. 공격자는 PyPI 패키지를 침해하고 악성 도커 이미지까지 게시했습니다.",
-        "문제의 페이로드는 자격 증명과 시크릿, 환경변수를 훔치도록 설계됐습니다. LiteLLM은 다양한 LLM API 호출을 묶어 주는 도구로, API 키가 환경변수로 관리되는 경우가 많아 표적이 되기 쉬운 구조입니다. AI 개발 도구가 공급망 공격의 관문이 되는 사례가 잇따르고 있다는 점에서 이번 사건도 그 연장선에 있습니다.",
-        "다만 오염된 패키지 버전의 범위와 실제 피해 규모는 아직 전부 파악된 것이 아닙니다. 이미 설치를 마친 환경이 무사한지는 각자 확인이 필요하고, 보안 업체 보도 이후 추가 정보가 갱신되고 있는 상황이라 변동 가능성이 있습니다.",
-        "이후로는 AI 관련 오픈소스 의존성에 대한 점검이 개발 표준 절차로 자리 잡을 가능성이 높습니다. 도구가 편해질수록 그 도구가 오염됐을 때 파장이 커진다는 교훈입니다."
-      ],
-      "extra": "",
-      "takeaway": "LLM 게이트웨이 같은 핵심 개발 도구가 공급망 공격의 표적이 된 것이 이번 사건에서 달라진 대목입니다. LLM API 키를 환경변수로 쓰는 팀이라면 설치 버전 점검과 키 교체를 체크리스트에 넣어 두시면 됩니다.",
-      "tags": [],
-      "sources": [
-        {
-          "handle": "BleepingComputer",
-          "url": "https://www.bleepingcomputer.com/news/security/litellm-release-pipeline-hacked-to-distribute-info-stealer-malware/",
-          "kind": "doc"
-        }
-      ]
-    },
-    {
-      "id": "velocloud-zeroday",
-      "n": 5,
-      "title": "5. 관리 콘솔이 뚫리면 네트워크 전체가 위험",
-      "bullets": [
-        "VeloCloud 오케스트레이터의 SQL 인젝션 제로데이",
-        "패치 공개 전에 이미 공격에 활용된 상태",
-        "SD-WAN 전체를 좌우하는 중앙 관리 시스템이 표적"
-      ],
-      "body": [
-        "아리스타가 자사 SD-WAN 제품군의 중앙 관리 시스템인 VeloCloud 오케스트레이터의 SQL 인젝션 취약점이 실제 공격에 악용되고 있다고 경고했습니다. 제로데이, 즉 패치가 나오기 전부터 쓰인 취약점이라는 점에서 대응 시간이 촉박합니다.",
-        "표적이 된 오케스트레이터는 VCO라 불리는 관리 콘솔로, 여러 지점의 SD-WAN 네트워크를 한곳에서 통제하는 자리입니다. 여기가 뚫리면 개별 장비가 아니라 관리 권한 자체가 넘어갈 수 있어 영향 범위가 넓습니다.",
-        "다만 침해 피해 규모나 공격자의 정체는 아직 파악된 바가 제한적입니다. 회사 경고가 나온 시점 이후 정보가 계속 갱신 중이므로, 방어 지침은 최신 권고를 기준으로 삼아야 한계를 줄일 수 있습니다.",
-        "관리형 네트워크 장비의 콘솔 취약점이 잇따라 이슈가 되는 흐름과도 맞닿아 있습니다. 관리 인터페이스의 노출 최소화라는 기본 원칙이 다시 중요해지는 국면입니다. SD-WAN 전체를 좌우하는 중앙 관리 시스템이 표적"
-      ],
-      "extra": "",
-      "takeaway": "중앙 관리 콘솔이 실제 공격에 쓰인 제로데이 경로로 노출된 이유는 단일 장비가 아니라 네트워크 전체 통제권이 걸려 있기 때문입니다. VeloCloud를 운영하는 조직은 아리스타 권고의 패치 적용 우선순위부터 확인하면 됩니다.",
-      "tags": [],
-      "sources": [
-        {
-          "handle": "The Hacker News",
-          "url": "https://thehackernews.com/2026/10/arista-warns-of-critical-velocloud-sql.html",
-          "kind": "doc"
-        }
-      ]
     }
   ],
   "mood": {
-    "shift": "에이전트 앱이 챗봇을 대체하는 자리를 본격적으로 다투는 국면",
-    "grow": "대기업 전사 도입과 초대형 투자 라운드가 동시에 이어짐",
-    "caution": "개발 도구 공급망과 관리 콘솔 제로데이 등 실공격 보안 이슈가 하루에 여러 건",
-    "heat": "뒤엣-뮤즈 비교 보도가 여러 매체에서 동시에 나오며 경쟁 구도 가시화"
+    "shift": "챗봇에서 에이전트 전용 앱으로 제품 무게 이동",
+    "grow": "OpenAI $30B 조달, Uber 전사 배포 등 자금·도입 확장",
+    "caution": "공급망 해킹과 제로데이 3건이 하루에 겹친 상황",
+    "heat": "Claude Duet을 둘러싼 에이전트 경쟁 보도"
   },
   "tips": [
     {
-      "title": "LiteLLM 설치 환경 점검",
-      "body": "챗봇·에이전트 개발에 LiteLLM을 쓴다면 PyPI 패키지와 도커 이미지의 버전과 출처를 확인하고, 노출 가능성이 있는 API 키는 교체하는 순서로 대응합니다.",
+      "title": "LiteLLM 사용 환경 점검",
+      "body": "최근 설치한 패키지와 Docker 이미지의 출처와 해시를 대조하고, 노출 가능성이 있는 API 키와 시크릿을 새로 발급해 두세요.",
       "via": "BleepingComputer"
     },
     {
       "title": "VeloCloud 관리 콘솔 접근 제한",
-      "body": "SD-WAN 오케스트레이터를 인터넷에 노출했다면 접근 경로를 좁히고, 아리스타의 최신 권고에 따라 패치를 적용합니다.",
+      "body": "VCO가 인터넷에 노출되어 있다면 접근 경로를 내부망으로 좁히고, 공지된 패치 일정을 확인하세요.",
       "via": "The Hacker News"
     },
     {
-      "title": "에이전트에 주는 권한 최소화",
-      "body": "에이전트 앱을 도입할 때는 비밀번호 노출 없이 대리 로그인하는 방식(1Password의 신규 기능 등)이 있는지, 어떤 권한을 위임하는지 먼저 적어두고 검토합니다.",
-      "via": "TechCrunch"
+      "title": "PHP 버전 업그레이드 계획",
+      "body": "이번 비상 패치가 반영된 버전으로 서비스별 업그레이드 일정을 잡고, 구버전 의존 모듈 호환성을 함께 점검하세요.",
+      "via": "The Hacker News"
     },
     {
-      "title": "MCP 서버 연결 전 출처 확인",
-      "body": "코딩 에이전트에 외부 MCP 서버를 붙일 때는 저장소와 게시자를 확인하고, 로그인 시점의 코드 실행 권한을 함께 점검합니다.",
-      "via": "The Hacker News"
+      "title": "CAPCOM ID 계정 정리",
+      "body": "해당 서비스를 이용 중이라면 비밀번호를 바꾸고, 같은 비밀번호를 재사용한 다른 서비스가 있는지 확인하세요.",
+      "via": "BleepingComputer"
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
