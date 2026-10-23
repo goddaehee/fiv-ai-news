@@ -185,8 +185,38 @@ def render_feedback(sidecar) -> str:
         rep = json.loads(Path(sidecar).read_text(encoding="utf-8"))
     except Exception:
         return ""
+    errors = [e for e in (rep.get("errors") or []) if isinstance(e, dict)]
+    # P17d: 이전 attempt sidecar 병합 — draft 단계(스키마 에러)에서 죽은
+    # attempt는 validate sidecar를 남기지 못해, 그 전 attempt의 게이트
+    # 피드백이 다음 시도에 닿지 않았다 (run 39903110797 실측: attempt 1의
+    # BODY-LENGTH ×6이 attempt 2의 스키마 sidecar에 밀려 attempt 3에
+    # 미전달 → 같은 짧은 문단이 재발). 파일명의 attempt 번호로 이전
+    # sidecar들을 찾아 시간순으로 합치고 중복을 제거한다 (fail-soft).
+    try:
+        _p = Path(sidecar)
+        _m = re.search(r"\.attempt(\d+)\.json$", _p.name)
+        if _m and int(_m.group(1)) > 1:
+            _seen = {json.dumps(e, sort_keys=True, ensure_ascii=False) for e in errors}
+            _earlier: list[dict] = []
+            for _k in range(1, int(_m.group(1))):
+                _prev = _p.with_name(re.sub(r"\.attempt\d+\.json$",
+                                            f".attempt{_k}.json", _p.name))
+                try:
+                    _prep = json.loads(_prev.read_text(encoding="utf-8"))
+                except Exception:
+                    continue
+                for _e in _prep.get("errors") or []:
+                    if not isinstance(_e, dict):
+                        continue
+                    _key = json.dumps(_e, sort_keys=True, ensure_ascii=False)
+                    if _key not in _seen:
+                        _seen.add(_key)
+                        _earlier.append(_e)
+            errors = _earlier + errors
+    except Exception:
+        pass
     blocks: list[str] = []
-    for e in rep.get("errors") or []:
+    for e in errors:
         if not isinstance(e, dict):
             continue
         # P15: 분석 개수 하한 미달 — 없는 briefing id를 짚어 정확히 채우게 한다.
@@ -677,17 +707,45 @@ def _sources(v) -> list[dict]:
     return out
 
 
+_PARA_TERM_RE = re.compile(r"[.!?…。][\"'”’』」)]*\s*$")
+_PARA_END_RE = re.compile(r"[다요][\"'”’』」)]*\s*$")
+
+
+def _para_complete(p: str) -> bool:
+    """문단이 완결된 문장으로 끝나는지 (validate._is_fragment와 같은 기준)."""
+    return bool(_PARA_TERM_RE.search(p) or _PARA_END_RE.search(p))
+
+
 def thicken_body(body: list[str], bullets: list[str]) -> list[str]:
-    """본문 문단을 그대로 정리만 한다.
+    """본문 문단을 정리하고, 짧은 완결 문단만 앞 문단에 병합한다.
 
     P17: 불릿 이어붙이기 제거. 짧은 문단(<90자) 끝에 불릿을 붙이면 불릿의
     명사형 꼬리가 마침표 없이 노출되는 비문이 됐다 (2·3차 패널 평가 반복
     지적, 2026-10-23호 분석 5개 중 3개에서 실측). P0에서 템플릿 패딩을
     없앴듯, 분량은 프롬프트 요구와 BODY-FRAG 게이트가 다룰 일이지
     normalize가 문장을 합성할 일이 아니다. 문단 수가 부족하면 부족한 대로
-    두고 깊이 슬롯·밀도 경고가 판단한다."""
+    두고 깊이 슬롯·밀도 경고가 판단한다.
+    P17d: 문단-문단 병합은 허용한다 — LLM의 마지막 전망 문단이 완결된
+    문장인데도 66~79자로 80자 게이트에 반복해서 걸렸다 (run 39901814043·
+    39903110797 실측, 전부 '…입니다.' 종결). 완결 문장끼리의 병합은
+    비문을 만들지 않고, 합쳐진 문단은 완결 문장으로 끝난다. 조각 문단
+    (종결 없음)은 병합으로 숨기지 않고 BODY-FRAG 게이트에 남긴다.
+    20자 미만은 _is_fragment 판정 범위 밖이라 건드리지 않는다."""
     out = [(raw or "").strip() for raw in (body or [])]
-    return [p for p in out[:6] if p]
+    out = [p for p in out[:6] if p]
+    i = 1
+    while len(out) >= 2 and i < len(out):
+        if (20 <= len(out[i]) < 80 and _para_complete(out[i])
+                and _para_complete(out[i - 1])):
+            out[i - 1] += " " + out[i]
+            del out[i]
+        else:
+            i += 1
+    while (len(out) >= 2 and 20 <= len(out[0]) < 80
+           and _para_complete(out[0]) and _para_complete(out[1])):
+        out[0] += " " + out[1]
+        del out[1]
+    return out
 
 
 def thicken_take(take: str, bullets: list[str], title: str) -> str:

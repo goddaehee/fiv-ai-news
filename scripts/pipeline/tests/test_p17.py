@@ -364,5 +364,44 @@ ok("2패스 쿼터 시드: 1차 BC가 cap(2)에 닿으면 보충 BC는 0건",
 ok("2패스 쿼터 시드: 보충이 막힌 분석은 1차 출처만 유지",
    all(len(a["sources"]) == 1 for a in out2p["analysis"][:2]))
 
+# --- 10. P17d: 완결 문단 병합 + 피드백 이력 병합 --------------------------------
+# 실측 짧은 문단 (run 39903110797 attempt 3): 전부 '…입니다.' 완결문인데 80자 미만
+_long_para = ("Anthropic이 공개한 Claude Duet은 이용자가 목표만 정하면 에이전트가 "
+              "작업을 스스로 수행하는 형태를 말합니다. 업계에서는 이를 '에이전트에 대한 "
+              "베팅'으로 평가했습니다.")
+_short_complete = "경쟁의 첫 판가름 기준이 될 관측이 나옵니다. 도입 결정의 참고점이 될 가능성이 있습니다."
+assert 20 <= len(_short_complete) < 80
+_merged = thicken_body([_long_para, _short_complete], [])
+ok("완결 문단 병합: 80자 미만 완결 문단은 앞 문단에 병합",
+   len(_merged) == 1 and _merged[0].endswith("있습니다.")
+   and len(_merged[0]) >= 80)
+_frag = "후속 업데이트에서 경쟁 구도가 한층 더 뚜렷해짐"  # 종결 없는 조각 — 병합으로 숨기지 않는다
+assert len(_frag) >= 20
+ok("완결 문단 병합: 조각 문단은 병합하지 않음",
+   thicken_body([_long_para, _frag], []) == [_long_para, _frag])
+ok("완결 문단 병합: 20자 미만 문단은 건드리지 않음",
+   thicken_body(["첫째입니다.", "둘째입니다."], []) == ["첫째입니다.", "둘째입니다."])
+
+with tempfile.TemporaryDirectory() as _td:
+    _d = Path(_td)
+    (_d / "2026-10-23.validate-errors.attempt1.json").write_text(json.dumps(
+        {"errors": [{"code": "BODY-LENGTH", "analysis_id": "a1",
+                     "analysis_index": 0, "paragraph_index": 3, "length": 66}]}),
+        encoding="utf-8")
+    (_d / "2026-10-23.validate-errors.attempt2.json").write_text(json.dumps(
+        {"errors": [{"code": "SCHEMA-001",
+                     "message": "briefing[1] summary 누락"}]}), encoding="utf-8")
+    _fb = render_feedback(_d / "2026-10-23.validate-errors.attempt2.json")
+    ok("피드백 이력 병합: 이전 attempt의 BODY-LENGTH가 함께 렌더링",
+       "80자 미만" in _fb and "스키마 오류" in _fb)
+    # 중복 제거: 같은 에러가 두 파일에 있으면 한 번만
+    (_d / "2026-10-23.validate-errors.attempt2.json").write_text(json.dumps(
+        {"errors": [{"code": "BODY-LENGTH", "analysis_id": "a1",
+                     "analysis_index": 0, "paragraph_index": 3, "length": 66}]}),
+        encoding="utf-8")
+    _fb2 = render_feedback(_d / "2026-10-23.validate-errors.attempt2.json")
+    ok("피드백 이력 병합: 중복 에러는 한 번만 렌더링",
+       _fb2.count("80자 미만") == 1)
+
 print(f"P17 tests: {PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)
