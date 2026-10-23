@@ -41,11 +41,12 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - mainEvent는 사람이 읽는 이벤트명 (내부 ID 금지).
 - tips의 title과 body는 서로 다르게 씁니다. via는 실제 출처명 (디버그 값 금지).
 - 같은 시사점을 여러 칸에 복붙하지 않습니다.
-- sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. analysis마다 2개 필수이며, 비어 있으면 호 전체가 폐기된다. example.com 금지.
+- sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. analysis마다 같은 토픽 버킷의 서로 다른 아이템에서 3개 기본(버킷 아이템이 3개 미만이면 있는 만큼만)이며, 비어 있으면 호 전체가 폐기된다. example.com 금지.
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
-- briefing 5~7 (중요도 순 선정. 뉴스가 적은 날은 3~4개도 가능 — 억지 채우기 금지), analysis는 briefing 중 메인 3~5개 id와 1:1 (나머지는 단신, analysis 없음), bullets 3, body 3문단 기본(핵심 기사는 최대 4문단, 문단당 2~3문장, 각 문단 80자 이상), tips 4~5, keynums 4~6, timeline 4~6.
+- briefing 6~8 (중요도 순 선정. 뉴스가 적은 날은 5개도 가능 — 억지 채우기 금지), analysis는 main_topics 전부(5~7개)의 briefing id와 1:1 (main_topics에 없는 토픽은 단신, analysis 없음), bullets 3, body 3~4문단(문단당 2~3문장, 150~200자, 기사당 본문 합계 500자 이상), tips 4~5, keynums 4~6, timeline 4~6.
+- 본문 구성: 첫 문단=무슨 일인가(핵심 사실), 둘째 문단=배경·맥락(필요한 용어 풀이 포함), 셋째 문단=수치의 조건·한계·반론, 넷째 문단(선택)=전망·파급. 분량은 새 사실을 만들지 말고 배경 설명·맥락·비교·해석으로 채웁니다. 입력에 없는 세부 사실(인용·사례·수치)을 지어내면 호가 폐기됩니다.
 - analysis는 입력의 main_topics 목록에 있는 토픽의 briefing id와 1:1로만 작성한다. main_topics에 없는 토픽으로는 analysis를 만들지 않는다 (도메인 다양성 확보).
 - 깊이 슬롯: 기사마다 아래 5개를 출력 전에 스스로 셉니다. 한 기사에서 2개 이상 비우면 그 기사는 실패입니다.
   전체 슬롯의 10%를 초과해 비우면 호 전체가 폐기됩니다. "근거 없음"이라고 적어도 슬롯을 통과시키지 못합니다.
@@ -68,11 +69,11 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - intro 첫 문장은 입력 JSON의 date_ko 값으로 시작합니다(예: '10월 15일 수요일 발행.'). 이어서 오늘 호 항목에서 나온 맥락 한 문장을 붙입니다. 맥락이 없으면 날짜만 씁니다.
 - timeline.t는 해당 item의 published_ko를 한 글자도 바꾸지 않고 복사합니다. 값이 없으면 그 칸을 생략합니다. "01", "02" 같은 순번을 만들지 않습니다. timeline은 3개 이상.
 [작성 예시 — 형식 참고용. 숫자와 시각은 입력에 있던 값만 씁니다]
-body: "A사가 새 모델을 공개했다. 응답은 2배 빨라지고 가격은 30% 내렸다.\n\n이전 모델이 기준선이었다. 다만 평가는 영어 과제뿐이라 한계가 있다."
+body: "A사가 새 모델을 공개했다. 응답은 2배 빨라지고 가격은 30% 내렸다.\n\n이전 모델이 기준선이었다. 이번 수치는 회사가 공개한 과제 묶음으로 잰 값이라, 실제 업무에 쓰는 긴 문서 과제와는 조건이 다르다.\n\n다만 평가는 영어 과제뿐이라 다른 언어에서도 같은 폭으로 오르는지는 확인되지 않았다. 가격도 구독 요금이 아니라 API 호출 기준이다."
 takeaway: "응답 속도와 가격이 함께 바뀐 점이 도입 비용 판단에 중요하다. 다음 분기 적용 전에 영어 외 과제 점수도 확인하면 됩니다."
 timeline: [{"t": "<그 item의 published_ko 그대로>", "d": "모델 공개"}]
 keynums: [{"val": "2배", "lab": "응답 속도", "sub": "A사 발표"}]
-sources: [{"url": "<입력 buckets의 실제 링크 그대로>"}, {"url": "<입력 buckets의 실제 링크 그대로>"}]  # analysis마다 필수 2개. 비우면 호 폐기.
+sources: [{"url": "<입력 buckets의 실제 링크 그대로>"}, {"url": "<입력 buckets의 실제 링크 그대로>"}, {"url": "<입력 buckets의 실제 링크 그대로>"}]  # analysis마다 기본 3개. 비우면 호 폐기.
 - 전체 분량: briefMin 5, readMin은 실제 분량 기준이며 normalize에서 글자 수로 계산합니다.
 - 확인 안 된 인수는 미확정이라고 밝힙니다. 회사 자체 측정은 본문에 그 사실을 적습니다.
 - 과장 형용사(혁명, 폭발) 금지. 숫자로 강도를 전합니다.
@@ -233,6 +234,13 @@ def render_feedback(sidecar) -> str:
                 "  일부 기사는 입력 buckets의 다른 도메인 출처로 교체하세요. 한 도메인이 절반을 넘으면 호 전체가 폐기됩니다."
             )
             continue
+        # P14: 오타·깨진 문자 피드백 (TYPO-001).
+        if e.get("code") == "TYPO-001":
+            blocks.append(
+                f"- {e.get('loc') or '본문'}에 깨진 문자·오타 '{e.get('token') or ''}'가 있습니다.\n"
+                "  입력 원문의 표기 그대로 고쳐 쓰세요. 비슷한 다른 단어로 바꾸거나 없는 단어를 만들지 마세요."
+            )
+            continue
         if e.get("code") != "NUMBERS-UNGROUNDED":
             continue
         aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
@@ -348,7 +356,7 @@ def attach_sources(issue: dict, snap: dict,
             if it.get("origin_url"):
                 picked_src["origin_url"] = it["origin_url"]
             picked.append(picked_src)
-            if len(picked) >= 2:
+            if len(picked) >= 4:
                 break
         a["sources"] = picked
     return issue
@@ -810,7 +818,7 @@ def preserve_images(new_issue: dict, prev_issue: dict, public_root: Path) -> int
 def skeleton(snap: dict) -> dict:
     date = snap["date"]
     ranked = rank_buckets(cluster(snap["items"]))
-    # 1주차: 선별 점수제 + 소스 쿼터. 메인 3~5개는 briefing+analysis, 나머지는 briefing만 (단신).
+    # 선별 점수제 + 소스 쿼터. 메인(상한 7개)은 briefing+analysis, 나머지는 briefing만 (단신).
     main_buckets, rest_buckets = select_buckets(ranked)
     buckets = [(n, it) for n, it, _ in main_buckets] + [(n, it) for n, it, _ in rest_buckets]
     main_names = {n for n, _, _ in main_buckets}
@@ -955,9 +963,9 @@ def main() -> int:
                 {
                     "topic": topic,
                     "n": len(items),
-                    "items": [_item_payload(it) for it in items[:3]],
+                    "items": [_item_payload(it) for it in items[:5]],
                 }
-                for topic, items in buckets[:7]
+                for topic, items in buckets[:10]
             ],
         }
         print(f"drafting provider={name} model={model} buckets={len(payload['buckets'])} temp={args.temperature}", flush=True)
