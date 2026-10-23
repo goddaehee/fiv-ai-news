@@ -648,7 +648,18 @@ from draft import render_feedback
 from run import draft_with_retry
 
 # P9-1: 구조화 에러 리포트 (feedback sidecar 소스)
-_p9_issue = base_issue(analysis=[_p7_analysis("120B", "99%")])
+# P17b: sidecar에 BODY-LENGTH도 실리므로, P9 픽스처는 본문을 80자 이상으로
+# 만들어 NUMBERS 피드백만 격리해 검증한다 (짧은 본문은 별도 게이트의 몫).
+def _p9_issue_with(*nums):
+    _a = _p7_analysis(*nums)
+    _txt = " ".join(nums)
+    _a["body"] = [
+        f"첫 번째 문단입니다. {_txt} 수치를 포함해 배경과 맥락을 충분히 설명하는 긴 문단으로, 수치의 출처와 측정 조건까지 함께 적어 독자가 직접 판단할 수 있게 했습니다.",
+        "두 번째 문단도 충분합니다. 비교 대상과 한계, 앞으로 확인할 지표를 구체적으로 적어 첫 문단의 판단을 뒷받침하고, 후속 보도에서 달라질 수 있는 조건까지 함께 밝혀 둡니다.",
+    ]
+    return base_issue(analysis=[_a])
+
+_p9_issue = _p9_issue_with("120B", "99%")
 _p9_rep = collect_structured_errors(_p9_issue, _p7_collected())
 ok("P9: 구조화 에러 1건", len(_p9_rep) == 1)
 ok("P9: code NUMBERS-UNGROUNDED", len(_p9_rep) == 1 and _p9_rep[0]["code"] == "NUMBERS-UNGROUNDED")
@@ -659,7 +670,7 @@ ok("P9: fields에 body 포함", len(_p9_rep) == 1 and "body" in _p9_rep[0]["fiel
 ok("P9: domains에 openai.com", len(_p9_rep) == 1 and "openai.com" in _p9_rep[0]["domains"])
 # grounded면 빈 리스트
 ok("P9: grounded면 빈 리포트",
-   collect_structured_errors(base_issue(analysis=[_p7_analysis("120B", "2배")]), _p7_collected()) == [])
+   collect_structured_errors(_p9_issue_with("120B", "2배"), _p7_collected()) == [])
 # _numbers_grounded_detail / wrapper 호환
 _d9 = _numbers_grounded_detail(_p7_analysis("120B", "99%"), _p7_collected())
 ok("P9: detail grounded=False + joined", not _d9["grounded"] and _d9["joined"])

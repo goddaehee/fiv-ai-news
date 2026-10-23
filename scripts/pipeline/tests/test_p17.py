@@ -253,5 +253,56 @@ fb = render_feedback(sidecar)
 ok("피드백: MUST-COVER가 빠진 이야기를 짚음", "PHP2Shell" in fb and "analysis" in fb)
 ok("피드백: BODY-FRAG가 조각 문장을 짚음", "뚜렷해짐" in fb and "완전한 문장" in fb)
 
+# --- 8. P17b: BODY-LENGTH 피드백 + 보충 쿼터 캡 --------------------------------
+
+short_issue = {"briefing": [], "analysis": [
+    {"id": "s1", "body": ["이 문단은 여든 자가 되지 않는 짧은 전망 문단입니다. 조금 짧습니다."],
+     "sources": [{"url": "https://example.org/a"}]},
+]}
+serr3 = collect_structured_errors(short_issue, None)
+bl = [e for e in serr3 if e.get("code") == "BODY-LENGTH"]
+ok("BODY-LENGTH: 80자 미만 문단이 sidecar에 실림",
+   len(bl) == 1 and bl[0]["length"] < 80 and bl[0]["analysis_id"] == "s1")
+with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as tf:
+    json.dump({"errors": bl}, tf, ensure_ascii=False)
+    sidecar3 = tf.name
+ok("BODY-LENGTH: 피드백 렌더링", "80자 미만" in render_feedback(sidecar3))
+
+# 보충 쿼터 캡: 같은 도메인(BC)이 전체 분석 절반까지만 보충으로 들어간다
+def _story_pair(prod, feat_a, feat_b, slug):
+    return [
+        _it(f"{prod} Blog", f"{prod} {feat_a}", f"https://{slug}.dev/a",
+            summary=feat_a),
+        _it("BleepingComputer", f"{prod} {feat_b}",
+            f"https://bleepingcomputer.com/{slug}", summary=feat_b),
+    ]
+
+SNAPQ = {"items":
+         _story_pair("ZetaDB", "releases vector search for AI apps",
+                     "vector search arrives for AI apps", "zetadb")
+         + _story_pair("KodaBrowser", "adds agent mode for research",
+                       "agent mode rolls out to researchers", "koda")
+         + _story_pair("MiraChip", "unveils NPU for edge inference",
+                       "NPU targets edge inference devices", "mira")
+         + _story_pair("LumenCRM", "launches call summary automation",
+                       "call summary automation goes live", "lumen")}
+ISSQ = {"analysis": [
+    {"id": f"a{i}", "title": f"{i}. {prod} 소식",
+     "bullets": [f"{prod} 관련 핵심 사실"],
+     "body": [f"{prod}가 새 기능을 공개했다. 관련 업계의 주목을 받고 있다."],
+     "takeaway": "새 기능이 경쟁 구도를 바꾸는 점이 중요합니다. 도입 조건을 확인하면 됩니다.",
+     "sources": [{"url": f"https://{slug}.dev/a"}]}
+    for i, (prod, slug) in enumerate(
+        [("ZetaDB", "zetadb"), ("KodaBrowser", "koda"),
+         ("MiraChip", "mira"), ("LumenCRM", "lumen")], start=1)
+]}
+outq = attach_sources(json.loads(json.dumps(ISSQ)), SNAPQ, ref_table=_ref_table(SNAPQ))
+bc_counts = [sum(1 for s in a["sources"] if "bleepingcomputer" in s["url"])
+             for a in outq["analysis"]]
+ok("보충 쿼터 캡: BC 보충은 분석 절반(2개)까지만",
+   bc_counts == [1, 1, 0, 0])
+ok("보충 쿼터 캡: 캡에 걸린 분석은 1차 출처만 유지",
+   all(len(a["sources"]) == 1 for a in outq["analysis"][2:]))
+
 print(f"P17 tests: {PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)
