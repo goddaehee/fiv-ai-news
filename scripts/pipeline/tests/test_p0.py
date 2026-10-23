@@ -11,7 +11,7 @@ from validate import check_source_quota, extract_domain, check_takeaway_template
 from validate import _numbers_grounded
 from validate import _canon_num
 from draft import thicken_take, thicken_body, number_mentions
-from select_items import bucket_domain, select_buckets, score_bucket, MIN_MAIN, MAX_MAIN
+from select_items import bucket_domain, select_buckets, score_bucket, MIN_MAIN, MAX_MAIN, TARGET_MAIN
 from select_items import _parse_date
 
 PASS = 0
@@ -318,7 +318,8 @@ def _scored(name, url, source):
               "url": url, "source": source, "published": _P4_NOW}]
     return (name, items)
 
-# 도메인 중복 제거 (fallback 미발동: 도메인 필터 후 main >= MIN_MAIN)
+# 도메인 중복 제거 + P15 목표 개수 완화: 엄격 패스에서는 같은 도메인 1개만
+# 고르지만, TARGET_MAIN 미달이면 도메인 규칙을 완화해 목표까지만 채운다.
 _mixed = [
     _scored("a1", "https://openai.com/a", "라벨1"),
     _scored("a2", "https://openai.com/b", "라벨2"),
@@ -329,11 +330,13 @@ _mixed = [
 ]
 main, rest = select_buckets(_mixed)
 _main_names = {m[0] for m in main}
-ok("도메인 중복 제거: 같은 도메인은 1개만 main",
-   "a1" in _main_names and "a2" not in _main_names and "a3" not in _main_names)
-ok("도메인 중복 제거: 다른 도메인은 모두 main",
+ok("P15 완화: 목표 개수(TARGET_MAIN)까지 충원",
+   len(main) == TARGET_MAIN)
+ok("P15 완화: 다른 도메인은 모두 main",
    all(n in _main_names for n in ["b1", "c1", "d1"]))
-ok("도메인 중복 제거: 탈락분은 rest", len(rest) == 2)
+ok("P15 완화: 같은 도메인 추가는 목표 도달까지만 (a2만 추가, a3는 rest)",
+   "a1" in _main_names and "a2" in _main_names and "a3" not in _main_names)
+ok("P15 완화: 탈락분은 rest", len(rest) == 1)
 
 # fallback: 도메인이 부족하면 MIN_MAIN까지 채워짐 (도메인 규칙 완화)
 _same_dom = [
@@ -359,14 +362,16 @@ ok("도메인 분산: score 포함 3-튜플", all(len(m) == 3 for m in main))
 main, rest = select_buckets(_same_dom)
 ok("fallback: MIN_MAIN까지 채워짐", len(main) == MIN_MAIN)
 
-# fallback: 피드 라벨 필터는 유지 (같은 라벨은 fallback에서도 제외)
+# P15: 피드 라벨 필터는 1단계 완화까지만 유지 — 목표 미달이 계속되면
+# 최종 단계에서 라벨 규칙까지 완화한다 (10/23 'anthropic' 탈락 재발 방지).
+# 후보가 3개뿐이면 전부 메인으로 올라간다.
 _label_same = [
     _scored("t1", "https://openai.com/a", "동일라벨"),
     _scored("t2", "https://openai.com/b", "동일라벨"),
     _scored("t3", "https://openai.com/c", "동일라벨"),
 ]
 main, rest = select_buckets(_label_same)
-ok("fallback: 피드 라벨 필터 유지", len(main) == 1)
+ok("P15 완화: 라벨 규칙은 최종 단계에서 완화 (후보 소진 시 전부 main)", len(main) == 3)
 
 # MAX_MAIN 상한 유지
 _many = [_scored(f"t{i}", f"https://dom{i}.com/a", f"소스{i}") for i in range(8)]
@@ -378,7 +383,7 @@ _draft_src = (Path(__file__).resolve().parents[1] / "draft.py").read_text(encodi
 ok("LLM 경로 배선: main()에서 select_buckets 호출",
    "main_buckets, rest_buckets = select_buckets(ranked)" in _draft_src)
 ok("LLM 경로 배선: payload에 main_topics 포함", '"main_topics"' in _draft_src)
-ok("LLM 경로 배선: 프롬프트 하드 규칙 포함", "main_topics에 없는 토픽으로는 analysis를 만들지 않는다" in _draft_src)
+ok("LLM 경로 배선: 프롬프트 하드 규칙 포함", "analysis 개수 규칙 (P15)" in _draft_src and "최소 5개" in _draft_src)
 
 # ---------------------------------------------------------------------------
 # P5: 수집 단계 개선 — <source url> 파싱, origin_url 우선, 48h 신선도 필터

@@ -45,9 +45,9 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
-- briefing 6~8 (중요도 순 선정. 뉴스가 적은 날은 5개도 가능 — 억지 채우기 금지), analysis는 main_topics 전부(5~7개)의 briefing id와 1:1 (main_topics에 없는 토픽은 단신, analysis 없음), bullets 3, body 3~4문단(문단당 2~3문장, 150~200자, 기사당 본문 합계 500자 이상), tips 4~5, keynums 4~6, timeline 4~6.
+- briefing 6~8 (중요도 순 선정. 뉴스가 적은 날은 5개도 가능 — 억지 채우기 금지), analysis는 briefing 상위 5~7개의 id와 1:1 (개수 규칙은 아래 별도 항목), bullets 3, body 3~4문단(문단당 2~3문장, 150~200자, 기사당 본문 합계 500자 이상), tips 4~5, keynums 4~6, timeline 4~6.
 - 본문 구성: 첫 문단=무슨 일인가(핵심 사실), 둘째 문단=배경·맥락(필요한 용어 풀이 포함), 셋째 문단=수치의 조건·한계·반론, 넷째 문단(선택)=전망·파급. 분량은 새 사실을 만들지 말고 배경 설명·맥락·비교·해석으로 채웁니다. 입력에 없는 세부 사실(인용·사례·수치)을 지어내면 호가 폐기됩니다.
-- analysis는 입력의 main_topics 목록에 있는 토픽의 briefing id와 1:1로만 작성한다. main_topics에 없는 토픽으로는 analysis를 만들지 않는다 (도메인 다양성 확보).
+- analysis 개수 규칙 (P15): briefing이 6개 이상이면 analysis는 **최소 5개**이며, 5개 미만이면 호 전체가 폐기됩니다. 어느 briefing에 analysis를 붙일지는 중요도 순으로 정하되, 입력의 main_topics(주요 버킷)에 속한 이야기가 우선이고 출처 도메인이 서로 겹치지 않게 고릅니다. analysis가 붙지 않은 briefing은 단신으로 둡니다. main_topics는 버킷 이름이라 briefing id와 글자 그대로 대응하지 않으니, 개수와 우선순위 판단에만 씁니다.
 - 깊이 슬롯: 기사마다 아래 5개를 출력 전에 스스로 셉니다. 한 기사에서 2개 이상 비우면 그 기사는 실패입니다.
   전체 슬롯의 10%를 초과해 비우면 호 전체가 폐기됩니다. "근거 없음"이라고 적어도 슬롯을 통과시키지 못합니다.
   1. what: body 첫 문단, 30자 이상.
@@ -176,6 +176,7 @@ def render_feedback(sidecar) -> str:
     P11 (Grok 권장): 커버리지 확대 — SCHEMA-001 · SOURCES-MISSING ·
     NUMBERS-UNGROUNDED 외에 EMPTY-001 · TPL-001 · TAKEAWAY-DUP ·
     TAKEAWAY-TPL · QUOTA-001도 렌더링한다.
+    P15: ANALYSIS-COUNT (분석 개수 하한 미달) 추가.
     sidecar가 없거나 커버 대상 에러가 없으면 빈 문자열.
     """
     try:
@@ -185,6 +186,16 @@ def render_feedback(sidecar) -> str:
     blocks: list[str] = []
     for e in rep.get("errors") or []:
         if not isinstance(e, dict):
+            continue
+        # P15: 분석 개수 하한 미달 — 없는 briefing id를 짚어 정확히 채우게 한다.
+        if e.get("code") == "ANALYSIS-COUNT":
+            missing = ", ".join(str(x) for x in (e.get("missing_ids") or [])) or "상위 briefing"
+            blocks.append(
+                f"- analysis가 {e.get('n_analysis')}개뿐입니다. briefing {e.get('n_briefing')}개 기준 "
+                f"최소 {e.get('required')}개가 필요하며, 미달이면 호 전체가 폐기됩니다.\n"
+                f"  analysis가 없는 briefing({missing}) 중 중요도 순으로 골라 analysis를 추가하세요. "
+                "기존 analysis는 그대로 두고, 추가분도 같은 규칙(bullets 3·body 500자 이상·sources 3개 기본)을 지킵니다."
+            )
             continue
         # P10: 스키마 에러도 피드백에 포함 (normalize 합성 금지의 반대급부).
         if e.get("code") == "SCHEMA-001":
@@ -791,27 +802,132 @@ def published_lock(path: Path) -> bool:
     return not cur.get("draft")
 
 
+# P15: preserve_images 유사도 매칭용 토큰화.
+# 한국어 조사가 붙은 형태를 그대로 비교하므로 완전 일치 토큰만으로 셈한다.
+_SIM_STOPWORDS = {
+    "의", "를", "을", "이", "가", "은", "는", "에", "서", "와", "과", "도", "만",
+    "으로", "로", "하기", "위한", "대한", "대해", "것", "수", "일", "및", "등",
+}
+_SIM_THRESHOLD = 0.6
+
+
+def _sim_tokens(text) -> set[str]:
+    """제목·본문 비교용 토큰 집합. 선행 번호("3. ")는 제거한다."""
+    s = re.sub(r"^\s*\d+\.\s*", "", str(text or ""))
+    parts = re.split(r"[^0-9a-zA-Z가-힣]+", s.lower())
+    return {p for p in parts if len(p) >= 2 and p not in _SIM_STOPWORDS}
+
+
+def _id_tokens(analysis_id) -> set[str]:
+    return {p for p in re.split(r"[-_]", str(analysis_id or "").lower()) if len(p) >= 2}
+
+
+def _analysis_text(a: dict) -> str:
+    parts = [str(a.get("title") or "")]
+    for key in ("bullets", "body"):
+        v = a.get(key)
+        if isinstance(v, list):
+            parts += [str(x) for x in v]
+    parts.append(str(a.get("takeaway") or ""))
+    return " ".join(parts)
+
+
+def _jaccard(a: set, b: set) -> float:
+    if not a or not b:
+        return 0.0
+    return len(a & b) / len(a | b)
+
+
+def _image_similarity(prev_a: dict, new_a: dict) -> float:
+    """이전 분석과 새 분석이 같은 이야기인지 점수화 (0~4).
+
+    신호 4종 합산: id 토큰 · 제목 토큰 · 본문 토큰 · 출처 URL 겹침.
+    2026-10-23 실측 보정: 같은 이야기(ms-medical-diagnostic→ms-medical-ai)는
+    1.24, 출처 URL만 겹치는 다른 이야기(mit-agents-island→ms-medical-ai,
+    attach_sources 교차 오염)는 0.39가 최대였다. 임계값 0.6은 그 사이에 둔다.
+    """
+    score = _jaccard(_id_tokens(prev_a.get("id")), _id_tokens(new_a.get("id")))
+    score += _jaccard(_sim_tokens(prev_a.get("title")), _sim_tokens(new_a.get("title")))
+    score += _jaccard(_sim_tokens(_analysis_text(prev_a)), _sim_tokens(_analysis_text(new_a)))
+    prev_urls = {url_core(str(s.get("url") or "")) for s in prev_a.get("sources") or [] if isinstance(s, dict)}
+    new_urls = {url_core(str(s.get("url") or "")) for s in new_a.get("sources") or [] if isinstance(s, dict)}
+    score += _jaccard(prev_urls, new_urls)
+    return score
+
+
+def _existing_images(a: dict, public_root: Path) -> list:
+    """분석에 등록된 이미지 중 참조 파일이 public/ 아래에 실존하는 것만."""
+    keep = []
+    for im in a.get("images") or []:
+        if not isinstance(im, dict):
+            continue
+        src = str(im.get("src") or "")
+        if src.startswith("/img/") and (public_root / src.lstrip("/")).is_file():
+            keep.append(im)
+    return keep
+
+
 def preserve_images(new_issue: dict, prev_issue: dict, public_root: Path) -> int:
-    """P13: 같은 날짜 재발행 시 이전 발행본에 등록된 이미지를 새 호로 이관한다.
+    """P13/P15: 같은 날짜 재발행 시 이전 발행본에 등록된 이미지를 새 호로 이관.
 
     배경: imggen이 등록한 호도 draft=True라서, 같은 날짜로 파이프라인을
     재실행하면 새 초안이 issue JSON을 통째로 덮어써 등록 이미지가 사라졌다
-    (2026-10-16·10-23호에서 실제 발생). analysis id가 일치하고 참조 파일이
-    public/ 아래에 실존하는 항목만 옮긴다. id가 바뀐 분석에는 옮기지 않는다
-    — 주제가 달라진 분석에 엉뚱한 일러스트가 붙는 것을 막기 위해서다.
-    반환값은 이관된 이미지 수.
+    (2026-10-16·10-23호에서 실제 발생).
+
+    P15: 1차 id 일치만으로는 부족했다 — 재발행 때 LLM이 분석 id를 바꾸면
+    (예: ms-medical-diagnostic → ms-medical-ai) 같은 이야기인데도 이미지가
+    탈락해 파일 4장 중 1장만 라이브에 남았다 (2026-10-23 실측).
+    2단계로 나눈다: ① id 일치 항목을 먼저 이관하고, ② 남은 항목은
+    제목·본문·출처 유사도(_image_similarity ≥ 0.6)로 1:1 탐욕 매칭한다.
+    출처 URL 겹침만으로는 임계값에 못 미치게 설계해, 교차 오염된 출처 때문에
+    엉뚱한 일러스트가 붙는 것을 막는다. 반환값은 이관된 이미지 수.
     """
-    prev = {a.get("id"): a.get("images") or [] for a in prev_issue.get("analysis", [])}
+    prev_analyses = [a for a in prev_issue.get("analysis", []) if isinstance(a, dict)]
     moved = 0
+    used_prev: set[int] = set()
+
+    # 1차: id 일치
+    prev_by_id = {a.get("id"): a for a in prev_analyses}
+    remaining_new: list[dict] = []
     for a in new_issue.get("analysis", []):
-        keep = []
-        for im in prev.get(a.get("id")) or []:
-            src = str(im.get("src") or "")
-            if src.startswith("/img/") and (public_root / src.lstrip("/")).is_file():
-                keep.append(im)
-        if keep:
-            a["images"] = keep
-            moved += len(keep)
+        if not isinstance(a, dict):
+            continue
+        pa = prev_by_id.get(a.get("id"))
+        if pa is not None and id(pa) not in used_prev:
+            used_prev.add(id(pa))
+            keep = _existing_images(pa, public_root)
+            if keep:
+                a["images"] = keep
+                moved += len(keep)
+                continue
+        remaining_new.append(a)
+
+    # 2차: 유사도 매칭 (id가 바뀐 같은 이야기)
+    prev_pool = [
+        pa for pa in prev_analyses
+        if id(pa) not in used_prev and _existing_images(pa, public_root)
+    ]
+    candidates: list[tuple[float, dict, dict]] = []
+    for na in remaining_new:
+        if na.get("images"):
+            continue
+        for pa in prev_pool:
+            sim = _image_similarity(pa, na)
+            if sim >= _SIM_THRESHOLD:
+                candidates.append((sim, na, pa))
+    candidates.sort(key=lambda c: -c[0])
+    taken_new: set[int] = set()
+    taken_prev: set[int] = set()
+    for _sim, na, pa in candidates:
+        if id(na) in taken_new or id(pa) in taken_prev:
+            continue
+        keep = _existing_images(pa, public_root)
+        if not keep:
+            continue
+        na["images"] = keep
+        moved += len(keep)
+        taken_new.add(id(na))
+        taken_prev.add(id(pa))
     return moved
 
 

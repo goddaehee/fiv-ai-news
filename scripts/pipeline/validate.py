@@ -797,6 +797,21 @@ def _irrelevant_source_domains(
     return out
 
 
+def required_analysis_count(n_briefing: int) -> int:
+    """P15: 분석 개수 하한.
+
+    2026-10-23 실측: briefing 6개인데 analysis가 4개에 고착됐다 (선별
+    main_topics 4개 + LLM이 임의로 4개만 선택). 브리핑이 충분한 날은
+    최소 5개를 요구하고, 적은 날은 briefing-1로 낮춰 억지 채우기를 막는다.
+    초안 프롬프트(draft.py)의 개수 규칙과 같은 기준을 쓴다.
+    """
+    if n_briefing >= 6:
+        return 5
+    if n_briefing >= 2:
+        return n_briefing - 1
+    return n_briefing
+
+
 def check_quality(
     issue: dict,
     collected_urls: set[str] | None,
@@ -811,6 +826,16 @@ def check_quality(
     # 1. 발행일 일치 (수동 재실행·백필은 --date override)
     if date_str and issue.get("date") != date_str:
         errors.append(f"date: {issue.get('date')} != {date_str} (수동 재실행이면 --date로 지정)")
+
+    # 1b. 분석 개수 하한 (P15) — 재시도 피드백(ANALYSIS-COUNT)으로 수렴시킨다.
+    _n_brief = len([b for b in (issue.get("briefing") or []) if isinstance(b, dict)])
+    _n_an = len([a for a in (issue.get("analysis") or []) if isinstance(a, dict)])
+    _req = required_analysis_count(_n_brief)
+    if _n_an < _req:
+        errors.append(
+            f"ANALYSIS-COUNT: analysis {_n_an}개 < 하한 {_req}개 (briefing {_n_brief}개) "
+            "— briefing 상위 항목에 analysis 추가 필요"
+        )
 
     # 2. 헤드라인 중복 (정규화 후 비교)
     heads: list[tuple[str, str]] = []
@@ -1138,9 +1163,23 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
     - bad: 차단된 수치 (피드백 렌더링 시에는 앵커 방지용으로 제외하고 allowed만 사용)
     P11: SOURCES-MISSING · NUMBERS-UNGROUNDED 외에 EMPTY-001 · TPL-001 ·
     TAKEAWAY-DUP · TAKEAWAY-TPL · QUOTA-001도 수집한다.
+    P15: ANALYSIS-COUNT (분석 개수 하한 미달 + analysis 없는 briefing id) 추가.
     """
     errors: list[dict] = []
     analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
+    # P15: 분석 개수 하한 미달 — 어느 briefing에 analysis가 없는지까지 실어
+    # 다음 attempt가 정확히 그 항목을 채우게 한다.
+    _briefs = [b for b in (issue.get("briefing") or []) if isinstance(b, dict)]
+    _req = required_analysis_count(len(_briefs))
+    if len(analyses) < _req:
+        _have = {a.get("id") for a in analyses}
+        errors.append({
+            "code": "ANALYSIS-COUNT",
+            "n_analysis": len(analyses),
+            "n_briefing": len(_briefs),
+            "required": _req,
+            "missing_ids": [b.get("id") for b in _briefs if b.get("id") not in _have],
+        })
     # P10c: sources 누락 — 재시도 피드백용. LLM이 sources 키를 통째로 생략하는
     # 회귀(10/22: 3회 시도 전부 need ≥1 탈락)에 대응. hollow는 검증 실패이므로
     # 다음 시도에서 고치도록 피드백에 포함한다.
