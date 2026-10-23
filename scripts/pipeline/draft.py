@@ -507,10 +507,50 @@ def number_mentions(summary: str) -> list[str]:
     return seen[:6]
 
 
+def _fallback_keynum(item: dict, seen: set) -> dict | None:
+    """P12: 수집 아이템에서 유효한 keynum 하나를 만든다. 만들 수 없으면 None.
+
+    유효한 keynum = 수치(val) + 그 수치가 무엇을 뜻하는지 설명하는 lab +
+    발행처를 가리키는 sub. P10 폴백처럼 lab에 피드명, sub에 "수집 요약" 같은
+    내부 문자열을 넣지 않는다. 조건을 못 채우면 충원하지 않는다.
+    """
+    title = str(item.get("title") or "")
+    origin = str(item.get("origin_url") or "")
+    if not title or not origin:
+        return None
+    # 발행처 도메인 (sub용). origin_url은 발행처 홈페이지 URL이다.
+    m_dom = re.search(r"https?://([^/]+)", origin)
+    if not m_dom:
+        return None
+    publisher = m_dom.group(1).lower().removeprefix("www.")
+    if not publisher or publisher == "news.google.com":
+        return None
+    feed_name = str(item.get("source") or "")
+    for m in NUM_RE.finditer(normalize_num_text(title)):
+        val = m.group(0).strip()
+        if not val or val in seen:
+            continue
+        # lab: 제목에서 수치 표면을 제거한 나머지 텍스트.
+        # 원문 제목에 정규화 전 표면이 그대로 있어야 만들 수 있다.
+        if val not in title:
+            continue
+        lab = re.sub(r"\s+", " ", title.replace(val, " ")).strip(" ,·-—:;()[]")
+        if len(lab) < 4 or len(lab) > 44:
+            continue
+        # lab이 피드명·출처명이면 설명이 아니다.
+        if feed_name and lab == feed_name:
+            continue
+        if "GNews" in lab or "수집" in lab:
+            continue
+        return {"val": val, "lab": lab, "sub": publisher}
+    return None
+
+
 def normalize(issue: dict, snap: dict | None = None) -> dict:
     """Coerce sloppy LLM JSON into the house schema so check() does not crash.
 
     P10: snap을 받으면 keynums 폴백을 수집 전체에서 채운다.
+    P12: 폴백은 유효한 keynum(수치+설명 lab+발행처 sub)을 만들 수 있을 때만 충원.
     P10 (Gemini안): summary→headline 복제 폴백 제거. 필수 키가 없으면
     합성 대신 SchemaError를 던져 재시도 피드백에 포함시킨다
     (DUP-001 유령 에러 원천 제거)."""
@@ -644,33 +684,20 @@ def normalize(issue: dict, snap: dict | None = None) -> dict:
                 break
     if keynums and all(str(k["val"]).isdigit() and str(k["lab"]).isdigit() for k in keynums):
         keynums = []
-    if len(keynums) < 3:
-        # P10 (Codex안): keynums 폴백을 수집 전체 스냅샷으로 확장.
-        # 브리핑 blob의 좁은 정규식 대신 NUM_RE로 수집 title+summary를 스캔한다.
+    if len(keynums) < 3 and snap:
+        # P12: 폴백은 "수치 + 의미 있는 lab + 발행처 sub"를 전부 만들 수 있을 때만 충원한다.
+        # P10 폴백은 lab에 출처명(피드명), sub에 "수집 요약"을 넣어 깨진 keynums가
+        # 그대로 발행되는 사고를 냈다. 유효 항목을 만들 수 없으면 강제 충원하지 않고
+        # 적게 두는 쪽이 낫다 (부족분은 validate 게이트+재시도 피드백이 판단).
         seen = {k["val"] for k in keynums}
-        if snap:
-            for it in snap.get("items") or []:
-                text = f"{it.get('title') or ''} {it.get('summary') or ''}"
-                for m in NUM_RE.finditer(normalize_num_text(text)):
-                    val = m.group(0).strip()
-                    if val in seen:
-                        continue
-                    seen.add(val)
-                    keynums.append({"val": val, "lab": it.get("source") or "수집", "sub": "수집 요약"})
-                    if len(keynums) >= 3:
-                        break
-                if len(keynums) >= 3:
-                    break
-        if len(keynums) < 3:
-            blob = " ".join(f"{b['headline']} {b['summary']}" for b in brief)
-            for m in re.finditer(r"(\$[\d,.]+|\d+(?:\.\d+)?%|\d{1,3}(?:,\d{3})+)", blob):
-                val = m.group(1)
-                if val in seen:
-                    continue
-                seen.add(val)
-                keynums.append({"val": val, "lab": "본문 수치", "sub": "본문"})
-                if len(keynums) >= 3:
-                    break
+        for it in snap.get("items") or []:
+            fb = _fallback_keynum(it, seen)
+            if fb is None:
+                continue
+            seen.add(fb["val"])
+            keynums.append(fb)
+            if len(keynums) >= 3:
+                break
     # P0: 패딩 금지. 부족하면 그대로 두고 validator가 판단한다.
     # "01"·"교차검증 전" 같은 가짜 값으로 fail-closed 게이트를 속이지 않는다.
     if not tips:

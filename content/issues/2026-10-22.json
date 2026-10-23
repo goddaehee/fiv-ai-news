@@ -56,11 +56,6 @@
       "val": "50%",
       "lab": "AI 도입 후 평가 어려움 응답 비율",
       "sub": "신규 관리자 설문"
-    },
-    {
-      "val": "$1 billion",
-      "lab": "Anthropic GNews",
-      "sub": "수집 요약"
     }
   ],
   "timeline": [
