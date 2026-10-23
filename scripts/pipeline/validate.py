@@ -338,6 +338,76 @@ def check_keynums_semantics(issue: dict, bag: list[str]) -> None:
             err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: sub에 내부 문자열 포함 ({sub!r})", bag)
 
 
+# P14: 오타·깨진 문자 게이트 (TYPO-001).
+# "Open아AI"처럼 영문 단어 중간에 한글 음절이 끼는 혼합 오타와, 인코딩이
+# 깨진 문자(U+FFFD)를 기계적으로 잡는다. 조사 오류 같은 문법 오타는 패턴으로
+# 안정적으로 잡을 수 없어 대상이 아니다 (사람·문체 패스의 몫).
+# 기존 발행본 전수에 패턴을 돌려 오탐 0건임을 확인한 패턴만 쓴다.
+_TYPO_MIXED = re.compile(r"[A-Za-z][가-힣][A-Za-z]")
+
+
+def _typo_findings(issue: dict) -> list[dict]:
+    """오타 검출 상세. 반환: [{loc, field, token}] (loc은 사람이 읽는 위치)."""
+    out: list[dict] = []
+
+    def scan(loc: str, field: str, text) -> None:
+        t = str(text or "")
+        if not t:
+            return
+        if "\ufffd" in t:
+            out.append({"loc": loc, "field": field, "token": "�"})
+        for m in _TYPO_MIXED.finditer(t):
+            s = m.start()
+            while s > 0 and not t[s - 1].isspace() and m.start() - s < 12:
+                s -= 1
+            e = m.end()
+            while e < len(t) and not t[e].isspace() and e - m.end() < 12:
+                e += 1
+            out.append({"loc": loc, "field": field, "token": t[s:e]})
+
+    scan("title", "title", issue.get("title"))
+    scan("heroline", "heroline", issue.get("heroline"))
+    scan("dek", "dek", issue.get("dek"))
+    scan("intro", "intro", issue.get("intro"))
+    for i, b in enumerate(issue.get("briefing") or []):
+        if not isinstance(b, dict):
+            continue
+        scan(f"briefing[{i}].headline", "headline", b.get("headline"))
+        scan(f"briefing[{i}].summary", "summary", b.get("summary"))
+    for i, a in enumerate(issue.get("analysis") or []):
+        if not isinstance(a, dict):
+            continue
+        scan(f"analysis[{i}].title", "title", a.get("title"))
+        for j, x in enumerate(a.get("bullets") or []):
+            scan(f"analysis[{i}].bullets[{j}]", "bullets", x)
+        for j, x in enumerate(a.get("body") or []):
+            scan(f"analysis[{i}].body[{j}]", "body", x)
+        scan(f"analysis[{i}].takeaway", "takeaway", a.get("takeaway"))
+        scan(f"analysis[{i}].extra", "extra", a.get("extra"))
+        for j, x in enumerate(a.get("tags") or []):
+            scan(f"analysis[{i}].tags[{j}]", "tags", x)
+    for i, k in enumerate(issue.get("keynums") or []):
+        if isinstance(k, dict):
+            scan(f"keynums[{i}].lab", "lab", k.get("lab"))
+            scan(f"keynums[{i}].sub", "sub", k.get("sub"))
+    for i, t in enumerate(issue.get("tips") or []):
+        if isinstance(t, dict):
+            scan(f"tips[{i}].title", "title", t.get("title"))
+            scan(f"tips[{i}].body", "body", t.get("body"))
+    for i, t in enumerate(issue.get("timeline") or []):
+        if isinstance(t, dict):
+            scan(f"timeline[{i}].d", "d", t.get("d"))
+    return out[:8]
+
+
+def check_typo(issue: dict) -> list[str]:
+    """P14: 오타·깨진 문자 게이트. error 문자열 목록 반환."""
+    return [
+        f"TYPO-001 {f['loc']}: 깨진 문자·혼합 오타 패턴 '{f['token']}'"
+        for f in _typo_findings(issue)
+    ]
+
+
 def check(issue: dict, collected_by_url: dict | None = None) -> list[str]:
     bag: list[str] = []
     require(
@@ -808,8 +878,8 @@ def check_quality(
 
     # 7. 목표 범위 초과 (warning)
     nb = len(issue.get("briefing") or [])
-    if nb > 7:
-        warnings.append(f"briefing: 목표 5~7 초과 ({nb}개)")
+    if nb > 8:
+        warnings.append(f"briefing: 목표 6~8 초과 ({nb}개)")
     for a in issue.get("analysis") or []:
         ex = str((a or {}).get("extra") or "")
         if len(ex) > 300:
@@ -839,6 +909,14 @@ def check_quality(
         btext = " ".join(body) if isinstance(body, list) else str(body)
         if btext and len(btext) < 50:
             warnings.append(f"analysis[{i}].body: 50자 미만 ({len(btext)}자)")
+        # P14: 밀도 경고 — 차단은 하지 않는다. 본문·출처 밀도의 주 레버는
+        # 프롬프트 요구량이고, 게이트는 부족분을 눈에 보이게만 한다
+        # (LLM이 안정적으로 못 채우는 hard 게이트는 결호를 부른다는 P9 교훈).
+        if btext and len(btext) < 500:
+            warnings.append(f"analysis[{i}].body: 본문 합계 500자 미만 ({len(btext)}자) — 밀도 부족")
+        nsrc = len(a.get("sources") or [])
+        if nsrc < 3:
+            warnings.append(f"analysis[{i}].sources: 3개 미만 ({nsrc}개) — 출처 밀도 부족")
         for bp in BANNED_PHRASES:
             if bp in btext:
                 warnings.append(f"analysis[{i}].body: 금지 메타 문구 포함")
@@ -860,6 +938,9 @@ def check_quality(
     rel_hold, rel_warn = check_source_relevance(issue, collected_by_url)
     warnings.extend(rel_hold)
     warnings.extend(rel_warn)
+
+    # 13. P14: 오타·깨진 문자 게이트 (TYPO-001) — error로 발행 차단.
+    errors.extend(check_typo(issue))
 
     return errors, warnings
 
@@ -1116,6 +1197,16 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
         m = re.match(r"QUOTA-001 (\S+):", line)
         if m:
             errors.append({"code": "QUOTA-001", "domain": m.group(1)})
+    # P14: 오타·깨진 문자 — 재시도가 고칠 수 있게 위치·토큰을 싣는다.
+    # 숫자 앵커 방지와 달리 오타 토큰은 고칠 대상 그 자체라 인용이 필요하다.
+    for f in _typo_findings(issue):
+        m = re.match(r"analysis\[(\d+)\]\.", f["loc"])
+        errors.append({
+            "code": "TYPO-001",
+            "analysis_index": int(m.group(1)) if m else None,
+            "loc": f["loc"],
+            "token": f["token"],
+        })
     return errors
 
 

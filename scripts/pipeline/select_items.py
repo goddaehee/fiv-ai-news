@@ -3,7 +3,7 @@
 
 선별 점수제: 영향도·새로움·관련성·근거 각 0~2점 = 총 8점, 5점 미만 탈락.
 소스 쿼터: 단일 출처 ≤25% (분모 = 당일 기사 수).
-메인 기사 상한: 3~5개, 나머지는 단신 목록.
+메인 기사 상한: 7개 (P14: 원본 밀도 근접 — 분석 5~7개 목표), 나머지는 단신 목록.
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ import re
 from collections import Counter
 from datetime import datetime, timezone
 
-MAX_MAIN = 5
+MAX_MAIN = 7
 MIN_MAIN = 3
 SCORE_CUTOFF = 5
 SOURCE_QUOTA = 0.25
@@ -143,7 +143,7 @@ def select_buckets(
     scored.sort(key=lambda x: (-x[2]["total"], -len(x[1]), x[0]))
 
     # 메인 상한 + 소스 쿼터
-    # 메인 기사가 3~5개면, 같은 출처 2개 = 40% > 25%이므로
+    # 메인 기사가 7개여도 같은 출처 2개 = 28% > 25%이므로
     # 사실상 메인 기사는 출처당 1개까지만 허용한다.
     main: list[tuple[str, list[dict], dict]] = []
     rest: list[tuple[str, list[dict], dict]] = []
