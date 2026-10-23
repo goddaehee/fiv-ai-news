@@ -1483,6 +1483,24 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
             "paragraph_index": f["paragraph_index"],
             "tail": f["tail"],
         })
+    # P17b: 본문 문단 80자 미만 — check()의 bag 에러는 sidecar에 실리지 않아
+    # 재시도가 눈먼 채로 같은 실패를 반복했다 (run 39899940662: attempt 1·2
+    # 연속 동일 사유 실패). thicken_body 병합이 그동안 우연히 길이를 떠받치고
+    # 있어 드러나지 않았던 피드백 공백이다. check()와 같은 규칙으로 직접 잰다.
+    for i, a in enumerate(analyses):
+        body = a.get("body") or []
+        if not isinstance(body, list):
+            body = [body]
+        for j, p in enumerate(body):
+            if isinstance(p, str) and len(p) < 80:
+                errors.append({
+                    "code": "BODY-LENGTH",
+                    "analysis_index": i,
+                    "analysis_id": a.get("id"),
+                    "paragraph_index": j,
+                    "length": len(p),
+                })
+                break
     # P17: 톱뉴스 누락 — 어떤 이야기가 빠졌는지 제목으로 짚는다.
     if collected_by_url:
         for st in must_cover_findings(issue, list(collected_by_url.values())):

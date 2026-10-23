@@ -20,7 +20,7 @@ from pathlib import Path
 
 from cluster import cluster, rank_buckets, story_groups, _outlet_key, must_cover_stories
 from select_items import select_buckets
-from validate import KINDS, check, url_core
+from validate import KINDS, check, url_core, extract_domain
 
 KST = timezone(timedelta(hours=9))
 ROOT = Path(__file__).resolve().parents[2]
@@ -288,6 +288,18 @@ def render_feedback(sidecar) -> str:
                 "새 문장을 온전하게 추가하세요."
             )
             continue
+        # P17b: 본문 문단 길이 피드백 (BODY-LENGTH). 80자 미만 문단은 발행이
+        # 차단된다 — 짧은 전망 문단이 반복해서 걸렸다. 늘리는 방법은 완전한
+        # 문장 추가뿐이며, 불릿 이어붙이기는 BODY-FRAG로 다시 차단된다.
+        if e.get("code") == "BODY-LENGTH":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            blocks.append(
+                f'- analysis id "{aid}"의 body 문단 하나가 {e.get("length")}자로 '
+                "80자 미만입니다. 짧으면 호 전체가 폐기됩니다.\n"
+                "  그 문단에 배경·맥락·비교를 완전한 문장으로 덧붙여 80자 이상으로 "
+                "쓰세요. 불릿 문구를 이어붙이거나 같은 문장을 반복하면 안 됩니다."
+            )
+            continue
         if e.get("code") != "NUMBERS-UNGROUNDED":
             continue
         aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
@@ -435,6 +447,12 @@ def payload_items(items: list[dict], limit: int = 5) -> list[tuple[dict, int]]:
     return reps[:limit]
 
 
+def _item_domain(it: dict) -> str:
+    """QUOTA 판정용 아이템 도메인. validate._source_domain과 같은 기준 —
+    GNews 아이템은 origin_url(실발행처)을 우선한다."""
+    return extract_domain(str(it.get("origin_url") or it.get("url") or ""))
+
+
 def attach_sources(issue: dict, snap: dict,
                    ref_table: list[dict] | None = None) -> dict:
     """P10: 결정적 소스 조립.
@@ -448,6 +466,10 @@ def attach_sources(issue: dict, snap: dict,
     ref_by_core = {url_core(it.get("url") or ""): i for i, it in enumerate(table)}
     title_df, n_snap = _title_df(snap)  # P16b: 희귀 토큰 판정용
     analyses = issue.get("analysis") or []
+    # P17b: QUOTA-001(단일 도메인이 분석 과반 등장 시 차단)과의 충돌 방지용
+    # 카운터. 보충 단계에서 도메인별 등장 분석 수와 cap을 공유한다.
+    domain_counts: dict[str, int] = {}
+    quota_cap = max(1, len(analyses) // 2)
     for a in analyses:
         picked = []
         picked_items: list[dict] = []
@@ -506,9 +528,16 @@ def attach_sources(issue: dict, snap: dict,
         # 아니라 교차보도 출처다. 그룹 판정은 story_groups(조립 테이블
         # 기준), 후보는 정합 필터와 같은 기준(본문 겹침 또는 첫 출처와
         # 희귀 토큰 공유)을 통과하고 매체가 겹치지 않는 것부터 넣는다.
+        # P17b: QUOTA-001과의 충돌 방지 — 보충이 단일 도메인을 분석 과반에
+        # 등장시키는 marginal 원인이 되지 않게, 도메인별 등장 분석 수를
+        # cap(전체 분석의 절반)으로 제한하고 등장 수가 적은 도메인부터
+        # 채운다. 보안 위주인 날은 BleepingComputer 같은 전문 매체가 여러
+        # 사건을 동시에 커버해 LLM 1차 선택만으로도 쿼터에 근접한다
+        # (run 39899940662 attempt 2 실측: BC 4/6 중 보충 기여 1건).
         if picked_items and len(picked) < 4:
             have = {url_core(str(it.get("url") or "")) for it in picked_items}
             outlets = {_outlet_key(it) for it in picked_items}
+            cur_doms = {_item_domain(it) for it in picked_items}
             pool: list[dict] = []
             for g in story_groups(table):
                 g_items = g["items"]
@@ -517,8 +546,11 @@ def attach_sources(issue: dict, snap: dict,
                         it for it in g_items
                         if url_core(str(it.get("url") or "")) not in have
                     )
-            # 매체가 겹치지 않는 후보 우선, 그 안에서 테이블 순서 유지
-            pool.sort(key=lambda it: _outlet_key(it) in outlets)
+            # 쿼터 여유가 있는 도메인 → 매체가 겹치지 않는 후보 순
+            pool.sort(key=lambda it: (
+                domain_counts.get(_item_domain(it), 0),
+                _outlet_key(it) in outlets,
+            ))
             for cand in pool:
                 if len(picked) >= 4:
                     break
@@ -528,6 +560,10 @@ def attach_sources(issue: dict, snap: dict,
                 if not (_source_overlap(a, cand) > 0
                         or _shares_rare_token(cand, picked_items[0], title_df, n_snap)):
                     continue
+                cand_dom = _item_domain(cand)
+                if (cand_dom and cand_dom not in cur_doms
+                        and domain_counts.get(cand_dom, 0) >= quota_cap):
+                    continue  # 보충이 쿼터 위반의 marginal 원인이 되지 않게
                 entry = {
                     "handle": cand.get("source") or "source",
                     "url": cand.get("url"),
@@ -539,9 +575,15 @@ def attach_sources(issue: dict, snap: dict,
                 picked_items.append(cand)
                 have.add(core)
                 outlets.add(_outlet_key(cand))
+                cur_doms.add(cand_dom)
                 print(f"attach_sources: '{a.get('id')}' 같은 이야기 출처 보충: "
                       f"{str(cand.get('title') or '')[:50]}")
         a["sources"] = picked
+        # QUOTA 카운트 갱신: 이 분석에 등장한 도메인 집합
+        for it in picked_items:
+            d = _item_domain(it)
+            if d:
+                domain_counts[d] = domain_counts.get(d, 0) + 1
     return issue
 
 
