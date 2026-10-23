@@ -783,6 +783,30 @@ def published_lock(path: Path) -> bool:
     return not cur.get("draft")
 
 
+def preserve_images(new_issue: dict, prev_issue: dict, public_root: Path) -> int:
+    """P13: 같은 날짜 재발행 시 이전 발행본에 등록된 이미지를 새 호로 이관한다.
+
+    배경: imggen이 등록한 호도 draft=True라서, 같은 날짜로 파이프라인을
+    재실행하면 새 초안이 issue JSON을 통째로 덮어써 등록 이미지가 사라졌다
+    (2026-10-16·10-23호에서 실제 발생). analysis id가 일치하고 참조 파일이
+    public/ 아래에 실존하는 항목만 옮긴다. id가 바뀐 분석에는 옮기지 않는다
+    — 주제가 달라진 분석에 엉뚱한 일러스트가 붙는 것을 막기 위해서다.
+    반환값은 이관된 이미지 수.
+    """
+    prev = {a.get("id"): a.get("images") or [] for a in prev_issue.get("analysis", [])}
+    moved = 0
+    for a in new_issue.get("analysis", []):
+        keep = []
+        for im in prev.get(a.get("id")) or []:
+            src = str(im.get("src") or "")
+            if src.startswith("/img/") and (public_root / src.lstrip("/")).is_file():
+                keep.append(im)
+        if keep:
+            a["images"] = keep
+            moved += len(keep)
+    return moved
+
+
 def skeleton(snap: dict) -> dict:
     date = snap["date"]
     ranked = rank_buckets(cluster(snap["items"]))
@@ -983,6 +1007,18 @@ def main() -> int:
         sidecar.parent.mkdir(parents=True, exist_ok=True)
         print(f"keeping published {out.name}; writing sidecar {sidecar}")
         out = sidecar
+
+    # P13: 같은 날짜 재발행이면 이전 발행본의 등록 이미지를 이관한다.
+    # published_lock은 draft 없는(손으로 고친) 호만 지켜 주고, imggen이
+    # 이미지를 등록한 draft 호는 재실행 때 그대로 덮어써져 이미지가 사라졌다.
+    if out.name == f"{snap['date']}.json" and out.exists():
+        try:
+            _prev_issue = json.loads(out.read_text(encoding="utf-8"))
+            _moved = preserve_images(issue, _prev_issue, ROOT / "public")
+            if _moved:
+                print(f"[draft] preserved {_moved} registered image(s) from previous {out.name}")
+        except Exception as e:  # 이미지 이관 실패가 발행을 막으면 안 됨 (fail-soft)
+            print(f"[draft] image preservation skipped: {e}", file=sys.stderr)
 
     bag = check(issue)
     out.parent.mkdir(parents=True, exist_ok=True)

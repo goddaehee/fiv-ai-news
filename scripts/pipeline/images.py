@@ -22,6 +22,9 @@ Usage:
       --analysis <analysis-id> --src <generated.png> \\
       --prompt "..." --model "..." --alt "..."
       -> converts to WebP, saves under public/img/<date>/, updates issue JSON
+  python3 scripts/pipeline/images.py audit --days 7
+      -> read-only integrity report over recent issues: analyses without
+         images, JSON refs whose file is gone, orphan files (P13)
 """
 
 from __future__ import annotations
@@ -179,11 +182,60 @@ def cmd_register(args) -> int:
     return 0
 
 
+def cmd_audit(args) -> int:
+    """P13: 최근 N일 발행본의 이미지 정합성 리포트 (읽기 전용, 항상 exit 0).
+
+    재발행이 등록 이미지를 지우거나(10/16·10/23호), 발행이 이미지 크론보다
+    늦어 통째로 건너뛰어진 호(10/20·10/22호)를 사후에라도 감지하기 위한 감사.
+    - missing: 이미지가 하나도 없는 analysis id
+    - broken: JSON이 참조하지만 public/ 아래에 파일이 없는 src
+    - orphans: public/img/<date>/에 있지만 JSON이 참조하지 않는 파일
+    발행본 파일 자체가 없는 날짜는 건너뛴다 (누락 감지는 freshness-check 몫).
+    """
+    from datetime import datetime, timedelta, timezone
+
+    kst = timezone(timedelta(hours=9))
+    today = datetime.now(kst).date()
+    report: dict[str, dict] = {}
+    checked = 0
+    for i in range(args.days):
+        d = (today - timedelta(days=i)).isoformat()
+        if not (ISSUES / f"{d}.json").exists():
+            continue
+        checked += 1
+        _, issue = load_issue(d)
+        referenced: set[str] = set()
+        missing: list[str] = []
+        broken: list[dict] = []
+        for a in issue.get("analysis", []):
+            imgs = a.get("images") or []
+            if not imgs:
+                missing.append(a.get("id"))
+            for im in imgs:
+                src = str(im.get("src") or "")
+                referenced.add(src)
+                if src.startswith("/img/") and not (ROOT / "public" / src.lstrip("/")).is_file():
+                    broken.append({"analysis": a.get("id"), "src": src})
+        orphans: list[str] = []
+        imgdir = IMGROOT / d
+        if imgdir.is_dir():
+            for f in sorted(imgdir.glob("*.webp")):
+                if f"/img/{d}/{f.name}" not in referenced:
+                    orphans.append(f.name)
+        if missing or broken or orphans:
+            report[d] = {"missing": missing, "broken": broken, "orphans": orphans}
+    print(json.dumps({"days": args.days, "checked": checked, "gaps": report},
+                     ensure_ascii=False, indent=2))
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("plan")
     p.add_argument("--date", required=True)
+    au = sub.add_parser("audit")
+    au.add_argument("--days", type=int, default=7)
     r = sub.add_parser("register")
     r.add_argument("--date", required=True)
     r.add_argument("--analysis", required=True)
@@ -194,6 +246,8 @@ def main() -> int:
     args = ap.parse_args()
     if args.cmd == "plan":
         return cmd_plan(args.date)
+    if args.cmd == "audit":
+        return cmd_audit(args)
     return cmd_register(args)
 
 
