@@ -167,6 +167,35 @@ issue2 = {"analysis": [dict(AGENT_ANALYSIS, sources=[
 out2 = attach_sources(issue2, snap)
 ok("출처 1개뿐이면 필터 미적용", len(out2["analysis"][0]["sources"]) == 1)
 
+# P16b: 본문이 고유명사를 한글 음차한 경우 — 첫 출처와 다른 이야기+겹침 0만 제거
+SNAP_MINERVA = [
+    _it("The Next Web", "Nvidia launches Minerva to catch failing parts in giant AI data centers",
+        "https://thenextweb.com/minerva", summary="minerva"),
+    _it("NVIDIA Blog", "Kazakhstan Expands Compute for Its AI Future",
+        "https://blogs.nvidia.com/kazakhstan", summary="kazakhstan"),
+    _it("TechCrunch AI", "Nvidia Minerva brings predictive maintenance to AI factories",
+        "https://techcrunch.com/minerva2", summary="minerva2"),
+]
+MINERVA_ANALYSIS = {
+    "id": "minerva",
+    "title": "부품 단위 장애 예측, GPU 규모가 커질수록 커지는 운영 문제",
+    "bullets": ["엔비디아가 미네르바를 공개했다"],
+    "body": ["엔비디아의 미네르바는 부품 장애를 미리 예측하는 도구다. "
+             "대규모 데이터센터에서 운영 부담을 줄이는 것이 목적이다."],
+    "takeaway": "장애 예측이 중요해진 점이 핵심입니다. 운영 방식을 확인하면 됩니다.",
+    "sources": [{"url": "https://thenextweb.com/minerva"},
+                {"url": "https://blogs.nvidia.com/kazakhstan"},
+                {"url": "https://techcrunch.com/minerva2"}],
+}
+snap_m = {"items": SNAP_MINERVA}
+out_m = attach_sources({"analysis": [dict(MINERVA_ANALYSIS)]}, snap_m)
+urls_m = [s["url"] for s in out_m["analysis"][0]["sources"]]
+ok("P16b: 음차 본문에서도 첫 출처 유지", "https://thenextweb.com/minerva" in urls_m)
+ok("P16b: 다른 이야기(카자흐스탄) 패딩 제거",
+   "https://blogs.nvidia.com/kazakhstan" not in urls_m)
+ok("P16b: 같은 이야기 두 번째 출처는 겹침 0이어도 유지",
+   "https://techcrunch.com/minerva2" in urls_m)
+
 # --- 6. KEYNUMS-LINK 게이트 --------------------------------------------------
 
 def _analysis_with(*nums_text):
