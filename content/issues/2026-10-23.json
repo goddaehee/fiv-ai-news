@@ -178,6 +178,15 @@
           "url": "https://openai.com/index/uber-chatgpt-work-rollout",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-23/uber-chatgpt-work-3d7e2a90.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "전사 업무에 도입된 대화형 AI 비서 네트워크를 표현한 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {

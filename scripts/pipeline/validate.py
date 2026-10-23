@@ -920,6 +920,73 @@ def _irrelevant_source_domains(
     return out
 
 
+# ---------------------------------------------------------------------------
+# P17: 톱뉴스 강제 편입 (MUST-COVER) + 불릿 병합 비문 (BODY-FRAG)
+# ---------------------------------------------------------------------------
+
+def must_cover_findings(issue: dict, items: list[dict] | None) -> list[dict]:
+    """MUST-COVER: cluster.must_cover_stories가 꼽은 당일 톱뉴스가 analysis로
+    편입됐는지. 편입 판정은 출처 URL — analysis의 sources 중 하나라도 그
+    이야기 아이템(서명 토큰 확장 포함)을 인용하면 편입으로 본다.
+    스냅샷이 없으면(수동 검증 등) 판정하지 않는다."""
+    if not items:
+        return []
+    from cluster import must_cover_stories
+
+    cited: set[str] = set()
+    for a in issue.get("analysis") or []:
+        if not isinstance(a, dict):
+            continue
+        for s in a.get("sources") or []:
+            if isinstance(s, dict):
+                u = str(s.get("url") or "")
+                if u:
+                    cited.add(url_core(u))
+    out: list[dict] = []
+    for st in must_cover_stories(items):
+        cores = {url_core(u) for u in st["urls"]}
+        if not (cores & cited):
+            out.append(st)
+    return out
+
+
+_TERM_PUNCT_RE = re.compile(r"[.!?…。][\"'”’』」)]*\s*$")
+_FINAL_END_RE = re.compile(r"[다요][\"'”’』」)]*\s*$")
+
+
+def _is_fragment(paragraph) -> bool:
+    """본문 문단이 문장으로 종결되지 않은 조각인지.
+
+    한국어 본문 문장은 종결 부호(. ! ? …)로 끝나거나 종결어미(…다/…요)로
+    끝난다. 명사형 종결(…전망, …표적, …해짐)은 불릿을 문단 끝에 이어붙인
+    비문이다. 과거 발행본 680개 문단 실측: 이 규칙이 잡은 29건이 전부
+    실제 비문이었고 완결 문장 오탐은 없었다."""
+    s = str(paragraph or "").strip()
+    if len(s) < 20:
+        return False
+    return not (_TERM_PUNCT_RE.search(s) or _FINAL_END_RE.search(s))
+
+
+def body_fragment_findings(issue: dict) -> list[dict]:
+    """BODY-FRAG: 종결되지 않은 본문 문단 목록."""
+    out: list[dict] = []
+    for i, a in enumerate(issue.get("analysis") or []):
+        if not isinstance(a, dict):
+            continue
+        body = a.get("body") or []
+        if not isinstance(body, list):
+            body = [body]
+        for j, p in enumerate(body):
+            if _is_fragment(p):
+                out.append({
+                    "analysis_index": i,
+                    "analysis_id": a.get("id"),
+                    "paragraph_index": j,
+                    "tail": str(p).strip()[-30:],
+                })
+    return out
+
+
 def required_analysis_count(n_briefing: int) -> int:
     """P15: 분석 개수 하한.
 
@@ -1100,6 +1167,25 @@ def check_quality(
 
     # 15. P16: 출처-제목 정합 경고 (SRC-TOPIC) — warning 전용.
     warnings.extend(check_src_topic(issue, collected_by_url))
+
+    # 16. P17: 불릿 병합 비문 (BODY-FRAG) — 본문 문단이 문장으로 끝나지
+    # 않으면 발행 차단. 근본 원인이던 thicken_body 병합은 제거됐고, 이
+    # 게이트는 LLM이 직접 쓴 조각 문장까지 잡는다 (2·3차 평가 반복 지적).
+    for f in body_fragment_findings(issue):
+        errors.append(
+            f"BODY-FRAG analysis[{f['analysis_index']}].body[{f['paragraph_index']}]: "
+            f"문장으로 종결되지 않은 조각 문장 ('…{f['tail']}') — 완전한 문장으로 고칠 것"
+        )
+
+    # 17. P17: 톱뉴스 강제 편입 (MUST-COVER) — coverage·보안 신호로 꼽힌
+    # 당일 톱뉴스가 analysis에 없으면 발행 차단 (재시도 피드백 연동).
+    if collected_by_url:
+        for st in must_cover_findings(issue, list(collected_by_url.values())):
+            errors.append(
+                f"MUST-COVER: 당일 톱뉴스 '{st['title'][:60]}' "
+                f"(coverage {st['coverage']}, {st['signal']})가 analysis에 없음 "
+                "— 그 이야기의 아이템을 sources로 단 analysis 필요"
+            )
 
     return errors, warnings
 
@@ -1388,6 +1474,24 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
             "keynum_index": f["keynum_index"],
             "val": f["val"],
         })
+    # P17: 불릿 병합 비문 — 위치와 꼬리를 실어 다음 attempt가 정확히 고치게.
+    for f in body_fragment_findings(issue):
+        errors.append({
+            "code": "BODY-FRAG",
+            "analysis_index": f["analysis_index"],
+            "analysis_id": f["analysis_id"],
+            "paragraph_index": f["paragraph_index"],
+            "tail": f["tail"],
+        })
+    # P17: 톱뉴스 누락 — 어떤 이야기가 빠졌는지 제목으로 짚는다.
+    if collected_by_url:
+        for st in must_cover_findings(issue, list(collected_by_url.values())):
+            errors.append({
+                "code": "MUST-COVER",
+                "title": st["title"],
+                "coverage": st["coverage"],
+                "signal": st["signal"],
+            })
     return errors
 
 
