@@ -356,6 +356,38 @@ def _source_overlap(a: dict, item: dict) -> int:
     return sum(1 for t in toks if t in text)
 
 
+def _title_df(snap: dict) -> tuple[dict[str, int], int]:
+    """스냅샷 제목 전체에서 핵심 토큰의 등장 아이템 수 (희귀도 계산용)."""
+    df: dict[str, int] = {}
+    items = (snap or {}).get("items") or []
+    for it in items:
+        for t in _src_title_tokens(it.get("title")):
+            df[t] = df.get(t, 0) + 1
+    return df, len(items)
+
+
+_FUNC_WORDS = {
+    "for", "with", "from", "into", "over", "after", "about", "says",
+    "how", "why", "what", "will", "can", "are", "was", "has", "its",
+    "the", "and", "new",
+}
+
+
+def _shares_rare_token(item: dict, first: dict,
+                       df: dict[str, int], n_snap: int) -> bool:
+    """두 아이템 제목이 희귀 토큰(제품명 등)을 공유하는가.
+
+    P16b: 같은 이야기의 다른 매체 기사는 제목 문구가 크게 달라도 제품명
+    같은 희귀 토큰은 공유한다. 흔한 단어(회사명 등)만 겹치면 같은
+    이야기로 보지 않는다. 기능어(for 등) 공유는 신호로 치지 않는다."""
+    shared = (_src_title_tokens(item.get("title"))
+              & _src_title_tokens(first.get("title"))) - _FUNC_WORDS
+    if not shared:
+        return False
+    thresh = max(3, int(0.05 * n_snap))
+    return any(df.get(t, 0) <= thresh for t in shared)
+
+
 def payload_items(items: list[dict], limit: int = 5) -> list[tuple[dict, int]]:
     """P16: 버킷 페이로드 선별. 같은 이야기는 대표 1개만 싣고, 교차보도
     (coverage) 높은 이야기부터, 동률이면 최신순으로 채운다.
@@ -390,6 +422,7 @@ def attach_sources(issue: dict, snap: dict,
     '수집되지 않은 URL' 게이트 통과)."""
     table = ref_table if ref_table is not None else _ref_table(snap)
     ref_by_core = {url_core(it.get("url") or ""): i for i, it in enumerate(table)}
+    title_df, n_snap = _title_df(snap)  # P16b: 희귀 토큰 판정용
     analyses = issue.get("analysis") or []
     for a in analyses:
         picked = []
@@ -427,9 +460,16 @@ def attach_sources(issue: dict, snap: dict,
         # P16: 토픽 정합 필터 — 제목 핵심 토큰이 본문에 하나도 없는 출처는
         # 다른 이야기의 아이템이 섞인 것이라 제거한다. 전부 무관이면
         # 최소 1개는 남긴다 (빈 sources 판정은 검증기 몫).
+        # P16b: 본문이 고유명사를 한글로 음차하면(미네르바 등) 정작 맞는
+        # 출처까지 겹침 0이 된다. 첫 출처와 희귀 토큰(그날 수집에서 드물게
+        # 등장하는 제목 단어 — 제품명 등)을 공유하면 같은 이야기로 보고
+        # 남긴다. 실측: Minerva 분석에 카자흐스탄 블로그가 패딩된 사례.
         if len(picked) >= 2:
-            kept = [i for i, it in enumerate(picked_items)
-                    if _source_overlap(a, it) > 0]
+            kept = []
+            for i, it in enumerate(picked_items):
+                if (i == 0 or _source_overlap(a, it) > 0
+                        or _shares_rare_token(it, picked_items[0], title_df, n_snap)):
+                    kept.append(i)
             if kept and len(kept) < len(picked):
                 dropped = [picked_items[i].get("title", "")[:50]
                            for i in range(len(picked)) if i not in kept]
