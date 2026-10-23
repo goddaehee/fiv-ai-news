@@ -46,6 +46,11 @@ FEEDS = [
     ("TechCrunch AI", "https://techcrunch.com/category/artificial-intelligence/feed/", "doc"),
     ("The Verge AI", "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", "doc"),
     ("Ars Technica", "https://feeds.arstechnica.com/arstechnica/technology-lab", "doc"),
+    # P16: 보안 톱뉴스(제로데이·대규모 취약점) 수집 경로. php2shell 같은
+    # 사건은 AI 전문 매체보다 보안 매체가 먼저·깊게 다루는데 피드가 없어
+    # 통째로 누락됐다 (2026-10-23 원본 톱 php2shell 미수집 실측).
+    ("The Hacker News", "https://feeds.feedburner.com/TheHackersNews", "doc"),
+    ("BleepingComputer", "https://www.bleepingcomputer.com/feed/", "doc"),
     ("HN AI", "https://hnrss.org/newest?q=AI+OR+LLM+OR+GPT+OR+Claude+OR+Gemini", "talk"),
     (
         "Google News AI",
@@ -59,6 +64,15 @@ AI_HINT = re.compile(
     r"inference|benchmark|safety|coding)\b",
     re.I,
 )
+# P16: 보안 피드 전용 통과 힌트. 보안 매체는 AI와 무관한 기사도 많아서
+# AI_HINT만으로는 부족하고, 반대로 보안 키워드만으로 다 받으면 노이즈가 된다.
+# 보안 피드는 AI_HINT 또는 SECURITY_HINT 중 하나라도 걸리면 수집한다.
+SECURITY_HINT = re.compile(
+    r"vulnerab|zero[- ]?day|exploit|malware|ransomware|data breach|"
+    r"\bcve-\d|phishing|backdoor|botnet|hackers?\b|breached|patch(ed)?\s+(tuesday|flaw)",
+    re.I,
+)
+SECURITY_SOURCES = {"The Hacker News", "BleepingComputer"}
 TAG = re.compile(r"<[^>]+>")
 
 # P5: 피드별 수집 상한. Google News AI는 limit=40이 수집의 60%를 폐기하므로 100으로 상향.
@@ -159,6 +173,13 @@ def parse_feed(xml: bytes, source: str, kind: str, limit: int = 40) -> list[dict
             origin_url = (source_el.get("url") or "").strip() or None
         blob = f"{title} {summary}"
         if source.startswith("Google News") or "GNews" in source or source.startswith("HN") or AI_HINT.search(blob):
+            keep = True
+        elif source in SECURITY_SOURCES:
+            # P16: 보안 피드는 AI 힌트 또는 보안 힌트가 있을 때만
+            keep = bool(AI_HINT.search(blob) or SECURITY_HINT.search(blob))
+        else:
+            keep = bool(AI_HINT.search(blob))
+        if keep:
             item = {
                 "source": source,
                 "kind": kind,
