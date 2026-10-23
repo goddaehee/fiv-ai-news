@@ -54,7 +54,7 @@ ok("서로 다른 도메인 9개 → main 7개", len(main) == 7 and len(rest) ==
 # --- 2. 프롬프트 밀도 요구 ---
 ok("프롬프트: analysis briefing 상위 1:1 + 개수 하한", "analysis는 briefing 상위 5~7개의 id와 1:1" in PROMPT and "최소 5개" in PROMPT)
 ok("프롬프트: 본문 합계 500자 이상", "기사당 본문 합계 500자 이상" in PROMPT)
-ok("프롬프트: 출처 기본 3개", "3개 기본" in PROMPT)
+ok("프롬프트: 출처는 그 이야기의 아이템만 (P16 — 3개 패딩 금지)", "바로 그 이야기의 아이템에서만" in PROMPT and "3개 기본" not in PROMPT)
 ok("프롬프트: 본문 구성 지침", "본문 구성: 첫 문단=무슨 일인가" in PROMPT)
 ok("프롬프트: 지어내기 금지 재강조", "지어내면 호가 폐기됩니다" in PROMPT)
 

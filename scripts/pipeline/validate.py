@@ -338,6 +338,129 @@ def check_keynums_semantics(issue: dict, bag: list[str]) -> None:
             err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: sub에 내부 문자열 포함 ({sub!r})", bag)
 
 
+# ---------------------------------------------------------------------------
+# P16: keynums-기사 연결 (KEYNUMS-LINK) + 출처-제목 정합 경고 (SRC-TOPIC)
+# ---------------------------------------------------------------------------
+
+def _analysis_number_canons(a: dict) -> set[str]:
+    """analysis 전체 텍스트(title·bullets·body·takeaway)의 수치 canon 집합."""
+    parts = [str(a.get("title") or ""), str(a.get("takeaway") or "")]
+    for k in ("bullets", "body"):
+        v = a.get(k) or []
+        parts.extend(str(x) for x in (v if isinstance(v, list) else [v]))
+    text = _normalize_num_text(" ".join(parts))
+    return {_canon_num(m.group(0)) for m in NUM_RE_VALIDATE.finditer(text)}
+
+
+_COUNT_BRIDGE = re.compile(r"^(\d+(?:\.\d+)?)(명|개|건|점|곳|종|편|회|단계)$")
+
+
+def _link_keys(canon: str) -> set[str]:
+    """KEYNUMS-LINK 비교용 키 확장.
+
+    '3만'(→mag:30000)과 '30,000명'(→표면 '30000명')은 같은 수인데 canon이
+    갈린다. 개수 단위 표면형과 크기형 사이에 숫자 키를 다리로 놓는다.
+    100 미만 소수는 날짜·순번과 겹치기 쉬워 다리를 놓지 않고, %·배는
+    단위 자체가 의미라 표면 그대로만 비교한다."""
+    keys = {canon}
+    if canon.startswith("mag:"):
+        try:
+            n = int(canon[4:])
+        except ValueError:
+            return keys
+        if n >= 100:
+            keys.add(f"num:{n}")
+        return keys
+    m = _COUNT_BRIDGE.match(canon)
+    if m:
+        try:
+            v = Decimal(m.group(1))
+        except InvalidOperation:
+            return keys
+        if v == v.to_integral_value() and int(v) >= 100:
+            keys.add(f"num:{int(v)}")
+    return keys
+
+
+def keynums_link_findings(issue: dict) -> list[dict]:
+    """keynums 수치가 어떤 analysis에도 등장하지 않는 항목 목록.
+
+    반환: [{keynum_index, val}]. val에 NUM_RE 매칭이 아예 없으면 검사에서
+    제외한다 — '125건'처럼 NUM_RE 밖 단위를 쓰는 정상 항목을 오탐하지
+    않기 위해서다 (그쪽 판정은 KEYNUMS-SEMANTIC의 몫).
+    2026-10-23 실측: keynums 3개 중 2개(77%·13개)가 분석 없는 이야기의
+    수치라 홈 카드→기사 동선이 끊겼다."""
+    corpus: set[str] = set()
+    for a in issue.get("analysis") or []:
+        if isinstance(a, dict):
+            for c in _analysis_number_canons(a):
+                corpus |= _link_keys(c)
+    out: list[dict] = []
+    for i, k in enumerate(issue.get("keynums") or []):
+        if not isinstance(k, dict):
+            continue
+        val = str(k.get("val") or "")
+        ms = [m.group(0) for m in
+              NUM_RE_VALIDATE.finditer(_normalize_num_text(val))]
+        if not ms:
+            continue
+        vkeys: set[str] = set()
+        for m in ms:
+            vkeys |= _link_keys(_canon_num(m))
+        if not (vkeys & corpus):
+            out.append({"keynum_index": i, "val": val})
+    return out
+
+
+_SRC_TOPIC_STOP = {
+    "the", "a", "an", "of", "to", "in", "for", "on", "with", "and", "or",
+    "as", "at", "by", "is", "are", "its", "it", "ai",
+}
+
+
+def _title_key_tokens(title) -> set[str]:
+    toks: set[str] = set()
+    for p in re.split(r"[^0-9a-zA-Z]+", str(title or "").lower()):
+        if len(p) >= 3 and p not in _SRC_TOPIC_STOP:
+            toks.add(p)
+    return toks
+
+
+def check_src_topic(
+    issue: dict, collected_by_url: dict | None = None
+) -> list[str]:
+    """SRC-TOPIC 경고: 출처 아이템 제목의 핵심 토큰이 analysis 본문에
+    하나도 없으면 다른 이야기의 출처가 섞였을 의심으로 경고한다.
+
+    SRC-REL은 회사 도메인 기반이라 중립 매체(TechCrunch 등) 내부의
+    교차 오염을 못 잡는다. 오탐 시 발행이 막히면 안 되므로 warning 전용.
+    draft.attach_sources의 결정적 필터와 같은 기준을 쓴다."""
+    if not collected_by_url:
+        return []
+    warnings: list[str] = []
+    for i, a in enumerate(issue.get("analysis") or []):
+        if not isinstance(a, dict):
+            continue
+        parts = [str(a.get("title") or ""), str(a.get("takeaway") or "")]
+        for k in ("bullets", "body"):
+            v = a.get(k) or []
+            parts.extend(str(x) for x in (v if isinstance(v, list) else [v]))
+        text = " ".join(parts).lower()
+        for s in a.get("sources") or []:
+            if not isinstance(s, dict):
+                continue
+            it = collected_by_url.get(url_core(str(s.get("url") or "")))
+            if not it:
+                continue
+            toks = _title_key_tokens(it.get("title"))
+            if toks and not any(t in text for t in toks):
+                warnings.append(
+                    f"SRC-TOPIC analysis[{i}].sources: 본문과 무관한 출처 의심 "
+                    f"({str(it.get('title'))[:50]})"
+                )
+    return warnings
+
+
 # P14: 오타·깨진 문자 게이트 (TYPO-001).
 # "Open아AI"처럼 영문 단어 중간에 한글 음절이 끼는 혼합 오타와, 인코딩이
 # 깨진 문자(U+FFFD)를 기계적으로 잡는다. 조사 오류 같은 문법 오타는 패턴으로
@@ -967,6 +1090,17 @@ def check_quality(
     # 13. P14: 오타·깨진 문자 게이트 (TYPO-001) — error로 발행 차단.
     errors.extend(check_typo(issue))
 
+    # 14. P16: keynums-기사 연결 (KEYNUMS-LINK) — 홈 카드 수치가 어떤
+    # analysis에도 없으면 카드→기사 동선이 끊긴다. error (재시도 피드백 연동).
+    for f in keynums_link_findings(issue):
+        errors.append(
+            f"KEYNUMS-LINK: keynums[{f['keynum_index']}] '{f['val']}'가 어떤 "
+            "analysis에도 없음 — analysis 본문의 수치로 교체하거나 삭제"
+        )
+
+    # 15. P16: 출처-제목 정합 경고 (SRC-TOPIC) — warning 전용.
+    warnings.extend(check_src_topic(issue, collected_by_url))
+
     return errors, warnings
 
 
@@ -1245,6 +1379,14 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
             "analysis_index": int(m.group(1)) if m else None,
             "loc": f["loc"],
             "token": f["token"],
+        })
+    # P16: keynums-기사 단절 — 대상 수치는 이미 출력된 keynums 값이라
+    # 앵커 문제가 없다 (render_feedback이 그대로 인용해 교체를 지시).
+    for f in keynums_link_findings(issue):
+        errors.append({
+            "code": "KEYNUMS-LINK",
+            "keynum_index": f["keynum_index"],
+            "val": f["val"],
         })
     return errors
 

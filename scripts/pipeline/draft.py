@@ -18,7 +18,7 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from cluster import cluster, rank_buckets
+from cluster import cluster, rank_buckets, story_groups
 from select_items import select_buckets
 from validate import KINDS, check, url_core
 
@@ -41,7 +41,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - mainEvent는 사람이 읽는 이벤트명 (내부 ID 금지).
 - tips의 title과 body는 서로 다르게 씁니다. via는 실제 출처명 (디버그 값 금지).
 - 같은 시사점을 여러 칸에 복붙하지 않습니다.
-- sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. analysis마다 같은 토픽 버킷의 서로 다른 아이템에서 3개 기본(버킷 아이템이 3개 미만이면 있는 만큼만)이며, 비어 있으면 호 전체가 폐기된다. example.com 금지.
+- sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. **sources는 그 기사가 다루는 바로 그 이야기의 아이템에서만** 고른다. 3개를 채우려고 같은 버킷의 다른 이야기 아이템을 넣으면 출처 오염으로 호 전체가 폐기된다. 그 이야기의 아이템이 1~2개뿐이면 있는 만큼만 넣는다. 비어 있으면 호 전체가 폐기된다. example.com 금지.
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
@@ -62,10 +62,11 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
   4. limits: 한계, 하지만, 단,, 주의, 반론, 다만, 아직, 불확실, 검증되지 중 1개 이상 포함.
   5. why: takeaway 60자 이상(두 문장), 입니다/됩니다 종결, 그리고 중요, 의미, 영향, 바뀐, 달라진 중 1개 이상 포함.
 - 선별 점수제: 각 기사를 영향도(0~2: 다룬 매체 수)·새로움(0~2: 24시간 이내=2)·관련성(0~2: 수치·고유명사)·근거(0~2: 공식 출처 URL) 로 채점, 총 8점 중 5점 미만은 제외.
+- 입력 아이템의 coverage는 같은 이야기를 다룬 매체 수다. coverage가 3 이상이면 여러 매체가 동시에 다룬 당일 주요 뉴스라는 뜻이므로 briefing 선정과 analysis 우선순위에서 먼저 고려한다. coverage 높은 이야기를 빼고 단독 보도만으로 호를 채우지 않는다.
 - 소스 쿼터: 단일 출처가 당일 전체 기사 수의 25%를 넘지 않게. 메인 기사는 출처당 1개까지. analysis 선정 시 출처 도메인이 서로 다른 기사를 우선하고, 같은 도메인이 과반을 차지하면 다른 출처의 대체 기사로 교체하라.
 - 수치·주장·인용은 입력에 제공된 원문 요약(summary)과 URL 정보에서 확인된 사실만 씁니다. 해석·전망은 허용하되 사실과 구분하고, 확인 안 된 것은 '추정'·'미확정'으로 명시합니다. 이 규칙은 body뿐 아니라 intro·bullets·extra·tips·keynums·timeline 전체에 적용됩니다.
 - 각 analysis는 extra 필드를 가질 수 있습니다: '그 밖에: '로 시작하는 한 문단. 본문에서 못 다룬 관련 소식이 해당 항목의 sources에 있을 때만 2~3문장으로 짧게 쓰고, 없으면 빈 문자열로 둡니다. 본문·다른 항목과 겹치지 않게.
-- keynums는 3개 이상. number_mentions에서 확인된 수치만 넣습니다. sub에 '초안', '교차검증 전' 같은 문구를 적지 않습니다. 확인 안 된 수치는 keynums에 넣지 않습니다.
+- keynums는 3개 이상. **keynums의 수치는 analysis로 작성한 기사의 본문·bullets에 실제로 등장하는 것에서만 뽑습니다.** analysis가 없는 이야기의 수치를 keynums에 넣으면 홈 카드와 기사가 어긋나 호 전체가 폐기됩니다. number_mentions에서 확인된 수치만 넣습니다. sub에 '초안', '교차검증 전' 같은 문구를 적지 않습니다. 확인 안 된 수치는 keynums에 넣지 않습니다.
 - intro 첫 문장은 입력 JSON의 date_ko 값으로 시작합니다(예: '10월 15일 수요일 발행.'). 이어서 오늘 호 항목에서 나온 맥락 한 문장을 붙입니다. 맥락이 없으면 날짜만 씁니다.
 - timeline.t는 해당 item의 published_ko를 한 글자도 바꾸지 않고 복사합니다. 값이 없으면 그 칸을 생략합니다. "01", "02" 같은 순번을 만들지 않습니다. timeline은 3개 이상.
 [작성 예시 — 형식 참고용. 숫자와 시각은 입력에 있던 값만 씁니다]
@@ -73,7 +74,7 @@ body: "A사가 새 모델을 공개했다. 응답은 2배 빨라지고 가격은
 takeaway: "응답 속도와 가격이 함께 바뀐 점이 도입 비용 판단에 중요하다. 다음 분기 적용 전에 영어 외 과제 점수도 확인하면 됩니다."
 timeline: [{"t": "<그 item의 published_ko 그대로>", "d": "모델 공개"}]
 keynums: [{"val": "2배", "lab": "응답 속도", "sub": "A사 발표"}]
-sources: [{"url": "<입력 buckets의 실제 링크 그대로>"}, {"url": "<입력 buckets의 실제 링크 그대로>"}, {"url": "<입력 buckets의 실제 링크 그대로>"}]  # analysis마다 기본 3개. 비우면 호 폐기.
+sources: [{"url": "<입력 buckets의 실제 링크 그대로>"}, {"url": "<입력 buckets의 실제 링크 그대로>"}]  # 그 이야기의 아이템만. 다른 이야기 아이템으로 채우면 폐기. 비우면 호 폐기.
 - 전체 분량: briefMin 5, readMin은 실제 분량 기준이며 normalize에서 글자 수로 계산합니다.
 - 확인 안 된 인수는 미확정이라고 밝힙니다. 회사 자체 측정은 본문에 그 사실을 적습니다.
 - 과장 형용사(혁명, 폭발) 금지. 숫자로 강도를 전합니다.
@@ -194,7 +195,7 @@ def render_feedback(sidecar) -> str:
                 f"- analysis가 {e.get('n_analysis')}개뿐입니다. briefing {e.get('n_briefing')}개 기준 "
                 f"최소 {e.get('required')}개가 필요하며, 미달이면 호 전체가 폐기됩니다.\n"
                 f"  analysis가 없는 briefing({missing}) 중 중요도 순으로 골라 analysis를 추가하세요. "
-                "기존 analysis는 그대로 두고, 추가분도 같은 규칙(bullets 3·body 500자 이상·sources 3개 기본)을 지킵니다."
+                "기존 analysis는 그대로 두고, 추가분도 같은 규칙(bullets 3·body 500자 이상·sources는 그 이야기의 아이템만)을 지킵니다."
             )
             continue
         # P10: 스키마 에러도 피드백에 포함 (normalize 합성 금지의 반대급부).
@@ -209,8 +210,8 @@ def render_feedback(sidecar) -> str:
             aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
             blocks.append(
                 f'- analysis id "{aid}"의 sources가 비어 있습니다. 비어 있으면 호 전체가 폐기됩니다.\n'
-                '  입력 buckets에서 이 기사와 같은 주제의 아이템 2개를 골라\n'
-                '  sources에 [{"url": "<실제 링크>"}, {"url": "<실제 링크>"}] 형태로 넣으세요.\n'
+                '  입력 buckets에서 이 기사가 다루는 바로 그 이야기의 아이템을 골라\n'
+                '  sources에 [{"url": "<실제 링크>"}] 형태로 넣으세요. 다른 이야기의 아이템으로 채우지 마세요.\n'
                 "  URL은 입력에 있는 것을 한 글자도 바꾸지 않고 그대로 복사하고, 지어내지 마세요."
             )
             continue
@@ -250,6 +251,17 @@ def render_feedback(sidecar) -> str:
             blocks.append(
                 f"- {e.get('loc') or '본문'}에 깨진 문자·오타 '{e.get('token') or ''}'가 있습니다.\n"
                 "  입력 원문의 표기 그대로 고쳐 쓰세요. 비슷한 다른 단어로 바꾸거나 없는 단어를 만들지 마세요."
+            )
+            continue
+        # P16: keynums-기사 단절 피드백 (KEYNUMS-LINK). 홈 카드 수치가 어떤
+        # analysis에도 없으면 카드→기사 동선이 끊긴다. 대상 수치는 이미 출력된
+        # keynums 값이라 앵커 문제가 없다 (고칠 대상 그 자체를 짚는 것).
+        if e.get("code") == "KEYNUMS-LINK":
+            blocks.append(
+                f"- keynums의 '{e.get('val') or ''}'가 어떤 analysis 기사에도 등장하지 않습니다. "
+                "홈 카드와 기사가 어긋나면 호 전체가 폐기됩니다.\n"
+                "  그 keynums 항목을 삭제하거나, analysis 본문·bullets에 실제로 있는 수치로 교체하세요. "
+                "keynums는 analysis로 작성한 기사의 수치에서만 뽑습니다."
             )
             continue
         if e.get("code") != "NUMBERS-UNGROUNDED":
@@ -326,6 +338,47 @@ def _ref_table(snap: dict) -> list[dict]:
     return table
 
 
+def _src_title_tokens(title) -> set[str]:
+    """출처 아이템 제목의 핵심 토큰 (영문 3자+). 판정 불가한 제목은 빈 집합."""
+    return {t for t in _sim_tokens(title) if len(t) >= 3 and t.isascii()}
+
+
+def _source_overlap(a: dict, item: dict) -> int:
+    """analysis 텍스트와 출처 아이템 제목의 핵심 토큰 겹침 수.
+
+    P16: 출처-주장 연결의 결정적 백스톱. 한국어 본문에는 영문 고유명사
+    (회사명·제품명)가 그대로 등장하므로, 제목 토큰이 본문에 하나도 없으면
+    그 출처는 다른 이야기의 아이템일 가능성이 높다."""
+    toks = _src_title_tokens(item.get("title"))
+    if not toks:
+        return 1  # 판정 불가(제목에 영문 토큰 없음) → 무관으로 보지 않는다
+    text = _analysis_text(a).lower()
+    return sum(1 for t in toks if t in text)
+
+
+def payload_items(items: list[dict], limit: int = 5) -> list[tuple[dict, int]]:
+    """P16: 버킷 페이로드 선별. 같은 이야기는 대표 1개만 싣고, 교차보도
+    (coverage) 높은 이야기부터, 동률이면 최신순으로 채운다.
+
+    기존의 수집 순서 앞 5개 절단은 톱뉴스를 버킷 뒤쪽에 묻었다
+    (2026-10-23 실측: Claude Duet는 anthropic 버킷 8번째, PHP 보안
+    뉴스는 openai 버킷 16번째에서 절단)."""
+    reps: list[tuple[dict, int]] = []
+    for g in story_groups(items):
+        reps.append((g["items"][0], g["coverage"]))
+
+    def _ts(it: dict) -> float:
+        try:
+            return datetime.fromisoformat(
+                str(it.get("published") or "").replace("Z", "+00:00")
+            ).timestamp()
+        except ValueError:
+            return 0.0
+
+    reps.sort(key=lambda rc: (-rc[1], -_ts(rc[0])))
+    return reps[:limit]
+
+
 def attach_sources(issue: dict, snap: dict,
                    ref_table: list[dict] | None = None) -> dict:
     """P10: 결정적 소스 조립.
@@ -340,6 +393,7 @@ def attach_sources(issue: dict, snap: dict,
     analyses = issue.get("analysis") or []
     for a in analyses:
         picked = []
+        picked_items: list[dict] = []
         used: set[int] = set()
         for s in a.get("sources") or []:
             ref = None
@@ -367,8 +421,20 @@ def attach_sources(issue: dict, snap: dict,
             if it.get("origin_url"):
                 picked_src["origin_url"] = it["origin_url"]
             picked.append(picked_src)
+            picked_items.append(it)
             if len(picked) >= 4:
                 break
+        # P16: 토픽 정합 필터 — 제목 핵심 토큰이 본문에 하나도 없는 출처는
+        # 다른 이야기의 아이템이 섞인 것이라 제거한다. 전부 무관이면
+        # 최소 1개는 남긴다 (빈 sources 판정은 검증기 몫).
+        if len(picked) >= 2:
+            kept = [i for i, it in enumerate(picked_items)
+                    if _source_overlap(a, it) > 0]
+            if kept and len(kept) < len(picked):
+                dropped = [picked_items[i].get("title", "")[:50]
+                           for i in range(len(picked)) if i not in kept]
+                print(f"attach_sources: '{a.get('id')}' 무관 출처 제거: {dropped}")
+                picked = [picked[i] for i in kept]
         a["sources"] = picked
     return issue
 
@@ -540,7 +606,10 @@ def _fallback_keynum(item: dict, seen: set) -> dict | None:
     내부 문자열을 넣지 않는다. 조건을 못 채우면 충원하지 않는다.
     """
     title = str(item.get("title") or "")
-    origin = str(item.get("origin_url") or "")
+    # P16: 발행처는 origin_url(실발행처) 우선, 없으면 아이템 자체 URL.
+    # 직접 피드 아이템은 URL 호스트가 곧 발행처다. GNews 래퍼 도메인은
+    # 아래 publisher 검사에서 제외된다.
+    origin = str(item.get("origin_url") or item.get("url") or "")
     if not title or not origin:
         return None
     # 발행처 도메인 (sub용). origin_url은 발행처 홈페이지 URL이다.
@@ -714,10 +783,27 @@ def normalize(issue: dict, snap: dict | None = None) -> dict:
         # P10 폴백은 lab에 출처명(피드명), sub에 "수집 요약"을 넣어 깨진 keynums가
         # 그대로 발행되는 사고를 냈다. 유효 항목을 만들 수 없으면 강제 충원하지 않고
         # 적게 두는 쪽이 낫다 (부족분은 validate 게이트+재시도 피드백이 판단).
+        # P16: 충원 후보를 analysis가 실제로 인용한 아이템으로 제한하고, 그 수치가
+        # analysis 본문에도 등장할 때만 쓴다. 수집 전체에서 아무 수치나 끌어오면
+        # 홈 카드와 심층 기사가 어긋난다 (2026-10-23: 77%·13개 카드 단절 실측).
         seen = {k["val"] for k in keynums}
+        cited = {
+            url_core(str(s.get("url") or ""))
+            for a in analysis
+            for s in (a.get("sources") or [])
+            if isinstance(s, dict)
+        }
+        corpus = normalize_num_text(
+            " ".join(_analysis_text(a) for a in analysis))
+        corpus_flat = corpus.replace(",", "")
         for it in snap.get("items") or []:
+            if url_core(str(it.get("url") or "")) not in cited:
+                continue
             fb = _fallback_keynum(it, seen)
             if fb is None:
+                continue
+            surf = normalize_num_text(fb["val"])
+            if surf not in corpus and surf.replace(",", "") not in corpus_flat:
                 continue
             seen.add(fb["val"])
             keynums.append(fb)
@@ -1053,12 +1139,12 @@ def main() -> int:
         # (ref 번호 방식은 LLM이 sources를 생략하는 회귀를 일으켜 폐기).
         ref_table = _ref_table(snap)
 
-        def _item_payload(it: dict) -> dict:
+        def _item_payload(it: dict, coverage: int = 1) -> dict:
             # P1 (Codex): 후보는 420자 전체 summary에서 추출 (180자 잘림 전에).
             # LLM에게는 180자만 보여주지만 쓸 수 있는 숫자는 전체에서 뽑는다.
             full_summary = it.get("summary") or ""
             summary = full_summary[:180]
-            return {
+            p = {
                 "title": it["title"],
                 "url": it.get("url"),
                 "source": it["source"],
@@ -1068,6 +1154,10 @@ def main() -> int:
                 # P0: LLM이 쓸 수 있는 수치 후보 — 검증기 numbers 정규식을 통과한 것만.
                 "number_mentions": number_mentions(full_summary),
             }
+            # P16: 교차보도 신호 — 같은 이야기를 다룬 매체 수. 2 이상일 때만 싣는다.
+            if coverage >= 2:
+                p["coverage"] = coverage
+            return p
 
         payload = {
             "date": snap["date"],
@@ -1079,7 +1169,8 @@ def main() -> int:
                 {
                     "topic": topic,
                     "n": len(items),
-                    "items": [_item_payload(it) for it in items[:5]],
+                    "items": [_item_payload(it, cov)
+                              for it, cov in payload_items(items)],
                 }
                 for topic, items in buckets[:10]
             ],

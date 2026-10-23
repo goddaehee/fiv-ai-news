@@ -138,7 +138,17 @@ snap_ok = {"date": "2026-10-22", "items": [
     {"title": "사용자 100명 돌파한 신규 서비스", "url": "https://news.google.com/y", "source": "Google News AI",
      "summary": "", "origin_url": "https://www.theverge.com/"},
 ]}
-n2 = normalize(iss, snap_ok)
+# P16: 폴백 충원은 analysis가 인용한 아이템 + 그 수치가 analysis 본문에
+# 등장할 때만. 픽스처에도 인용·본문 등장을 갖춘 analysis를 붙인다.
+iss_ok = dict(iss, analysis=[{
+    "id": "b1", "title": "모델 가격 인하와 신규 서비스",
+    "bullets": ["가격이 30% 내렸고 사용자 100명을 돌파했다"],
+    "body": ["모델 가격이 30% 인하됐다. 신규 서비스는 사용자 100명을 돌파했다."],
+    "takeaway": "가격과 사용자 수가 함께 바뀐 점이 중요합니다. 도입 전에 확인하면 됩니다.",
+    "sources": [{"url": "https://news.google.com/x"},
+                {"url": "https://news.google.com/y"}],
+}])
+n2 = normalize(iss_ok, snap_ok)
 ok("keynums 유효 항목 충원", len(n2["keynums"]) == 2)
 vals = {k["val"] for k in n2["keynums"]}
 ok("keynums 30% 포함", any("30%" in v for v in vals))
