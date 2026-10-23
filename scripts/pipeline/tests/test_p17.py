@@ -304,5 +304,65 @@ ok("보충 쿼터 캡: BC 보충은 분석 절반(2개)까지만",
 ok("보충 쿼터 캡: 캡에 걸린 분석은 1차 출처만 유지",
    all(len(a["sources"]) == 1 for a in outq["analysis"][2:]))
 
+# --- 9. P17c: 2패스 쿼터 시드 (run 39901814043 실측 재현) ----------------------
+# 1차 선택만으로 BC가 이미 cap에 닿아 있으면, 앞 분석의 BC 보충은 없어야
+# 한다. 1패스 시절에는 보충 2 + 1차 2 = 4/7로 QUOTA-001에 걸렸다.
+def _pair2(primary_outlet, primary_title, bc_title, slug):
+    outlets = {
+        "thn": ("The Hacker News", f"https://thehackernews.com/{slug}"),
+        "bc": ("BleepingComputer", f"https://bleepingcomputer.com/{slug}"),
+    }
+    src, url = outlets[primary_outlet]
+    return [
+        _it(src, primary_title, url, summary=primary_title),
+        _it("BleepingComputer" if primary_outlet != "bc" else "The Hacker News",
+            bc_title,
+            f"https://bleepingcomputer.com/{slug}" if primary_outlet != "bc"
+            else f"https://thehackernews.com/{slug}",
+            summary=bc_title),
+    ]
+
+SNAP2P = {"items":
+          _pair2("thn", "NexGate releases patch for gateway RCE flaw",
+                 "NexGate patch arrives for gateway RCE flaw", "nexgate")
+          + _pair2("thn", "VoltMail discloses breach hitting cloud tenants",
+                   "VoltMail breach exposes cloud tenant data", "voltm")
+          + _pair2("bc", "KiteDB zero-day exploited in the wild",
+                   "KiteDB zero-day under active exploitation", "kitedb")
+          + _pair2("bc", "OrbitOS update fixes critical kernel bug",
+                   "OrbitOS kernel bug fix rolls out to users", "orbitos")
+          + [_it("SoloAI Blog", "SoloAI launches coding assistant",
+                 "https://soloai.dev/a", summary="coding assistant")]}
+ISS2P = {"analysis": [
+    {"id": "s1", "title": "1. NexGate 소식", "bullets": ["NexGate 핵심"],
+     "body": ["NexGate가 게이트웨이 결함 패치를 공개했다. 관련 업계의 주목을 받고 있다."],
+     "takeaway": "패치 적용이 우선입니다. 일정을 확인하면 됩니다.",
+     "sources": [{"url": "https://thehackernews.com/nexgate"}]},
+    {"id": "s2", "title": "2. VoltMail 소식", "bullets": ["VoltMail 핵심"],
+     "body": ["VoltMail이 침해 사실을 공개했다. 클라우드 테넌트의 점검이 필요하다."],
+     "takeaway": "테넌트 점검이 우선입니다. 범위를 확인하면 됩니다.",
+     "sources": [{"url": "https://thehackernews.com/voltm"}]},
+    {"id": "s3", "title": "3. KiteDB 소식", "bullets": ["KiteDB 핵심"],
+     "body": ["KiteDB 제로데이가 실제 공격에 쓰이고 있다. 긴급 업데이트가 나왔다."],
+     "takeaway": "업데이트가 우선입니다. 버전을 확인하면 됩니다.",
+     "sources": [{"url": "https://bleepingcomputer.com/kitedb"}]},
+    {"id": "s4", "title": "4. OrbitOS 소식", "bullets": ["OrbitOS 핵심"],
+     "body": ["OrbitOS가 커널 버그를 고친 업데이트를 내놨다. 재시작이 필요하다."],
+     "takeaway": "업데이트가 우선입니다. 재시작 일정을 확인하면 됩니다.",
+     "sources": [{"url": "https://bleepingcomputer.com/orbitos"}]},
+    {"id": "s5", "title": "5. SoloAI 소식", "bullets": ["SoloAI 핵심"],
+     "body": ["SoloAI가 코딩 어시스턴트를 출시했다. 개발자 도구 경쟁이 거세진다."],
+     "takeaway": "도입 조건이 관건입니다. 가격을 확인하면 됩니다.",
+     "sources": [{"url": "https://soloai.dev/a"}]},
+]}
+out2p = attach_sources(json.loads(json.dumps(ISS2P)), SNAP2P,
+                       ref_table=_ref_table(SNAP2P))
+bc2p = [sum(1 for s in a["sources"] if "bleepingcomputer" in s["url"])
+        for a in out2p["analysis"]]
+ok("2패스 쿼터 시드: 1차 BC가 cap(2)에 닿으면 보충 BC는 0건",
+   bc2p == [0, 0, 1, 1, 0])
+ok("2패스 쿼터 시드: 보충이 막힌 분석은 1차 출처만 유지",
+   all(len(a["sources"]) == 1 for a in out2p["analysis"][:2]))
+
 print(f"P17 tests: {PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)
