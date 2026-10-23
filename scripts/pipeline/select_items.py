@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 
 MAX_MAIN = 7
 MIN_MAIN = 3
+TARGET_MAIN = 5  # P15: 메인 목표 개수. 미달 시 쿼터를 단계적으로 완화해 채운다.
 SCORE_CUTOFF = 5
 SOURCE_QUOTA = 0.25
 
@@ -166,19 +167,28 @@ def select_buckets(
         if dom:
             used_domains.add(dom)
 
-    # P4 fallback: MIN_MAIN 미달 시 도메인 규칙만 완화 (피드 라벨 필터는 유지)
-    if len(main) < MIN_MAIN:
-        for name, items, s in scored:
-            if len(main) >= MIN_MAIN:
-                break
-            if any(name == m[0] for m in main):
-                continue
-            top_source = str(items[0].get("source") or "")
-            if top_source in used_sources:
-                continue
-            main.append((name, items, s))
-            used_sources.add(top_source)
+    # P15: 목표 개수(TARGET_MAIN)까지 단계적 완화 (기존 P4 MIN_MAIN 폴백 일반화).
+    # 2026-10-23 실측: 점수 통과 버킷 5개 중 'anthropic'(34건)이 'other'의 대표
+    # 아이템과 피드 라벨("Anthropic GNews")이 겹쳐 메인에서 탈락 → main_topics
+    # 4개가 분석 4개 고착의 상한이 됐다. 1단계는 도메인 규칙만 완화(라벨 유지),
+    # 2단계는 라벨 규칙까지 완화한다. 점수 컷(5점)은 완화 대상이 아니다 —
+    # 점수 미달 버킷은 어느 단계에서도 메인이 되지 않는다.
+    if len(main) < TARGET_MAIN:
         main_names = {m[0] for m in main}
+        for relax_source in (False, True):
+            for name, items, s in scored:
+                if len(main) >= TARGET_MAIN:
+                    break
+                if name in main_names:
+                    continue
+                top_source = str(items[0].get("source") or "")
+                if not relax_source and top_source in used_sources:
+                    continue
+                main.append((name, items, s))
+                main_names.add(name)
+                used_sources.add(top_source)
+            if len(main) >= TARGET_MAIN:
+                break
         rest = [t for t in rest if t[0] not in main_names]
 
     return main, rest
