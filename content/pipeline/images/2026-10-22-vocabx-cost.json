@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-22",
+  "analysis": "vocabx-cost",
+  "title": "5. 어휘 설계만으로 줄인 추론 비용",
+  "src": "/img/2026-10-22/vocabx-cost-835e6c85.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration of cost shrinking through smart design: a wide stream of small token fragments funneling into a narrow efficient channel, compression from large scattered geometric forms to small focused ones, green and violet gradient background, geometric abstraction, wide 16:9 composition, no text, no letters, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "835e6c85",
+  "alt": "넓은 토큰 흐름이 좁은 채널로 압축되는 깔때기가 추론 비용 절감을 상징하는 추상 일러스트"
+}
