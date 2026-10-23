@@ -167,6 +167,9 @@ def cmd_register(args) -> int:
     meta = {
         "date": args.date,
         "analysis": args.analysis,
+        # P17: 복원 매칭용으로 그 시점의 분석 제목도 남긴다 (id가 바뀌어도
+        # 제목 유사도로 디스크 복원이 매칭할 수 있게).
+        "title": a.get("title", ""),
         "src": entry["src"],
         "model": args.model,
         "prompt": args.prompt,
@@ -179,6 +182,26 @@ def cmd_register(args) -> int:
 
     path.write_text(json.dumps(issue, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"registered image for analysis {args.analysis} in {path.name}")
+    return 0
+
+
+def cmd_restore(args) -> int:
+    """P17: 이미 발행된 호 JSON에 디스크 파일 기반 이미지 복원을 적용한다.
+
+    재발행(draft)이 아닌 사후 수리용 — 파일·메타는 있는데 JSON 등록이
+    증발한 호를 그 자리에서 고친다. 복원 로직은 draft.restore_images_from_disk
+    와 동일 함수를 쓴다 (판정 기준 단일 소스)."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from draft import restore_images_from_disk
+
+    path, issue = load_issue(args.date)
+    restored = restore_images_from_disk(issue, args.date, ROOT)
+    if restored:
+        path.write_text(json.dumps(issue, ensure_ascii=False, indent=2) + "\n",
+                        encoding="utf-8")
+        print(f"restored {restored} image(s) into {path.name}")
+    else:
+        print(f"no restorable images for {args.date}")
     return 0
 
 
@@ -236,6 +259,8 @@ def main() -> int:
     p.add_argument("--date", required=True)
     au = sub.add_parser("audit")
     au.add_argument("--days", type=int, default=7)
+    rs = sub.add_parser("restore")
+    rs.add_argument("--date", required=True)
     r = sub.add_parser("register")
     r.add_argument("--date", required=True)
     r.add_argument("--analysis", required=True)
@@ -248,6 +273,8 @@ def main() -> int:
         return cmd_plan(args.date)
     if args.cmd == "audit":
         return cmd_audit(args)
+    if args.cmd == "restore":
+        return cmd_restore(args)
     return cmd_register(args)
 
 

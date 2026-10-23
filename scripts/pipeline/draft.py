@@ -18,7 +18,7 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from cluster import cluster, rank_buckets, story_groups
+from cluster import cluster, rank_buckets, story_groups, _outlet_key, must_cover_stories
 from select_items import select_buckets
 from validate import KINDS, check, url_core
 
@@ -41,12 +41,12 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - mainEvent는 사람이 읽는 이벤트명 (내부 ID 금지).
 - tips의 title과 body는 서로 다르게 씁니다. via는 실제 출처명 (디버그 값 금지).
 - 같은 시사점을 여러 칸에 복붙하지 않습니다.
-- sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. **sources는 그 기사가 다루는 바로 그 이야기의 아이템에서만** 고른다. 3개를 채우려고 같은 버킷의 다른 이야기 아이템을 넣으면 출처 오염으로 호 전체가 폐기된다. 그 이야기의 아이템이 1~2개뿐이면 있는 만큼만 넣는다. 비어 있으면 호 전체가 폐기된다. example.com 금지.
+- sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. **sources는 그 기사가 다루는 바로 그 이야기의 아이템에서만** 고른다. 다른 이야기의 아이템을 넣으면 출처 오염으로 호 전체가 폐기된다. **같은 이야기를 다룬 다른 매체의 아이템은 교차보도 출처이므로 함께 넣어도 되고, 가능하면 2~3개를 넣는다.** 그 이야기의 아이템이 1개뿐이면 1개만 넣는다. 비어 있으면 호 전체가 폐기된다. example.com 금지.
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
 - briefing 6~8 (중요도 순 선정. 뉴스가 적은 날은 5개도 가능 — 억지 채우기 금지), analysis는 briefing 상위 5~7개의 id와 1:1 (개수 규칙은 아래 별도 항목), bullets 3, body 3~4문단(문단당 2~3문장, 150~200자, 기사당 본문 합계 500자 이상), tips 4~5, keynums 4~6, timeline 4~6.
-- 본문 구성: 첫 문단=무슨 일인가(핵심 사실), 둘째 문단=배경·맥락(필요한 용어 풀이 포함), 셋째 문단=수치의 조건·한계·반론, 넷째 문단(선택)=전망·파급. 분량은 새 사실을 만들지 말고 배경 설명·맥락·비교·해석으로 채웁니다. 입력에 없는 세부 사실(인용·사례·수치)을 지어내면 호가 폐기됩니다.
+- 본문 구성: 첫 문단=무슨 일인가(핵심 사실), 둘째 문단=배경·맥락(필요한 용어 풀이 포함), 셋째 문단=수치의 조건·한계·반론, 넷째 문단(선택)=전망·파급. 분량은 새 사실을 만들지 말고 배경 설명·맥락·비교·해석으로 채웁니다. 입력에 없는 세부 사실(인용·사례·수치)을 지어내면 호가 폐기됩니다. **본문 문단은 반드시 완전한 문장으로 끝냅니다** (…입니다/…됩니다 + 마침표). 명사형으로 끊긴 조각 문장(…전망, …해짐)으로 문단을 끝내거나 불릿 문구를 문단 끝에 이어붙이면 호가 폐기됩니다.
 - analysis 개수 규칙 (P15): briefing이 6개 이상이면 analysis는 **최소 5개**이며, 5개 미만이면 호 전체가 폐기됩니다. 어느 briefing에 analysis를 붙일지는 중요도 순으로 정하되, 입력의 main_topics(주요 버킷)에 속한 이야기가 우선이고 출처 도메인이 서로 겹치지 않게 고릅니다. analysis가 붙지 않은 briefing은 단신으로 둡니다. main_topics는 버킷 이름이라 briefing id와 글자 그대로 대응하지 않으니, 개수와 우선순위 판단에만 씁니다.
 - 깊이 슬롯: 기사마다 아래 5개를 출력 전에 스스로 셉니다. 한 기사에서 2개 이상 비우면 그 기사는 실패입니다.
   전체 슬롯의 10%를 초과해 비우면 호 전체가 폐기됩니다. "근거 없음"이라고 적어도 슬롯을 통과시키지 못합니다.
@@ -63,6 +63,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
   5. why: takeaway 60자 이상(두 문장), 입니다/됩니다 종결, 그리고 중요, 의미, 영향, 바뀐, 달라진 중 1개 이상 포함.
 - 선별 점수제: 각 기사를 영향도(0~2: 다룬 매체 수)·새로움(0~2: 24시간 이내=2)·관련성(0~2: 수치·고유명사)·근거(0~2: 공식 출처 URL) 로 채점, 총 8점 중 5점 미만은 제외.
 - 입력 아이템의 coverage는 같은 이야기를 다룬 매체 수다. coverage가 3 이상이면 여러 매체가 동시에 다룬 당일 주요 뉴스라는 뜻이므로 briefing 선정과 analysis 우선순위에서 먼저 고려한다. coverage 높은 이야기를 빼고 단독 보도만으로 호를 채우지 않는다.
+- **must_cover 강제 편입 (P17)**: 입력 JSON의 must_cover 목록은 그날 반드시 analysis로 다뤄야 할 톱뉴스다. 각 항목을 빠짐없이 analysis로 작성하고, sources에는 그 이야기의 아이템 URL을 넣는다. 하나라도 빠지면 호 전체가 폐기된다. must_cover 항목이 analysis 개수 하한과 겹치면 그 항목부터 채운다.
 - 소스 쿼터: 단일 출처가 당일 전체 기사 수의 25%를 넘지 않게. 메인 기사는 출처당 1개까지. analysis 선정 시 출처 도메인이 서로 다른 기사를 우선하고, 같은 도메인이 과반을 차지하면 다른 출처의 대체 기사로 교체하라.
 - 수치·주장·인용은 입력에 제공된 원문 요약(summary)과 URL 정보에서 확인된 사실만 씁니다. 해석·전망은 허용하되 사실과 구분하고, 확인 안 된 것은 '추정'·'미확정'으로 명시합니다. 이 규칙은 body뿐 아니라 intro·bullets·extra·tips·keynums·timeline 전체에 적용됩니다.
 - 각 analysis는 extra 필드를 가질 수 있습니다: '그 밖에: '로 시작하는 한 문단. 본문에서 못 다룬 관련 소식이 해당 항목의 sources에 있을 때만 2~3문장으로 짧게 쓰고, 없으면 빈 문자열로 둡니다. 본문·다른 항목과 겹치지 않게.
@@ -262,6 +263,29 @@ def render_feedback(sidecar) -> str:
                 "홈 카드와 기사가 어긋나면 호 전체가 폐기됩니다.\n"
                 "  그 keynums 항목을 삭제하거나, analysis 본문·bullets에 실제로 있는 수치로 교체하세요. "
                 "keynums는 analysis로 작성한 기사의 수치에서만 뽑습니다."
+            )
+            continue
+        # P17: 톱뉴스 누락 피드백 (MUST-COVER). 빠진 이야기를 제목으로 짚어
+        # 다음 attempt가 그 이야기를 analysis로 승격하게 한다.
+        if e.get("code") == "MUST-COVER":
+            blocks.append(
+                f"- 당일 톱뉴스 '{e.get('title') or ''}' (coverage {e.get('coverage')})가 "
+                "analysis에 없습니다. 빠지면 호 전체가 폐기됩니다.\n"
+                "  입력 buckets에서 이 이야기의 아이템을 찾아 analysis로 작성하고, "
+                "sources에는 그 이야기의 아이템 URL을 넣으세요. briefing에만 있고 "
+                "analysis가 없으면 analysis로 승격하세요."
+            )
+            continue
+        # P17: 불릿 병합 비문 피드백 (BODY-FRAG). 조각 문장의 꼬리를 인용해
+        # 어느 문단이 문제인지 짚는다 (고칠 대상 그 자체라 앵커 문제 없음).
+        if e.get("code") == "BODY-FRAG":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            blocks.append(
+                f'- analysis id "{aid}"의 body 문단이 "…{e.get("tail") or ""}"처럼 '
+                "문장으로 끝나지 않는 조각 문장으로 끝났습니다.\n"
+                "  불릿 문구를 문단 끝에 이어붙이지 말고, 그 문단을 완전한 문장"
+                "(…입니다/…됩니다 + 마침표)으로 고쳐 쓰세요. 내용을 늘리려면 "
+                "새 문장을 온전하게 추가하세요."
             )
             continue
         if e.get("code") != "NUMBERS-UNGROUNDED":
@@ -475,6 +499,48 @@ def attach_sources(issue: dict, snap: dict,
                            for i in range(len(picked)) if i not in kept]
                 print(f"attach_sources: '{a.get('id')}' 무관 출처 제거: {dropped}")
                 picked = [picked[i] for i in kept]
+                picked_items = [picked_items[i] for i in kept]
+        # P17: 출처 밀도 회복 — 같은 이야기의 다른 매체 아이템으로 보충.
+        # P16의 패딩 금지가 과하게 작동해 출처가 분석당 1.0개까지 떨어졌다
+        # (원본 6.8개, 3차 평가). '같은 이야기'의 다른 매체 보도는 패딩이
+        # 아니라 교차보도 출처다. 그룹 판정은 story_groups(조립 테이블
+        # 기준), 후보는 정합 필터와 같은 기준(본문 겹침 또는 첫 출처와
+        # 희귀 토큰 공유)을 통과하고 매체가 겹치지 않는 것부터 넣는다.
+        if picked_items and len(picked) < 4:
+            have = {url_core(str(it.get("url") or "")) for it in picked_items}
+            outlets = {_outlet_key(it) for it in picked_items}
+            pool: list[dict] = []
+            for g in story_groups(table):
+                g_items = g["items"]
+                if any(url_core(str(it.get("url") or "")) in have for it in g_items):
+                    pool.extend(
+                        it for it in g_items
+                        if url_core(str(it.get("url") or "")) not in have
+                    )
+            # 매체가 겹치지 않는 후보 우선, 그 안에서 테이블 순서 유지
+            pool.sort(key=lambda it: _outlet_key(it) in outlets)
+            for cand in pool:
+                if len(picked) >= 4:
+                    break
+                core = url_core(str(cand.get("url") or ""))
+                if not core or core in have:
+                    continue
+                if not (_source_overlap(a, cand) > 0
+                        or _shares_rare_token(cand, picked_items[0], title_df, n_snap)):
+                    continue
+                entry = {
+                    "handle": cand.get("source") or "source",
+                    "url": cand.get("url"),
+                    "kind": cand.get("kind") or "doc",
+                }
+                if cand.get("origin_url"):
+                    entry["origin_url"] = cand["origin_url"]
+                picked.append(entry)
+                picked_items.append(cand)
+                have.add(core)
+                outlets.add(_outlet_key(cand))
+                print(f"attach_sources: '{a.get('id')}' 같은 이야기 출처 보충: "
+                      f"{str(cand.get('title') or '')[:50]}")
         a["sources"] = picked
     return issue
 
@@ -563,19 +629,15 @@ def _sources(v) -> list[dict]:
 
 
 def thicken_body(body: list[str], bullets: list[str]) -> list[str]:
-    """Length is not a reason to drop a day. Expand from the section's own bullets.
-    P0: 템플릿 패딩 제거 — 부족하면 짧게 두고 validate가 잡는다."""
-    out = []
-    for i, raw in enumerate(body or [""]):
-        p = (raw or "").strip()
-        if len(p) < 90 and bullets:
-            extra = bullets[min(i, len(bullets) - 1)]
-            if extra and extra not in p:
-                p = f"{p} {extra}".strip()
-        # P0: 고정 패딩 문구 추가 금지. 짧으면 짧은 대로 둔다.
-        out.append(p)
-    if len(out) < 2:
-        out.append(" ".join(bullets[:3]))
+    """본문 문단을 그대로 정리만 한다.
+
+    P17: 불릿 이어붙이기 제거. 짧은 문단(<90자) 끝에 불릿을 붙이면 불릿의
+    명사형 꼬리가 마침표 없이 노출되는 비문이 됐다 (2·3차 패널 평가 반복
+    지적, 2026-10-23호 분석 5개 중 3개에서 실측). P0에서 템플릿 패딩을
+    없앴듯, 분량은 프롬프트 요구와 BODY-FRAG 게이트가 다룰 일이지
+    normalize가 문장을 합성할 일이 아니다. 문단 수가 부족하면 부족한 대로
+    두고 깊이 슬롯·밀도 경고가 판단한다."""
+    out = [(raw or "").strip() for raw in (body or [])]
     return [p for p in out[:6] if p]
 
 
@@ -1057,6 +1119,110 @@ def preserve_images(new_issue: dict, prev_issue: dict, public_root: Path) -> int
     return moved
 
 
+def _disk_image_candidates(date: str, root: Path) -> list[dict]:
+    """디스크에 파일이 실존하는 이미지 후보. 메타 파일 우선, 없으면 파일명에서
+    구 분석 id를 복원한다 (<id>-<prompthash8>.webp 규칙)."""
+    cands: list[dict] = []
+    seen_src: set[str] = set()
+    public_root = root / "public"
+    meta_dir = root / "content" / "pipeline" / "images"
+    if meta_dir.is_dir():
+        for mf in sorted(meta_dir.glob(f"{date}-*.json")):
+            try:
+                meta = json.loads(mf.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            src = str(meta.get("src") or "")
+            if not src.startswith("/img/"):
+                continue
+            if not (public_root / src.lstrip("/")).is_file():
+                continue
+            seen_src.add(src)
+            cands.append({
+                "analysis_id": str(meta.get("analysis") or ""),
+                "title": str(meta.get("title") or ""),
+                "src": src,
+                "alt": str(meta.get("alt") or ""),
+            })
+    img_dir = public_root / "img" / date
+    if img_dir.is_dir():
+        for f in sorted(img_dir.glob("*.webp")):
+            src = f"/img/{date}/{f.name}"
+            if src in seen_src:
+                continue
+            stem = re.sub(r"-[0-9a-f]{8}$", "", f.stem)
+            cands.append({"analysis_id": stem, "title": "", "src": src, "alt": ""})
+    return cands
+
+
+def restore_images_from_disk(new_issue: dict, date: str, root: Path) -> int:
+    """P17: 디스크 파일 기반 이미지 복원.
+
+    preserve_images는 *이전 JSON에 등록된* 이미지만 이관하므로, 한 번
+    JSON에서 탈락한 이미지는 파일·메타가 디스크에 남아 있어도 복원 경로가
+    없었다 (2026-10-23호: 파일 4장인데 발행 JSON은 0장 — 3차 평가에서
+    '이미지 증발 재발'로 지적). 메타와 파일을 스캔해, 이미지가 없는 새
+    분석과 id·제목 유사도로 1:1 매칭해 재등록한다. id 토큰을 공유하지
+    않으면 매칭하지 않는다 — 엉뚱한 일러스트가 붙는 것보다 비어 있는
+    쪽이 안전하다. 반환값은 복원된 이미지 수."""
+    public_root = root / "public"
+    taken_src: set[str] = set()
+    for a in new_issue.get("analysis", []):
+        if isinstance(a, dict):
+            for im in _existing_images(a, public_root):
+                taken_src.add(str(im.get("src") or ""))
+    cands = [c for c in _disk_image_candidates(date, root)
+             if c["src"] not in taken_src]
+    if not cands:
+        return 0
+
+    def _dims(src: str) -> tuple[int, int]:
+        try:
+            from PIL import Image
+
+            with Image.open(public_root / src.lstrip("/")) as im:
+                return im.size
+        except Exception:
+            return 1200, 675
+
+    pairs: list[tuple[float, dict, dict]] = []
+    for a in new_issue.get("analysis", []):
+        if not isinstance(a, dict) or a.get("images"):
+            continue
+        a_id_toks = _id_tokens(a.get("id"))
+        if not a_id_toks:
+            continue
+        for c in cands:
+            c_id_toks = _id_tokens(c["analysis_id"])
+            if not (a_id_toks & c_id_toks):
+                continue
+            score = _jaccard(a_id_toks, c_id_toks)
+            if c["title"]:
+                score += _jaccard(_sim_tokens(c["title"]),
+                                   _sim_tokens(a.get("title")))
+            if score >= _SIM_THRESHOLD:
+                pairs.append((score, a, c))
+    pairs.sort(key=lambda p: -p[0])
+    used_a: set[int] = set()
+    used_c: set[str] = set()
+    restored = 0
+    for _score, a, c in pairs:
+        if id(a) in used_a or c["src"] in used_c:
+            continue
+        w, h = _dims(c["src"])
+        a["images"] = [{
+            "src": c["src"],
+            "caption": "AI 생성 일러스트 (실제 사진 아님)",
+            "alt": c["alt"] or "AI 생성 추상 일러스트",
+            "width": w,
+            "height": h,
+        }]
+        used_a.add(id(a))
+        used_c.add(c["src"])
+        restored += 1
+    return restored
+
+
 def skeleton(snap: dict) -> dict:
     date = snap["date"]
     ranked = rank_buckets(cluster(snap["items"]))
@@ -1205,6 +1371,13 @@ def main() -> int:
             # P4: analysis는 main_topics의 토픽(briefing id)과 1:1로만 작성.
             # main이 먼저 오도록 buckets도 main+rest 순으로 정렬됨.
             "main_topics": [topic for topic, _items, _s in main_buckets],
+            # P17: 톱뉴스 강제 편입 목록. validate의 MUST-COVER 게이트와
+            # 같은 함수(cluster.must_cover_stories)로 계산한다.
+            "must_cover": [
+                {"title": mc["title"], "coverage": mc["coverage"],
+                 "bucket": mc["bucket"], "signal": mc["signal"]}
+                for mc in must_cover_stories(snap["items"])
+            ],
             "buckets": [
                 {
                     "topic": topic,
@@ -1274,6 +1447,17 @@ def main() -> int:
                 print(f"[draft] preserved {_moved} registered image(s) from previous {out.name}")
         except Exception as e:  # 이미지 이관 실패가 발행을 막으면 안 됨 (fail-soft)
             print(f"[draft] image preservation skipped: {e}", file=sys.stderr)
+
+    # P17: 디스크 파일 기반 복원 — 이전 JSON에서 한 번 탈락한 이미지는
+    # preserve_images로 돌아오지 못하므로, 파일·메타가 남아 있는 한
+    # 재발행 때마다 다시 붙인다. 파일이 있으면 무조건 살아남는 구조.
+    if out.name == f"{snap['date']}.json":
+        try:
+            _restored = restore_images_from_disk(issue, snap["date"], ROOT)
+            if _restored:
+                print(f"[draft] restored {_restored} image(s) from disk for {snap['date']}")
+        except Exception as e:  # fail-soft
+            print(f"[draft] disk image restore skipped: {e}", file=sys.stderr)
 
     bag = check(issue)
     out.parent.mkdir(parents=True, exist_ok=True)
