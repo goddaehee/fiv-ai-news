@@ -116,7 +116,11 @@ ok("URL origin_url 유지",
 ok("환각 URL 버림", out_u["analysis"][1]["sources"] == [])
 ok("문자열 URL 처리", out_u["analysis"][2]["sources"][0]["url"] == "https://blog.a.com/post1")
 
-# --- P0-5: keynums 폴백 수집 전체 확장 ---
+# --- P0-5 → P12: keynums 폴백은 유효 항목만 충원 ---
+# P10 정책(수치만 뽑아 lab=출처명·sub="수집 요약"으로 무조건 3개)은 깨진 항목을
+# 발행하는 사고를 냈다. P12부터는 제목 문맥으로 설명 lab을 만들고 발행처
+# 도메인 sub를 붙일 수 있을 때만 충원한다. 아래 스냅샷은 origin_url이 없고
+# 수치도 summary에만 있어 유효 항목을 만들 수 없으므로 충원되지 않아야 한다.
 snap_nums = {"date": "2026-10-22", "items": [
     {"title": "t1", "url": "https://x.com/1", "source": "S1", "summary": "가격이 30% 내리고 2배 빨라졌다."},
     {"title": "t2", "url": "https://x.com/2", "source": "S2", "summary": "사용자 100명 돌파."},
@@ -127,10 +131,22 @@ iss = {"briefing": [
 ], "analysis": [], "keynums": [], "tips": [{"title": "t", "body": "b", "via": ""}],
     "timeline": [], "keywords": ["a", "b", "c"]}
 n = normalize(iss, snap_nums)
-ok("keynums 수집에서 3개", len(n["keynums"]) >= 3)
-vals = {k["val"] for k in n["keynums"]}
+ok("keynums 유효 항목 못 만들면 충원 안 함", n["keynums"] == [])
+snap_ok = {"date": "2026-10-22", "items": [
+    {"title": "모델 가격 30% 인하 발표", "url": "https://news.google.com/x", "source": "Google News AI",
+     "summary": "", "origin_url": "https://techcrunch.com/"},
+    {"title": "사용자 100명 돌파한 신규 서비스", "url": "https://news.google.com/y", "source": "Google News AI",
+     "summary": "", "origin_url": "https://www.theverge.com/"},
+]}
+n2 = normalize(iss, snap_ok)
+ok("keynums 유효 항목 충원", len(n2["keynums"]) == 2)
+vals = {k["val"] for k in n2["keynums"]}
 ok("keynums 30% 포함", any("30%" in v for v in vals))
 ok("keynums 100명 포함", any("100명" in v for v in vals))
+ok("keynums lab에 내부 문자열 없음",
+   all("수집" not in k["lab"] and "GNews" not in k["lab"] for k in n2["keynums"]))
+ok("keynums sub은 발행처 도메인",
+   {k["sub"] for k in n2["keynums"]} == {"techcrunch.com", "theverge.com"})
 
 # --- P0-7: summary 폴백 제거 + SchemaError ---
 iss2 = {"briefing": [

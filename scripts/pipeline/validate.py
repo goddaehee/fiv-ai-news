@@ -303,6 +303,41 @@ def require(obj: dict, keys: list[str], path: str, bag: list[str]) -> None:
             err(path, f"missing {k}", bag)
 
 
+# P12: keynums lab/sub에 들어가면 안 되는 내부 문자열·피드명 패턴.
+# P10 폴백이 lab="Anthropic GNews", sub="수집 요약"인 깨진 항목을 발행한 사고의 재발 방지.
+_KEYNUM_BAD_LAB = ("GNews", "수집 요약", "수집 항목", "Google News", "Hacker News")
+_KEYNUM_BAD_SUB = ("수집 요약", "수집 항목", "수집 기준", "초안", "교차검증 전", "본문 수치")
+_KEYNUM_DOMAIN_ONLY = re.compile(r"^[a-z0-9.-]+\.(com|net|org|io|ai|co|kr)$", re.IGNORECASE)
+
+
+def check_keynums_semantics(issue: dict, bag: list[str]) -> None:
+    """P12: keynums 의미 검증 — 개수만으로는 깨진 항목을 못 잡는다.
+
+    각 항목은 (1) val에 실제 숫자가 들어 있고, (2) lab이 피드명·내부 문자열이
+    아니며, (3) sub에 내부 문자열이 없어야 한다.
+    val 단위까지 NUM_RE로 강제하지는 않는다 — 정상 발행본에 '125건', '2조 달러',
+    '128GB'처럼 NUM_RE 밖 단위가 실제로 쓰이기 때문이다.
+    """
+    for i, k in enumerate(issue.get("keynums") or []):
+        if not isinstance(k, dict):
+            err(f"keynums[{i}]", "KEYNUMS-SEMANTIC: 항목이 객체가 아님", bag)
+            continue
+        val = str(k.get("val") or "").strip()
+        lab = str(k.get("lab") or "").strip()
+        sub = str(k.get("sub") or "").strip()
+        if not val or not re.search(r"\d", val):
+            err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: val에 숫자가 없음 ({val!r})", bag)
+        if not lab:
+            err(f"keynums[{i}]", "KEYNUMS-SEMANTIC: lab이 비어 있음", bag)
+        else:
+            if any(p in lab for p in _KEYNUM_BAD_LAB):
+                err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: lab에 피드명·내부 문자열 포함 ({lab!r})", bag)
+            if _KEYNUM_DOMAIN_ONLY.match(lab):
+                err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: lab이 도메인뿐임 ({lab!r})", bag)
+        if any(p in sub for p in _KEYNUM_BAD_SUB):
+            err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: sub에 내부 문자열 포함 ({sub!r})", bag)
+
+
 def check(issue: dict, collected_by_url: dict | None = None) -> list[str]:
     bag: list[str] = []
     require(
@@ -335,6 +370,7 @@ def check(issue: dict, collected_by_url: dict | None = None) -> list[str]:
         err("briefing", "need 3–14 items", bag)
     if not (3 <= len(issue.get("keynums") or []) <= 16):
         err("keynums", "need 3–16 items", bag)
+    check_keynums_semantics(issue, bag)
     if len(issue.get("timeline") or []) < 3:
         err("timeline", "need ≥3", bag)
     if not (2 <= len(issue.get("analysis") or []) <= 14):

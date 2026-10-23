@@ -51,16 +51,6 @@
       "val": "50%",
       "lab": "AI 도입 후 직원 업무 평가가 어려워졌다고 답한 관리자 비율",
       "sub": "신규 설문, 테크크런치 보도"
-    },
-    {
-      "val": "$5",
-      "lab": "Anthropic GNews",
-      "sub": "수집 요약"
-    },
-    {
-      "val": "$15B",
-      "lab": "Anthropic GNews",
-      "sub": "수집 요약"
     }
   ],
   "timeline": [
