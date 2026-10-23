@@ -142,6 +142,15 @@
           "kind": "doc",
           "origin_url": "https://www.rdworldonline.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-23/claude-duet-975c3f2a.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "듀엣처럼 나란히 흐르는 두 개의 빛나는 리본이 AI 에이전트의 협업을 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -172,6 +181,15 @@
           "kind": "doc",
           "origin_url": "https://www.csoonline.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-23/litellm-supply-chain-6beb2ed4.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "깨끗한 파이프라인이 오염된 파편으로 변하며 정보 탈취 위협을 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -200,6 +218,15 @@
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/arista-patches-new-velocloud-orchestrator-zero-day-exploited-in-attacks/",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-23/arista-velocloud-0356b968.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "갈라진 틈새로 주황빛이 새어나오는 네트워크 제어 허브를 그린 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -236,6 +263,15 @@
           "url": "https://thehackernews.com/2026/10/php2shell-two-unpatched-critical-php.html",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-23/php-emergency-patch-f34b3e1f.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "균열 난 표면을 봉합하는 빛나는 방패 패치가 긴급 패치를 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -265,6 +301,15 @@
           "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxNaXJKX0VKeUZUZTJTXzdWTHhRODhSZW52RUJHdk5sd1ZIbTBWbkdoZVpTSHpZYzdodlQ2LUVjd2tmVWxTejA1VnJpdEw2V25MOXNTa29yTU9DTzlNNGZKSmhONWRIcWJqS0JvN2o2MHNvR3dPX0tRZ0hpeG00VDlSaURSWXgyNUNQSkxWV2FwLWZvdmpMdzlmbUZMWmdPSmNYSnVUekJkSm9wVGJ2ajFuVVBsZjNDamxTNEN1VExtWmpUbU82U2tkM0tKbXE4OUlRcWVPNHZXSTBtQWdpaVF2aVBBel9pcVUwSzA2NW5Fdm1hZ9IB9wFBVV95cUxOb0ZQajNmaWhDN0lWcjdNX0Z5NlUxZ3ZUdm1sY1FrSXZRdVFwZlduZUpIcHZWY2laaFVfa1o1WkFhYWFoa2puaHhYMFZpa0ZjVjNBZVVVSjZUZWVSLXhNMlRmSTFFX3VBd0ZFSzc1bG5vdlQwMzROUDlNZXp4LTctUUQtMjVDbzRkdEZhc3dHQUZMVDYwT0ZsZmdidUZBRzEtdnh0QmMzQ3BEM0hyWXlIejlRbDFBUVA3dFNpbGpTdF9CMU1qcWRjM3RvQy1NSWt6cXF0cWhGV2tIbnRyYkJoSjhwS1V5SmZXVm5GNGVicnB2NDlhY29r?oc=5",
           "kind": "doc",
           "origin_url": "https://www.business-standard.com"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-23/openai-funding-a0edf0fc.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "수평선으로 솟구치는 금화 더미와 빛의 흐름이 대규모 자금 조달을 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },

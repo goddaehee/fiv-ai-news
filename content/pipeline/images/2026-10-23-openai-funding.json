@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-23",
+  "analysis": "openai-funding",
+  "title": "5. IPO 전 OpenAI, $1.25T 밸류에이션 $30B 라운드",
+  "src": "/img/2026-10-23/openai-funding-a0edf0fc.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration of a record-scale funding round: towering stacks of glowing golden coins rising toward a bright horizon, upward-flowing streams of golden light, deep green and gold palette, geometric abstraction, wide 16:9 composition, no text, no letters, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "a0edf0fc",
+  "alt": "수평선으로 솟구치는 금화 더미와 빛의 흐름이 대규모 자금 조달을 상징하는 추상 일러스트"
+}

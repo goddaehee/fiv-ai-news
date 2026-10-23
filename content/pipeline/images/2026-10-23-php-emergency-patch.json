@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-23",
+  "analysis": "php-emergency-patch",
+  "title": "4. PHP 언어 자체의 RCE 결함 2건, 긴급 패치로 봉쇄",
+  "src": "/img/2026-10-23/php-emergency-patch-f34b3e1f.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration of an urgent software patch sealing a vulnerability: a shield-like glowing patch closing over a fractured surface of flowing code waves, teal and amber tones, geometric abstraction, wide 16:9 composition, no text, no letters, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "f34b3e1f",
+  "alt": "균열 난 표면을 봉합하는 빛나는 방패 패치가 긴급 패치를 상징하는 추상 일러스트"
+}

@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-23",
+  "analysis": "litellm-supply-chain",
+  "title": "2. LiteLLM 릴리스 파이프라인 침해로 정보 탈취 악성코드 확산",
+  "src": "/img/2026-10-23/litellm-supply-chain-6beb2ed4.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration of a software supply chain under threat: a clean pipeline of flowing code cubes gradually turning into dark contaminated fragments with leaking data droplets, warning-red accents on a dark navy background, geometric abstraction, wide 16:9 composition, no text, no letters, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "6beb2ed4",
+  "alt": "깨끗한 파이프라인이 오염된 파편으로 변하며 정보 탈취 위협을 상징하는 추상 일러스트"
+}

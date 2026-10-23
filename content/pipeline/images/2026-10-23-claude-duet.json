@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-23",
+  "analysis": "claude-duet",
+  "title": "1. 에이전트 앱 '듀엣'으로 경쟁 구도를 바꾸는 Anthropic",
+  "src": "/img/2026-10-23/claude-duet-975c3f2a.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration of two harmonious AI assistant agents working side by side as a duet: twin glowing abstract ribbon forms flowing in parallel streams of light, synchronized curves, deep blue and teal gradient background, soft geometric shapes, minimalist tech aesthetic, wide 16:9 composition, no text, no letters, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "975c3f2a",
+  "alt": "듀엣처럼 나란히 흐르는 두 개의 빛나는 리본이 AI 에이전트의 협업을 상징하는 추상 일러스트"
+}
