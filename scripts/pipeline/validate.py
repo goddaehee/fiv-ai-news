@@ -926,6 +926,14 @@ def _canon_num(s: str) -> str:
     m = re.match(r"^(\d+(?:\.\d+)?)([a-z가-힣]*)$", t)
     if m:
         num, unit = m.group(1), m.group(2)
+        # P12: 단위 없는 순수 숫자도 크기로 통일한다. 안 그러면 입력 "30,000"과
+        # 출력 "3만"이 "30000" vs "mag:30000"으로 어긋나 정확한 변환이 오탐된다.
+        if unit == "":
+            try:
+                val = Decimal(num)
+                return f"mag:{int(val.to_integral_value())}"
+            except InvalidOperation:
+                pass
         if unit in _MAG_UNIT:
             try:
                 val = Decimal(num) * (Decimal(10) ** _MAG_UNIT[unit])
