@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-22",
+  "analysis": "claude-duet",
+  "src": "/img/2026-10-22/claude-duet-17883cfb.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract flat vector illustration, wide 16:9 composition: two luminous orbs orbiting each other in a graceful duet dance above a calm reflective surface, trailing ribbons of light that intertwine; a large soft doorway of warm light opening in the background. No text, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "17883cfb",
+  "alt": "사람 곁에서 함께 움직이는 개인 에이전트 듀엣을 상징하는 두 빛나는 구체와 리본의 추상 일러스트"
+}

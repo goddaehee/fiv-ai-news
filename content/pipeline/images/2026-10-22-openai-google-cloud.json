@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-22",
+  "analysis": "openai-google-cloud",
+  "src": "/img/2026-10-22/openai-google-cloud-36526937.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract flat vector illustration, wide 16:9 composition: a radiant geometric gem travelling along a bridge of light between two clusters of soft cloud-like blocks; several open pathways of light branching across a calm sky, suggesting distribution across many platforms. No text, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "36526937",
+  "alt": "모델이 여러 클라우드로 유통되는 개방형 경로를 상징하는 빛의 다리와 구름 블록의 추상 일러스트"
+}

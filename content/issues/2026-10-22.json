@@ -110,6 +110,15 @@
           "kind": "doc",
           "origin_url": "https://www.cnbc.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-22/claude-duet-17883cfb.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "사람 곁에서 함께 움직이는 개인 에이전트 듀엣을 상징하는 두 빛나는 구체와 리본의 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -139,6 +148,15 @@
           "handle": "OpenAI News",
           "url": "https://openai.com/index/broad-access-through-consistent-standards",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-22/openai-google-cloud-36526937.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "모델이 여러 클라우드로 유통되는 개방형 경로를 상징하는 빛의 다리와 구름 블록의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
