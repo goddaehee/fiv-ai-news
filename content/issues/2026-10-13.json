@@ -164,6 +164,15 @@
           "url": "https://openai.com/index/the-eternal-complement",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-13/sophos-daybreak-495faa8a.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "깔때기로 모인 작은 돌들이 세 개의 맑은 흐름으로 갈라지며 사람 감독 아래 정리되는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -193,6 +202,15 @@
           "handle": "Anthropic News",
           "url": "https://www.anthropic.com/news/anthropic-raises-series-b-to-build-safe-reliable-ai",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-13/asana-sol-06cafe05.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "무거운 짐을 가벼운 깃털로 바꾸는 작은 엔진과 넓어지는 길이 비용·속도 개선을 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
