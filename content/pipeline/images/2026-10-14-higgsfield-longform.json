@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-14",
+  "analysis": "higgsfield-longform",
+  "title": "1분에서 10분으로, AI 영상의 단위가 바뀌었다",
+  "src": "/img/2026-10-14/higgsfield-longform-412f4365.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape, of a short film strip on the left stretching and lengthening into a long flowing ribbon of frames across a warm horizon, suggesting video length growing from brief to long-form. No text, no numbers, no people, no faces, no logos, no charts, no graphs. Flat modern editorial illustration, warm coral and deep navy palette.",
+  "prompt_hash": "412f4365",
+  "alt": "짧은 필름이 길게 늘어지며 긴 영상으로 확장되는 모습을 그린 추상 일러스트"
+}

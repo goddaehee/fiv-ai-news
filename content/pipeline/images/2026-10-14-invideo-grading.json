@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-14",
+  "analysis": "invideo-grading",
+  "title": "6. 색 보정 3배, 하루 이펙트 50개의 의미",
+  "src": "/img/2026-10-14/invideo-grading-faea7ecf.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape, of a smooth gradient spectrum flowing across the frame with a palette of paint swatches and a small film reel shape, suggesting color grading craft and many custom visual effects made each day. No text, no numbers, no people, no faces, no logos, no charts, no graphs. Flat modern editorial illustration, rich rainbow gradient over dark background, but no chart axes.",
+  "prompt_hash": "faea7ecf",
+  "alt": "어두운 배경 위로 흐르는 색상 스펙트럼과 팔레트가 색 보정 작업을 상징하는 추상 일러스트"
+}

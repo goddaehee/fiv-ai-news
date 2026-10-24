@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-14",
+  "analysis": "sophos-daybreak",
+  "title": "2. 보안 운영에서 사람의 역할이 '감독'으로 좁아졌다",
+  "src": "/img/2026-10-14/sophos-daybreak-d6e4b1a0.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape, of a calm watchtower on a hill overlooking a field of small automated flowing streams, with a single gentle oversight beacon above, suggesting human supervision remaining over largely automated security work. No text, no numbers, no people, no faces, no logos, no charts, no graphs. Flat modern editorial illustration, slate blue and soft green palette.",
+  "prompt_hash": "d6e4b1a0",
+  "alt": "언덕 위 망루가 자동화된 흐름을 조용히 내려다보는 추상 일러스트"
+}

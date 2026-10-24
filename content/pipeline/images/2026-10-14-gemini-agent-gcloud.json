@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-14",
+  "analysis": "gemini-agent-gcloud",
+  "title": "4. Google Cloud가 에이전트를 클라우드 상품으로 묶었다",
+  "src": "/img/2026-10-14/gemini-agent-gcloud-7b4050a6.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape, of soft layered cloud forms stacking into a platform, with small abstract helper orbs docking into the layers and connecting with gentle arcs, suggesting agents bundled into a cloud service. No text, no numbers, no people, no faces, no logos, no charts, no graphs. Flat modern editorial illustration, sky blue and warm white palette.",
+  "prompt_hash": "7b4050a6",
+  "alt": "층층이 쌓인 구름 플랫폼에 작은 구체들이 연결되는 추상 일러스트"
+}

@@ -110,6 +110,15 @@
           "url": "https://openai.com/index/the-eternal-complement",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-14/higgsfield-longform-412f4365.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "짧은 필름이 길게 늘어지며 긴 영상으로 확장되는 모습을 그린 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -136,6 +145,15 @@
           "handle": "OpenAI News",
           "url": "https://openai.com/index/sophos",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-14/sophos-daybreak-d6e4b1a0.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "언덕 위 망루가 자동화된 흐름을 조용히 내려다보는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -164,6 +182,15 @@
           "url": "https://openai.com/index/asana-browser-agent",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-14/asana-browser-agent-a299a1a9.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "가파른 계단이 열린 문으로 이어지며 비용 하락과 접근 확대를 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -190,6 +217,15 @@
           "handle": "Google Blog",
           "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gemini-at-work/",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-14/gemini-agent-gcloud-7b4050a6.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "층층이 쌓인 구름 플랫폼에 작은 구체들이 연결되는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -218,6 +254,15 @@
           "url": "https://openai.com/index/introducing-mentalhealthbench",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-14/mentalhealthbench-52fa87dc.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "조용한 정원에 마주한 두 의자와 그 위의 균형 저울이 신중한 대화 평가를 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -244,6 +289,15 @@
           "handle": "OpenAI News",
           "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-14/invideo-grading-faea7ecf.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "어두운 배경 위로 흐르는 색상 스펙트럼과 팔레트가 색 보정 작업을 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }
