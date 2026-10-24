@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-15",
+  "analysis": "sentinelone-daybreak",
+  "title": "2. 악성코드 분석, 몇 주 걸리던 일이 수 시간으로",
+  "src": "/img/2026-10-15/sentinelone-daybreak-0815a9c0.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape, of a tangled knot of dark threads on one side gradually unraveling into a single clear, bright strand on the other side, under a large soft magnifying lens shape, suggesting a long investigation compressed into a short time. No text, no numbers, no people, no faces, no logos, no charts, no graphs. Flat modern editorial illustration, dark slate and bright cyan palette.",
+  "prompt_hash": "0815a9c0",
+  "alt": "엉킨 실타래가 돋보기 아래에서 하나의 맑은 실로 풀리는 추상 일러스트"
+}

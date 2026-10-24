@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-15",
+  "analysis": "third-moment-10000-agents",
+  "title": "1만 개 에이전트가 36시간 이상 버티는 구조",
+  "src": "/img/2026-10-15/third-moment-10000-agents-8697df53.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape, of a vast constellation of small glowing orbs working together in coordinated patterns across a calm night-like field, with faint connecting threads that grow steadier over a long horizon line, suggesting many autonomous agents running continuously and improving with use. No text, no numbers, no people, no faces, no logos, no charts, no graphs. Flat modern editorial illustration, deep teal and soft gold palette.",
+  "prompt_hash": "8697df53",
+  "alt": "수많은 빛나는 구체가 연결된 선으로 조율되며 장시간 함께 작동하는 모습을 그린 추상 일러스트"
+}

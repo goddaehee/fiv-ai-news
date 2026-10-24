@@ -95,6 +95,15 @@
           "url": "https://openai.com/index/third-moment-research",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-15/third-moment-10000-agents-8697df53.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "수많은 빛나는 구체가 연결된 선으로 조율되며 장시간 함께 작동하는 모습을 그린 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -119,6 +128,15 @@
           "url": "https://openai.com/index/sentinelone",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-15/sentinelone-daybreak-0815a9c0.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "엉킨 실타래가 돋보기 아래에서 하나의 맑은 실로 풀리는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -142,6 +160,15 @@
           "handle": "OpenAI News",
           "url": "https://openai.com/index/amp-beyond-coding",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-15/amp-beyond-coding-c1e1a3db.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "작업대 너머 여러 개의 열린 문으로 이어지는 길이 코드 밖 업무 확장을 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }
