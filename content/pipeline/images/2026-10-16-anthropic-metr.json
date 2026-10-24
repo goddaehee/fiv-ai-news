@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-16",
+  "analysis": "anthropic-metr",
+  "title": "1. 외부 평가기관 두 곳을 거치는 안전 점검",
+  "src": "/img/2026-10-16/anthropic-metr-0a3882f3.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape, of two independent observatory checkpoints standing apart and calmly examining the same glowing abstract core from different angles, with a soft gate of light between them suggesting an independent safety review before release. No text, no numbers, no people, no faces, no logos, no charts, no graphs. Flat modern editorial illustration, muted blue and warm amber palette, clean shapes.",
+  "prompt_hash": "0a3882f3",
+  "alt": "두 개의 독립 관측소가 하나의 빛나는 핵심을 양쪽에서 살피는 추상 일러스트"
+}
