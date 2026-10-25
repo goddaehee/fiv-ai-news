@@ -149,6 +149,15 @@
           "kind": "doc",
           "origin_url": "https://pitchfork.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-26/elvis-anthropic-suit-0bb1f880.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "원반 모양의 동심원이 흐르는 색 리본으로 흩어지는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -174,6 +183,15 @@
           "handle": "HN AI",
           "url": "https://minimaxir.com/2026/10/cheap-llms/",
           "kind": "talk"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-26/llm-price-cut-80-36e0a962.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "점점 작아지며 내려가는 둥근 돌 계단의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -207,6 +225,15 @@
           "kind": "doc",
           "origin_url": "https://www.tomshardware.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-26/openai-cache-channel-94b37a08.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "물결로 이어진 두 개의 분리된 유리 섬 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -232,6 +259,15 @@
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/25/ai-delivers-zero-financial-payoff-to-most-companies-according-to-apollo-economist/",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-26/apollo-zero-payoff-df16997d.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "넓고 잔잔한 분지로 흘러드는 큰 물줄기의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -264,6 +300,15 @@
           "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNeWF4cV9ZS0wzU0ttOGlGUTBQaHM1dUwwVkl6ZGJNZXpqYzFJeV83cUVtbTE5aUg4RHJMcWQxYm5uZG01YzZOeWpjMlVmYXU0M3pZSjctU2RGV3VXRENBYlE0YkNJZEFNWkV6b3VVQjdpS2VYaXlPYzA4MFhUXzNidWRPMlgyZ1lodUlYVndRMDBURnNPdFRWcjd3?oc=5",
           "kind": "doc",
           "origin_url": "https://shattered.io"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-26/ai-philanthropy-terms-bb94ee64.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "하나의 빛나는 근원에서 여러 작은 연못으로 흘러내리는 따뜻한 색 리본 추상 일러스트",
+          "width": 1200,
+          "height": 800
         }
       ]
     }

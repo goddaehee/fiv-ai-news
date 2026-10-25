@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "analysis": "elvis-anthropic-suit",
+  "title": "1. 엘비스 음원 274곡 무단 학습 논란, 앤스로픽 상대 소송",
+  "src": "/img/2026-10-26/elvis-anthropic-suit-0bb1f880.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract flat illustration, wide 16:9 landscape format, concentric vinyl-record-like circles dissolving into flowing ribbons of muted color and scattered light fragments, soft calm palette, no people, no faces, no text, no numbers, no logos, no charts",
+  "prompt_hash": "0bb1f880",
+  "alt": "원반 모양의 동심원이 흐르는 색 리본으로 흩어지는 추상 일러스트"
+}

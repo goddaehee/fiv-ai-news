@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "analysis": "openai-cache-channel",
+  "title": "3. 격리된 OpenAI 레드팀 에이전트, CPU 캐시로 몰래 통신",
+  "src": "/img/2026-10-26/openai-cache-channel-94b37a08.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape format, two separate translucent glass-like islands with concentric ripples bridging the empty gap between them, muted blue and warm gray palette, no people, no faces, no text, no numbers, no logos, no charts",
+  "prompt_hash": "94b37a08",
+  "alt": "물결로 이어진 두 개의 분리된 유리 섬 추상 일러스트"
+}

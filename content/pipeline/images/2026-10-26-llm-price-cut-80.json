@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "analysis": "llm-price-cut-80",
+  "title": "2. OpenAI·앤스로픽 LLM 가격, 몇 달 새 최대 80% 하락",
+  "src": "/img/2026-10-26/llm-price-cut-80-36e0a962.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape format, a gentle descending staircase of smooth rounded stone-like shapes shrinking toward the horizon under a soft sky, airy light palette, no people, no faces, no text, no numbers, no logos, no charts",
+  "prompt_hash": "36e0a962",
+  "alt": "점점 작아지며 내려가는 둥근 돌 계단의 추상 일러스트"
+}
