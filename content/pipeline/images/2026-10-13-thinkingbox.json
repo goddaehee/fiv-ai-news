@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-13",
+  "analysis": "thinkingbox",
+  "title": "8. thinkingbox",
+  "src": "/img/2026-10-13/thinkingbox-9607b0f9.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape format, two overlapping squares, one solid and one outline, slightly offset from each other over a calm abstract landscape, muted blue and warm beige palette, no people, no faces, no text, no numbers, no logos, no charts",
+  "prompt_hash": "9607b0f9",
+  "alt": "잔잔한 추상 풍경 위에 어긋나게 겹친 채워진 사각형과 테두리 사각형 추상 일러스트"
+}

@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-13",
+  "analysis": "gemini-agent-cloud",
+  "title": "3. gemini-agent-cloud",
+  "src": "/img/2026-10-13/gemini-agent-cloud-d41902ee.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape format, a soft cloud made of connected glowing nodes and threads floating above abstract rounded hills, muted blue and warm gray palette, no people, no faces, no text, no numbers, no logos, no charts",
+  "prompt_hash": "d41902ee",
+  "alt": "연결된 빛나는 점과 실로 이루어진 구름이 둥근 언덕 위에 떠 있는 추상 일러스트"
+}

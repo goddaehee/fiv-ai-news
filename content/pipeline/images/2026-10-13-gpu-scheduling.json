@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-13",
+  "analysis": "gpu-scheduling",
+  "title": "7. gpu-scheduling",
+  "src": "/img/2026-10-13/gpu-scheduling-ea56d774.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape format, orderly rows of glowing cubes with a few cubes moving along smooth curved paths, muted teal, amber and gray palette, no people, no faces, no text, no numbers, no logos, no charts",
+  "prompt_hash": "ea56d774",
+  "alt": "정돈된 큐브 행렬 위를 곡선 경로로 이동하는 빛나는 큐브들의 추상 일러스트"
+}
