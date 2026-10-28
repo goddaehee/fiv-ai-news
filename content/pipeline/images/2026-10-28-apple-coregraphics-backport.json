@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-28",
+  "analysis": "apple-coregraphics-backport",
+  "title": "1. 실제 공격에 쓰인 취약점의 구형 기기 소급 수정",
+  "src": "/img/2026-10-28/apple-coregraphics-backport-fe8e48c2.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: overlapping translucent protective shields and soft patchwork shapes layered over muted rounded rectangles suggesting older devices, calm blue-grey and warm amber palette, gentle gradient light, minimal geometric style, no text, no numbers, no people, no faces, no logos, no charts, no graphs",
+  "prompt_hash": "fe8e48c2",
+  "alt": "겹쳐진 반투명 방패와 패치 형태의 추상 일러스트"
+}

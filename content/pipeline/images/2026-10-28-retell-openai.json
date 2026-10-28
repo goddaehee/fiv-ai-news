@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-28",
+  "analysis": "retell-openai",
+  "title": "4. 직원당 $1.6M 매출, 음성 에이전트의 규모 증명",
+  "src": "/img/2026-10-28/retell-openai-c10062a3.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: concentric sound waves rippling outward over soft flowing waves, a small glowing abstract node at the center, warm coral and deep navy palette, minimal geometric style, no text, no numbers, no people, no faces, no logos, no charts, no graphs",
+  "prompt_hash": "c10062a3",
+  "alt": "중심에서 퍼지는 동심원 음파와 물결의 추상 일러스트"
+}

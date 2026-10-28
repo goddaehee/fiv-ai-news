@@ -133,6 +133,15 @@
           "url": "https://www.bleepingcomputer.com/news/apple/apple-backports-coregraphics-zero-day-patches-to-older-iphones/",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-28/apple-coregraphics-backport-fe8e48c2.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "겹쳐진 반투명 방패와 패치 형태의 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -168,6 +177,15 @@
           "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOUVVta2t6RjJhRml3YzdnWHVHNFp2a0V5bnhHN1JobVJ6NlFTY01TVmxBb3k0WGVYanpWN1JDVkZYa2s3dXlVa3RJRklQYkNueDF3bWRIYklMZ0lzVFlkMm1hUzNzQ04ybkVNUjJQWTNacExrOVVDdVdiSEd5djVlc1FWcTdyelo1LWN5Z2JvaGtYb1N2YmoxSFNvVzNUbkk3?oc=5",
           "kind": "doc",
           "origin_url": "https://www.bloomberg.com"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-28/anthropic-ipo-6354e142.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "계단처럼 쌓인 빈 서류 더미의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -208,6 +226,15 @@
           "url": "https://techcrunch.com/2026/10/27/googles-genie-4-world-model-adds-audio-more-realistic-worlds-and-real-time-steering/",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-28/genie-4-98f28ab9.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "떠다니는 기하학적 풍경과 빛의 리본 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -237,6 +264,15 @@
           "url": "https://openai.com/index/retell-ai",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-28/retell-openai-c10062a3.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "중심에서 퍼지는 동심원 음파와 물결의 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -265,6 +301,15 @@
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/26/spacex-locks-in-40b-gpu-financing-deal-with-apollo/",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-28/spacex-apollo-gpu-f928b01a.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛의 흐름으로 갈라지는 큐브 무리의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }
