@@ -121,6 +121,15 @@
           "kind": "doc",
           "origin_url": "https://www.wdrbwave.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-29/ai-workforce-regulation-c0ab3be5.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "작은 노드들이 하나의 큰 틀로 모이는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -152,6 +161,15 @@
           "url": "https://www.bleepingcomputer.com/news/security/volt-typhoon-hides-zero-day-attacks-using-silent-train-framework/",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-29/volt-typhoon-zero-days-481c3689.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "어두운 풍경 아래 숨은 네트워크와 소용돌이 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -178,6 +196,15 @@
           "url": "https://techcrunch.com/2026/10/28/microsoft-recorded-10-billion-in-revenue-from-openai/",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-29/microsoft-openai-revenue-91408274.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "겹쳐 맞물린 두 형태가 하나의 큰 구조를 이루는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -203,6 +230,15 @@
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/sony-isp-subsidiary-data-breach-exposes-25-million-customer-records/",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-29/sony-breach-19046c4d.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "금 간 보관함에서 조각들이 흘러나오는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -233,6 +269,15 @@
           "handle": "Hugging Face",
           "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-10-29/anthropic-ipo-questions-b9c2b4c7.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "음파가 빈 리본 페이지로 바뀌는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }

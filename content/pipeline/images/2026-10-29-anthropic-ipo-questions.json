@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-29",
+  "analysis": "anthropic-ipo-questions",
+  "title": "5. 엔비디아의 무료 전사 모델, 녹음 전용이라는 조건",
+  "src": "/img/2026-10-29/anthropic-ipo-questions-b9c2b4c7.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 landscape composition: gentle sound waves on the left transforming into flowing, blank ribbon-like pages on the right, suggesting recorded speech becoming written text after the fact. Soft violet, teal and warm cream palette, flat modern editorial illustration style, calm rhythm. Absolutely no text, no numbers, no letters, no words, no people, no faces, no logos, no charts, no graphs.",
+  "prompt_hash": "b9c2b4c7",
+  "alt": "음파가 빈 리본 페이지로 바뀌는 추상 일러스트"
+}
