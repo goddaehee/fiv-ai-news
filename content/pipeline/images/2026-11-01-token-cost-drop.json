@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-01",
+  "analysis": "token-cost-drop",
+  "title": "5. 추론이 싸질수록 임대 사업 수익은 얇아짐",
+  "src": "/img/2026-11-01/token-cost-drop-ffaf5ac1.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration, wide 16:9 landscape: soft layered waves gradually thinning as they flow downward across the frame, warm amber fading into cool grey, minimalist flat shapes, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "ffaf5ac1",
+  "alt": "따뜻한 황색에서 차가운 회색으로 흐르며 점점 얇아지는 겹겹의 파도 추상 일러스트"
+}

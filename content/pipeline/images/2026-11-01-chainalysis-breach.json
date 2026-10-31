@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-01",
+  "analysis": "chainalysis-breach",
+  "title": "4. 에이전트를 무기로 쓴 침해라는 낯선 각도",
+  "src": "/img/2026-11-01/chainalysis-breach-ec83ad71.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration, wide 16:9 landscape: a quiet abstract maze of interlocking walls with a single thin glowing thread weaving through a narrow gap, deep blue and soft violet palette, minimalist flat shapes, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "ec83ad71",
+  "alt": "얽힌 벽 사이 좁은 틈을 빛나는 실 한 가닥이 통과하는 미로 추상 일러스트"
+}

@@ -138,6 +138,15 @@
           "kind": "doc",
           "origin_url": "https://www.moneycontrol.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-01/openai-funding-cut-d06fea1d.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "수평선 위에서 점점 작아지는 큰 빛나는 구체와 멀어지는 작은 구체들의 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -182,6 +191,15 @@
           "kind": "doc",
           "origin_url": "https://techcrunch.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-01/anthropic-ipo-0d26ead7.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "어두운 남색에서 밝은 빛으로 이어지는 오름 계단의 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -206,6 +224,15 @@
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/new-android-sms-of-death-exploit-can-remotely-crash-unpatched-phones/",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-01/android-sms-death-45d09a10.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "어두운 배경에서 조각으로 흩어지는 둥근 사각형과 중심의 은은한 빛의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -232,6 +259,15 @@
           "url": "https://www.bleepingcomputer.com/news/security/chainalysis-discloses-data-breach-from-offensive-agentic-techniques/",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-01/chainalysis-breach-ec83ad71.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "얽힌 벽 사이 좁은 틈을 빛나는 실 한 가닥이 통과하는 미로 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -256,6 +292,15 @@
           "handle": "Hacker News",
           "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/firm-that-lets-you-rent-out-your-idle-mac-for-ai-inference-workloads-warns-of-plummeting-token-costs-darkbloom-network-sees-earnings-drop-to-usd1-23-a-day-as-anthropic-tokens-fall-77-percent",
           "kind": "talk"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-01/token-cost-drop-ffaf5ac1.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "따뜻한 황색에서 차가운 회색으로 흐르며 점점 얇아지는 겹겹의 파도 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }

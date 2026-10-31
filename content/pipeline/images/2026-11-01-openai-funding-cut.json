@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-01",
+  "analysis": "openai-funding-cut",
+  "title": "1. 투자 식욕 약화 국면에서 읽는 조달 규모 축소",
+  "src": "/img/2026-11-01/openai-funding-cut-d06fea1d.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration, wide 16:9 landscape: a large glowing sphere slowly shrinking above a calm horizon line, with smaller dim spheres drifting away into soft haze, muted teal and warm grey palette, minimalist flat shapes, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "d06fea1d",
+  "alt": "수평선 위에서 점점 작아지는 큰 빛나는 구체와 멀어지는 작은 구체들의 추상 일러스트"
+}
