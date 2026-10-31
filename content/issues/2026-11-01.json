@@ -1,0 +1,298 @@
+{
+  "date": "2026-11-01",
+  "title": "11월 1일 AI 뉴스",
+  "heroline": "OpenAI 조달 목표 축소, Anthropic IPO 가시화, 보안 3연속",
+  "dek": "투자 심리 위축 속 OpenAI의 자금 조달 규모 축소가 보도됐고, Anthropic의 나스닥 상장 준비가 세부까지 알려졌습니다. 보안 쪽에서는 Android 문자 메시지 취약점 개념 증명과 Chainalysis 침해 공시가 이어졌습니다.",
+  "tag": "AI 데일리",
+  "briefMin": 3,
+  "readMin": 8,
+  "briefing": [
+    {
+      "id": "openai-funding-cut",
+      "headline": "OpenAI 조달 목표 100억 달러 축소 보도",
+      "summary": "투자자들의 AI 부문 투자 의욕 약화 속에 OpenAI가 자금 조달 목표를 줄였다는 보도가 잇따랐습니다."
+    },
+    {
+      "id": "anthropic-ipo",
+      "headline": "Anthropic 나스닥 상장 티커 ANT 공개",
+      "summary": "여러 매체가 Anthropic의 상장 계획을 다뤘고, 거래소와 티커, 신용등급 전망까지 세부 사항이 알려졌습니다."
+    },
+    {
+      "id": "android-sms-death",
+      "headline": "Android 문자 메시지 취약점 원격 크래시 PoC 공개",
+      "summary": "최근 패치된 Android 취약점을 악용하면 패치되지 않은 기기를 원격에서 멈추게 할 수 있다는 증명 코드가 공개됐습니다."
+    },
+    {
+      "id": "chainalysis-breach",
+      "headline": "Chainalysis 내부 시스템 침해로 고객 정보 노출",
+      "summary": "블록체인 분석 회사 Chainalysis가 공격형 에이전트 기법을 쓴 침해 사고로 고객 이름과 이메일이 노출됐다고 밝혔습니다."
+    },
+    {
+      "id": "token-cost-drop",
+      "headline": "토큰 가격 하락이 개인 컴퓨팅 임대 사업 수익 압박",
+      "summary": "유휴 맥을 AI 추론에 빌려주는 사업자가 토큰 단가 하락으로 수익이 줄었다고 경고했습니다."
+    },
+    {
+      "id": "ivanti-kev",
+      "headline": "Ivanti Connect Secure 취약점 3개 연결 공격 주의",
+      "summary": "CISA가 Ivanti Connect Secure 취약점을 이미 악용 중인 목록에 올렸고, 공격자들이 취약점 여러 개를 연결해 인증 없이 루트 권한을 얻는 사례가 보고됐습니다."
+    },
+    {
+      "id": "google-space-tpu",
+      "headline": "구글 첫 데이터센터 위성, 우주 TPU로 Gemma 4 가동",
+      "summary": "궤도에 오른 구글의 첫 데이터센터 위성이 DeepMind Gemma 4 모델을 구동하며 시험 출력을 내고 있다고 전해졌습니다."
+    },
+    {
+      "id": "drupal-commerce-exploit",
+      "headline": "Drupal Commerce Core 인증 우회 취약점 악용 중",
+      "summary": "Drupal이 커머스 코어 구성 요소의 심각한 인증 우회 결함이 실제 공격에 쓰이고 있다고 경고했습니다."
+    }
+  ],
+  "keywords": [
+    "OpenAI",
+    "Anthropic IPO",
+    "AI 보안",
+    "토큰 단가",
+    "CISA"
+  ],
+  "mainEvent": "OpenAI 조달 목표 축소와 Anthropic IPO 임박",
+  "keynums": [
+    {
+      "val": "100억 달러",
+      "lab": "OpenAI 조달 목표 축소",
+      "sub": "매체 보도 기반"
+    },
+    {
+      "val": "975억 달러",
+      "lab": "Meta AI 투자 계획",
+      "sub": "같은 주 정리 보도"
+    },
+    {
+      "val": "3가지",
+      "lab": "Anthropic IPO 리스크",
+      "sub": "언론 지목 항목"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "10/31 17:27",
+      "d": "Ivanti Connect Secure 취약점 CISA KEV 등재"
+    },
+    {
+      "t": "10/31 21:50",
+      "d": "Chainalysis 데이터 유출 공시"
+    },
+    {
+      "t": "10/31 22:57",
+      "d": "OpenAI 조달 목표 축소 보도"
+    },
+    {
+      "t": "11/01 00:35",
+      "d": "Android SMS of Death 개념 증명 공개"
+    },
+    {
+      "t": "11/01 02:13",
+      "d": "토큰 단가 하락에 따른 임대 수익 경고"
+    },
+    {
+      "t": "11/01 04:05",
+      "d": "Anthropic 나스닥 티커 ANT 보도"
+    }
+  ],
+  "intro": "11월 1일 일요일 발행. 오늘은 자금 조달과 상장이라는 두 축에서 AI 업계의 투자 흐름이 갈리는 날이고, 보안 쪽에서는 문자 메시지·에이전트 기법 침해 등 운영 대응 이슈가 겹쳤습니다.",
+  "analysis": [
+    {
+      "id": "openai-funding-cut",
+      "n": 1,
+      "title": "1. 투자 식욕 약화 국면에서 읽는 조달 규모 축소",
+      "bullets": [
+        "OpenAI가 자금 조달 목표를 100억 달러 줄인 것으로 보도",
+        "투자자들의 AI 부문 투자 식욕 약화가 배경으로 지목",
+        "같은 주에는 Meta의 975억 달러 AI 투자 계획도 정리돼 대비"
+      ],
+      "body": [
+        "여러 매체가 OpenAI가 자금 조달 목표를 100억 달러 축소했다고 전했습니다. 보도들은 이유를 투자자들의 AI 부문에 대한 식욕 약화에서 찾고 있습니다.",
+        "배경에는 최근 몇 달간 이어진 AI 인프라 투자 규모에 대한 시장의 회의가 자리 잡고 있습니다. 흥미로운 대비는 같은 주에 Meta가 975억 달러 규모의 AI 투자 계획을 정리했다는 점인데, 개별 회사의 처지에 따라 같은 국면에서도 방향이 갈린다는 해석이 가능합니다.",
+        "다만 이 수치는 회사 공식 발표가 아니라 언론 보도에 기반한 것이며, 축소된 목표의 최종 규모와 세부 조건은 미확정입니다. 보도 매체마다 강조점도 다릅니다.",
+        "향후 주목할 지점은 OpenAI가 이번 조달을 어떤 조건으로 마무리하는가입니다. 조건이 달라지면 AI 인프라 확장 속도 전체에 영향을 줄 수 있습니다."
+      ],
+      "extra": "그 밖에: 같은 주 정리 보도에는 OpenAI의 과학 주장에 대한 검토 이슈도 함께 언급됐습니다. 별도 확인이 필요한 대목입니다.",
+      "takeaway": "AI 인프라에 대한 자금 흐름이 달라진 지점입니다. 기획·재무 담당은 이번 주 OpenAI 측 공식 입장과 발표 일정부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPcDlFbnVzRzZmeVF2R0JPMHlNM291M3oxQ0JnVUMyRmVXZGRPUXhHVU9QQ1JqME9hUy0yeTVOSkFLUUp2RmZrc0tVM2hDOGZsU0Q4dDd0aFN1cG4wdEdMT3hZZEYwSVRIRzdua0Z6OWFCX0dZdGlPajVIem8xOC13S3pMdUtTRmd3N1ZsaERJeGFWWGxJRUI5ekt2emNZdGVucjJNSkN5cm53Ml85N010bWk3X2U?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.theedgesingapore.com"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOSEpJX2h1ZzIxV2NuY2ZwdFlGOUdrN2IxNlRrT2pFcXJueDhWa0M2TWxVSV91V0ZxYzdHR1pYYVRUNmh6eThyVzVfSGVtVjR2UDFaMTRKSnczUkZoTjlIdnhmM2xSbVBFS1dmRzN3cndRd0pJSGladTVxVk82RC1UM0NzSzE3clZHaXZaRHFybUppenRXbGNScW90eFVWOEQtN3NUeE1CekpIUXdMbXh1aWFsVFktM2dPaUd5eHBUTFJSbHRKQ1VLTWZJUWtZMUZfTXV1bDhB?oc=5",
+          "kind": "doc",
+          "origin_url": "https://today.lorientlejour.com"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQc1BxdkxaZEl2djNYVXl5TVFMX09fMEtubHdBRGtHOGh3VlVNd0pWdTZFdk1MQ1ZsQlBOdnYtOWMwODNyTmdfYUxQTlpEQV9QUjZneXdwNWdJcWJmd2IxVFVHaEhQSkhzbXRVQWp6SDJZMlRVVU5kZmhOUEhHbzd0TkttY0UtSGZHX3BwZW5qWXpQYWUwZGlzQUxXd0tlWXIzZ0xQVW40Z2pUQ1NrRzdwRjVRanp4Slp4Rzg3aEsxSllfZHU3RVk2R1pRcHY1cldPUDNKWEZB0gHbAUFVX3lxTFA5RXRwOHdKRE90N2N4dE8tbTBBUUdwT2RXTDRTbjhGUjFyMVFSZVo1ZXl5ZF94S1pJR185UVY4dGJ0X0dUODBTOEp6dUIwQ3lxc1A0R1lONVlvRDlEOHVMNnY5aDRvSVVRUE1fMnBESlBJUzhJa012RURQR0lvVVNUejNDbl9VSjJsbzR1UVZjNW1fTDJ1RzNtbXFNaHFNTVlUZnJWUHdKczRTdTFaQVJDbjl0Z3V1a0Itdmk1aE1sN1RuejdwUFFDREdxVU00X21rZUdCVldPMU9rVQ?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.moneycontrol.com"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-ipo",
+      "n": 2,
+      "title": "2. 티커·등급 전망까지 흘러나온 상장 준비",
+      "bullets": [
+        "나스닥 상장 티커 ANT 의사 확인 보도",
+        "Blackstone은 상장 후 하이드 정크(고수읤)급 등급 전망",
+        "언론은 상장 관련 리스크 3가지를 짚어냈다"
+      ],
+      "body": [
+        "Anthropic이 나스닥에서 티커 ANT로 거래할 계획이라는 보도가 나왔고, 상장을 앞둔 회사의 수익 구조와 리스크를 짚는 분석 기사들이 잇따랐습니다. 여러 매체가 동시에 이 이야기를 다룰 만큼 관심이 쏠린 상태입니다.",
+        "IPO는 기업이 주식을 처음 공개 매도해 자금을 조달하는 절차입니다. Anthropic의 경우 상장 후 채무 신용등급이 투자적등급이 아닌 고수읤(정크)급으로 매겨질 수 있다는 블랙스톤 측 전망이 나오면서, 성장 속도와 수익성 사이의 균형이 시장의 쟁점으로 올라왔습니다.",
+        "다만 등급 전망은 블랙스톤의 추정이고 최종 등급은 아닙니다. 리스크 3가지라는 목록도 특정 매체의 정리이며, 공시서류의 확정 내용과는 차이가 있을 수 있습니다. 상장이 완료되면 AI 대형 모델 회사의 재무 정보가 분기마다 공개되므로, 업계 전체의 투명도가 한 단계 높아지는 효과가 예상됩니다."
+      ],
+      "extra": "",
+      "takeaway": "비공개 성장 회사였던 Anthropic의 재무가 시장에서 읽히는 의미는 투명도 상승입니다. 기업 전략 담당은 상장 공시서류의 수익 구조 항목을 비교 기준으로 삼으면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNS29iWWxpY2dIOFdjaXVkOXpaajJVM1Fqd3lWRl9kUklMTHRreDdKbl9lMDY1Rk5jLWdUNHFfS0ROUDlSX1VmQkw3aEJRbmxhOTA2bUlSdmI5aG1LMWo4dHg1WDJ2cmNaQ0xJbllJRXBPXzY1Ry1vNHBWOVZiY3BNdVBsbGdJa1pQZkcyWHpJX0VVWHlHUmVsWWRHeHhaRUhNVERj?oc=5",
+          "kind": "doc",
+          "origin_url": "https://finance.yahoo.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQQ2hqeUl1NTRsM1MzSFRnU2J2S0Joa2FSalBndG5EM0VPMWlDYTE4U2tlU0lRRzRuRlk1RVFoREpORkcwYWFKUVMxLTl4eXR6S3JoOHVBZ19lT050NVJzYTc1M3c3UC1NYWFrSl91STdfOURjZXR6aGNIanNwdlRWUGlZVFQxSmhibVdnZW5vTklMRExoeDdEa2o3bE0xdF9uWlF4dVg2TmtrR2J0MDFKOTJBQQ?oc=5",
+          "kind": "doc",
+          "origin_url": "https://app.dealroom.co"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPd2I5TS10blhFdXZuZHFhRmEyYktmYnRJTU9WbkxpYnV1dE5FaFhlalg0bzVvT1JxNXJYeDZpLS1EVXZ4VjRBdG5pYnc5X0duaHhNemdudW1Ud1VfaTYwU2JkdUxfVWNpdVNnZG4wNWpWU3FLZndxVjhPNmVzVlZ4aEFmdUttMWNEOHJfQ3lWcE9EU1U3Z1dz?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.fool.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOVXpfTXdqVDgtSDYzSkp0TmVFdW5yZ0lyRXdfNk9tdHY3d05BQzdvZ1ZLRXEyQ2FuWkdCRF9SRnBhNTFMRG5fN0VKT0tVUVNXZm92clZwOEh0Z2NPYlhRQWhxT1FZTWhkTmM1a2dOdFpvaU00UmY4S1lNWEEycnpZNjlzdWtubWpLWmEwQS1rRHNFWTBXRzdtWVNjQWlqaU1CazVYM01VcktOdDdJcFJkazdjSUVkVV9fUDJhaFIzVEFNV292QlJz?oc=5",
+          "kind": "doc",
+          "origin_url": "https://techcrunch.com"
+        }
+      ]
+    },
+    {
+      "id": "android-sms-death",
+      "n": 3,
+      "title": "3. 이미 패치는 나왔지만 미갱신 기기가 표적",
+      "bullets": [
+        "보안 연구자가 '죽음의 문자' 개념 증명 코드 공개",
+        "CVE-2026-58882 결함을 악용해 미패치 폰을 원격 크래시",
+        "최근 패치된 취약점이라 업데이트가 곧 방어선"
+      ],
+      "body": [
+        "보안 연구자가 Android의 문자 수신 경로 결함을 악용하는 개념 증명 코드를 공개했습니다. 코드는 CVE-2026-58882로 추적되는 취약점을 이용해 패치되지 않은 기기를 원격에서 멈추게 할 수 있게 만든 것입니다.",
+        "'SMS of Death'라는 별칭은 문자 하나를 받는 것만으로 기기가 꺼지거나 재부팅되는 증상에서 왔습니다. 유사한 이름의 과거 취약점 사례가 있어 왔고, 이번 사안 역시 수신 경로의 결함을 노리는 유형입니다.",
+        "다만 이 취약점은 이미 최근 패치가 배포된 상태라, 방어 여부는 기기 업데이트 적용에 달려 있습니다. 개념 증명이 공개된 만큼 실제 악용 시도가 이어질 가능성은 있습니다. 기업 환경에서는 관리 대상 단말의 패치 적용률을 점검하는 것이 우선 대응입니다."
+      ],
+      "extra": "",
+      "takeaway": "관리되지 않는 개인 단말이 섞인 환경에 미칠 영향이 큽니다. IT 담당은 Android 보안 업데이트 강제 적용 정책과 소유 단말 목록을 체크리스트에 넣어 두시면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/new-android-sms-of-death-exploit-can-remotely-crash-unpatched-phones/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "chainalysis-breach",
+      "n": 4,
+      "title": "4. 에이전트를 무기로 쓴 침해라는 낯선 각도",
+      "bullets": [
+        "Chainalysis가 데이터 유출 사고를 공시",
+        "공격자가 '공격형 에이전트 기법'으로 내부 시스템·도구 접근",
+        "고객 이름과 이메일 등이 노출"
+      ],
+      "body": [
+        "블록체인 데이터 분석 회사 Chainalysis가 데이터 유출 사고를 공개했습니다. 회사 설명에 따르면 공격자는 '공격형 에이전트 기법'을 이용해 내부 시스템과 도구에 접근했고, 고객 이름과 이메일 등이 노출됐습니다.",
+        "에이전트는 사람의 지시를 받아 스스로 도구를 호출하고 작업을 이어가는 자동화 구조를 뜻합니다. 그동안 에이전트는 생산성 도구로 논의돼 왔지만, 이번 사고는 같은 기술이 공격 쪽에서도 쓰일 수 있음을 보여줍니다.",
+        "다만 침해 경로의 기술적 세부 사항과 피해 범위의 전모는 아직 회사 발표로만 확인됩니다. 노출 항목이 이름·이메일 수준인지 그 이상인지도 추가 확인이 필요합니다. AI 도구를 내부에 넓게 도입한 조직이라면, 에이전트에 부여한 권한 범위를 다시 점검할 계기로 삼을 수 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "내부 에이전트의 권한 설계가 중요해진 이유는 공격 쪽에서도 같은 구조가 쓰이기 때문입니다. 보안 담당은 사내 에이전트 도구의 접근 권한 최소화 원칙을 검토 항목에 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/chainalysis-discloses-data-breach-from-offensive-agentic-techniques/",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "token-cost-drop",
+      "n": 5,
+      "title": "5. 추론이 싸질수록 임대 사업 수익은 얇아짐",
+      "bullets": [
+        "유휴 맥을 AI 추론에 빌려주는 Darkbloom Network가 수익 급감 경고",
+        "Anthropic 토큰 가격 하락이 직접 원인이라는 설명",
+        "추론 단가 인하는 소비자에겐 호재, 임대 사업자에겐 압박"
+      ],
+      "body": [
+        "유휴 맥을 AI 추론 작업에 빌려주는 사업을 하는 Darkbloom Network가 수익이 크게 줄었다고 경고했습니다. 회사 측 설명은 Anthropic 토큰 가격의 지속 하락이 대여 수익을 압박한다는 것입니다.",
+        "이런 사업 모델은 개인의 남는 컴퓨팅 자원을 모아 모델 추론에 쓰는 구조입니다. 모델 회사가 공식 API 단가를 내리면, 같은 작업을 더 싼 공식 경로로 처리할 수 있어 임대 자원의 매력이 상대적으로 떨어집니다.",
+        "다만 이 주장은 해당 사업자의 자체 경험이라 시장 전체로 일반화하기는 어렵습니다. 하락 폭과 지속 여부도 회사가 제시한 관점에서 벗어난 독립 검증은 아직 없습니다. 추론 단가 인하 흐름이 이어진다면, 비용 절감 혜택은 앱 개발자와 최종 사용자 쪽으로 옮겨가는 구도가 더 뚜렷해질 전망입니다."
+      ],
+      "extra": "",
+      "takeaway": "추론 단가가 사업 모델의 존립 조건을 바꾼 대목입니다. 자체 서비스의 단가 구조를 점검하려는 담당자는 주요 모델 회사의 가격 공식 문서부터 잡아 보면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Hacker News",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/firm-that-lets-you-rent-out-your-idle-mac-for-ai-inference-workloads-warns-of-plummeting-token-costs-darkbloom-network-sees-earnings-drop-to-usd1-23-a-day-as-anthropic-tokens-fall-77-percent",
+          "kind": "talk"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "투자 심리가 OpenAI의 조달 규모 축소 보도로 흔들리는 흐름",
+    "grow": "Anthropic 상장 준비로 AI 기업 재무 정보 공개가 늘어날 전망",
+    "caution": "Android 문자 취약점·Chainalysis 침해 등 운영 대응 이슈 동시 발생",
+    "heat": "여러 매체가 동시에 다룬 Anthropic IPO가 오늘 최고 관심사"
+  },
+  "tips": [
+    {
+      "title": "Android 보안 업데이트 즉시 적용",
+      "body": "문자 수신 경로 취약점의 개념 증명이 공개됐으므로, 조직과 개인 단말 모두 최신 보안 패치 적용이 우선 방어선입니다.",
+      "via": "BleepingComputer"
+    },
+    {
+      "title": "Ivanti 게이트웨이 패치 점검",
+      "body": "CISA의 이미 악용 중인 취약점 목록에 오른 만큼, 해당 제품을 쓰는 조직은 긴급 패치와 무단 접근 로그 확인을 서두르는 것이 좋습니다.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "에이전트 권한 최소화 점검",
+      "body": "Chainalysis 침해가 에이전트 기법을 통한 내부 도구 접근으로 일어났다는 점에서, 사내 AI 에이전트의 권한 범위를 다시 좁힐 시점입니다.",
+      "via": "BleepingComputer"
+    },
+    {
+      "title": "합성 데이터로 Copilot 평가 설계",
+      "body": "민감한 실제 기업 데이터 대신 합성 데이터로 대규모 평가를 설계한 사례가 공식 연구 블로그에 나와 있어, 사내 도구 도입 평가에 참고할 만합니다.",
+      "via": "Microsoft Research"
+    },
+    {
+      "title": "AI 생성 취약점 리포트 대응",
+      "body": "버그 바운티에 AI 생성 리포트가 밀려들어 진짜 취약점을 가리는 현상이 언급되고 있으니, 신고 접수 기준을 다듬는 대응이 필요합니다.",
+      "via": "BleepingComputer"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": true
+}
