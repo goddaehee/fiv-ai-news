@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-08",
+  "analysis": "gpt6-cyber-launch",
+  "title": "4. 방어에 쓰일 모델이 공격에도 쓰일 수 있는 딜레마",
+  "src": "/img/2026-11-08/gpt6-cyber-launch-50bef2f6.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration, wide 16:9 landscape: a large shield split down the middle, one half glowing warm light and the other half dark shadow, standing before a stylized digital fortress wall of geometric blocks, teal and slate palette, minimalist flat illustration style, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "50bef2f6",
+  "alt": "한쪽은 따뜻한 빛, 한쪽은 어두운 그림자인 반반 방패와 기하학적 성벽의 추상 일러스트"
+}

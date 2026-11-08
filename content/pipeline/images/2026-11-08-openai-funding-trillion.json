@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-08",
+  "analysis": "openai-funding-trillion",
+  "title": "2. 공개 시장 못지않게 민간 자금이 계속 몰리는 대목",
+  "src": "/img/2026-11-08/openai-funding-trillion-618f4421.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration, wide 16:9 landscape: rivers of golden light flowing from many directions into one large glowing sphere that keeps growing, dark navy background, minimalist flat illustration style, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "618f4421",
+  "alt": "어두운 남색 배경에서 여러 방향의 금빛 흐름이 하나의 빛나는 구체로 모이는 추상 일러스트"
+}
