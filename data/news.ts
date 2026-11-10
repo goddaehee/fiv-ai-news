@@ -7,6 +7,9 @@ export type { Issue };
 export const ISSUES: Issue[] = readdirSync(join(process.cwd(), "content/issues"))
   .filter((f) => f.endsWith(".json"))
   .map((f) => JSON.parse(readFileSync(join(process.cwd(), "content/issues", f), "utf8")) as Issue)
+  // P19 이중 방어: draft:true인 호는 발행 확정이 아니므로 공개에서 제외.
+  // 파이프라인은 validate 통과 시 draft를 false로 뒤집어 커밋한다(run.py).
+  .filter((i) => !i.draft)
   .sort((a, b) => b.date.localeCompare(a.date));
 
 export function getIssue(date: string) {

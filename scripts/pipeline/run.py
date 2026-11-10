@@ -64,6 +64,28 @@ def draft_with_retry(draft_cmd: list[str], issue, run_validate, max_attempts: in
     return rc
 
 
+def finalize_publish(issue: Path) -> bool:
+    """P19: 발행 확정 표시. validate 통과 = 발행이므로 draft:true를
+    draft:false로 뒤집는다.
+
+    지금까지는 어느 단계도 이 플래그를 뒤집지 않아, 발행된 호 전부가
+    draft:true인 채로 라이브에 서빙됐다 (4차 패널 평가 지적). draft 키가
+    없는 호(손편집·발행 확정)는 손대지 않는다 — published_lock의 잠금
+    의미(키 없음 = 잠금)를 finalize가 깨면 안 된다."""
+    try:
+        data = json.loads(issue.read_text(encoding="utf-8"))
+    except Exception as e:
+        print(f"[run] finalize skipped (unreadable issue): {e}", file=sys.stderr)
+        return False
+    if data.get("draft") is not True:
+        return False
+    data["draft"] = False
+    issue.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                     encoding="utf-8")
+    print(f"[run] finalized publish: {issue.name} draft -> false")
+    return True
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date")
@@ -133,8 +155,13 @@ def main() -> int:
     # 그래도 validate를 못 넘기면 fail-closed (AGENTS.md: 규칙 깨면 배포 안 함).
     # P9: sidecar 피드백 주입 (pipe_dir/date 전달 → attempt 2+에 --feedback).
     max_attempts = 3 if args.llm else 1
-    return draft_with_retry(draft_cmd, issue, run_validate, max_attempts,
-                            pipe_dir=pipe, date=date)
+    rc = draft_with_retry(draft_cmd, issue, run_validate, max_attempts,
+                          pipe_dir=pipe, date=date)
+    if rc == 0:
+        # P19: validate 통과 = 발행 확정. 워크플로우 커밋 전에 draft를
+        # false로 뒤집어, 발행본이 draft:true로 나가지 않게 한다.
+        finalize_publish(issue)
+    return rc
 
 
 if __name__ == "__main__":

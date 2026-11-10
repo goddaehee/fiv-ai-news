@@ -104,9 +104,9 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Anthropic GNews",
+          "handle": "CNBC · cnbc.com",
           "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOdTIyNURFZndfMmRpN0liM2l3eE9Rb3pncXlkaGRDUExCemNqQldWUmlLcVhEWHhwYXlOVHFxSlpuLWVUXzV0eHoxcjdsVXAxVTJ0X3FFVGFscldqY0lnbVVxNlhxWWZ4QUZNUmYyc1dSWHpHSl9XdXNaMEVONm5SVXd5ODM2VFFEa2fSAY8BQVVfeXFMUGdJcmpnY21LbUlicTI5OEZXSzB2UE1SclB6TDZWRDdNd0luMEpaY1o3a3podTZLQ3hFZUVpSUpKaEtqWlNETUhZYXUyLWFqdTJhSGoyVXF3ejFCNldkMHJnYjJCbmRFLVlKeGo3OFFOQUNSUDRJRzNfaVlSb3p4NGl4eWE3TFNFR0tUNHNxa0k?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.cnbc.com"
         },
         {
@@ -144,15 +144,15 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Anthropic GNews",
+          "handle": "Anthropic · anthropic.com",
           "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE8zZVFudWFYcC04RHNOZHI0cGhuSXBUTlk2RWZsUnFkY2MzeWZRY0NVaV9OSTJHbDVkc3BBTHBWd1FKUDVCbjdYLTQtN2tGNUZXdnFYRmt2OUZTTzRoRVZNeWNteUE1Vy1DSXBGTTUxSFJqVmRf?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.anthropic.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "Reuters · reuters.com",
           "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQRW4tSGppV2U0ZWtvaXBsQmlyaDVVLVFCSmJNMWdmMHpod0FWd25kUXRNQzFvZXJPTmhoQUNvMlFrQzI3NjBQVG9McWFPRHdUODhMbVItOGg4S0N3ZmJ4R2psZVd1aWFZM2M0aEY4R3VaYnFZWUxhOFZiRXAxTnc5UG9hMm1ERGpKbURkX3BWYzQ5UWl3THBFTDhWUWR0SVhUSWJsekpMZjM4OUZRQl9BVmY2djVKRENDSldCSUpOWmdvbHVK?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.reuters.com"
         }
       ],
@@ -279,5 +279,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

@@ -506,14 +506,14 @@
       ],
       "sources": [
         {
-          "handle": "Google News AI",
+          "handle": "Google News · news.google.com",
           "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQdlpRZ2kyazdNYi1HNzVmMWRabFlRVUNHb28yOEphakthbjdmdXctZjRVVG40TEZuN2lOMUgtRUdCY0pfeGhKVjAxNjIyQWZTbWZnOUdGd2p2OWhQUVdWQ3R3QUlnTXF4OThxdmU5S3JMQ3MwTDFYRkt4c2hnRVdaTkVPVkpBNDhMeF9ZNWk4UFlHSTFMRDd1MnU3N0pYcTFjMkV6SEZEcjEtRkk0?oc=5",
-          "kind": "doc"
+          "kind": "news"
         },
         {
-          "handle": "Google News AI",
+          "handle": "Google News · news.google.com",
           "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPdmUzNFp6VTgzNlc2ZGVpMkExZi04MEhORkFfZTBGOU9nSW90SUdjWnRQZkxxY3I3aFFhWmwzal84RnFEb0o4Zjd1dXBYRDEzTGh0VktkMnRHejJ5NGtTdmM2Y2FDUkZ4S2J0M2RKTTcxb0hnb1hYeVlGVVdrN1RWb0dIX2JSaW0xbk9mdlZoRTJ5T3Jk?oc=5",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     }
@@ -557,5 +557,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

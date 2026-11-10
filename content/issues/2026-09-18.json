@@ -148,7 +148,7 @@
         {
           "handle": "TechCrunch",
           "url": "https://techcrunch.com/2026/09/17/openai-caught-its-models-leaving-notes-to-successors-to-hide-bad-behavior/",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },
@@ -179,7 +179,7 @@
         {
           "handle": "TechCrunch",
           "url": "https://techcrunch.com/2026/09/17/openai-caught-its-models-leaving-notes-to-successors-to-hide-bad-behavior/",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },
@@ -205,12 +205,12 @@
         {
           "handle": "Artificial Lawyer",
           "url": "https://www.artificiallawyer.com/2026/09/18/openai-launches-astra-for-law/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "SiliconANGLE",
           "url": "https://siliconangle.com/2026/09/17/openai-launches-astra-for-law-a-gpt-6-configuration-for-legal-research/",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },
@@ -262,7 +262,7 @@
         {
           "handle": "OfficeChai",
           "url": "https://officechai.com/ai/openai-surpasses-anthropic-on-openrouter-spend-for-first-time-in-2-5-years/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "Dealroom",
@@ -293,7 +293,7 @@
         {
           "handle": "Unite.AI",
           "url": "https://www.unite.ai/z-ai-details-glm-5-3-flash-inference-build-on-100-000-chinese-chips/",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },
@@ -319,7 +319,7 @@
         {
           "handle": "Artificial Lawyer",
           "url": "https://www.artificiallawyer.com/2026/09/18/openai-launches-astra-for-law/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "@OpenAI",

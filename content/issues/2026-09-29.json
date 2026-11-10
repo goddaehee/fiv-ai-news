@@ -421,14 +421,14 @@
       ],
       "sources": [
         {
-          "handle": "Google News AI",
+          "handle": "Google News · news.google.com",
           "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxOVGtUZ1Y5bWVzV19HWXc0dE43WEJSMmpwRnZYZ1JMMlJWQXFzNkpKR3RlMTBDSXltWHNIVlNXQkR1cVZ0a3pJWGVIS1NlSlhTcE9RQWd2eWVrUTY5VXhJak5JTndWQ3ltX2loLTNrZ0ZQSTEzSllNdy1tbzllb0hYaGZiZWRoc2Q0TUkzekJPQ0dXSG1nWkJZRTlMZ1VITmtNTFAyWi03UDU4Tl9JSHlxdUhxR0NXTzZId08zbkFwSlNKSk5oYnBDajZfWDJjVEotY2hRWVJpeW5rQTl0Y2gzTGpKNA?oc=5",
-          "kind": "doc"
+          "kind": "news"
         },
         {
-          "handle": "Google News AI",
+          "handle": "Google News · news.google.com",
           "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPNF9UVTNvdlhmcFIzY09YcS1FNm9pN3dxLVF1TEZlcjNSQzczUkVzMGZXc3R5bW1CVm9jN3ZJUDVraUtzOVBHYkY0N0ExcjhWWUtwcXZzTXBINm16YVlnQzMzTHVIMmM1bm5HZ0M5TG5nQ2Nkd1BoUFhBRmxEa2t1My14Znl0TDh1T2FJX3FyMjZsV0pyT3d0LVoxRE1DRzhTU1MxaVhlaFdQRThUa01aQW1pVV84Ymtr?oc=5",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },
@@ -453,7 +453,7 @@
         {
           "handle": "The Verge AI",
           "url": "https://www.theverge.com/tech/1001749/amd-world-labs-ai-acquisition-deal",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "Hacker News",
@@ -537,5 +537,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

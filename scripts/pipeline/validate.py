@@ -14,7 +14,7 @@ from urllib.parse import urlparse
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 URI_RE = re.compile(r"^https?://")
-KINDS = {"hot", "talk", "rt", "doc"}
+KINDS = {"hot", "talk", "rt", "doc", "news"}
 KST = timezone(timedelta(hours=9))
 
 # --- P0: 출력 정리 검사 (TPL/ID/DUP/VIA/RND) ---
@@ -606,8 +606,15 @@ def check(issue: dict, collected_by_url: dict | None = None) -> list[str]:
                 err(f"{p}.sources[{j}]", "must be object", bag)
                 continue
             if s.get("kind") not in KINDS:
-                err(f"{p}.sources[{j}].kind", "hot|talk|rt|doc", bag)
+                err(f"{p}.sources[{j}].kind", "hot|talk|rt|doc|news", bag)
             url = str(s.get("url") or "")
+            # P19 (SRC-RELAY-KIND): Google News 중계 링크는 원문 문서가 아니라
+            # 경유지라 kind "doc"(공식 문서)로 두면 "1차 출처 포함" 배지가
+            # 거짓이 된다. attach_sources가 결정적으로 news로 교정하므로
+            # 프로덕션 경로에서는 도달하지 않는다 (회귀·수기 편집 방지용).
+            if (urlparse(url).hostname or "") == "news.google.com" and s.get("kind") == "doc":
+                err(f"{p}.sources[{j}].kind",
+                    "Google News 중계 링크는 doc 불가 — news로 교정 (SRC-RELAY-KIND)", bag)
             if not URI_RE.match(url):
                 err(f"{p}.sources[{j}].url", "http(s) url", bag)
             if "example.com" in url:

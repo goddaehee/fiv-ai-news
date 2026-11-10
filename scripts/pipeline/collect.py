@@ -33,7 +33,7 @@ FEEDS = [
     (
         "Anthropic GNews",
         "https://news.google.com/rss/search?q=Anthropic+when:2d&hl=en-US&gl=US&ceid=US:en",
-        "doc",
+        "news",
     ),
     ("Google Blog", "https://blog.google/rss/", "doc"),
     ("DeepMind", "https://deepmind.google/blog/feed/basic/", "doc"),
@@ -43,19 +43,22 @@ FEEDS = [
     ("Meta Eng", "https://engineering.fb.com/feed/", "doc"),
     ("Azure Blog", "https://azure.microsoft.com/en-us/blog/feed/", "doc"),
     ("MS Research", "https://www.microsoft.com/en-us/research/feed/", "doc"),
-    ("TechCrunch AI", "https://techcrunch.com/category/artificial-intelligence/feed/", "doc"),
-    ("The Verge AI", "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", "doc"),
-    ("Ars Technica", "https://feeds.arstechnica.com/arstechnica/technology-lab", "doc"),
+    # P19: kind 교정 — "doc"은 공식 블로그·문서(회사 1차 발표)만. 언론 매체와
+    # Google News 중계 피드는 "news". 전 피드가 doc이던 시절에는 모든 출처에
+    # "1차 출처 포함" 배지가 붙는 오표시가 됐다 (4차 패널 평가 Codex P0).
+    ("TechCrunch AI", "https://techcrunch.com/category/artificial-intelligence/feed/", "news"),
+    ("The Verge AI", "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", "news"),
+    ("Ars Technica", "https://feeds.arstechnica.com/arstechnica/technology-lab", "news"),
     # P16: 보안 톱뉴스(제로데이·대규모 취약점) 수집 경로. php2shell 같은
     # 사건은 AI 전문 매체보다 보안 매체가 먼저·깊게 다루는데 피드가 없어
     # 통째로 누락됐다 (2026-10-23 원본 톱 php2shell 미수집 실측).
-    ("The Hacker News", "https://feeds.feedburner.com/TheHackersNews", "doc"),
-    ("BleepingComputer", "https://www.bleepingcomputer.com/feed/", "doc"),
+    ("The Hacker News", "https://feeds.feedburner.com/TheHackersNews", "news"),
+    ("BleepingComputer", "https://www.bleepingcomputer.com/feed/", "news"),
     ("HN AI", "https://hnrss.org/newest?q=AI+OR+LLM+OR+GPT+OR+Claude+OR+Gemini", "talk"),
     (
         "Google News AI",
         "https://news.google.com/rss/search?q=artificial+intelligence+OR+LLM+when:1d&hl=en-US&gl=US&ceid=US:en",
-        "doc",
+        "news",
     ),
 ]
 
@@ -167,10 +170,15 @@ def parse_feed(xml: bytes, source: str, kind: str, limit: int = 40) -> list[dict
         published = parse_date(child(node, "pubdate", "published", "updated", "date", "created"))
         # P5: Google News <source url="실발행처URL"> 파싱 — 불투명 리다이렉트 URL 대신
         # 실제 발행처 도메인을 origin_url에 저장 (RSS 내부 데이터라 No-scrape 제약 위반 아님)
+        # P19: <source> 요소 텍스트(발행처 이름, 예: "Reuters")도 함께 저장한다.
+        # 지금까지는 url 속성만 읽고 이름을 버려서, 발행본 출처 라벨이 피드명
+        # ("Anthropic GNews")으로 남았다. 이름은 draft의 출처 라벨 조립에 쓴다.
         origin_url = None
+        publisher = None
         source_el = child(node, "source")
         if source_el is not None:
             origin_url = (source_el.get("url") or "").strip() or None
+            publisher = collapse(text_of(source_el)) or None
         blob = f"{title} {summary}"
         if source.startswith("Google News") or "GNews" in source or source.startswith("HN") or AI_HINT.search(blob):
             keep = True
@@ -190,6 +198,8 @@ def parse_feed(xml: bytes, source: str, kind: str, limit: int = 40) -> list[dict
             }
             if origin_url:
                 item["origin_url"] = origin_url
+            if publisher:
+                item["publisher"] = publisher
             items.append(item)
         if len(items) >= limit:
             break

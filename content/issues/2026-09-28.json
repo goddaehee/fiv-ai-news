@@ -426,9 +426,9 @@
       ],
       "sources": [
         {
-          "handle": "Google News AI",
+          "handle": "Google News · news.google.com",
           "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPb3loa0FnTTJZNzY2T2tCMGZFaTN6WEgwYk1kb1NIcTNvWUVvZEFFVWloN04ybUJ5VnhodjBpMm11YndxcVk2dlE5dXZiMHFhWWVTUFhOdGJDSzcxT2Z3VTROMlduX2tCdGRwdEVPSmJuRTUwSllrZDQxeE1XMFUyaVVoSC1Jc25iU0pCRlFESmltZw?oc=5",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "OpenAI News",
@@ -477,5 +477,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

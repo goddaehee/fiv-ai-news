@@ -121,27 +121,27 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Anthropic GNews",
+          "handle": "TechCrunch · techcrunch.com",
           "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNQ2Yta1hDZm1QakE4S2RXZTd0UXR0N2V5QVdtdFNxQVBZQW9XVklvODB3WGR1Wmc3Vk5tV1VoX1ltVHVEd0liM2Fka1Q2NS1nRVdMSWZKLVJQTUd6Wm9xd3JWWGlwX2M3Mkl2cjlIS0pSdUFmZEdWaWtkQnItbmRvaVRudDFnVXdGMmY4Vi1aLU9ma2RDM2VWd2loMGI3aE1i?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://techcrunch.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "Fortune · fortune.com",
           "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNZXh5WWJvWmxMbkZBakNhNWhkR3R2YnFvS2Uwc3JuOFlPOGh0aU1mbWZXZEJJU0xuRDZ2TW1nLXdyMWxnWllFcnRnRGlHWDJBdWUxdHJaR1NIZDc5Y0djdEliTUhGTDlxazlFbER1cmZyTk9udlJ1eHJxRHo1cmlKV2QtMW0yVTFaVk55dFJJVE9DRVYyM21nMXl0eEVzVEVxR1lVVGJWb2lzNDl1MmJONWVsc2ZET2VST3dEUUxGQWdIeFFkQjB6TnlKY0M5WmFqck80Q1VaSHQ?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://fortune.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "SiliconANGLE · siliconangle.com",
           "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPTkdMd0hfb1Z0amJnRVNBWFViSlJxYUpTYjJzN0dhc1k1NHphNTNONnR3Z1Jqd3czVmVfMk5ubncwVVlJZDIzMktLQVlJRThET3ZaUTV6MF9jQlVnYV9ST2RPX3NKWms4SlRHYjJ5VklfZVY1Z3VsRE01bUpORmJyaFpqdTFkU1pIMWxzdVU0XzdHWFJMOVd6cnNuMjdLYnppdEdnaGYtOHlFZXZQaFE?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://siliconangle.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "CNBC · cnbc.com",
           "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1EZ19OSTNSY1dhR3hRS1h5MWdBMnQtbDBZRG9lNUl6c2Z3Sy1hYlh2LUY2elVFd1BzbUVrYkdHcC1XQVBuTFZ3d2p3ME9uTkRRb0k5NE1OdjB1eU5XNFFWb3pTcTd1OUw0cTF2Ynd4M25tSGFQaHdhVFFoZVZyR1U?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.cnbc.com"
         }
       ]
@@ -167,22 +167,22 @@
         {
           "handle": "The Verge AI",
           "url": "https://www.theverge.com/ai-artificial-intelligence/1030422/nvidia-jensen-huang-ai-china-alice-huang",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/11/09/jensen-huangs-affair-with-alleged-chinese-spy-puts-nvidias-china-ambitions-under-scrutiny/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/11/09/the-race-is-on-to-sue-nvidia/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
-          "handle": "Google News AI",
+          "handle": "NBC Bay Area · nbcbayarea.com",
           "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNMHY0S2NqZlJFdng2STBzMW5Ybjd1cjdGR29LZUsyTmtRT2xJRGVmOWs1b1IwSGc2T2V1Y3o0YTAySmgtLXg2TlNYLXg2T3VuTTdSa1RTdmRDa0hmc25kVDZmem15Y3JmcWktM3E4UVNpazVtNnRKYnBTZUtNN2FRcXBDUXdTOTdOZkxJYjVUUkHSAZgBQVVfeXFMT1JibzNHQi1rMnpRdDBUN0ZyX1Mzd2RielpPR01DNkxvYXRTakt0eVJOdE41NWU5U2Y5TWdHOGRvaWVqTXE3REVhTkRJWlBRQ1FSZmR0dnFWZmM1OUdEUFB0aWs3cFJuTmpSUFJxQ25Pck1BXzRPRkFkcGxGdkNtOU03LVFDbG5Nb0NBUGR6V2xPQUdLbEdvcnA?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.nbcbayarea.com"
         }
       ]
@@ -205,21 +205,21 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Anthropic GNews",
+          "handle": "IFR · ifre.com",
           "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNYzdlaUtxUHZyU2VDWHhmZW82QjlBRXlzOUdCUWpTSGhkWmxZVU03ZXN1TXctS1Z0NkhVOFdmZWlJRzQ3SGNoaFJBMmIxLXJ1LUlBaFVQaHRGbkx4RlZENGIxY3lpVjc3Z1RZcFljWThKV0pjLW14a0laT1k4TERXWHM4cDFVby00bXFOYQ?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.ifre.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "The Defiant · thedefiant.io",
           "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQeG1kbl9Vazl3RTVuZmFwdkQ0cF81Z0VrWHdlZ3dmb3hiVkdCaDU1MVd4b3UyTE5LX2twVW5IMTRBTi13TjdhaC1ZOUtKUVFSZlc5bGVRMk9NVF9SUzY4bG54RWtMX1JIOHJkeG5hbG5OUW9xTmE0Z0dOYzJXU2tnZTU4ZGI4XzVQY1dibWtKWkw2c0tLVWotVC1Eb3NQSzVqWVE?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://thedefiant.io"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "CNBC · cnbc.com",
           "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTFB2VjJmaUxYTHNlQ3VoVnRla3ZjTXg4MU11MDRNTkx3U1g3ZTQtR0RVeGFaNGFpWllnMU9hQ2Vka3AyQkcxSlFFVHZDU3FSMDIwQ0JzSWtacUdvYUNBcF80SXdIWl9iQ2dkcllwZ3BCVDJKUXdUQlhJag?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.cnbc.com"
         }
       ]
@@ -270,12 +270,12 @@
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/11/09/meta-releases-muse-ember-a-new-lightweight-model-for-agent-execution/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
-          "handle": "Google News AI",
+          "handle": "marketscreener.com",
           "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNQ1hPbVRFWTJ3Wjc2UU56RWNONURfQ0l5MXMxblI2dlE0WHhWWERVbHMtYmJrUW5qd2RsbWZ1WWtFR3VJcFROSVFtV0RHVVZJQWxVU3FzMWZ1cElFVkp0MVdGa0Jtc2tvWjIyalNVVGQ3Z1RjX1FIMHJHZVFQcnJXRlVDX25NU3BoWlRBVk1Ja0huVzM2dDVsU0tmaDVvLVA0UEhzV1picTFqRHk2emlTTTJmdjIyN3pu?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.marketscreener.com"
         }
       ]
@@ -301,7 +301,7 @@
         {
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/sega-newsletter-data-breach-exposes-22-million-email-addresses/",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     }
@@ -335,5 +335,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

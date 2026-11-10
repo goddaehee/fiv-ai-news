@@ -166,7 +166,7 @@
         {
           "handle": "The Decoder",
           "url": "https://the-decoder.com/former-openai-researcher-builds-an-ai-model-that-judges-options-instead-of-writing-text/",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },
@@ -192,7 +192,7 @@
         {
           "handle": "Benzinga",
           "url": "https://www.benzinga.com/markets/tech/26/09/61807324/mark-zuckerberg-meta-muse-ai-safety-delayed-months-ai-labs-responsibility",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },
@@ -218,7 +218,7 @@
         {
           "handle": "Tom's Hardware",
           "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/defeated-gpt-6-astra-model-spent-several-hours-just-farming-potatoes-after-being-blown-up-by-a-creeper-in-minecraft-openai-offering-gets-further-than-any-other-ai-system-in-141-hour-test",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },
@@ -249,7 +249,7 @@
         {
           "handle": "TechCrunch",
           "url": "https://techcrunch.com/2026/09/16/anthropic-merges-claude-chat-and-cowork-in-one-interface/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "@AnthropicAI",
@@ -285,7 +285,7 @@
         {
           "handle": "Reuters",
           "url": "https://www.reuters.com/business/media-telecom/openai-tests-advertiser-sponsored-agents-expands-ai-tools-chatgpt-ads-2026-09-16/",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },
@@ -368,7 +368,7 @@
         {
           "handle": "Reuters",
           "url": "https://www.reuters.com/business/microsoft-ai-chief-calls-out-anthropics-approach-to-ai-consciousness-2026-09-16/",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },

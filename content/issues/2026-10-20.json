@@ -199,9 +199,9 @@
           "kind": "doc"
         },
         {
-          "handle": "Google News AI",
+          "handle": "The Next Web · thenextweb.com",
           "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFB2QmhjTV9FcEpkaElRYy04eDBpX2R3ZFR0Zk1JYWxScEptMGc1NGFLajV1THpmSEJxWlhXN2RLdTJ5UXFlNHo1QnFlVzA4Y0d3LTZWd3pKUkdkRVd0Y1A4WHNoeFY2cEJ4TDF0amVFVWRwYnd4OWc?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://thenextweb.com"
         }
       ],
@@ -239,9 +239,9 @@
           "kind": "doc"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "Reuters · reuters.com",
           "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPZHQyOU05TVZ4RVNpTGdJX18zeHlMZ1pGOGdNeGFmRnFMNERObThVUTl2Ny1CVGU1Vm5IMF9aSS1qaWpOTWlFdDBLeHZIa1lkYnltX1pnU1BLbGdGM3duM1FJZDhocndUWGlUZ0pSaEV6U2RUdzgwX1FaY2s2YllieUo3cTBSWVUtRzJEczR3YXliUzB0d0dRQkRsWjlaQ0FCeXBKM1A2MjlaYzdZa0E?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.reuters.com"
         }
       ],
@@ -285,5 +285,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

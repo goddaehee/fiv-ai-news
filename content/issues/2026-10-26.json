@@ -126,27 +126,27 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Anthropic GNews",
+          "handle": "The New York Times · nytimes.com",
           "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNX09XVmlSS01jT3lubFZUV2pxODhTM3JaOFpwX2k1cVNEdkItaFNCcGtNU3dRSnV3eXVTZ19JRm5pcGRFcDIxLVNLb3U0QkxZNlhSU3k2U05vZndadGNtb3FrUzhoUFNhVWpPYUVpX1FxV0hjejJiRzB1M2w3MzJSdUlDb1oxZENReEFmdE1qUU5HUQ?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.nytimes.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "Los Angeles Times · latimes.com",
           "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOQ2xhUk9UN09Xa21neEc2TVN2RjVMREhVekVyVmVuQlZZYVhHa3RwSUpncFFFUWNBNzg5bU11YjdyZk1odFItM213Y2dwX3NtQzBvVWF1Y3JkTVVHRnF4a3ZyRVczU1RzLXZPNjNVRlZRcm0wNjR1cTgwNEN6bWItWWw5RXI2dm9DMHRVX0M2ZDNleER3MVNUblRnSm5aUUt6elh4WVI5Z0cwOGxEcDVtMDltRC1vZmpGamZwbGg3MzFKQQ?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.latimes.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "NBC News · nbcnews.com",
           "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQbG82ZXpUaVVOTDJpczU3NXh0WWRqV2VkbENhUVJBQTJKZDQ4YlFjeDdXemlvQU0zRllGTFpBb3ZjcElSVERQZmQ2X0paY1NzMXlBM0FkZUhST2FMc0xrOTBjTUtEWjNpNEFkNVZ1UG45VHlScFJTZkxBc1ZOR2s0UFVBYjRlcGNsdlEwOTAtNkRhbWl4VjdBX2FTeDRKYUp6NEhCNVJ4T19ZTEV4Y3BnQ1dyM01XZ1lB?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.nbcnews.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "Pitchfork · pitchfork.com",
           "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNZkdyYnA4Z2J2aEc1OWZKTU1xQUhCTThtTmJwQlpXQnhqdVBZV3hCSTA1ZW9NbFIwaTRiSzI2TkJrbzBWMG9GMS16MXJOUkQ0NU5wWFhrbmRKNnlOSHEzeVlMdlpyQ3ZPcXdXWVFIckNvTXhuc0pJOFkyaFJXa0w1UVpuZHpNNjVHZ3BzRnhhM3BNcndjcC1IeS16WWp5WWhSNmFEV2IwU2ZsNmxtb2c?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://pitchfork.com"
         }
       ],
@@ -220,9 +220,9 @@
           "kind": "talk"
         },
         {
-          "handle": "Google News AI",
+          "handle": "Tom's Hardware · tomshardware.com",
           "url": "https://news.google.com/rss/articles/CBMizwJBVV95cUxQUzdBSXJpd083eUx4UlRyNnVSRC1kZjBhWUVuNjVmbkVvU3hGNlZjM3A2a0g1ZzRNVkJrdU82QmFabXVUMFhJMW1xeFJzUVJ3ZEEzRTFLZ0p6Q1E4SDRsRDhGaGUtSEhsNWxPRkdUNzJfQUxWS3FRSW45aHU0b0J2dzYwSE82QWRmS2h3Q3FUU2xQWEdaVDVURTFGdHVMRC0xclpPTE9aVnNLU0dycTN6SVltOVhEZU12YjRkQmhNN0FSd2ZaMGFXT2ozSExFXzJyaGZ6LVE1ZE5IZ0h4dHpJWmNPZGFhXy1LYl9JSVc5V1lLMFJ5RFJrTko0WXZFTldHR01jaHVfSWRsSk8xcUJ4Qmt5ZkhWUUJJTERSRmdCb0FEMEl4RDFhR3FjWlQ1Vi1kTGllQzhNYUFIcDFiM18zNkkyeHcwT0w5Qmh2dkNkQQ?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.tomshardware.com"
         }
       ],
@@ -258,7 +258,7 @@
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/25/ai-delivers-zero-financial-payoff-to-most-companies-according-to-apollo-economist/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -290,15 +290,15 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Anthropic GNews",
+          "handle": "tech-insider.org",
           "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQQlFXUXJmTlk1b3p1ZVgybmF6cl9jbDRWUXZOejVGbVBEUzdxNjZjYzNXYU5tZXBmS05kb1l3WTMzRHA0a21ITzRDY0NyaGI1Z2pDdTVZcmwwMFZEWGhnU210X3YtNnV4SHNJS2VMczRzR2NYZlBTTjhENmpqX0E5Z2FrMU8tSm9HaE5EU2Jqd04zX1ZRbnU5UW0yNTg?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://tech-insider.org"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "shattered.io",
           "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNeWF4cV9ZS0wzU0ttOGlGUTBQaHM1dUwwVkl6ZGJNZXpqYzFJeV83cUVtbTE5aUg4RHJMcWQxYm5uZG01YzZOeWpjMlVmYXU0M3pZSjctU2RGV3VXRENBYlE0YkNJZEFNWkV6b3VVQjdpS2VYaXlPYzA4MFhUXzNidWRPMlgyZ1lodUlYVndRMDBURnNPdFRWcjd3?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://shattered.io"
         }
       ],
@@ -342,5 +342,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

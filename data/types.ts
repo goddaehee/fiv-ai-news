@@ -1,9 +1,10 @@
-export type SourceKind = "hot" | "talk" | "rt" | "doc";
+export type SourceKind = "hot" | "talk" | "rt" | "doc" | "news";
 
 export type Source = {
   handle: string;
   url: string;
   kind: SourceKind;
+  origin_url?: string;
 };
 
 export type BriefItem = {
@@ -75,6 +76,8 @@ export type Issue = {
   tips: Tip[];
   method: string;
   legacy?: boolean;
+  /** 파이프라인 초안 표시. true인 호는 공개 목록에서 제외된다 (P19). */
+  draft?: boolean;
 };
 
 export type RepoCategory =
