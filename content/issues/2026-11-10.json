@@ -144,6 +144,15 @@
           "kind": "news",
           "origin_url": "https://www.cnbc.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-10/anthropic-mythos-fable-14a8d161.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "기울어진 저울 위에서 크기가 다른 두 개의 빛나는 구체가 균형을 이루는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -185,6 +194,15 @@
           "kind": "news",
           "origin_url": "https://www.nbcbayarea.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-10/nvidia-huang-probe-8e961c7f.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "높은 탑이 연결된 노드들의 네트워크 위로 긴 그림자를 드리우는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -222,6 +240,15 @@
           "kind": "news",
           "origin_url": "https://www.cnbc.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-10/anthropic-ipo-ebad2a89.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "일출 아래 도시 스카이라인 위로 두 개의 기하학적 형태가 떠오르는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -246,6 +273,15 @@
           "handle": "OpenAI News",
           "url": "https://openai.com/index/control-room",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-10/openai-control-room-a1ff2e37.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛나는 일시정지 표시와 원형 조절 다이얼 아래 조용히 빛나는 모듈 격자의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -278,6 +314,15 @@
           "kind": "news",
           "origin_url": "https://www.marketscreener.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-10/meta-muse-ember-1d15eda0.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "작은 톱니바퀴와 잎사귀의 들판 위로 떠오르는 작은 불씨의 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -302,6 +347,15 @@
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/sega-newsletter-data-breach-exposes-22-million-email-addresses/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-10/sega-newsletter-breach-b58d5376.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "깨진 봉인을 가진 봉투에서 종이비행기들이 흩어져 날아가는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }

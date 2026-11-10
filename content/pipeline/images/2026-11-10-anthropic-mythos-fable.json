@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-10",
+  "analysis": "anthropic-mythos-fable",
+  "title": "1. 가격 구조가 먼저 움직인 프론티어 모델 경쟁",
+  "src": "/img/2026-11-10/anthropic-mythos-fable-14a8d161.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract flat illustration of two glowing orbs of different sizes balancing on a tilting scale, soft gradient sky, minimalist geometric shapes, wide 16:9 composition. No text, no numbers, no people, no logos, no charts.",
+  "prompt_hash": "14a8d161",
+  "alt": "기울어진 저울 위에서 크기가 다른 두 개의 빛나는 구체가 균형을 이루는 추상 일러스트"
+}

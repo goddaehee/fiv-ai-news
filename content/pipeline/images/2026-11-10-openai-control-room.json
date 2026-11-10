@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-10",
+  "analysis": "openai-control-room",
+  "title": "4. 연구 인프라 전체를 멈출 수 있는 안전 장치",
+  "src": "/img/2026-11-10/openai-control-room-a1ff2e37.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract flat illustration of a large circular control dial with a glowing pause symbol hovering above a calm grid of softly lit modules, deep blue tones, minimalist geometric style, wide 16:9 composition. No text, no numbers, no people, no logos, no charts.",
+  "prompt_hash": "a1ff2e37",
+  "alt": "빛나는 일시정지 표시와 원형 조절 다이얼 아래 조용히 빛나는 모듈 격자의 추상 일러스트"
+}

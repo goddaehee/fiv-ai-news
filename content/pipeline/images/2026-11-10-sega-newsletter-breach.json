@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-10",
+  "analysis": "sega-newsletter-breach",
+  "title": "6. 제3자 벤더가 뚫린 뉴스레터 유출",
+  "src": "/img/2026-11-10/sega-newsletter-breach-b58d5376.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract flat illustration of an envelope with a cracked seal and scattered paper planes drifting away, muted blue and gray palette, minimalist flat style, wide 16:9 composition. No text, no numbers, no people, no logos, no charts.",
+  "prompt_hash": "b58d5376",
+  "alt": "깨진 봉인을 가진 봉투에서 종이비행기들이 흩어져 날아가는 추상 일러스트"
+}
