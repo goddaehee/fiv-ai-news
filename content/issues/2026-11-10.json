@@ -1,0 +1,339 @@
+{
+  "date": "2026-11-10",
+  "title": "5분 AI 뉴스 — 11월 10일 화요일",
+  "heroline": "앤스로픽 신모델 20% 저가 공세와 IPO 동시 진행",
+  "dek": "Mythos·Fable 출시, 엔비디아 황 CEO 조사 여파, 메타의 10센트 에이전트 모델까지 하루 동안 움직인 큰 흐름",
+  "tag": "ai-daily",
+  "briefMin": 3,
+  "readMin": 8,
+  "briefing": [
+    {
+      "id": "anthropic-mythos-fable",
+      "headline": "클로드 Fable·Mythos 5.2, GPT-6 Astra 대비 20% 저가 출시",
+      "summary": "앤스로픽이 프론티어 모델 클로드 Fable과 Mythos 5.2를 공개했으며, 가격은 GPT-6 Astra보다 20% 낮게 책정됐다. 과학·코딩 과제 개선이 중심 축이다."
+    },
+    {
+      "id": "nvidia-huang-probe",
+      "headline": "엔비디아 주가 4% 이상 하락, 황 CEO 내부 조사 여파",
+      "summary": "엔비디아가 젠슨 황 CEO 관련 내부 조사를 시작한 것으로 알려졌고, 주가는 4% 넘게 하락했다. 트럼프 대통령은 FBI 검토를 언급하며 사안을 축소하는 입장이다."
+    },
+    {
+      "id": "anthropic-ipo",
+      "headline": "앤스로픽 나스닥 IPO, 화요일 오전 상장 개시",
+      "summary": "International Financing Review 보도에 따르면 앤스로픽 나스닥 IPO가 화요일 오전 시작되며, 신모델 공개와 같은 날 겹쳐 투자 설명 방향이 주목된다."
+    },
+    {
+      "id": "openai-control-room",
+      "headline": "OpenAI 컨트롤 룸, 모델 워크로드 즉시 중단 체계 공개",
+      "summary": "OpenAI가 공식 블로그에서 연구 인프라 전체 워크로드를 추적하고 안전·보안 우려 시 신속 중단하는 '컨트롤 룸'을 소개했다."
+    },
+    {
+      "id": "meta-muse-ember",
+      "headline": "메타 Muse Ember, 입력 100만 토큰당 10센트 경량 모델",
+      "summary": "메타가 에이전트 실행용 경량 모델 Muse Ember를 공개했다. 입력 100만 토큰당 10센트로 Haiku, Luna 등 프론티어 경쟁 모델보다 상당히 저렴하다."
+    },
+    {
+      "id": "sega-newsletter-breach",
+      "headline": "세가 뉴스레터 유출, 이메일 주소 220만 건 노출",
+      "summary": "세가 제3자 뉴스레터 제공사 ARARA의 데이터 침해로 구독자 이메일 주소 220만 건이 노출됐다."
+    },
+    {
+      "id": "nable-zero-days",
+      "headline": "N-able, 제로데이 30건 넘게 공개되자 플랫폼 오프라인 전환",
+      "summary": "보안 연구자가 30건이 넘는 제로데이 취약점을 공개하자 N-able이 호스티드 N-central 환경을 오프라인으로 전환하고 온프레미스 고객에게 서버 중단을 권고했다."
+    }
+  ],
+  "keywords": [
+    "앤스로픽",
+    "Mythos 5.2",
+    "젠슨 황",
+    "나스닥 IPO",
+    "에이전트",
+    "데이터 유출"
+  ],
+  "mainEvent": "앤스로픽 신모델·IPO 동시 공세",
+  "keynums": [
+    {
+      "val": "20%",
+      "lab": "GPT-6 Astra 대비 가격",
+      "sub": "Fortune 보도"
+    },
+    {
+      "val": "4%",
+      "lab": "엔비디아 주가 하락",
+      "sub": "이사회 조사 개시 후"
+    },
+    {
+      "val": "10센트",
+      "lab": "Muse Ember 입력 단가",
+      "sub": "100만 토큰당"
+    },
+    {
+      "val": "220만 건",
+      "lab": "세가 구독자 이메일 노출",
+      "sub": "ARARA 침해"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "11/09 00:00",
+      "d": "엔비디아 스파이 스캔들 경위 정리 보도"
+    },
+    {
+      "t": "11/09 22:00",
+      "d": "OpenAI 컨트롤 룸 공식 문서 공개"
+    },
+    {
+      "t": "11/10 03:00",
+      "d": "메타 Muse Ember 공개"
+    },
+    {
+      "t": "11/10 04:24",
+      "d": "앤스로픽 Mythos·Fable 출시 보도"
+    },
+    {
+      "t": "11/10 04:59",
+      "d": "앤스로픽 나스닥 IPO 상장 임박 보도"
+    },
+    {
+      "t": "11/10 07:09",
+      "d": "세가 뉴스레터 유출 공개"
+    }
+  ],
+  "intro": "11월 10일 화요일 발행. 앤스로픽이 신모델 공개와 나스닥 IPO를 하루에 묶었고, 엔비디아는 경영진 조사 여파가 주가와 법무 문제로 번지는 날입니다.",
+  "analysis": [
+    {
+      "id": "anthropic-mythos-fable",
+      "n": 1,
+      "title": "1. 가격 구조가 먼저 움직인 프론티어 모델 경쟁",
+      "bullets": [
+        "과학·코딩 과제 개선이 이번 버전 중심 축",
+        "RSI 우려가 커지는 시점의 프론티어 출시",
+        "IPO 일정과 맞물린 가격 공세"
+      ],
+      "body": [
+        "앤스로픽이 새 프론티어 모델인 클로드 Fable과 Mythos 5.2를 공개했습니다. Fortune 보도에 따르면 가격은 OpenAI의 GPT-6 Astra보다 20% 낮게 책정됐습니다.",
+        "이번 출시는 다리오 아모데이가 모델 개발 속도 조절을 주장한 이후 나온 첫 프론티어 모델이라는 점에서 CNBC가 맥락을 짚었습니다. SiliconANGLE는 과학과 코딩 과제에서의 성능 개선이 이번 버전의 중심이라고 전했습니다. TechCrunch는 RSI, 즉 재귀적 자기개선 우려가 커지는 가운데 나온 출시라는 점을 주목했습니다.",
+        "다만 20% 저가의 기준이 입력·출력 토큰 중 어느 쪽인지, 성능 주장이 어떤 벤치마크로 측정됐는지는 아직 확인되지 않았습니다. RSI 우려가 실제 안전 문제로 이어졌는지 여부도 독립 검증 이전입니다. IPO를 앞둔 시점의 출시라 상징성이 큽니다. 가격 경쟁이 프론티어 모델 시장의 새 기준선이 될지 지켜볼 대목입니다."
+      ],
+      "extra": "",
+      "takeaway": "성능보다 가격 구조가 먼저 달라진 지점입니다. 도입 예산 담당자는 GPT-6 Astra와의 과제별 원가 비교를 비교 기준으로 삼으면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNQ2Yta1hDZm1QakE4S2RXZTd0UXR0N2V5QVdtdFNxQVBZQW9XVklvODB3WGR1Wmc3Vk5tV1VoX1ltVHVEd0liM2Fka1Q2NS1nRVdMSWZKLVJQTUd6Wm9xd3JWWGlwX2M3Mkl2cjlIS0pSdUFmZEdWaWtkQnItbmRvaVRudDFnVXdGMmY4Vi1aLU9ma2RDM2VWd2loMGI3aE1i?oc=5",
+          "kind": "doc",
+          "origin_url": "https://techcrunch.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNZXh5WWJvWmxMbkZBakNhNWhkR3R2YnFvS2Uwc3JuOFlPOGh0aU1mbWZXZEJJU0xuRDZ2TW1nLXdyMWxnWllFcnRnRGlHWDJBdWUxdHJaR1NIZDc5Y0djdEliTUhGTDlxazlFbER1cmZyTk9udlJ1eHJxRHo1cmlKV2QtMW0yVTFaVk55dFJJVE9DRVYyM21nMXl0eEVzVEVxR1lVVGJWb2lzNDl1MmJONWVsc2ZET2VST3dEUUxGQWdIeFFkQjB6TnlKY0M5WmFqck80Q1VaSHQ?oc=5",
+          "kind": "doc",
+          "origin_url": "https://fortune.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPTkdMd0hfb1Z0amJnRVNBWFViSlJxYUpTYjJzN0dhc1k1NHphNTNONnR3Z1Jqd3czVmVfMk5ubncwVVlJZDIzMktLQVlJRThET3ZaUTV6MF9jQlVnYV9ST2RPX3NKWms4SlRHYjJ5VklfZVY1Z3VsRE01bUpORmJyaFpqdTFkU1pIMWxzdVU0XzdHWFJMOVd6cnNuMjdLYnppdEdnaGYtOHlFZXZQaFE?oc=5",
+          "kind": "doc",
+          "origin_url": "https://siliconangle.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1EZ19OSTNSY1dhR3hRS1h5MWdBMnQtbDBZRG9lNUl6c2Z3Sy1hYlh2LUY2elVFd1BzbUVrYkdHcC1XQVBuTFZ3d2p3ME9uTkRRb0k5NE1OdjB1eU5XNFFWb3pTcTd1OUw0cTF2Ynd4M25tSGFQaHdhVFFoZVZyR1U?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.cnbc.com"
+        }
+      ]
+    },
+    {
+      "id": "nvidia-huang-probe",
+      "n": 2,
+      "title": "2. 경영진 리스크가 사업 전략으로 번지는 국면",
+      "bullets": [
+        "이사회 조사 개시 후 주가 4% 넘게 하락",
+        "수출 통제 완화 로비에 미칠 영향 논란",
+        "증권 소송 가능성은 전문가 추정 단계"
+      ],
+      "body": [
+        "엔비디아가 젠슨 황 CEO와 의심되는 중국 간첩 관련 내부 조사를 시작한 것으로 알려졌고, 주가는 4% 넘게 하락했습니다. 트럼프 대통령은 FBI가 해당 사안을 검토 중이라고 언급하면서도 사안 자체를 축소하는 입장을 냈습니다.",
+        "The Verge 정리에 따르면 황 CEO는 메가스피드 임원 앨리스 황과의 관계를 인정했고, 회사 조사와 각국에서의 논의가 이어지고 있습니다. TechCrunch는 이 사안이 미국의 대중국 반도체 수출 통제 완화 로비와 중국 시장 접근 전략을 복잡하게 만들 수 있다고 짚었습니다.",
+        "다만 간첩 혐의 자체는 아직 미확정입니다. 소송 가능성 역시 증권법 전문가의 추정일 뿐 실제 제소는 이뤄지지 않았습니다. 보도는 회사 내부 조사 진행 사실을 전하는 수준이라는 점도 함께 읽어야 합니다. 한국 스타트업 투자 확대 등 최근 발표된 사업 확장 일정에도 변수가 될 수 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "수출 통제 로비와 해외 투자 일정에서 읽히는 의미는 리스크 관리의 문제입니다. 기업 IR·조달 담당자는 조사 결과 발표 시점부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Verge AI",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1030422/nvidia-jensen-huang-ai-china-alice-huang",
+          "kind": "doc"
+        },
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/09/jensen-huangs-affair-with-alleged-chinese-spy-puts-nvidias-china-ambitions-under-scrutiny/",
+          "kind": "doc"
+        },
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/09/the-race-is-on-to-sue-nvidia/",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNMHY0S2NqZlJFdng2STBzMW5Ybjd1cjdGR29LZUsyTmtRT2xJRGVmOWs1b1IwSGc2T2V1Y3o0YTAySmgtLXg2TlNYLXg2T3VuTTdSa1RTdmRDa0hmc25kVDZmem15Y3JmcWktM3E4UVNpazVtNnRKYnBTZUtNN2FRcXBDUXdTOTdOZkxJYjVUUkHSAZgBQVVfeXFMT1JibzNHQi1rMnpRdDBUN0ZyX1Mzd2RielpPR01DNkxvYXRTakt0eVJOdE41NWU5U2Y5TWdHOGRvaWVqTXE3REVhTkRJWlBRQ1FSZmR0dnFWZmM1OUdEUFB0aWs3cFJuTmpSUFJxQ25Pck1BXzRPRkFkcGxGdkNtOU03LVFDbG5Nb0NBUGR6V2xPQUdLbEdvcnA?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.nbcbayarea.com"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-ipo",
+      "n": 3,
+      "title": "3. 모델 공세와 상장이 하루에 겹친 이유",
+      "bullets": [
+        "나스닥 IPO 화요일 오전 개시",
+        "같은 날 프론티어 모델 두 종 공개",
+        "공모가 등 세부 수치는 미확정"
+      ],
+      "body": [
+        "International Financing Review 보도에 따르면 앤스로픽이 나스닥 IPO를 화요일 오전에 시작합니다. 신모델 공개 소식과 같은 날 겹치면서 회사의 투자 설명 방향이 주목됩니다.",
+        "경쟁사 대비 20% 낮은 가격 정책은 상장 직전 기업의 성장 전략을 보여주는 대표 사례로 읽힙니다. 프론티어 모델 경쟁에서 가격이 곧 시장 점유율 논쟁으로 이어지는 흐름과 맞닿아 있습니다. 다만 공모가, 주식 수, 유통 규모 같은 구체 수치는 아직 미확정입니다. 상장 첫날 거래는 변동성이 클 수 있다는 점도 감안해야 합니다. AI 기업 공개 시장의 온도를 가늠할 시금석이 될 전망입니다."
+      ],
+      "extra": "",
+      "takeaway": "AI 기업 공개 시장 전반에 미칠 영향이 큽니다. 포트폴리오 담당자는 상장 첫날 거래 데이터를 체크리스트에 넣어 두시면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNYzdlaUtxUHZyU2VDWHhmZW82QjlBRXlzOUdCUWpTSGhkWmxZVU03ZXN1TXctS1Z0NkhVOFdmZWlJRzQ3SGNoaFJBMmIxLXJ1LUlBaFVQaHRGbkx4RlZENGIxY3lpVjc3Z1RZcFljWThKV0pjLW14a0laT1k4TERXWHM4cDFVby00bXFOYQ?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.ifre.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQeG1kbl9Vazl3RTVuZmFwdkQ0cF81Z0VrWHdlZ3dmb3hiVkdCaDU1MVd4b3UyTE5LX2twVW5IMTRBTi13TjdhaC1ZOUtKUVFSZlc5bGVRMk9NVF9SUzY4bG54RWtMX1JIOHJkeG5hbG5OUW9xTmE0Z0dOYzJXU2tnZTU4ZGI4XzVQY1dibWtKWkw2c0tLVWotVC1Eb3NQSzVqWVE?oc=5",
+          "kind": "doc",
+          "origin_url": "https://thedefiant.io"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTFB2VjJmaUxYTHNlQ3VoVnRla3ZjTXg4MU11MDRNTkx3U1g3ZTQtR0RVeGFaNGFpWllnMU9hQ2Vka3AyQkcxSlFFVHZDU3FSMDIwQ0JzSWtacUdvYUNBcF80SXdIWl9iQ2dkcllwZ3BCVDJKUXdUQlhJag?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.cnbc.com"
+        }
+      ]
+    },
+    {
+      "id": "openai-control-room",
+      "n": 4,
+      "title": "4. 연구 인프라 전체를 멈출 수 있는 안전 장치",
+      "bullets": [
+        "연구 인프라 전체 워크로드 추적",
+        "안전·보안 우려 시 신속 중단",
+        "작동 범위 세부는 공개 문서 수준"
+      ],
+      "body": [
+        "OpenAI가 연구 인프라 전체에서 모델 워크로드를 추적하고, 안전이나 보안 우려가 생기면 신속하게 중단할 수 있는 '컨트롤 룸'을 공식 블로그에서 소개했습니다. 프론티어 모델 훈련과 실험을 통제하는 중앙 체계입니다.",
+        "프론티어급 모델의 훈련 규모가 커질수록 이상 징후를 일찍 끊는 인프라의 중요성이 함께 커진다는 배경에서 나온 발표로 읽힙니다. RSI 논쟁이 커지는 시점과도 맞닿아 있습니다.",
+        "다만 중단 판단 기준과 적용 범위의 세부는 공개 문서 수준이며 외부 검증은 이뤄지지 않았습니다. 실효성 평가는 앞으로 운용 사례가 쌓여야 가능합니다. 업계 전반의 안전 인프라 설계 논의에 참고 사례가 될 것으로 보입니다."
+      ],
+      "extra": "",
+      "takeaway": "안전 인프라가 중요해진 이유는 모델 규모가 커질수록 중단의 어림 없는 비용도 함께 커지기 때문입니다. MLOps 담당자는 워크로드 킬스위치 설계를 자사 파이프라인에 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/index/control-room",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "meta-muse-ember",
+      "n": 5,
+      "title": "5. 에이전트 실행 단가를 노린 저가 모델",
+      "bullets": [
+        "에이전트 실행 전용 경량 모델",
+        "입력 100만 토큰당 10센트 가격",
+        "Haiku·Luna 등 프론티어 대비 저가"
+      ],
+      "body": [
+        "메타가 에이전트 실행용 경량 모델 Muse Ember를 공개했습니다. TechCrunch 보도에 따르면 입력 100만 토큰당 10센트로, Haiku나 Luna 같은 프론티어 경쟁 모델보다 상당히 저렴합니다.",
+        "에이전트를 대량으로 돌리는 서비스에서는 회당 토큰 비용이 수지를 가르는 핵심 변수입니다. 경량 모델을 이 지점에 정확히 맞춘 것이 이번 출시의 포지션입니다.",
+        "다만 10센트는 입력 토큰 기준 가격이며, 출력 가격과 실제 과제 성능 비교는 아직 확인되지 않았습니다. 저가가 곧 총소유비용 절감으로 이어지는지도 과제별로 다를 수 있습니다. 에이전트용 모델의 단가 인하 경쟁이 본격화되는 신호로 읽힙니다."
+      ],
+      "extra": "",
+      "takeaway": "에이전트 실행 단가 구조가 바뀐 대목입니다. 에이전트 서비스 기획자는 기존 모델 대비 원가 시뮬레이션을 먼저 시험해 보면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/09/meta-releases-muse-ember-a-new-lightweight-model-for-agent-execution/",
+          "kind": "doc"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNQ1hPbVRFWTJ3Wjc2UU56RWNONURfQ0l5MXMxblI2dlE0WHhWWERVbHMtYmJrUW5qd2RsbWZ1WWtFR3VJcFROSVFtV0RHVVZJQWxVU3FzMWZ1cElFVkp0MVdGa0Jtc2tvWjIyalNVVGQ3Z1RjX1FIMHJHZVFQcnJXRlVDX25NU3BoWlRBVk1Ja0huVzM2dDVsU0tmaDVvLVA0UEhzV1picTFqRHk2emlTTTJmdjIyN3pu?oc=5",
+          "kind": "doc",
+          "origin_url": "https://www.marketscreener.com"
+        }
+      ]
+    },
+    {
+      "id": "sega-newsletter-breach",
+      "n": 6,
+      "title": "6. 제3자 벤더가 뚫린 뉴스레터 유출",
+      "bullets": [
+        "제3자 제공사 ARARA 경유 침해",
+        "구독자 이메일 220만 건 노출",
+        "피싱·스팸 2차 피해 리스크"
+      ],
+      "body": [
+        "세가가 제3자 뉴스레터 제공사 ARARA의 데이터 침해로 구독자 이메일 주소 220만 건이 노출됐다고 공개했습니다. BleepingComputer 보도에 따르면 일본 게임 기업의 구독자 목록이 외부 벤더 경로로 유출된 사안입니다.",
+        "뉴스레터 발송을 외부 SaaS에 맡기는 구조는 흔하지만, 고객 데이터의 실제 처리 주체가 계약서 속 어디에 있는지 다시 보게 하는 사례입니다. 이메일 주소만 노출되더라도 표적 피싱의 재료가 됩니다.",
+        "다만 유출 범위가 이메일 주소에 그치는지, 이름·이용 이력 같은 추가 정보가 포함됐는지는 발표 본문 확인이 필요합니다. 침해 수법과 경위도 아직 상세 공개 단계는 아닙니다. 외부 벤더 접점이 많은 조직이라면 이번 사안이 점검 계기가 될 수 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "제3자 벤더가 유출 경로였다는 점이 계약 책임의 경계를 다시 보게 하는 의미입니다. 보안 담당자는 외부 뉴스레터 벤더의 데이터 처리 조항을 점검 대상에 올려 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/sega-newsletter-data-breach-exposes-22-million-email-addresses/",
+          "kind": "doc"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "프론티어 모델 가격 기준이 20% 낮은 카드로 재설정",
+    "grow": "에이전트 실행 단가가 100만 토큰당 10센트로 내려옴",
+    "caution": "엔비디아 경영진 조사가 주가 4% 하락과 소송 논의로 확대",
+    "heat": "앤스로픽 모델·IPO 동시 진행에 관련 보도 다수"
+  },
+  "tips": [
+    {
+      "title": "컨트롤 룸 문서 원문 읽기",
+      "body": "OpenAI의 워크로드 추적·중단 체계 설명은 공식 블로그에 있습니다. 자사 MLOps 파이프라인의 킬스위치 설계와 비교해 보기 좋은 문서입니다.",
+      "via": "OpenAI News"
+    },
+    {
+      "title": "엔비디아·한국 협력 확대 흐름 확인",
+      "body": "엔비디아 공식 블로그가 반도체·데이터센터부터 스킬까지 아우르는 한국 협력 확대 소식을 정리했습니다. 경영진 조사와 별개 트랙으로 읽을 수 있습니다.",
+      "via": "NVIDIA Blog"
+    },
+    {
+      "title": "에이전트 원가 계산기 다시 열기",
+      "body": "Muse Ember 공개로 입력 100만 토큰당 10센트라는 기준점이 생겼습니다. 기존 모델 대비 회당 비용을 다시 잡아 보면 도입 판단이 달라질 수 있습니다.",
+      "via": "TechCrunch"
+    },
+    {
+      "title": "외부 뉴스레터 벤더 점검",
+      "body": "세가 사례처럼 제3자 발송사 경유 유출이 늘고 있습니다. 자사가 쓰는 외부 SaaS의 데이터 처리 조항과 발송 목록 보관 방식을 점검해 볼 시점입니다.",
+      "via": "BleepingComputer"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": true
+}
