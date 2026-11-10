@@ -38,7 +38,7 @@ ok("canon % 유지", _canon_num("30%") == "30%")
 ok("canon 배 유지", _canon_num("2배") == "2배")
 ok("canon 명 유지", _canon_num("100명") == "100명")
 ok("canon 개 유지", _canon_num("400개") == "400개")
-ok("canon 10x 유지", _canon_num("10x") == "10x")
+ok("canon 10x 유지", _canon_num("10x") == "10배")  # P18b: x→배 동등화 (2026-11-10 실측)
 
 # --- P0-4: NUM_RE S-1 lookbehind ---
 ok("S-1: GPT-4 제외", not NUM_RE.search("GPT-4 출시"))

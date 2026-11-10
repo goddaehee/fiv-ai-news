@@ -208,5 +208,66 @@ def dead_chat(payload: str) -> str:
 ok("수리: 호출 실패 시 False (기존 rc=4 경로 유지)",
    not _repair_missing_summaries(broken2, snap3, dead_chat))
 
+# ---------- 6. P18b: 영어 단위 단어형 (2026-11-10호 실측) ----------
+from validate import _canon_num
+
+ok("canon: '20x'와 '20배'는 같은 배수", _canon_num("20x") == _canon_num("20배"))
+ok("canon: '20 times'와 '20배'는 같은 배수", _canon_num("20 times") == _canon_num("20배"))
+ok("canon: '20배'와 '21배'는 다름", _canon_num("20배") != _canon_num("21배"))
+
+item_cr = _it("OpenAI News", "CodeRabbit ships 20x more code",
+              "https://openai.com/coderabbit",
+              summary="CodeRabbit ships 20x more code, reviewing 20 times faster.")
+by_cr = {url_core(item_cr["url"]): item_cr}
+a_cr = {"id": "coderabbit-20x", "sources": [{"url": item_cr["url"]}],
+        "bullets": ["출하량이 20배로 늘었다"], "body": [], "takeaway": "", "extra": ""}
+d = _numbers_grounded_detail(a_cr, by_cr)
+ok("단위 변환: '20배'는 20x/20 times 근거로 통과", d["grounded"])
+
+item_kk = _it("OpenAI News", "Kuken searches drawings in minutes",
+              "https://openai.com/kuken",
+              summary="A repair drawing search now takes 4.5 minutes, down from nearly an hour.")
+by_kk = {url_core(item_kk["url"]): item_kk}
+a_kk = {"id": "kuken", "sources": [{"url": item_kk["url"]}],
+        "bullets": ["검색이 거의 1시간에서 4.5분으로 단축"],
+        "body": [], "takeaway": "", "extra": ""}
+d = _numbers_grounded_detail(a_kk, by_kk)
+ok("단위 변환: '4.5분'·'1시간'은 minutes/an hour 근거로 통과", d["grounded"])
+a_kk2 = dict(a_kk)
+a_kk2["bullets"] = ["검색이 2시간으로 단축"]
+d = _numbers_grounded_detail(a_kk2, by_kk)
+ok("단위 변환: 근거 없는 '2시간'은 여전히 차단", not d["grounded"])
+
+item_em = _it("TechCrunch AI", "Meta releases Muse Ember",
+              "https://techcrunch.com/ember",
+              summary="At 10 cents per million input tokens, Ember is cheaper.")
+by_em = {url_core(item_em["url"]): item_em}
+a_em = {"id": "ember", "sources": [{"url": item_em["url"]}],
+        "bullets": ["100만 토큰당 10센트"], "body": [], "takeaway": "", "extra": ""}
+d = _numbers_grounded_detail(a_em, by_em)
+ok("단위 변환: '100만'은 per million 근거로 통과", d["grounded"])
+
+item_sg = _it("BleepingComputer", "SEGA breach exposes 2.2 million emails",
+              "https://bleepingcomputer.com/sega",
+              summary="The breach exposes 2.2 million email addresses.")
+by_sg = {url_core(item_sg["url"]): item_sg}
+a_sg = {"id": "sega", "sources": [{"url": item_sg["url"]}],
+        "bullets": ["100만 건이 노출됐다"], "body": [], "takeaway": "", "extra": ""}
+d = _numbers_grounded_detail(a_sg, by_sg)
+ok("bare 보강 제한: '2.2 million'만 있으면 '100만'은 차단", not d["grounded"])
+a_sg2 = dict(a_sg)
+a_sg2["bullets"] = ["220만 건이 노출됐다"]
+d = _numbers_grounded_detail(a_sg2, by_sg)
+ok("bare 보강 제한: '220만'은 2.2 million 근거로 통과", d["grounded"])
+
+item_pc = _it("Reuters", "Shares fall 4 percent on probe news",
+              "https://reuters.com/shares",
+              summary="Shares fell 4 percent after the probe was announced.")
+by_pc = {url_core(item_pc["url"]): item_pc}
+a_pc = {"id": "shares", "sources": [{"url": item_pc["url"]}],
+        "bullets": ["주가가 4% 하락했다"], "body": [], "takeaway": "", "extra": ""}
+d = _numbers_grounded_detail(a_pc, by_pc)
+ok("단위 변환: '4%'는 4 percent 근거로 통과", d["grounded"])
+
 print(f"P18 tests: {PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)
