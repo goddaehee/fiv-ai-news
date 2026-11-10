@@ -1267,6 +1267,11 @@ def _canon_num(s: str) -> str:
                 return f"mag:{int(val.to_integral_value())}"
             except InvalidOperation:
                 pass
+        # P18b: 배수 표기 동등화. 입력 "20x"·"20 times"와 출력 "20배"는 같은
+        # 배수인데 표면이 달라 미근거로 오탐됐다 (2026-11-10호 실측:
+        # 허용 목록에 '20x', '20 times'가 있는데도 '20배'가 2 attempt 연속 차단).
+        if unit in ("x", "times"):
+            return f"{num}배"
     # 크기 단위가 아니면 기존 동작: 영문 단위 약어화 + 소문자 + 공백 제거
     t = re.sub(r"\bbillions?\b", "b", t)
     t = re.sub(r"\bmillions?\b", "m", t)
@@ -1374,6 +1379,49 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
                 if norm not in input_nums:
                     input_nums.add(norm)
                     allowed_raw.append(m.group(0))
+            # P18b: 영어 단위 단어형 보강 (전부 2026-11-10호 실측 오탐).
+            # NUM_RE는 기호·한국어 단위만 잡아, 영어 단어형 단위는 입력에
+            # 있어도 집합에 못 들어갔고 LLM의 정확한 한국어 변환이 차단됐다.
+            # 입력 스캔에서만 한국어 canon으로 연결한다 (출력 추출은 불변).
+            for m in re.finditer(r"(\d+(?:\.\d+)?)\s*(?:percent|per\s?cent)\b", text, re.IGNORECASE):
+                norm = f"{m.group(1)}%"
+                if norm not in input_nums:
+                    input_nums.add(norm)
+                    allowed_raw.append(m.group(0))
+            for m in re.finditer(r"(\d+(?:\.\d+)?)\s*(?:minutes?|mins?|min)\b", text, re.IGNORECASE):
+                norm = f"{m.group(1)}분"
+                if norm not in input_nums:
+                    input_nums.add(norm)
+                    allowed_raw.append(m.group(0))
+            for m in re.finditer(r"(\d+(?:\.\d+)?)\s*(?:hours?|hrs?|hr)\b", text, re.IGNORECASE):
+                norm = f"{m.group(1)}시간"
+                if norm not in input_nums:
+                    input_nums.add(norm)
+                    allowed_raw.append(m.group(0))
+            # 관사+시간 단위는 수량 1이 확정적 ("nearly an hour" → "약 1시간").
+            # half/quarter가 앞선 경우는 제외한다.
+            for m in re.finditer(r"(?<!half )(?<!quarter )\ban?\s+hour\b", text, re.IGNORECASE):
+                if "1시간" not in input_nums:
+                    input_nums.add("1시간")
+                    allowed_raw.append(m.group(0))
+            for m in re.finditer(r"(?<!half )(?<!quarter )\ban?\s+minute\b", text, re.IGNORECASE):
+                if "1분" not in input_nums:
+                    input_nums.add("1분")
+                    allowed_raw.append(m.group(0))
+            # 숫자 없는 단수 magnitude 단어 ("per million input tokens" →
+            # "100만 토큰당"). 같은 텍스트에 숫자형("2.2 million")이 있으면
+            # 그쪽이 정확하므로 bare 보강은 건너뛴다. 복수형(millions)은
+            # \b 경계에서 걸러진다.
+            if not re.search(r"\d\s*million", text, re.IGNORECASE):
+                for m in re.finditer(r"\bmillion\b", text, re.IGNORECASE):
+                    if "mag:1000000" not in input_nums:
+                        input_nums.add("mag:1000000")
+                        allowed_raw.append(m.group(0))
+            if not re.search(r"\d\s*billion", text, re.IGNORECASE):
+                for m in re.finditer(r"\bbillion\b", text, re.IGNORECASE):
+                    if "mag:1000000000" not in input_nums:
+                        input_nums.add("mag:1000000000")
+                        allowed_raw.append(m.group(0))
     if not matched:
         return out
     out["joined"] = True
