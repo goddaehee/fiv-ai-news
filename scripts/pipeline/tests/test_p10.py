@@ -83,7 +83,10 @@ ok("ref 0→URL", out["analysis"][0]["sources"][0]["url"] == "https://blog.a.com
 ok("ref 1→URL + origin_url 유지",
    out["analysis"][0]["sources"][1]["url"] == "https://news.google.com/rss/articles/CBMix"
    and out["analysis"][0]["sources"][1]["origin_url"] == "https://tech.example.org/b-analysis")
-ok("ref 1 handle", out["analysis"][0]["sources"][1]["handle"] == "B GNews")
+# P19: 중계 링크 라벨은 피드명이 아니라 실발행처 도메인 (이름 없으면 도메인만),
+# kind도 doc이 아니라 news로 교정된다.
+ok("ref 1 handle", out["analysis"][0]["sources"][1]["handle"] == "tech.example.org")
+ok("ref 1 kind", out["analysis"][0]["sources"][1]["kind"] == "news")
 ok("무효 ref 제거", out["analysis"][1]["sources"] == [])
 ok("구형 URL 역조회", out["analysis"][2]["sources"][0]["url"] == "https://blog.a.com/post1")
 ok("hollow 빈 채", out["analysis"][3]["sources"] == [])

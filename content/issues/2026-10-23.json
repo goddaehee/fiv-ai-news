@@ -119,27 +119,27 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Anthropic GNews",
+          "handle": "TechCrunch · techcrunch.com",
           "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQUmgyb1ZobDFPVTdQcnNCbTIwR2EzODI3TmRwUGEyWl92eDY3OV83UVh3LXVfekJpNldLdlBXSW1oQlN0Z0MyRTNvUG1NSHRnTGg0NzBhSUFXbm41NFRIQjNObVNCV0xQS2xxWi1YaHpxN1dEOWtLZnUxRzBNMlJCc3lSTXI?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://techcrunch.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "Barron's · barrons.com",
           "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQTHp3Y2NHeEJpRWJZb3NBV3ljWjNDVDMtNE55Vjc2VS00SWJNUmY0dkw0UkwzUjU0RVZDQUprRnZINURJVFVfNTB6SV9FOUIzWFJhY1ltdEdfVS12QU5NZFNXbkpBQktEYUQ3a2lZUXpqLXNiY3R1MzZFWTQxNlJ6UzlXLVdQdWUzR0I4?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.barrons.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "CNET · cnet.com",
           "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQMU1UUHJzQzRhdmIwWUxYZUpCRGk5bDBDeXpwZmFoYU43Mk9iRmZvYWYwbFBGZXZpMUtZSUhIVmhSUEpkby1NVEgzLXJ5S2UyQXNfRmtMYnRLblV1aUltcmswc3NvQy0xQnFwQmRlVnB6eG54WXl6LU5tMlhZR3hpa19RdXFlWUt1VXF1Ni1nVkZ1ZmNCTTJwZ0pEd2s?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.cnet.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "rdworldonline.com",
           "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQZktXSVlYU0o4REc3S09jeXZBZkx3M0NZSElBS05HMTNaZXlVcDFHeWZYR29uck80X3pZYWw5MmtiOEFfbER1RUV6aWhHOEl5eTZZdnZzZ2RfeEM3cTlVMTlxajNzRUE5LXZVcDB3R1RkWmZfQUJDMUNVZndjc2VuYXJxQ2s5U09UenhJVmFpb0Vmc2RFLVRjYzI2d19odGxKMzNDbEZyZXZRYWJianc?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.rdworldonline.com"
         }
       ],
@@ -173,12 +173,12 @@
         {
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/litellm-release-pipeline-hacked-to-distribute-info-stealer-malware/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
-          "handle": "Google News AI",
+          "handle": "CSO Online · csoonline.com",
           "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNeDRyenppemRjendmY0ZULXRYTi1ZbTZvQ0hwQ290RmI4cGhvcmlrd3lIZzJ0d0xjbHNPdWtsRDZZWWxHeUIybk5mMnpoNW1GX1kyUS02QlhvSnYyLXF0Mk5oSFBlcmVvcUZsRFlscmsxLWh6VkZ6YTZvYmF4MmxMYnVuanREeC1vejVLQk1nU1REVEpjVC1UUFY4NUpHVEZGd0ZCcFY0UUlMLU8tSFRPaWlqT3NmV2dRNFFUbw?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.csoonline.com"
         }
       ],
@@ -212,12 +212,12 @@
         {
           "handle": "The Hacker News",
           "url": "https://thehackernews.com/2026/10/arista-warns-of-critical-velocloud-sql.html",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/arista-patches-new-velocloud-orchestrator-zero-day-exploited-in-attacks/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -251,17 +251,17 @@
         {
           "handle": "The Hacker News",
           "url": "https://thehackernews.com/2026/10/php-issues-emergency-patches-for-two.html",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/php-ships-emergency-patches-for-critical-php2shell-flaws/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "The Hacker News",
           "url": "https://thehackernews.com/2026/10/php2shell-two-unpatched-critical-php.html",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -294,12 +294,12 @@
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/22/openai-working-on-new-30b-raise-at-1-25t-valuation-ahead-of-ipo/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
-          "handle": "Google News AI",
+          "handle": "Business Standard · business-standard.com",
           "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxNaXJKX0VKeUZUZTJTXzdWTHhRODhSZW52RUJHdk5sd1ZIbTBWbkdoZVpTSHpZYzdodlQ2LUVjd2tmVWxTejA1VnJpdEw2V25MOXNTa29yTU9DTzlNNGZKSmhONWRIcWJqS0JvN2o2MHNvR3dPX0tRZ0hpeG00VDlSaURSWXgyNUNQSkxWV2FwLWZvdmpMdzlmbUZMWmdPSmNYSnVUekJkSm9wVGJ2ajFuVVBsZjNDamxTNEN1VExtWmpUbU82U2tkM0tKbXE4OUlRcWVPNHZXSTBtQWdpaVF2aVBBel9pcVUwSzA2NW5Fdm1hZ9IB9wFBVV95cUxOb0ZQajNmaWhDN0lWcjdNX0Z5NlUxZ3ZUdm1sY1FrSXZRdVFwZlduZUpIcHZWY2laaFVfa1o1WkFhYWFoa2puaHhYMFZpa0ZjVjNBZVVVSjZUZWVSLXhNMlRmSTFFX3VBd0ZFSzc1bG5vdlQwMzROUDlNZXp4LTctUUQtMjVDbzRkdEZhc3dHQUZMVDYwT0ZsZmdidUZBRzEtdnh0QmMzQ3BEM0hyWXlIejlRbDFBUVA3dFNpbGpTdF9CMU1qcWRjM3RvQy1NSWt6cXF0cWhGV2tIbnRyYkJoSjhwS1V5SmZXVm5GNGVicnB2NDlhY29r?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.business-standard.com"
         }
       ],
@@ -336,15 +336,15 @@
           "kind": "doc"
         },
         {
-          "handle": "Google News AI",
+          "handle": "The Next Web · thenextweb.com",
           "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9ubVA5TkNEazRqUUVKU1NmNmQtLWM0N2hTVDUzdFgxVEdPLXE2WFlhazcybmVhWmM2eG5CaHF3YlVhVG1wbkVwZS1RSXFrdWFhWWpZV2hfcXZvUFlOdzlOcmZEOHJCWHVNZjVubDF3?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://thenextweb.com"
         },
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/22/uber-puts-all-30000-employees-on-chatgpt-work/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -387,5 +387,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

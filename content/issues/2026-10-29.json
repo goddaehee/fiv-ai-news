@@ -116,9 +116,9 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Google News AI",
+          "handle": "wdrbwave.com",
           "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPSEhFcEg2RVhhVS16N1lKMnpzaFFiSEtCT1BvdnMtQUJvY2VnNjByZnhOQjA3aG9MaDh0YV9xdnpwLUZ3WGxLVDRxZVRyM01LajBKclN1M0l3OVJzQWh6M1NuV3dMeUZ3TkJ0c21hV3RmUTY2NWpXbUVydWl3cDg2TTVDLUR4TmJWejNEaDFGUVlvcUVxS1pONtIBrAFBVV95cUxOLTlzRGpoQThRYzBzd2tmT2xfSUZ1TWo0UjRfZlY5SWI1Qkh2VFJHNTBWSmtxdlRWanczOGxtemVTQnpEc3psX1cxeEx5U2xiRE5SSXVuZ1Z2VGMyNFpjZWVnN2VlNnZ0Tk1IWTdpbndSNkpreWpCSWpDVjl1eDNuRHZvblNoTHJsNy0zWTJMOVlLbDNZQW1abkgyQmk3M1JqNUtOMlJfcVcwZ2xI?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.wdrbwave.com"
         }
       ],
@@ -154,12 +154,12 @@
         {
           "handle": "The Hacker News",
           "url": "https://thehackernews.com/2026/10/volt-typhoon-used-covert-silent-train.html",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/volt-typhoon-hides-zero-day-attacks-using-silent-train-framework/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -194,7 +194,7 @@
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/28/microsoft-recorded-10-billion-in-revenue-from-openai/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -229,7 +229,7 @@
         {
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/sony-isp-subsidiary-data-breach-exposes-25-million-customer-records/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -263,7 +263,7 @@
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/28/voice-ai-in-vogue-nvidia-releases-new-open-transcription-model/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "Hugging Face",
@@ -311,5 +311,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

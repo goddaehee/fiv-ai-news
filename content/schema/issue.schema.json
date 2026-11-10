@@ -103,7 +103,8 @@
               "properties": {
                 "handle": { "type": "string" },
                 "url": { "type": "string", "format": "uri" },
-                "kind": { "enum": ["hot", "talk", "rt", "doc"] }
+                "kind": { "enum": ["hot", "talk", "rt", "doc", "news"] },
+                "origin_url": { "type": "string", "format": "uri" }
               }
             }
           }
@@ -135,6 +136,7 @@
         }
       }
     },
-    "method": { "type": "string" }
+    "method": { "type": "string" },
+    "draft": { "type": "boolean" }
   }
 }

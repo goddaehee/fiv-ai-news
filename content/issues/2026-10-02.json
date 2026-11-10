@@ -405,14 +405,14 @@
       ],
       "sources": [
         {
-          "handle": "Google News AI",
+          "handle": "Google News · news.google.com",
           "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNMmpUdUtUSE9Bb3JSMDU4STdUb21sU3lmYl9NcFU0NmJ2d0hCbHlWQ1c1SFJrSUc1aXNtMXpKX3ozUzFSWWtPVWpjanVXeHpoU3VLbnFDNlJLV3hubDZJUTFFN0I2b1otWVVlOS1MeXZrVXlCWlk2Smp6amFNbXItMGR1dGRxVkNIc09mOHFfdnFDak1iT2NFU2R0cXAzX0tweldHMlBWNmdDTE51bl8xekdZSzVvUzh0VldF?oc=5",
-          "kind": "doc"
+          "kind": "news"
         },
         {
-          "handle": "Google News AI",
+          "handle": "Google News · news.google.com",
           "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNYndZZG5Fd0dmLXI2UVA5YkNnZ2NlTC1vcm4xM0Q1OTl3ajgxQ1o2Y3lBRkx3Yk0xVWVPWlVMTFZpbHh2ZFJSaF9aS3JMMldSUFNnWDN0bm9EYzluX0pYWG96a1g4OFRad2ItZWExazFEZnBUMHFLZ01OYi1rMWtPUXNRTnh4MkNhMlpwWlNTd2FWTGt0ZWViZlZ0UQ?oc=5",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },
@@ -470,9 +470,9 @@
           "kind": "doc"
         },
         {
-          "handle": "Google News AI",
+          "handle": "Google News · news.google.com",
           "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPVGc0Q29na2pWRTd6Y0NfV2tEbTlQSy04cnREZ01Mcm50QzhGSVo0SElmUmNFRGRIZFk5NGk2SFB2SzMzdmpoa1JlOXhSa0JpUm5xV0FyX1hDTzJudHBfNlo5am5fOFJfSEJzN2Q5cTVBWkFKdHVyODc1SzAtLXBpeVF0cm51OWZWSEwtUllFcThBUVRJSjhn0gGcAUFVX3lxTFBxWVpsTS1xeXh5d2lpRTk3S2ZKZzh5WkRLaGh4c2UtNzNIc204cFZwNVZLcEhVeXI3bmJ4S0dXSUFYNFFRUnZsOFRUSFpadTBmQjNHMWtKYkdITHRJNDJ5cjBmTkJLSnZ6Wm9DS0FXS1lBUFUzVVFFUFRJVmE1N2F0M2l3cjF0THdFSGlyS0xBZ0NFNkFueHltdlRvNA?oc=5",
-          "kind": "doc"
+          "kind": "news"
         }
       ]
     },
@@ -521,5 +521,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

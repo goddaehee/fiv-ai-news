@@ -44,7 +44,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. **sources는 그 기사가 다루는 바로 그 이야기의 아이템에서만** 고른다. 다른 이야기의 아이템을 넣으면 출처 오염으로 호 전체가 폐기된다. **같은 이야기를 다룬 다른 매체의 아이템은 교차보도 출처이므로 함께 넣어도 되고, 가능하면 2~3개를 넣는다.** 그 이야기의 아이템이 1개뿐이면 1개만 넣는다. 비어 있으면 호 전체가 폐기된다. example.com 금지.
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
-- kind는 hot|talk|rt|doc. 공식 블로그·문서는 doc.
+- kind는 hot|talk|rt|doc|news. 공식 블로그·문서만 doc. 언론 보도는 news, Google News 중계 링크도 news.
 - briefing 6~8 (중요도 순 선정. 뉴스가 적은 날은 5개도 가능 — 억지 채우기 금지), analysis는 briefing 상위 5~7개의 id와 1:1 (개수 규칙은 아래 별도 항목), bullets 3, body 3~4문단(문단당 2~3문장, 150~200자, 기사당 본문 합계 500자 이상), tips 4~5, keynums 4~6, timeline 4~6.
 - 본문 구성: 첫 문단=무슨 일인가(핵심 사실), 둘째 문단=배경·맥락(필요한 용어 풀이 포함), 셋째 문단=수치의 조건·한계·반론, 넷째 문단(선택)=전망·파급. 분량은 새 사실을 만들지 말고 배경 설명·맥락·비교·해석으로 채웁니다. 입력에 없는 세부 사실(인용·사례·수치)을 지어내면 호가 폐기됩니다. **본문 문단은 반드시 완전한 문장으로 끝냅니다** (…입니다/…됩니다 + 마침표). 명사형으로 끊긴 조각 문장(…전망, …해짐)으로 문단을 끝내거나 불릿 문구를 문단 끝에 이어붙이면 호가 폐기됩니다.
 - analysis 개수 규칙 (P15): briefing이 6개 이상이면 analysis는 **최소 5개**이며, 5개 미만이면 호 전체가 폐기됩니다. 어느 briefing에 analysis를 붙일지는 중요도 순으로 정하되, 입력의 main_topics(주요 버킷)에 속한 이야기가 우선이고 출처 도메인이 서로 겹치지 않게 고릅니다. analysis가 붙지 않은 briefing은 단신으로 둡니다. main_topics는 버킷 이름이라 briefing id와 글자 그대로 대응하지 않으니, 개수와 우선순위 판단에만 씁니다.
@@ -566,6 +566,44 @@ def _item_domain(it: dict) -> str:
     return extract_domain(str(it.get("origin_url") or it.get("url") or ""))
 
 
+def _is_relay_url(url) -> bool:
+    """Google News 중계(불투명 리다이렉트) 링크인가."""
+    return extract_domain(str(url or "")) == "news.google.com"
+
+
+def source_entry(it: dict) -> dict:
+    """P19: 수집 아이템 → 발행본 출처 항목의 결정적 조립 (라벨·kind 교정).
+
+    기존에는 피드명("Anthropic GNews")과 피드 kind(당시 전부 doc)를 그대로
+    복사해, 중계 링크까지 "1차 출처 포함" 배지를 받았다 (4차 평가 Codex P0).
+    - 중계 링크: 라벨은 수집 때 저장한 발행처 이름(publisher)과 실발행처
+      도메인으로 "Reuters · reuters.com" 형태. kind는 news로 강제한다
+      (중계지는 원문 문서가 아니므로 doc=공식 문서가 될 수 없다).
+    - 직행 링크: 라벨은 피드명(그 자체가 발행처·섹션명), kind는 아이템 kind.
+    """
+    entry = {
+        "handle": it.get("source") or "source",
+        "url": it.get("url"),
+        "kind": it.get("kind") or "doc",
+    }
+    if _is_relay_url(entry["url"]):
+        entry["kind"] = "news"
+        domain = extract_domain(str(it.get("origin_url") or ""))
+        name = str(it.get("publisher") or "").strip()
+        if name and domain:
+            entry["handle"] = f"{name} · {domain}"
+        elif domain:
+            entry["handle"] = domain
+        elif name:
+            entry["handle"] = name
+    if entry["kind"] not in KINDS:
+        entry["kind"] = "doc"
+    # P5: Google News <source url> 실발행처 — 검증기의 도메인 계산에 사용
+    if it.get("origin_url"):
+        entry["origin_url"] = it["origin_url"]
+    return entry
+
+
 def attach_sources(issue: dict, snap: dict,
                    ref_table: list[dict] | None = None) -> dict:
     """P10: 결정적 소스 조립.
@@ -615,15 +653,7 @@ def attach_sources(issue: dict, snap: dict,
                 continue
             used.add(ref)
             it = table[ref]
-            picked_src = {
-                "handle": it.get("source") or "source",
-                "url": it.get("url"),
-                "kind": it.get("kind") or "doc",
-            }
-            # P5: Google News <source url> 실발행처 — 검증기의 도메인 계산에 사용
-            if it.get("origin_url"):
-                picked_src["origin_url"] = it["origin_url"]
-            picked.append(picked_src)
+            picked.append(source_entry(it))
             picked_items.append(it)
             if len(picked) >= 4:
                 break
@@ -669,14 +699,7 @@ def attach_sources(issue: dict, snap: dict,
                          if _source_overlap(a, it) >= 1]
                 cands.sort(key=lambda it: -_source_overlap(a, it))
                 for it in cands[:2]:
-                    entry = {
-                        "handle": it.get("source") or "source",
-                        "url": it.get("url"),
-                        "kind": it.get("kind") or "doc",
-                    }
-                    if it.get("origin_url"):
-                        entry["origin_url"] = it["origin_url"]
-                    picked.append(entry)
+                    picked.append(source_entry(it))
                     picked_items.append(it)
                 if picked:
                     print(f"attach_sources: '{a.get('id')}' 빈 출처 복구: "
@@ -729,14 +752,7 @@ def attach_sources(issue: dict, snap: dict,
                 if (cand_dom and cand_dom not in cur_doms
                         and domain_counts.get(cand_dom, 0) >= quota_cap):
                     continue  # 보충이 쿼터 위반의 marginal 원인이 되지 않게
-                entry = {
-                    "handle": cand.get("source") or "source",
-                    "url": cand.get("url"),
-                    "kind": cand.get("kind") or "doc",
-                }
-                if cand.get("origin_url"):
-                    entry["origin_url"] = cand["origin_url"]
-                picked.append(entry)
+                picked.append(source_entry(cand))
                 picked_items.append(cand)
                 have.add(core)
                 outlets.add(_outlet_key(cand))
@@ -1214,13 +1230,21 @@ def normalize(issue: dict, snap: dict | None = None) -> dict:
 
 
 def published_lock(path: Path) -> bool:
+    """덮어쓰기 잠금. AGENTS.md 규칙 그대로: `draft` 키가 없는 호 =
+    손으로 고친 호라 파이프라인이 덮지 않는다.
+
+    P19: 예전 구현은 `not cur.get("draft")`라 draft:false(파이프라인이
+    발행 확정한 호)까지 잠갔다. 발행 확정(run.py finalize_publish)이
+    draft:false를 쓰기 시작하면, 같은 날짜 재발행이 sidecar로 빠져
+    이미지 이관(P13/P17)이 죽는다. 키 존재 여부로 판정하면 손편집 호는
+    계속 잠기고 파이프라인 발행 호는 재발행이 유지된다."""
     if not path.exists():
         return False
     try:
         cur = json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return False
-    return not cur.get("draft")
+    return "draft" not in cur
 
 
 # P15: preserve_images 유사도 매칭용 토큰화.
@@ -1542,7 +1566,9 @@ def skeleton(snap: dict) -> dict:
         briefing.append({"id": hid, "headline": headline, "summary": (top.get("summary") or headline)[:220]})
         if name not in main_names:
             continue  # 단신: briefing만, analysis 없음
-        src = {"handle": top["source"], "url": top.get("url") or "https://example.com", "kind": top.get("kind") or "doc"}
+        src = source_entry(top)
+        if not src.get("url"):
+            src["url"] = "https://example.com"
         analysis.append(
             {
                 "id": hid,

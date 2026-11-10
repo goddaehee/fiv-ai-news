@@ -126,12 +126,12 @@
         {
           "handle": "The Hacker News",
           "url": "https://thehackernews.com/2026/10/apple-backports-fix-for-exploited.html",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/apple/apple-backports-coregraphics-zero-day-patches-to-older-iphones/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -167,15 +167,15 @@
       ],
       "sources": [
         {
-          "handle": "Anthropic GNews",
+          "handle": "CBS News · cbsnews.com",
           "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9Yb0oxZW82VTM4UDliRHJ4eHpZQ0RqQmhRWXdjTnBvNVhLXzlFZmxkN2ZFdUJZYk4zT3dOUnJxQVVvcG9MZkZfX2YxUjlpZ2E4NzdFcG11dmU5dlpldWtnTGc0QTZDX2FxZGww?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.cbsnews.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "Bloomberg · bloomberg.com",
           "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOUVVta2t6RjJhRml3YzdnWHVHNFp2a0V5bnhHN1JobVJ6NlFTY01TVmxBb3k0WGVYanpWN1JDVkZYa2s3dXlVa3RJRklQYkNueDF3bWRIYklMZ0lzVFlkMm1hUzNzQ04ybkVNUjJQWTNacExrOVVDdVdiSEd5djVlc1FWcTdyelo1LWN5Z2JvaGtYb1N2YmoxSFNvVzNUbkk3?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.bloomberg.com"
         }
       ],
@@ -224,7 +224,7 @@
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/27/googles-genie-4-world-model-adds-audio-more-realistic-worlds-and-real-time-steering/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -300,7 +300,7 @@
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/10/26/spacex-locks-in-40b-gpu-financing-deal-with-apollo/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -348,5 +348,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

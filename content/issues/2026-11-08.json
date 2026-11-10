@@ -127,27 +127,27 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Anthropic GNews",
+          "handle": "Bloomberg · bloomberg.com",
           "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNSnFFOWdvbmtEcGNObXJldm1QTGRoeXRMbnQ1THZ6REh2bDE4V2U4VmNDbVdOWHRtNm9TaGdCbTBrZUotOWdNZWszbmNoSUpjWnlNN2NNZ1NUcUJPVWRKb2s2RTlPZ19hNGZoR28tSWllbWFzQ0FNTUdoYl9GODVmb1JSdElLd0l0dWFSTktsbFBqSW1YVFJ2SU90anhWZjNMT0RJaFJJWlpfTUVtaDduTw?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.bloomberg.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "tech-insider.org",
           "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPNWhmN2hDOWJDSWYtUGRIOVJoM3ZPYl9MR09xaDYxMWUzem1laU54Y0J4NkNxalctVy1GQTVFRkFERU0xajJQTXFFN3hTRUVFWU4xd0Ixbm0wcnFIT0FqU3JBbnM4ZHlmWXFDUTFGcFFSNDBpNFNaS2JyUlpuajc5Rlhqd1UxcnVvMVp4eTk1aDM?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://tech-insider.org"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "Yahoo Finance · finance.yahoo.com",
           "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPVUV6dVh5WUcxemZzTXRjYmcxcVRXUHRqSjhUcjZ2VVJjbVdWMi0yMWFaaWIwZUZfTndvQ19LZl9fQk55bElVYUFyeE9pa3RmNEFBak05WEFvRkhpeG1PdFkzZkw5ZnUtczlrSS1HaU44UENxSi1ZTy1LNWZrb3BZQXRhSDZhTVpXODFvRUF2NTFoNkhNSEtYYld4LWpTaHNqSUM5WHIwWVpQNDlCelh5OFJmT0Znc1hrbGJLWDdIaUJUeExMN05KQk5DZkMtVUhiQWc?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://finance.yahoo.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "The Wall Street Journal · wsj.com",
           "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPNVlmZWpuTHFFVDktVG9OaXlnVl9xSFliZFl4YXFRemVUZDFRRFFaajdEcnQ0b01sQTNJNDVDUkRaQXpLdEY3dGhVUjloVS16UHZIQ0cwUG5wQnpxaDcyX3lvX3A0VFZTb0xjMFBObUJKR3N5cVU2WFhqNzRMcEtjN09HQ3VKcnNIcy15V3VJUTdFRkk1OXhQYlNjMFpELUV0Y2o1MnNNa2dPd3lSN3JJdGM2Z0wzdw?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.wsj.com"
         }
       ],
@@ -182,7 +182,7 @@
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/11/06/openai-reportedly-raises-an-additional-11-billion-at-a-1-25-trillion-valuation/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -215,20 +215,20 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Google News AI",
+          "handle": "Tom's Hardware · tomshardware.com",
           "url": "https://news.google.com/rss/articles/CBMi4wJBVV95cUxPOHM5bTRmeUdpQ0tPcjRZWWlvSlZLQkFfRS1CWFVsQXRoaVlPVFl4VjhoeDdpUGViYXZiRFAtYUVxMnhzSHVkV1E2eGtXcldZbTgyM2tCSUMxS2xnVnphYWZTZkdPY3NYMkhxVjR5OVdQc2ZVX2doOUkzN0FKaE9GZ0ZCWFNPWmc0dGF1bkdnRTJpeVd1bVZrYU11QVliUnNvOFMzS1V4RUw5WlpmVVpvUmg0LTFzX2twSjFtekdGVldTbjhCUmZzbi1RcVVneVN4dENaSzlxa0VUWkNMSWllOVlwZktWZ0xQa1dpYjFTaGR6UVhvNFNtTWJHSzJSbVpDS3Z0Tk5pMG5OTTZQN0w5cm02TVoySncyN1EwWFlRVThBYzlPbTJVUm1GRWJrbnEwR3lvTmRqaVpwODhwRW5aSGNCSE1pd2hyWGFkc1FZMjM0VXFsRjBRU2hZeFBmX2lDanRF?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.tomshardware.com"
         },
         {
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/11/07/chinese-exec-was-recruited-to-spy-on-nvidia-ceo-according-to-us-intelligence-memo/",
-          "kind": "doc"
+          "kind": "news"
         },
         {
-          "handle": "Google News AI",
+          "handle": "Ynet News · ynetnews.com",
           "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBCbFJMM1M4ZjBBdHZ6SUxEcFBpM21qWFJtaTBPbFl0OEprM1JORHJvdURjeEp3ektKQUZJMWxEQ3lrTl9fOXdoREVDbTR4dGVoMmMyajkxVVZwRFBfNU8tUnFrdmJHbkFneFVzTg?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.ynetnews.com"
         },
         {
@@ -269,12 +269,12 @@
         {
           "handle": "The Hacker News",
           "url": "https://thehackernews.com/2026/11/openai-launches-gpt-6-cyber-after-ai.html",
-          "kind": "doc"
+          "kind": "news"
         },
         {
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/openais-new-gpt-6-cyber-ai-finds-81-firefox-flaws-948-linux-bugs/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -308,7 +308,7 @@
         {
           "handle": "Ars Technica",
           "url": "https://arstechnica.com/security/2026/11/chainalysis-says-hackers-stole-credentials-and-tokens-for-all-of-its-customers/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -356,5 +356,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }

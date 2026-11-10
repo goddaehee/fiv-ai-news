@@ -13,6 +13,7 @@ const KIND: Record<SourceKind, string> = {
   talk: "💬",
   rt: "🔁",
   doc: "📄",
+  news: "📰",
 };
 
 const KIND_LABEL: Record<SourceKind, string> = {
@@ -20,6 +21,7 @@ const KIND_LABEL: Record<SourceKind, string> = {
   talk: "댓글이 많이 붙은 글",
   rt: "리트윗 비중이 높은 글",
   doc: "공식 문서",
+  news: "언론 보도",
 };
 
 function shortTitle(title: string) {
@@ -214,7 +216,8 @@ export function ArticleView({
           </blockquote>
           <p className="src-row">
             <span className="src-lab">출처 {sec.sources.length}</span>
-            {/* 1차 출처 = kind "doc" (공식 문서·발표). validate.py KINDS 참고 */}
+            {/* 1차 출처 = kind "doc" (공식 문서·발표)인 직행 링크만. 언론 보도와
+                Google News 중계 링크는 kind "news"라 배지를 받지 않는다 (P19). */}
             {sec.sources.some((s) => s.kind === "doc") ? (
               <span className="src-trust" title="공식 문서·발표 포함">1차 출처 포함</span>
             ) : null}

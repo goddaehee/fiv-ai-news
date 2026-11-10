@@ -121,21 +121,21 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Google News AI",
+          "handle": "The Edge Singapore · theedgesingapore.com",
           "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPcDlFbnVzRzZmeVF2R0JPMHlNM291M3oxQ0JnVUMyRmVXZGRPUXhHVU9QQ1JqME9hUy0yeTVOSkFLUUp2RmZrc0tVM2hDOGZsU0Q4dDd0aFN1cG4wdEdMT3hZZEYwSVRIRzdua0Z6OWFCX0dZdGlPajVIem8xOC13S3pMdUtTRmd3N1ZsaERJeGFWWGxJRUI5ekt2emNZdGVucjJNSkN5cm53Ml85N010bWk3X2U?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.theedgesingapore.com"
         },
         {
-          "handle": "Google News AI",
+          "handle": "today.lorientlejour.com",
           "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOSEpJX2h1ZzIxV2NuY2ZwdFlGOUdrN2IxNlRrT2pFcXJueDhWa0M2TWxVSV91V0ZxYzdHR1pYYVRUNmh6eThyVzVfSGVtVjR2UDFaMTRKSnczUkZoTjlIdnhmM2xSbVBFS1dmRzN3cndRd0pJSGladTVxVk82RC1UM0NzSzE3clZHaXZaRHFybUppenRXbGNScW90eFVWOEQtN3NUeE1CekpIUXdMbXh1aWFsVFktM2dPaUd5eHBUTFJSbHRKQ1VLTWZJUWtZMUZfTXV1bDhB?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://today.lorientlejour.com"
         },
         {
-          "handle": "Google News AI",
+          "handle": "Moneycontrol · moneycontrol.com",
           "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQc1BxdkxaZEl2djNYVXl5TVFMX09fMEtubHdBRGtHOGh3VlVNd0pWdTZFdk1MQ1ZsQlBOdnYtOWMwODNyTmdfYUxQTlpEQV9QUjZneXdwNWdJcWJmd2IxVFVHaEhQSkhzbXRVQWp6SDJZMlRVVU5kZmhOUEhHbzd0TkttY0UtSGZHX3BwZW5qWXpQYWUwZGlzQUxXd0tlWXIzZ0xQVW40Z2pUQ1NrRzdwRjVRanp4Slp4Rzg3aEsxSllfZHU3RVk2R1pRcHY1cldPUDNKWEZB0gHbAUFVX3lxTFA5RXRwOHdKRE90N2N4dE8tbTBBUUdwT2RXTDRTbjhGUjFyMVFSZVo1ZXl5ZF94S1pJR185UVY4dGJ0X0dUODBTOEp6dUIwQ3lxc1A0R1lONVlvRDlEOHVMNnY5aDRvSVVRUE1fMnBESlBJUzhJa012RURQR0lvVVNUejNDbl9VSjJsbzR1UVZjNW1fTDJ1RzNtbXFNaHFNTVlUZnJWUHdKczRTdTFaQVJDbjl0Z3V1a0Itdmk1aE1sN1RuejdwUFFDREdxVU00X21rZUdCVldPMU9rVQ?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.moneycontrol.com"
         }
       ],
@@ -168,27 +168,27 @@
       "tags": [],
       "sources": [
         {
-          "handle": "Anthropic GNews",
+          "handle": "Yahoo Finance · finance.yahoo.com",
           "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNS29iWWxpY2dIOFdjaXVkOXpaajJVM1Fqd3lWRl9kUklMTHRreDdKbl9lMDY1Rk5jLWdUNHFfS0ROUDlSX1VmQkw3aEJRbmxhOTA2bUlSdmI5aG1LMWo4dHg1WDJ2cmNaQ0xJbllJRXBPXzY1Ry1vNHBWOVZiY3BNdVBsbGdJa1pQZkcyWHpJX0VVWHlHUmVsWWRHeHhaRUhNVERj?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://finance.yahoo.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "app.dealroom.co",
           "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQQ2hqeUl1NTRsM1MzSFRnU2J2S0Joa2FSalBndG5EM0VPMWlDYTE4U2tlU0lRRzRuRlk1RVFoREpORkcwYWFKUVMxLTl4eXR6S3JoOHVBZ19lT050NVJzYTc1M3c3UC1NYWFrSl91STdfOURjZXR6aGNIanNwdlRWUGlZVFQxSmhibVdnZW5vTklMRExoeDdEa2o3bE0xdF9uWlF4dVg2TmtrR2J0MDFKOTJBQQ?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://app.dealroom.co"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "The Motley Fool · fool.com",
           "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPd2I5TS10blhFdXZuZHFhRmEyYktmYnRJTU9WbkxpYnV1dE5FaFhlalg0bzVvT1JxNXJYeDZpLS1EVXZ4VjRBdG5pYnc5X0duaHhNemdudW1Ud1VfaTYwU2JkdUxfVWNpdVNnZG4wNWpWU3FLZndxVjhPNmVzVlZ4aEFmdUttMWNEOHJfQ3lWcE9EU1U3Z1dz?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://www.fool.com"
         },
         {
-          "handle": "Anthropic GNews",
+          "handle": "TechCrunch · techcrunch.com",
           "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOVXpfTXdqVDgtSDYzSkp0TmVFdW5yZ0lyRXdfNk9tdHY3d05BQzdvZ1ZLRXEyQ2FuWkdCRF9SRnBhNTFMRG5fN0VKT0tVUVNXZm92clZwOEh0Z2NPYlhRQWhxT1FZTWhkTmM1a2dOdFpvaU00UmY4S1lNWEEycnpZNjlzdWtubWpLWmEwQS1rRHNFWTBXRzdtWVNjQWlqaU1CazVYM01VcktOdDdJcFJkazdjSUVkVV9fUDJhaFIzVEFNV292QlJz?oc=5",
-          "kind": "doc",
+          "kind": "news",
           "origin_url": "https://techcrunch.com"
         }
       ],
@@ -223,7 +223,7 @@
         {
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/new-android-sms-of-death-exploit-can-remotely-crash-unpatched-phones/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -257,7 +257,7 @@
         {
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/chainalysis-discloses-data-breach-from-offensive-agentic-techniques/",
-          "kind": "doc"
+          "kind": "news"
         }
       ],
       "images": [
@@ -339,5 +339,5 @@
     }
   ],
   "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
-  "draft": true
+  "draft": false
 }
