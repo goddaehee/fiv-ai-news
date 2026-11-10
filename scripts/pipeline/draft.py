@@ -129,7 +129,7 @@ def pick_key(prefer: str | None = None) -> tuple[str, str, str, str] | None:
     return None
 
 
-def chat(url: str, key: str, model: str, user: str, *, effort: str | None = None, temperature: float = 1.0, timeout: int | None = None) -> str:
+def chat(url: str, key: str, model: str, user: str, *, effort: str | None = None, temperature: float = 1.0, timeout: int | None = None, system: str | None = None) -> str:
     # P7 (Grok C1): 기본 타임아웃 600 → 300으로 하향.
     # GitHub Actions step timeout(20분) 안에 3회 재시도가 들어가도록.
     # attempt별로는 main()에서 더 짧게 지정할 수 있음 (1차 300s → 2차 240s → 3차 180s).
@@ -138,7 +138,7 @@ def chat(url: str, key: str, model: str, user: str, *, effort: str | None = None
         "model": model,
         "temperature": temperature,
         "messages": [
-            {"role": "system", "content": PROMPT},
+            {"role": "system", "content": system or PROMPT},
             {"role": "user", "content": user},
         ],
     }
@@ -366,6 +366,33 @@ def _write_schema_sidecar(pipe: Path, date: str, attempt: int, message: str) -> 
         print(f"WARN schema sidecar failed: {e}", file=sys.stderr)
 
 
+def _balanced_span(text: str, start: int) -> str | None:
+    """start 위치의 '{'에서 균형이 맞는 '}'까지의 부분 문자열.
+    문자열 내부의 괄호·이스케이프를 건너뛴다. 균형이 안 맞으면 None."""
+    depth = 0
+    in_str = False
+    esc = False
+    for i in range(start, len(text)):
+        c = text[i]
+        if in_str:
+            if esc:
+                esc = False
+            elif c == "\\":
+                esc = True
+            elif c == '"':
+                in_str = False
+            continue
+        if c == '"':
+            in_str = True
+        elif c == "{":
+            depth += 1
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                return text[start : i + 1]
+    return None
+
+
 def extract_json(text: str) -> dict:
     text = text.strip()
     if text.startswith("```"):
@@ -377,7 +404,28 @@ def extract_json(text: str) -> dict:
     end = text.rfind("}")
     if start < 0 or end < 0:
         raise ValueError("model did not return JSON")
-    return json.loads(text[start : end + 1])
+    # P18: LLM 출력 변형에 strict 파싱이 깨져 attempt가 크래시(rc=1)로
+    # 죽던 문제 (실측: 10/27 'Expecting property name', 11/05 'Extra data',
+    # 11/09 'Invalid control character'). 단계적으로 완화된 파싱을 시도한다:
+    # 원본 구간 → 균형 구간 → 제어문자 허용(strict=False) → 트레일링 콤마
+    # 제거. 전부 실패하면 기존처럼 ValueError (fail-closed 유지).
+    spans = [text[start : end + 1]]
+    balanced = _balanced_span(text, start)
+    if balanced and balanced != spans[0]:
+        spans.append(balanced)
+    for cand in spans:
+        for strict in (True, False):
+            try:
+                return json.loads(cand, strict=strict)
+            except Exception:
+                pass
+        cleaned = re.sub(r",\s*([}\]])", r"\1", cand)
+        if cleaned != cand:
+            try:
+                return json.loads(cleaned, strict=False)
+            except Exception:
+                pass
+    raise ValueError("model did not return parseable JSON")
 
 
 def slug(s: str) -> str:
@@ -402,6 +450,41 @@ def _ref_table(snap: dict) -> list[dict]:
         seen.add(key)
         table.append(it)
     return table
+
+
+def _common_prefix_len(a: str, b: str) -> int:
+    n = 0
+    for x, y in zip(a, b):
+        if x != y:
+            break
+        n += 1
+    return n
+
+
+def _prefix_ref(url: str, table: list[dict]) -> int | None:
+    """P18: 긴 불투명 URL 복사 깨짐의 결정적 복구.
+
+    실측 (2026-11-03호): LLM이 Google News 토큰 URL(310자)을 복사하다
+    꼬리를 깨뜨려 208자만 일치 → url_core 정확 대조 실패 → 출처 전량
+    탈락 → 'sources ≥1' 미달로 발행 실패. 이 패턴이 실패 run 거의
+    전부에 등장한 지배 원인이었다.
+    최장 공통 접두가 120자 이상이고 2위보다 16자 이상 길 때만 유일한
+    복원으로 인정한다 (GNews 공통 앞부분 ~41자를 확실히 상회하는 기준).
+    짧은 URL·모호한 경우는 복원하지 않는다 (오부착 방지)."""
+    scored = sorted(
+        ((_common_prefix_len(url, str(it.get("url") or "")), i)
+         for i, it in enumerate(table)),
+        reverse=True,
+    )
+    if not scored:
+        return None
+    best_len, best_i = scored[0]
+    second = scored[1][0] if len(scored) > 1 else 0
+    if best_len >= 120 and best_len - second >= 16:
+        print(f"attach_sources: URL 접두 복구 ({best_len}자 일치) → "
+              f"{str(table[best_i].get('title') or '')[:50]}")
+        return best_i
+    return None
 
 
 def _src_title_tokens(title) -> set[str]:
@@ -509,6 +592,7 @@ def attach_sources(issue: dict, snap: dict,
         used: set[int] = set()
         for s in a.get("sources") or []:
             ref = None
+            url = ""
             if isinstance(s, dict):
                 # legacy 호환: ref 키 직접 표기 (P10b 이후 프롬프트 금지 —
                 # 프로덕션 LLM 경로에서는 도달하지 않음)
@@ -516,10 +600,17 @@ def attach_sources(issue: dict, snap: dict,
                 if ref is None:
                     # 구형/직접 URL 표기 호환: 테이블에서 역조회
                     url = _text(s.get("url") or s.get("href") or s.get("link"))
-                    if url.startswith("http") and "example.com" not in url:
-                        ref = ref_by_core.get(url_core(url))
             elif isinstance(s, (int, float)):
                 ref = int(s)
+            elif isinstance(s, str):
+                # P18: LLM이 {"url": ...}가 아니라 URL 문자열만 나열하는
+                # 형태도 수용한다 (형식 변형으로 출처가 전량 탈락하던 문제).
+                url = s.strip()
+            if ref is None and url.startswith("http") and "example.com" not in url:
+                ref = ref_by_core.get(url_core(url))
+                if ref is None:
+                    # P18: 정확 대조 실패 시 접두 복구 (긴 토큰 URL 복사 깨짐)
+                    ref = _prefix_ref(url, table)
             if not isinstance(ref, int) or ref in used or not (0 <= ref < len(table)):
                 continue
             used.add(ref)
@@ -555,6 +646,41 @@ def attach_sources(issue: dict, snap: dict,
                 print(f"attach_sources: '{a.get('id')}' 무관 출처 제거: {dropped}")
                 picked = [picked[i] for i in kept]
                 picked_items = [picked_items[i] for i in kept]
+        # P18: 빈 출처 복구 — LLM 출처가 전부 탈락하면 보충 패스
+        # (picked_items 전제)가 동작하지 않아 그 analysis가 그대로
+        # 'sources ≥1' 게이트에서 호 전체를 죽였다 (실패 run 지배 원인).
+        # analysis 텍스트와 제목 토큰 겹침이 강한(≥2) 아이템이 속한
+        # story group에서만 복구하고, 기준 미달이면 빈 채로 둔다
+        # (fail-closed 유지 — 무관 출처를 지어 붙이지 않는다).
+        if not picked:
+            scored = [(_source_overlap(a, it), i) for i, it in enumerate(table)]
+            strong = sorted(((ov, i) for ov, i in scored if ov >= 2),
+                            reverse=True)
+            if strong:
+                anchor = table[strong[0][1]]
+                anchor_core = url_core(str(anchor.get("url") or ""))
+                group_items = [anchor]
+                for g in story_groups(table):
+                    if any(url_core(str(it.get("url") or "")) == anchor_core
+                           for it in g["items"]):
+                        group_items = g["items"]
+                        break
+                cands = [it for it in group_items
+                         if _source_overlap(a, it) >= 1]
+                cands.sort(key=lambda it: -_source_overlap(a, it))
+                for it in cands[:2]:
+                    entry = {
+                        "handle": it.get("source") or "source",
+                        "url": it.get("url"),
+                        "kind": it.get("kind") or "doc",
+                    }
+                    if it.get("origin_url"):
+                        entry["origin_url"] = it["origin_url"]
+                    picked.append(entry)
+                    picked_items.append(it)
+                if picked:
+                    print(f"attach_sources: '{a.get('id')}' 빈 출처 복구: "
+                          f"{[str(it.get('title') or '')[:40] for it in picked_items]}")
         states.append((a, picked, picked_items))
     # QUOTA-001 시드: 1차 선택만으로 이미 등장한 분석 수를 도메인별로 집계
     domain_counts: dict[str, int] = {}
@@ -771,7 +897,7 @@ def thicken_take(take: str, bullets: list[str], title: str) -> str:
 # \b 대신 (?![0-9A-Za-z]) 사용 — \b는 한글 조사 앞에서 단어 경계로 인식하지 않음.
 # P10: 첫 분기에도 lookbehind 추가 (S-1 오탐: "v2배"·"a1개" 같은 영숫자 접미사 제외).
 NUM_RE = re.compile(
-    r"(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)"  # 기존 한국어 단위
+    r"(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분기|분|시간|일|명|개)"  # 기존 한국어 단위 (P18: 분기 추가 — "3분기"가 "3분"으로 잘리던 오탐 수정, 긴 단위를 먼저 매칭)
     r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|billion|million)?(?![0-9A-Za-z])"  # $200, $300B
     r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K)(?![0-9A-Za-z])"  # 70B (GPT-4 제외)
     r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|thousand|times)(?![0-9A-Za-z])"
@@ -1330,6 +1456,74 @@ def restore_images_from_disk(new_issue: dict, date: str, root: Path) -> int:
     return restored
 
 
+REPAIR_PROMPT = """당신은 '5분 AI 뉴스' 편집 보조입니다. 초안 JSON에서 누락된 briefing summary만 채웁니다.
+
+규칙:
+- summary는 headline을 복사하지 않고, 근거 문맥에 있는 사실만으로 1~2문장(120자 이내)으로 압축합니다.
+- 없는 사실을 지어내지 않습니다. 숫자는 근거 문맥에 있는 것만 씁니다.
+- 출력은 JSON 객체 하나만: {"summaries": {"<id>": "<summary>", ...}}"""
+
+
+def _repair_missing_summaries(issue: dict, snap: dict, chat_fn) -> bool:
+    """P18: briefing summary 통째 생략 샘플의 수리.
+
+    실측 (2026-11-06호 attempt 1): LLM이 briefing 전 항목(7개)의 summary를
+    생략한 샘플이 나와 attempt가 rc=4로 통째로 소모됐다. 같은 패턴이
+    10/25·10/27·10/30·11/02·11/04·11/05·11/07에도 반복됐다.
+    값을 코드로 합성(복제)하는 것은 금지(P10)이므로, 누락 항목만 근거
+    (같은 id analysis의 불릿·본문 + headline과 토큰이 겹치는 수집 아이템
+    요약)와 함께 LLM에 다시 써 달라고 요청한다. 전부 채워졌을 때만
+    True, 아니면 False → 호출부가 기존 SchemaError 경로를 따른다."""
+    briefs = [b for b in _list(issue.get("briefing")) if isinstance(b, dict)]
+    missing = [b for b in briefs
+               if not _text(b.get("summary") or b.get("dek"))]
+    if not missing:
+        return False
+    analyses = {_text(a.get("id")): a
+                for a in _list(issue.get("analysis")) if isinstance(a, dict)}
+    items = (snap or {}).get("items") or []
+    req = []
+    for b in missing:
+        hid = _text(b.get("id"))
+        headline = _text(b.get("headline") or b.get("title"))
+        ev: list[str] = []
+        a = analyses.get(hid)
+        if a:
+            bl = [_text(x) for x in _list(a.get("bullets")) if _text(x)]
+            if bl:
+                ev.append("같은 기사 분석 불릿: " + " / ".join(bl[:3]))
+            body = [_text(x) for x in _list(a.get("body")) if _text(x)]
+            if body:
+                ev.append("같은 기사 분석 본문: " + body[0][:300])
+        probe = {"title": headline, "bullets": [], "body": [], "takeaway": ""}
+        scored = sorted(((_source_overlap(probe, it), it) for it in items),
+                        key=lambda x: -x[0])
+        for ov, it in scored[:2]:
+            if ov >= 1 and it.get("summary"):
+                ev.append(f"수집 요약({it.get('source')}): "
+                          f"{str(it['summary'])[:200]}")
+        req.append({"id": hid, "headline": headline, "evidence": ev})
+    try:
+        raw = chat_fn(json.dumps({"briefing": req}, ensure_ascii=False))
+        obj = extract_json(raw)
+    except Exception as e:
+        print(f"[draft] summary repair call failed: {e}", file=sys.stderr)
+        return False
+    sums = obj.get("summaries") if isinstance(obj, dict) else None
+    if not isinstance(sums, dict):
+        return False
+    fixed = 0
+    for b in missing:
+        hid = _text(b.get("id"))
+        headline = _text(b.get("headline") or b.get("title"))
+        s = _text(sums.get(hid))
+        if s and len(s) >= 10 and s != headline:
+            b["summary"] = s[:400]
+            fixed += 1
+    print(f"[draft] summary repair: {fixed}/{len(missing)} fixed")
+    return fixed == len(missing)
+
+
 def skeleton(snap: dict) -> dict:
     date = snap["date"]
     ranked = rank_buckets(cluster(snap["items"]))
@@ -1513,7 +1707,17 @@ def main() -> int:
             raw = chat(url, key, model, user_text, temperature=args.temperature, timeout=_to)
         except TimeoutError as e:
             print(f"{e}; retrying with reasoning_effort=low", flush=True)
-            raw = chat(url, key, model, user_text, effort="low", temperature=args.temperature, timeout=_to)
+            try:
+                # P18: 재시도 타임아웃은 절반 — 3 attempt 최악 합산이 step
+                # 제한을 넘지 않게. 재시도까지 실패하면 traceback 대신
+                # 명시 코드로 종료해 run.py의 다음 attempt가 이어받는다
+                # (2026-10-27 실측: 재시도 타임아웃이 rc=1 크래시로 죽음).
+                raw = chat(url, key, model, user_text, effort="low",
+                           temperature=args.temperature,
+                           timeout=max(60, _to // 2))
+            except TimeoutError as e2:
+                print(f"[draft] LLM timed out twice: {e2}", file=sys.stderr)
+                return 5
         # 디버깅용: 원시 LLM 응답 저장 (시도별 분리, 잘림 vs 나쁜 샘플 구분)
         try:
             raw_path = pipe / f"{snap['date']}.raw-llm.attempt{args.attempt}.txt"
@@ -1525,11 +1729,28 @@ def main() -> int:
         try:
             issue = normalize(issue, snap)
         except SchemaError as e:
-            # P10 (Gemini안): 합성 대신 명시적 스키마 에러 → sidecar로 남겨
-            # 다음 attempt의 피드백에 포함시킨다.
-            print(f"schema error: {e}", file=sys.stderr)
-            _write_schema_sidecar(pipe, snap["date"], args.attempt, str(e))
-            return 4
+            # P18: summary 누락은 통째 생략 샘플이 반복되는 패턴이라
+            # attempt를 버리기 전에 수리 호출 1회로 복구를 시도한다.
+            repaired = False
+            if "summary" in str(e):
+                repaired = _repair_missing_summaries(
+                    issue, snap,
+                    lambda user: chat(url, key, model, user,
+                                      system=REPAIR_PROMPT,
+                                      temperature=args.temperature,
+                                      timeout=min(_to, 120)))
+                if repaired:
+                    try:
+                        issue = normalize(issue, snap)
+                    except SchemaError as e2:
+                        e = e2
+                        repaired = False
+            if not repaired:
+                # P10 (Gemini안): 합성 대신 명시적 스키마 에러 → sidecar로 남겨
+                # 다음 attempt의 피드백에 포함시킨다.
+                print(f"schema error: {e}", file=sys.stderr)
+                _write_schema_sidecar(pipe, snap["date"], args.attempt, str(e))
+                return 4
         issue["date"] = snap["date"]
         issue = attach_sources(issue, snap, ref_table=ref_table)
         issue["draft"] = True
