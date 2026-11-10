@@ -4,6 +4,11 @@ on:
   schedule:
     # 매일 05:30 KST = 전날 20:30 UTC (주말 포함)
     - cron: "30 20 * * *"
+    # P18: 같은 날 재시도 슬롯 08:30 KST = 당일 23:30 UTC.
+    # 1차 슬롯이 실패했거나 GitHub 스케줄 지연으로 늦게 뜬 날에도
+    # 그날 안에 한 번 더 발행 기회를 만든다. 오늘 호가 이미 main에
+    # 있으면 아래 가드 스텝이 collect/draft를 건너뛴다.
+    - cron: "30 23 * * *"
   workflow_dispatch:
 
 # 수동 실행과 cron이 겹치면 push 충돌 → 직렬화
@@ -23,10 +28,20 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Skip if today's issue is already published (scheduled runs)
+        if: github.event_name == 'schedule'
+        run: |
+          DATE=$(TZ=Asia/Seoul date +%F)
+          if [ -f "content/issues/${DATE}.json" ]; then
+            echo "ALREADY_PUBLISHED=true" >> "$GITHUB_ENV"
+            echo "today's issue ${DATE} already on main — skipping collect/draft"
+          fi
       - name: Collect public feeds
+        if: env.ALREADY_PUBLISHED != 'true'
         run: python3 scripts/pipeline/run.py --collect-only
       - name: Draft Korean issue when an API key is present
-        timeout-minutes: 20
+        if: env.ALREADY_PUBLISHED != 'true'
+        timeout-minutes: 30
         env:
           LLM_PROVIDER: ${{ secrets.LLM_PROVIDER }}
           GLM_API_KEY: ${{ secrets.GLM_API_KEY }}

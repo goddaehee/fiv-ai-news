@@ -1210,7 +1210,7 @@ try:
 except ImportError:
     # standalone 실행 시 fallback (draft.py와 동일한 패턴)
     NUM_RE_VALIDATE = re.compile(
-        r"(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분|시간|일|명|개)"
+        r"(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분기|분|시간|일|명|개)"
         r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|billion|million)?(?![0-9A-Za-z])"
         r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K)(?![0-9A-Za-z])"
         r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|thousand|times)(?![0-9A-Za-z])"
@@ -1272,6 +1272,25 @@ def _canon_num(s: str) -> str:
     t = re.sub(r"\bmillions?\b", "m", t)
     t = re.sub(r"\bthousands?\b", "k", t)
     return t
+
+
+# P18: 영어 분기 표기 (입력 스캔 전용). "Q3" / "3Q" / "third quarter" /
+# "3rd quarter"를 한국어 "N분기" canon으로 연결한다.
+_QUARTER_RE = re.compile(
+    r"\bQ([1-4])\b"
+    r"|\b([1-4])Q\b"
+    r"|\b(first|second|third|fourth)\s+quarter\b"
+    r"|\b([1-4])(?:st|nd|rd|th)\s+quarter\b",
+    re.IGNORECASE,
+)
+_QUARTER_WORDS = {"first": 1, "second": 2, "third": 3, "fourth": 4}
+
+
+def _quarter_index(m: re.Match) -> int:
+    for g in (m.group(1), m.group(2), m.group(4)):
+        if g:
+            return int(g)
+    return _QUARTER_WORDS[m.group(3).lower()]
 
 
 def _input_number_count(a: dict, collected_by_url: dict | None) -> int | None:
@@ -1341,6 +1360,17 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
             # 크기 값으로 추가한다 (출력 쪽 패턴은 건드리지 않는다).
             for m in re.finditer(r"(?<![\d.,])\d{4,}(?![\d.,])", text):
                 norm = _canon_num(m.group(0))
+                if norm not in input_nums:
+                    input_nums.add(norm)
+                    allowed_raw.append(m.group(0))
+            # P18: 영어 분기 표기 보강. 입력의 "Q3"·"third quarter"는 숫자가
+            # 없어 NUM_RE에 안 잡히지만, LLM이 "3분기"로 번역해 쓰는 것은
+            # 정확한 변환이다. 그런데 출력 스캔이 "3분기"에서 "3분"(분 단위)을
+            # 뽑아 미근거로 오탐했다 (2026-11-03호: 3 attempt 전부 이 오탐이
+            # 재발해 발행 실패). 분기 canon은 출력 표면 "N분기"와 같은 형태로
+            # 입력 집합에 넣는다. 실제 "3분"(분)과는 canon이 달라 섞이지 않는다.
+            for m in _QUARTER_RE.finditer(text):
+                norm = f"{_quarter_index(m)}분기"
                 if norm not in input_nums:
                     input_nums.add(norm)
                     allowed_raw.append(m.group(0))

@@ -4,8 +4,11 @@ name: freshness-check
 # "워크플로우가 아예 안 돌았거나, push는 됐는데 배포가 안 된 경우"를 잡는다.
 on:
   schedule:
-    # 매일 08:00 KST = 전날 23:00 UTC
-    - cron: "0 23 * * *"
+    # 매일 10:00 KST = 당일 01:00 UTC
+    # P18: 08:00 → 10:00으로 이동. daily-issue 재시도 슬롯(08:30 KST)과
+    # GitHub 스케줄 지연(실측 최대 6시간)을 감안해, 발행 기회가 끝나기
+    # 전에 신선도 경보가 먼저 울리는 오경보를 줄인다.
+    - cron: "0 1 * * *"
   workflow_dispatch:
 
 jobs:
