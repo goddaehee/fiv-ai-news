@@ -1,0 +1,301 @@
+{
+  "date": "2026-11-11",
+  "title": "5분 AI 뉴스 — Anthropic 1.4조 달러 IPO, 엑셀 경쟁, 크롬 제로데이",
+  "heroline": "Anthropic가 최대 1.4조 달러 밸류에이션으로 상장을 추진합니다. 같은 날 엑셀 경쟁 제품 공개로 마이크로소프트 주가가 흔들렸고, 구글은 올해 여덟 번째 실공격 제로데이를 막는 크롬 업데이트를 배포했습니다.",
+  "dek": "Anthropic IPO와 생산성 앱 확장, Turla의 신형 악성코드, 뉴욕 AI 안전법 시행까지 하루 흐름 정리",
+  "tag": "ai-daily",
+  "briefMin": 3,
+  "readMin": 9,
+  "briefing": [
+    {
+      "id": "anthropic-ipo-valuation",
+      "headline": "최대 1.4조 달러 목표 상장 추진",
+      "summary": "Reuters 단독 보도와 Guardian 교차 보도로 확인된 목표치로, 월가의 AI 열기 자체가 시험대에 오릅니다."
+    },
+    {
+      "id": "anthropic-excel-competitor",
+      "headline": "엑셀 경쟁 제품 공개 1건으로 MS 주가 반응",
+      "summary": "생산성 앱 시장 진입 신호로 읽힌 발표에 마이크로소프트 주가가 떨어졌다는 Barron's 보도입니다."
+    },
+    {
+      "id": "chrome-eighth-zero-day",
+      "headline": "2026년 들어 8번째 실공격 제로데이 패치",
+      "summary": "구글이 9건의 취약점을 막는 업데이트를 내고, 그중 1건이 이미 악용 중이라고 밝혔습니다."
+    },
+    {
+      "id": "turla-cereal-malware",
+      "headline": "정부 Exchange 서버 겨냥 Cereal 악성코드 등장",
+      "summary": "국가 후원 그룹 Turla가 문서화되지 않은 도구셋으로 관공서 메일 서버를 노린다는 분석입니다."
+    },
+    {
+      "id": "ny-ai-safety-law",
+      "headline": "등록·공개·사고 보고 의무 부과 시행",
+      "summary": "대형 모델 개발사에 안전 관행 공개와 중대 사고 보고를 요구하는 주 단위 규제가 현실화됩니다."
+    },
+    {
+      "id": "grok-build-leak",
+      "headline": "35,000개 Grok Build 앱 무방비 노출",
+      "summary": "일부는 SpaceX 소속 기밀까지 포함된 것으로 알려진 연구자의 발견입니다."
+    }
+  ],
+  "keywords": [
+    "Anthropic IPO",
+    "1.4조 달러",
+    "엑셀 경쟁",
+    "크롬 제로데이",
+    "Turla",
+    "뉴욕 AI 안전법"
+  ],
+  "mainEvent": "Anthropic 최대 1.4조 달러 밸류에이션 IPO 추진",
+  "keynums": [
+    {
+      "val": "1.4조 달러",
+      "lab": "Anthropic IPO 목표 밸류에이션",
+      "sub": "Reuters 보도"
+    },
+    {
+      "val": "9건",
+      "lab": "크롬 패치 취약점 수",
+      "sub": "구글 발표"
+    },
+    {
+      "val": "8번째",
+      "lab": "올해 실공격 제로데이",
+      "sub": "2026년 누적"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "11/10 15:52",
+      "d": "구글, 크롬 보안 업데이트 발표"
+    },
+    {
+      "t": "11/10 19:07",
+      "d": "Turla Cereal 도구셋 분석 공개"
+    },
+    {
+      "t": "11/11 04:55",
+      "d": "Reuters, Anthropic IPO 목표 밸류에이션 단독 보도"
+    },
+    {
+      "t": "11/11 05:08",
+      "d": "Guardian, IPO 추진 교차 보도"
+    },
+    {
+      "t": "11/11 05:52",
+      "d": "뉴욕 AI 안전법 시행 보도"
+    },
+    {
+      "t": "11/11 06:39",
+      "d": "엑셀 경쟁 제품 발표와 MS 주가 반응 보도"
+    }
+  ],
+  "intro": "11월 11일 수요일 발행. Anthropic의 상장 추진이 오늘 뉴스 흐름의 중심에 섰고, 같은 회사의 엑셀 경쟁 제품 발표와 크롬 제로데이 패치, 뉴욕 규제 시행까지 하루에 겹쳤습니다.",
+  "analysis": [
+    {
+      "id": "anthropic-ipo-valuation",
+      "n": 1,
+      "title": "1. Anthropic, 최대 1.4조 달러 밸류에이션으로 상장 추진",
+      "bullets": [
+        "Reuters 단독 보도로 목표 밸류에이션 최대 1.4조 달러 확인",
+        "Guardian이 같은 내용을 교차 보도, Fidelity는 투자자용 FAQ 발행",
+        "Bloomberg는 주관 은행들이 밸류에이션을 더 올리려 한다는 후속 보도"
+      ],
+      "body": [
+        "Anthropic가 주식 시장 상장을 추진하며 최대 1.4조 달러의 밸류에이션을 목표로 한다는 보도가 나왔습니다. Reuters가 단독으로 보도했고, Guardian이 같은 방향의 교차 보도를 더했습니다. 이 숫자가 월가의 AI 투자 열기 어디까지 버티는지를 시험하는 사건이라는 게 통신사의 프레임입니다.",
+        "배경을 보면 Anthropic는 Claude 모델 계열을 개발하는 회사로, 그간 민간 자금으로 성장해 왔습니다. 이번 IPO는 미상장 AI 기업 가치의 공식 시장 검증이라는 점에서 업계 전체의 이정표 구실을 합니다. 투자은행 Fidelity가 투자자용 FAQ 문서까지 내놓은 것도 시장의 관심이 실제 주문으로 이어질 준비가 진행 중이라는 신호입니다.",
+        "다만 1.4조 달러는 어디까지나 목표치이고, Bloomberg 보도처럼 주관 은행들이 숫자를 더 올리려 한다는 정황이 있을 만큼 아직 확정된 게 아닙니다. 최종 등록 문서에서 어떤 밸류에이션이 확정되는지, 공모 규모와 상장 시점은 아직 미확정입니다.",
+        "규모가 확정되면 AI 기업 자금 조달의 기준 가격으로 작동할 가능성이 있습니다. 경쟁 모델 개발사들의 후속 상장이나 민간 투자 협상에도 참고선이 됩니다."
+      ],
+      "extra": "그 밖에: Bloomberg는 주관 은행들이 밸류에이션을 더 높이려 한다는 후속 보도를 냈습니다. 목표 숫자가 아직 유동적이라는 점을 보여주는 대목입니다.",
+      "takeaway": "최대 1.4조 달러라는 목표치가 AI 기업 가치의 공식 검증이라는 점에서 의미가 큽니다. 최종 등록 문서가 나오면 확정 밸류에이션과 공모 규모부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Fidelity Investments · fidelity.com",
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPaHA1U2FyNEUyS0FXdWhSWFd6SFE1VVEtaEVRU21hb2xCdnpCYThJQ0dDakttMlJDekxsVmppUkRGaENPVGxVOXd2SVZsSGp6dEh6blpkdkwtM05SSElveExxNGZyXzFvcVVzdHkwYVpwTjljU0pWVWY2YVhFX2RsWk5lWkJScW05Nnc?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.fidelity.com"
+        },
+        {
+          "handle": "Reuters · reuters.com",
+          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNaUtnS210c1pKNVpEZXJ1V1JpdUdyZ0h5OGh2SzVCXzJaVGRwaDZnb0NQZUxFS0ZFWmxwbU53ZlJtdlBkOWplZHdaNkloU0xwV3hvdlpjNnh0R1FISXdMOExfc09JckJqTWxjSWlZSjZpN0RWR1kyRUF6YUlXN0dqSm5XQU5TUmFmbWpFbGlzT3FZRllaMGU4cld0cDlsaFVYY0IzV2ZNYmwxYW0yd1FDaw?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.reuters.com"
+        },
+        {
+          "handle": "The Guardian · theguardian.com",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPRWZNcUt6ZldxUnNyTXZySGZacWZueTYtS0JOUVZ2S3JUWENYcThEMm9CSnVXX25QTGJYZGc3UVhKNXloQ0pPdUJpbkxZQ3Q1NEdSMzJEWjB5M3UwVDJ5UjhxdllTMEhjQm41UDg1QndqbE5KWkNBZ3RoMlhHSjM5SDkyN2tmQjZjcEpyNGMxVjF1MV9vRmpJb3d4X1NibmRYd3V5TUNxMGtacGJjXzNqRURn?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.theguardian.com"
+        },
+        {
+          "handle": "Bloomberg.com · bloomberg.com",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOUTgtOV9zN3Ywb2UycWxaSlNwOGltSV91cjMtRWdlNnJibWhnTVgtQkZkd0ZYU0NweVB5MEhaMkd6ZVNpUXlra3JiQ2ltcU4xUUUta0pPV2dqb19uWWpLZWVkanNqTnlsVEo2YmdFeGw2M2dNcGtGVHdGb1hBMTN4MFRteXhkbUctZWIxSURUQjcxczZxbmdtbGQ0d3ZLWWJCcjFQQVpwb1pjNHNzWlE?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.bloomberg.com"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-excel-competitor",
+      "n": 2,
+      "title": "2. Anthropic 엑셀 경쟁 제품 공개, 마이크로소프트 주가 하락",
+      "bullets": [
+        "Anthropic가 엑셀과 경쟁하는 제품 공개",
+        "발표 직후 마이크로소프트 주가 하락 반응",
+        "Barron's는 '당황할 필요 없다'는 해석 병기"
+      ],
+      "body": [
+        "Anthropic가 엑셀과 경쟁하는 제품을 공개했고, 발표가 알려지자 마이크로소프트 주가가 떨어졌다고 Barron's가 보도했습니다. 모델 개발사가 사무 생산성 영역으로 직접 발을 들인 첫 큰 신호로 시장이 읽은 것입니다.",
+        "생산성 소프트웨어는 마이크로소프트의 전통적 기반 시장입니다. AI 개발사가 스프레드시트까지 넘보는 움직임은 모델 경쟁이 애플리케이션 경쟁으로 번지고 있다는 흐름의 연장선에 있습니다. 투자자들이 이 발표 하나에 주가로 반응한 것도 그런 지형 변화 가능성을 값으로 매긴 결과입니다.",
+        "다만 Barron's 스스로 '당황할 필요가 없다'고 단서를 단 점이 중요합니다. 엑셀을 둘러싼 기업 생태계, 숙련된 사용자 기반, 문서 호환성이라는 진입장벽이 쉽게 무너지지 않는다는 관점입니다. 실제 점유율이나 매출 영향을 보여주는 수치는 이번 보도에 없습니다.",
+        "향후 판도는 제품 자체보다 기업 도입 속도와 마이그로소프트의 대응 속도가 갈릴 것으로 보입니다. 첫 주가 반응은 심리적 신호 이상으로 읽기 어렵습니다."
+      ],
+      "extra": "",
+      "takeaway": "모델 업체가 생산성 앱 시장에 본격 진입했다는 점이 사무용 소프트웨어 도입 검토에 미칠 영향이 큽니다. 기존 엑셀 기반 업무와의 호환성·전환 비용을 비교 기준으로 삼으면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Barron's · barrons.com",
+          "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxONTN6WVZPSEd2bVBITEc3MlhWb25Nal8zQVgtaExYMjBFWndmcHZqVHo5R0JDZTNsWUo0VGNNNzNfYkduSWJuRHp4QVVvMzBBVDNUbU5QRG5VazdWcHNfU1NqR21yS0JCR3lyOEZSZlVKT1VENG9CR1JfdDhaOWh5dWkyenIxUVU?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.barrons.com"
+        },
+        {
+          "handle": "Yahoo Finance · finance.yahoo.com",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNRDhIR2N3YWVsRk1wWTZtRmNTTFVwRDdxb1hUVmtqQ3NfTXRRaGJXa211U240YjNxa1hzRUJ0bjJ4RnI0cFlVM3VleXV4XzlqTVp1V0dzQUFtQTR0R09IQzBSeGZzR3RJaHZPS1BMbGpBeWRaM3JkU2o1OF9jQ1ZPV1B2WmxfQU05ZDh2bXVLR0N6YlFza21nOHlVaER1ek4xSTBN?oc=5",
+          "kind": "news",
+          "origin_url": "https://finance.yahoo.com"
+        },
+        {
+          "handle": "Investor's Business Daily · investors.com",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQVU1YdlJPSUlEcmx5OUpyelIxZlBYSnp5QmUzbTJpNE5IcG4xSURIbndrNWlHSXJpMGVacnM2QlpmWGdUbWRtY0xJQ3l1Z3RqN0RCRDM5VXZEOFlQWktpNTBDdHZqTTJDRnhlUkFVS1VOQS1Dakx2VmFhSVU3WXlaTGFicjRpcnBPWjJkbHBtcExZbXQySktYOWRB?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.investors.com"
+        }
+      ]
+    },
+    {
+      "id": "chrome-eighth-zero-day",
+      "n": 3,
+      "title": "3. 크롬, 올해 8번째 실공격 제로데이 패치 배포",
+      "bullets": [
+        "구글이 9건의 보안 취약점을 막는 업데이트 배포",
+        "그중 1건은 이미 실제 공격에 사용 중인 제로데이",
+        "올해 들어 확인된 실공격 제로데이는 이것이 8번째"
+      ],
+      "body": [
+        "구글이 월요일 크롬 보안 업데이트를 배포하며 9건의 취약점을 패치했습니다. 문제는 그중 하나가 이미 야외에서 실제 공격에 쓰이고 있다는 점이고, 이는 2026년 들어 여덟 번째 실공격 제로데이라고 The Hacker News가 정리했습니다.",
+        "제로데이는 패치가 나오기 전부터 공격자가 알고 있던 취약점을 뜻합니다. 브라우저는 모든 직원이 매일 쓰는 공격 면이어서, 실공격 사롘가 하나라도 확인되면 업데이트 강제 배포가 기본 대응입니다. 올해 들어 같은 패턴이 여덟 번째 반복됐다는 것은 브라우저가 여전히 가장 자주 노려지는 입구라는 뜻입니다.",
+        "다만 취약점의 상세 기술 정보는 통상 대부분의 사용자가 업데이트를 마칠 때까지 공개가 제한됩니다. 어떤 집단이 이 취약점을 썼는지, 실제 피해 규모가 얼마인지는 이번 보도 범위에서 확인되지 않았습니다. 패치 속도 경쟁이 이어지는 만큼, 기업 환경에서는 브라우저 자동 업데이트 정책을 다시 점검하는 계기가 됩니다."
+      ],
+      "extra": "",
+      "takeaway": "올해 여덟 번째 실공격 제로데이라는 누적 자체가 브라우저 관리 정책이 바뀐 대목입니다. 전사 크롬 자동 업데이트 설정과 적용률을 체크리스트에 넣어 두시면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/google-issues-chrome-security-update.html",
+          "kind": "news"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/google-patches-eighth-chrome-zero-day-exploited-in-attacks-this-year/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "turla-cereal-malware",
+      "n": 4,
+      "title": "4. Turla, 신형 Cereal 도구셋으로 정부 메일 탈취",
+      "bullets": [
+        "러시아 계열 Turla(일명 Snake) 그룹의 새 도구셋 Cereal 발견",
+        "정부 기관 Microsoft Exchange 서버 침투 후 이메일 탈취",
+        "이전에 문서화된 적 없는 신형 도구셋"
+      ],
+      "body": [
+        "러시아 계열 국가 후원 위협 그룹으로 알려진 Turla가 Cereal이라는 이름의 새 도구셋으로 정부 기관의 Microsoft Exchange 서버에 침투해 이메일을 훔쳤다는 분석이 나왔습니다. The Hacker News가 보도한 내용으로, 해당 도구셋은 이전에 문서화된 적이 없습니다.",
+        "Turla는 일명 Snake로도 불리는 사이버 스파이 그룹으로, 오랫동안 외교·정부 표적 공격으로 알려져 왔습니다. 이메일 서버를 노리는 것은 대화 전체를 확보하는 가장 직접적인 경로라는 점에서 이 그룹의 전형적인 수법과 맞닿아 있습니다. Exchange 서버는 관공서가 여전히 많이 쓰는 메일 인프라입니다.",
+        "다만 이번 보도는 도구셋의 기술적 특징과 사용 흔적에 초점이 맞춰져 있고, 침해된 기관 목록이나 유출된 메일 규모 같은 피해 범위 수치는 확인되지 않았습니다. 초기 침투 경로 역시 요약된 정보만으로는 불확실합니다. 공공 부문 메일 서버 운영자에게는 침해 탐지 규칙 갱신과 최근 로그 점검이 시급한 과제로 남습니다."
+      ],
+      "extra": "",
+      "takeaway": "정부 메일 서버를 겨냥한 신형 도구셋이 확인된 시점에서 공공 부문 침해 대응 준비가 중요해진 이유는 검증된 피해보다 미확인 침해 가능성입니다. Exchange 서버의 최근 인증 로그와 탐지 규칙부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/russian-turla-hackers-use-new-cereal.html",
+          "kind": "news"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/turla-hackers-use-new-ceral-malware-to-spy-on-govt-exchange-servers/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "ny-ai-safety-law",
+      "n": 5,
+      "title": "5. 뉴욕 AI 안전법 시행, OpenAI·Anthropic 감독 개시",
+      "bullets": [
+        "뉴욕주의 포괄적 AI 안전법이 시행 단계 진입",
+        "OpenAI·Anthropic 등 대형 개발사에 등록 의무",
+        "안전 관행 공개와 중대 사고 보고 의무 포함"
+      ],
+      "body": [
+        "뉴욕주가 포괄적인 AI 안전법을 시행에 들가며, OpenAI와 Anthropic 같은 대형 개발사에 등록·안전 관행 공개·중대 사고 보고 의무를 부과한다고 TechCrunch가 보도했습니다. 미국 내 주 단위 규제가 실질적 부담으로 전환되는 첫 큰 사례 중 하나입니다.",
+        "지금까지 미국의 AI 규제는 연방 차원의 가이드라인이 주를 이뤘습니다. 주가 개발사에 직접 등록과 보고를 요구하는 구조는 기업 입장에서 준수 대상이 주마다 갈라지는 결과를 낳습니다. 같은 날 호주가 정부 포털 침해 사건 이후 AI 규제기관 설립을 추진한다는 보도가 나온 점도 규제 확산 흐름과 맞닿아 있습니다.",
+        "다만 등록 절차의 구체적 서식, 사고 보고 기준, 위반 시 제재 수위가 실무에서 어떻게 적용될지는 아직 불확실합니다. 법 시행 첫 주기의 집행 사례를 지켜봐야 실효성을 판단할 수 있습니다.",
+        "규제 대상 회사들은 법무·컴플라이언스 담당의 대응 체계가 곧 실무 과제가 됩니다. 다른 주의 입법 움직임에도 영향을 줄 시금석이라는 점에서 관심 밖 기업도 흐름을 따라둘 필요가 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "주정부가 대형 개발사에 직접 등록과 보고를 요구하게 된 것이 미국 AI 규제 환경이 달라진 지점입니다. 관련 서비스를 뉴욕에서 쓰는 조직은 계약·컴플라이언스 문구에 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/10/openai-anthropic-face-new-oversight-as-new-yorks-ai-safety-law-takes-effect/",
+          "kind": "news"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "모델 개발사가 생산성 앱과 자본 시장으로 동시에 확장하는 전환 국면",
+    "grow": "Anthropic IPO가 AI 기업 가치의 공식 검증 기회로 부상",
+    "caution": "크롬 8번째 제로데이와 Turla 신형 도구로 공격 면 확대 지속",
+    "heat": "1.4조 달러 밸류에이션 목표가 월가 AI 열기의 시험대로 작동"
+  },
+  "tips": [
+    {
+      "title": "크롬 업데이트 지금 점검",
+      "body": "이번 패치에는 실공격 중인 제로데이가 포함돼 있습니다. 관리형 환경이라면 강제 업데이트 배치와 적용률 리포트를 오늘 안으로 확인하는 편이 안전합니다.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "정부 부문 Exchange 로그 점검",
+      "body": "Turla의 Cereal 도구셋은 메일 서버의 인증 이력에 흔적을 남길 수 있습니다. 공공 기관이라면 최근 익명 인증 시도와 비정상 계정 사용 내역부터 훑어보시면 됩니다.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "뉴욕 AI 안전법 준수 자가 점검",
+      "body": "등록·공개·사고 보고 세 가지 의무가 핵심 축입니다. 규제 대상 여부 판단 기준과 내부 보고 프로세스 담당자 지정을 문서로 정리해 두면 첫 집행 사례가 나와도 대응이 빠릅니다.",
+      "via": "TechCrunch"
+    },
+    {
+      "title": "에이전트 도구 권한 재점검",
+      "body": "Grok Build 앱 35,000개가 무방비로 노출된 사례는 에이전트가 다루는 비밀키와 산출물 권한이 그대로 위험이 된다는 점을 보여줍니다. 코딩 에이전트 도입 전에 출력물 공개 범위 설정부터 점검하시면 됩니다.",
+      "via": "Ars Technica"
+    },
+    {
+      "title": "IPO 등록 문서 원문 확인 습관",
+      "body": "언론이 전하는 목표 밸류에이션은 확정값이 아닙니다. 최종 등록 문서의 공모 규모와 지분 구성을 직접 확인하는 습관이 투자 판단의 기본선입니다.",
+      "via": "Reuters"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": false
+}
