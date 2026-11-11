@@ -1211,16 +1211,20 @@ WHY_MARKERS = ["중요", "의미", "영향", "바뀐", "달라진"]
 # P8: 정규식 단일 소스화 — draft.py의 NUM_RE를 직접 import.
 # 수동 복사본 동기화 깨짐 방지.
 # P10: normalize_num_text도 공유 (숫자-문자 사이 하이픈만 공백으로).
+# P20: 스크립트 디렉토리를 path에 넣어 draft import가 standalone 실행에서도
+# 되게 한다 (coverage.py·images.py와 같은 방식). 그래도 실패하면 아래
+# fallback이 쓰인다 — fallback 패턴은 draft.NUM_RE와 동일하게 유지할 것.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 try:
     from draft import NUM_RE as NUM_RE_VALIDATE
     from draft import normalize_num_text as _normalize_num_text
 except ImportError:
     # standalone 실행 시 fallback (draft.py와 동일한 패턴)
     NUM_RE_VALIDATE = re.compile(
-        r"(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분기|분|시간|일|명|개)"
-        r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|billion|million)?(?![0-9A-Za-z])"
-        r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K)(?![0-9A-Za-z])"
-        r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|thousand|times)(?![0-9A-Za-z])"
+        r"(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:%|배|달러|조(?=원|달러|엔|유로|\d|\s|$|[,.\)\]\"])|억|만|천|점|분기|분|시간|일|명|인|개)"
+        r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|T|billion|million|trillion)?(?![0-9A-Za-z])"
+        r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K|T)(?![0-9A-Za-z])"
+        r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|trillion|thousand|times)(?![0-9A-Za-z])"
         r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?x(?![0-9A-Za-z])",
         re.IGNORECASE,
     )
@@ -1235,8 +1239,15 @@ _MAG_UNIT = {
     "b": 9, "billion": 9, "billions": 9,
     "m": 6, "million": 6, "millions": 6,
     "k": 3, "thousand": 3, "thousands": 3,
-    "억": 8, "만": 4, "천": 3,
+    "t": 12, "trillion": 12, "trillions": 12,
+    "조": 12, "억": 8, "만": 4, "천": 3,
 }
+
+# P20: 개수 단위 — 크기만 같으면 같은 수로 본다. 입력 "35,000"(단위 없음)과
+# 출력 "35,000개"가 표면이 달라 오탐됐다 (2026-11-11호 grok-build-leak:
+# 6 attempt 중 5번 최종 차단). %, 배, 분기, 분, 시간, 일은 단위 자체가
+# 의미라 투명화하지 않는다 (6%는 여전히 차단, 14일은 날짜로 대조).
+_COUNT_UNITS = {"개", "명", "인", "건", "회", "대", "장", "곳", "편", "종", "점", "번"}
 
 
 def _canon_num(s: str) -> str:
@@ -1274,6 +1285,13 @@ def _canon_num(s: str) -> str:
                 return f"mag:{int(val.to_integral_value())}"
             except InvalidOperation:
                 pass
+        # P20: 개수 단위 투명화 (위 _COUNT_UNITS 주석 참조).
+        if unit in _COUNT_UNITS:
+            try:
+                val = Decimal(num)
+                return f"mag:{int(val.to_integral_value())}"
+            except InvalidOperation:
+                pass
         # P18b: 배수 표기 동등화. 입력 "20x"·"20 times"와 출력 "20배"는 같은
         # 배수인데 표면이 달라 미근거로 오탐됐다 (2026-11-10호 실측:
         # 허용 목록에 '20x', '20 times'가 있는데도 '20배'가 2 attempt 연속 차단).
@@ -1303,6 +1321,37 @@ def _quarter_index(m: re.Match) -> int:
         if g:
             return int(g)
     return _QUARTER_WORDS[m.group(3).lower()]
+
+
+# P20: 월-일 날짜 표기 (입력 스캔 전용). "October 14" / "Oct. 14" /
+# "14 October"를 한국어 "N일" canon으로 연결한다. 월 이름은 뉴스 텍스트에서
+# 대문자로 시작하므로 IGNORECASE를 쓰지 않는다 ("May"가 조동사 may와
+# 섞이지 않게 한다).
+_MONTHS = (
+    r"(?:January|February|March|April|May|June|July|August|September|"
+    r"October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|"
+    r"Oct|Nov|Dec)"
+)
+_MONTH_DAY_RE = re.compile(
+    rf"\b{_MONTHS}\.?\s+(\d{{1,2}})\b"
+    rf"|\b(\d{{1,2}})\s+(?:of\s+)?{_MONTHS}\b"
+)
+
+# P20: 영어 수 단어 (입력 스캔 전용). "one"은 대명사 용법이 압도적이라 제외.
+_NUM_WORDS = {
+    "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7,
+    "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12,
+    "thirteen": 13, "fourteen": 14, "fifteen": 15, "sixteen": 16,
+    "seventeen": 17, "eighteen": 18, "nineteen": 19, "twenty": 20,
+    "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70,
+    "eighty": 80, "ninety": 90,
+}
+_NUM_WORD_RE = re.compile(
+    r"\b(two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
+    r"thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|"
+    r"twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)\b",
+    re.IGNORECASE,
+)
 
 
 def _input_number_count(a: dict, collected_by_url: dict | None) -> int | None:
@@ -1429,6 +1478,38 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
                     if "mag:1000000000" not in input_nums:
                         input_nums.add("mag:1000000000")
                         allowed_raw.append(m.group(0))
+            # P20: 월-일 날짜 표기. 입력 "between October 14 and October 26"은
+            # NUM_RE에 안 잡히지만 LLM이 "14일, 26일"로 쓰는 것은 정확한
+            # 변환이다 (2026-11-11호 qubole: 입력 수치 0개인데 출력 날짜가
+            # 차단됐다). "N일" canon으로 연결한다. "May"는 월 이름일 때만
+            # 잡히도록 대문자로 시작하는 형태만 매칭한다.
+            for m in _MONTH_DAY_RE.finditer(text):
+                day = m.group(1) or m.group(2)
+                norm = f"{int(day)}일"
+                if norm not in input_nums:
+                    input_nums.add(norm)
+                    allowed_raw.append(m.group(0))
+            # P20: 기간 표기 "14 days" → "14일" (P18b 분/시간과 같은 방식).
+            for m in re.finditer(r"(\d+(?:\.\d+)?)\s*days?\b", text, re.IGNORECASE):
+                norm = f"{m.group(1)}일"
+                if norm not in input_nums:
+                    input_nums.add(norm)
+                    allowed_raw.append(m.group(0))
+            # P20: 영어 수 단어. "Each of the seven co-founders" → 7.
+            # "one"은 대명사 용법("one of the...")이 압도적이라 제외한다.
+            for m in _NUM_WORD_RE.finditer(text):
+                norm = f"mag:{_NUM_WORDS[m.group(0).lower()]}"
+                if norm not in input_nums:
+                    input_nums.add(norm)
+                    allowed_raw.append(m.group(0))
+            # P20: 작은 수 + 뒤따르는 단어 ("All 7 Anthropic founders" → 7).
+            # 4자리 이상은 P12b가 담당. 날짜("Nov 7")·버전("GPT-4" 뒤 숫자)은
+            # 뒤에 단어가 없을 때 제외되고, 소수점 뒤 숫자도 제외된다.
+            for m in re.finditer(r"(?<![\d.])(\d{1,3})(?=\s+[A-Za-z])", text):
+                norm = f"mag:{int(m.group(1))}"
+                if norm not in input_nums:
+                    input_nums.add(norm)
+                    allowed_raw.append(m.group(0))
     if not matched:
         return out
     out["joined"] = True
@@ -1536,6 +1617,35 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
             })
         elif line.startswith(("TAKEAWAY-DUP", "TAKEAWAY-TPL")):
             errors.append({"code": line.split(":", 1)[0]})
+        elif line.startswith("DUP-001"):
+            # P20: 브리핑 요약 중복 — check_p0와 같은 규칙을 재사용한다.
+            dm = re.match(r"DUP-001 briefing\[(\d+)\]\.", line)
+            if dm:
+                idx = int(dm.group(1))
+                _briefs = issue.get("briefing") or []
+                errors.append({
+                    "code": "DUP-001",
+                    "briefing_index": idx,
+                    "briefing_id": _briefs[idx].get("id") if idx < len(_briefs) else None,
+                })
+    # P20: 깊이 슬롯 미충족 — check_depth와 같은 규칙으로 직접 잰다.
+    # check()의 bag 에러는 sidecar에 실리지 않아 재시도가 눈먼 채로 같은
+    # 실패를 반복했다 (2026-11-11호: analysis[0] numbers+why 미충족이
+    # attempt 2·3 연속 재발). 에러 기준(2개 이상 미충족)만 구조화한다.
+    for i, a in enumerate(analyses):
+        status = _slot_status(a)
+        missing = [s for s in DEPTH_SLOTS if not status[s]]
+        if "numbers" in missing:
+            n_cand = _input_number_count(a, collected_by_url)
+            if n_cand is not None and n_cand < 2:
+                missing.remove("numbers")
+        if len(missing) > 1:
+            errors.append({
+                "code": "DEPTH",
+                "analysis_index": i,
+                "analysis_id": a.get("id"),
+                "missing": missing,
+            })
     quota_errors, _ = check_source_quota(issue, collected_by_url)
     for line in quota_errors:
         m = re.match(r"QUOTA-001 (\S+):", line)

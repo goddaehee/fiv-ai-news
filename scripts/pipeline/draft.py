@@ -16,11 +16,11 @@ import sys
 import urllib.error
 import urllib.request
 from datetime import datetime, timedelta, timezone
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 from cluster import cluster, rank_buckets, story_groups, _outlet_key, must_cover_stories
 from select_items import select_buckets
-from validate import KINDS, check, url_core, extract_domain
 
 KST = timezone(timedelta(hours=9))
 ROOT = Path(__file__).resolve().parents[2]
@@ -330,6 +330,41 @@ def render_feedback(sidecar) -> str:
                 "쓰세요. 불릿 문구를 이어붙이거나 같은 문장을 반복하면 안 됩니다."
             )
             continue
+        # P20: 깊이 슬롯 피드백 (DEPTH). check()의 bag 에러는 sidecar에
+        # 실리지 않아 재시도가 눈먼 채로 같은 실패를 반복했다 (2026-11-11호:
+        # analysis[0]의 numbers+why 미충족이 attempt 2·3 연속 재발).
+        # 슬롯별 처방을 함께 준다 — numbers는 입력 수치, why는 중요성 문장이다.
+        if e.get("code") == "DEPTH":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            missing = e.get("missing") or []
+            hints = []
+            if "numbers" in missing:
+                hints.append("본문·bullets에 입력의 수치를 2개 이상 넣으세요 (number_mentions 목록의 값을 그대로 쓰면 됩니다)")
+            if "why" in missing:
+                hints.append("takeaway에 이 소식이 왜 중요한지(영향·의미)를 한 문장으로 쓰세요")
+            if "what" in missing:
+                hints.append("body 첫 문단을 30자 이상으로 쓰세요")
+            if "context" in missing:
+                hints.append("body를 2개 문단 이상으로 쓰고, 둘째 문단에 배경·맥락을 쓰세요")
+            if "limits" in missing:
+                hints.append("본문에 한계·반론을 한 문장 넣으세요 ('다만', '아직 확인되지 않았다' 등)")
+            blocks.append(
+                f'- analysis id "{aid}"의 깊이 슬롯이 {len(missing)}개 비었습니다 ({", ".join(missing)}). '
+                "2개 이상 비면 호 전체가 폐기됩니다.\n"
+                + "  " + " / ".join(hints)
+            )
+            continue
+        # P20: 브리핑 요약 중복 피드백 (DUP-001). summary가 headline과 거의
+        # 같으면 발행이 차단된다 — 11/11호 attempt 3의 최종 차단 사유 중 하나.
+        if e.get("code") == "DUP-001":
+            idx = e.get("briefing_index")
+            blocks.append(
+                f"- briefing[{idx}]의 summary가 headline과 거의 같습니다. "
+                "호 전체가 폐기됩니다.\n"
+                "  summary를 headline과 다른 정보(수치·배경·전개)로 다시 쓰세요. "
+                "headline 문장을 그대로 옮기면 안 됩니다."
+            )
+            continue
         if e.get("code") != "NUMBERS-UNGROUNDED":
             continue
         aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
@@ -393,6 +428,18 @@ def _balanced_span(text: str, start: int) -> str | None:
     return None
 
 
+def _repair_bare_keys(text: str) -> str:
+    """따옴표가 빠진 JSON 키를 수리한다 (`bullets": [` → `"bullets": [`).
+
+    P20 실측 (2026-11-11호 재시도 슬롯 attempt 2): LLM이 키의 여는
+    따옴표를 빼먹어 extract_json이 전부 실패하고 attempt가 rc=1로 죽었다.
+    `{`·`,` 뒤에 오는 식별자 + `":` 형태만 고친다 — 정상 JSON에서는
+    나올 수 없는 패턴이라 정상 출력에는 손대지 않는다. 마지막 수단
+    후보로만 쓰므로, 원래 파싱이 되면 이 함수는 호출되지 않는다.
+    """
+    return re.sub(r"([,{]\s*)([A-Za-z_][A-Za-z0-9_]*)\"(\s*:)", r'\1"\2"\3', text)
+
+
 def extract_json(text: str) -> dict:
     text = text.strip()
     if text.startswith("```"):
@@ -409,20 +456,28 @@ def extract_json(text: str) -> dict:
     # 11/09 'Invalid control character'). 단계적으로 완화된 파싱을 시도한다:
     # 원본 구간 → 균형 구간 → 제어문자 허용(strict=False) → 트레일링 콤마
     # 제거. 전부 실패하면 기존처럼 ValueError (fail-closed 유지).
+    # P20: bare-key 수리 추가 (11/11호 `bullets": [` 실측 — 위 세 단계로도
+    # 안 되는 변형이라 attempt가 통째로 소모됐다).
     spans = [text[start : end + 1]]
     balanced = _balanced_span(text, start)
     if balanced and balanced != spans[0]:
         spans.append(balanced)
+    variants: list[str] = []
     for cand in spans:
+        variants.append(cand)
+        cleaned = re.sub(r",\s*([}\]])", r"\1", cand)
+        if cleaned != cand:
+            variants.append(cleaned)
+        repaired = _repair_bare_keys(cand)
+        if repaired != cand:
+            variants.append(repaired)
+            repaired_cleaned = re.sub(r",\s*([}\]])", r"\1", repaired)
+            if repaired_cleaned != repaired:
+                variants.append(repaired_cleaned)
+    for cand in variants:
         for strict in (True, False):
             try:
                 return json.loads(cand, strict=strict)
-            except Exception:
-                pass
-        cleaned = re.sub(r",\s*([}\]])", r"\1", cand)
-        if cleaned != cand:
-            try:
-                return json.loads(cleaned, strict=False)
             except Exception:
                 pass
     raise ValueError("model did not return parseable JSON")
@@ -912,14 +967,112 @@ def thicken_take(take: str, bullets: list[str], title: str) -> str:
 # P1 (Codex): AI 뉴스 실측 기반 확장. 모델명(GPT-4)·연도(2024년)는 제외.
 # \b 대신 (?![0-9A-Za-z]) 사용 — \b는 한글 조사 앞에서 단어 경계로 인식하지 않음.
 # P10: 첫 분기에도 lookbehind 추가 (S-1 오탐: "v2배"·"a1개" 같은 영숫자 접미사 제외).
+# P20 (2026-11-11호 실측 오탐):
+# - "조" 추가: "$1.4 trillion"→"1.4조 달러"가 NUM_RE에 안 잡혀 depth numbers
+#   슬롯이 비고 "$1.4"만 허용 목록에 올라 mag:1이 됐다. 조 뒤 lookahead는
+#   "제1조"(법 조항)·"1조정" 같은 비수량 용법을 제외한다 (뒤가 원/달러/엔/
+#   유로/숫자/공백/문장부호일 때만 단위로 본다).
+# - "천" 추가: "2억 5천만"의 "5천만"이 통째로 안 보여 "2억"만 잡혀
+#   mag:200M으로 오탐됐다. "천"은 _MAG_UNIT(10^3)에도 추가.
+# - "인" 추가: "7인"이 수치로 안 잡혀 depth 카운트에서 빠졌다.
+# - "trillion"/"T" 추가: "$1.4 trillion"·"1.4T"의 크기(10^12)가 잘렸다.
 NUM_RE = re.compile(
-    r"(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:%|배|달러|억|만|점|분기|분|시간|일|명|개)"  # 기존 한국어 단위 (P18: 분기 추가 — "3분기"가 "3분"으로 잘리던 오탐 수정, 긴 단위를 먼저 매칭)
-    r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|billion|million)?(?![0-9A-Za-z])"  # $200, $300B
-    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K)(?![0-9A-Za-z])"  # 70B (GPT-4 제외)
-    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|thousand|times)(?![0-9A-Za-z])"
+    r"(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:%|배|달러|조(?=원|달러|엔|유로|\d|\s|$|[,.\)\]\"])|억|만|천|점|분기|분|시간|일|명|인|개)"  # 기존 한국어 단위 (P18: 분기 추가 — "3분기"가 "3분"으로 잘리던 오탐 수정, 긴 단위를 먼저 매칭)
+    r"|\$\d+(?:\.\d+)?\s*(?:B|M|K|T|billion|million|trillion)?(?![0-9A-Za-z])"  # $200, $300B
+    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:B|M|K|T)(?![0-9A-Za-z])"  # 70B (GPT-4 제외)
+    r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?\s*(?:million|billion|trillion|thousand|times)(?![0-9A-Za-z])"
     r"|(?<![A-Za-z0-9\-])\d+(?:\.\d+)?x(?![0-9A-Za-z])",  # 10x
     re.IGNORECASE,
 )
+
+
+# P20: 한국어 복합수 단위 → 10의 거듭제곱 지수 (복합수 전개용).
+_COMP_MAG = {"조": 12, "억": 8, "만": 4, "천": 3, "백": 2, "십": 1}
+_COMP_UNITS = ("조", "억", "만", "천", "백", "십")
+_COMP_SPAN_RE = re.compile(
+    r"(?<![0-9A-Za-z가-힣])"
+    r"\d+(?:\.\d+)?(?:\s*(?:조|억|만|천|백|십))+"
+    r"(?:\s*\d+(?:\.\d+)?(?:\s*(?:조|억|만|천|백|십))*)*"
+)
+_COMP_TOKEN_RE = re.compile(r"(\d+(?:\.\d+)?)|([조억만천백십])")
+
+
+def _eval_korean_compound(span: str) -> str | None:
+    """복합수 구간을 아라비아 숫자로 전개한다. 실패하면 None.
+
+    한국어 수 읽기 규칙: 작은 단위(십·백·천)는 더하고, 큰 단위(만·억·조)는
+    앞 묶음을 곱한 뒤 결과에 합산한다. 숫자 없이 단위만 오는 경우
+    ("5천만"의 trailing "만")는 앞 묶음에 곱한다.
+    - "2억 5천만" → 250000000, "3만5000" → 35000, "5천만" → 50000000,
+      "1조 2천억" → 1200000000000, "6억2500만" → 625000000.
+    """
+    tokens: list[tuple[str, object]] = []
+    for m in _COMP_TOKEN_RE.finditer(span):
+        if m.group(1) is not None:
+            try:
+                tokens.append(("num", Decimal(m.group(1))))
+            except InvalidOperation:
+                return None
+        else:
+            tokens.append(("unit", m.group(2)))
+    if not tokens or tokens[0][0] != "num":
+        return None
+    result = Decimal(0)
+    cur = Decimal(0)
+    pending: Decimal | None = None
+    for kind, val in tokens:
+        if kind == "num":
+            if pending is not None:
+                cur += pending
+            pending = val  # type: ignore[assignment]
+            continue
+        mag = _COMP_MAG[val]  # type: ignore[index]
+        if pending is not None:
+            if mag <= 3:  # 십·백·천: 더한다
+                cur += pending * (Decimal(10) ** mag)
+            else:  # 만·억·조: 앞 묶음을 곱해 결과에 합산
+                cur = (cur + pending) * (Decimal(10) ** mag)
+                result += cur
+                cur = Decimal(0)
+            pending = None
+        else:
+            # 숫자 없는 단위 ("5천만"의 만): 앞 묶음에 곱한다.
+            if mag <= 3:
+                cur *= Decimal(10) ** mag
+            else:
+                cur = cur * (Decimal(10) ** mag)
+                result += cur
+                cur = Decimal(0)
+    if pending is not None:
+        cur += pending
+    result += cur
+    try:
+        return str(int(result.to_integral_value()))
+    except InvalidOperation:
+        return None
+
+
+def expand_korean_compound(text: str) -> str:
+    """텍스트 안의 한국어 복합수만 아라비아 숫자로 전개한다.
+
+    단일 단위("3만", "1.4조", "5천")는 건드리지 않는다 — _canon_num이
+    이미 크기로 통일한다. 2개 이상의 숫자 묶음 또는 단위가 겹친 경우만
+    전개한다 ("2억 5천만", "3만5000개", "5천만", "1조 2천억").
+    뒤따르는 개수 단위(개·명·달러 등)는 span 밖이라 그대로 남는다.
+    """
+    if not text:
+        return text or ""
+
+    def _sub(m: re.Match) -> str:
+        span = m.group(0)
+        n_digits = len(re.findall(r"\d+(?:\.\d+)?", span))
+        n_units = len(re.findall(r"[조억만천백십]", span))
+        if n_digits < 2 and n_units < 2:
+            return span
+        expanded = _eval_korean_compound(span)
+        return expanded if expanded is not None else span
+
+    return _COMP_SPAN_RE.sub(_sub, text)
 
 
 def normalize_num_text(text: str) -> str:
@@ -930,9 +1083,13 @@ def normalize_num_text(text: str) -> str:
     P12b: 천 단위 콤마를 병합한다. "30,000" → "30000". NUM_RE가 콤마를 숫자
     일부로 못 잡아 입력에서 "30"만 추출되고, 출력 "3만"과 어긋나던 오탐 수정.
     숫자-숫자 사이의 콤마만 건드리므로 문장 콤마("사과, 배")는 영향 없다.
+    P20: 한국어 복합수 전개. "2억 5천만" → "250000000",
+    "3만5000개" → "35000개". 입력·출력 양쪽에 똑같이 적용돼 대조가 맞는다.
+    단일 단위("3만", "1.4조")는 전개하지 않고 _canon_num에 맡긴다.
     """
     t = re.sub(r"(?<=\d)[-_](?=[A-Za-z])", " ", text or "")
-    return re.sub(r"(?<=\d),(?=\d)", "", t)
+    t = re.sub(r"(?<=\d),(?=\d)", "", t)
+    return expand_korean_compound(t)
 
 
 def number_mentions(summary: str) -> list[str]:
@@ -1823,6 +1980,15 @@ def main() -> int:
         return 0 if issue.get("analysis") and issue.get("briefing") else 1
     print(f"wrote {out}")
     return 0
+
+
+# P20: 순환 import 순서. validate.py가 모듈 상단에서 draft의 NUM_RE를
+# import하는데, draft가 파일 상단에서 validate를 import하면 draft를 먼저
+# 불러온 쪽(테스트 등)에서 validate의 draft import가 미초기화 모듈에
+# 닿아 ImportError가 나고 fallback(복합수 전개 없음)이 쓰인다. draft는
+# validate 이름을 함수 안에서만 쓰므로, 이 import를 파일 끝으로 옮겨
+# NUM_RE·normalize_num_text 정의가 먼저 끝나게 한다.
+from validate import KINDS, check, url_core, extract_domain
 
 
 if __name__ == "__main__":

@@ -592,7 +592,7 @@ ok("P10: _canon_num $80B==800억", _canon_num("$80B") == _canon_num("800억") ==
 ok("P10: _canon_num 80억 != $80B (10배 차이 차단)", _canon_num("80억") != _canon_num("$80B"))
 ok("P10: _canon_num % 유지", _canon_num("30%") == "30%")
 ok("P10: _canon_num 한글 단위 유지", _canon_num("2배") == "2배")
-ok("P10: _canon_num 명 유지", _canon_num("100명") == "100명")
+ok("P20: _canon_num 명 투명화 (개수 단위, 11/11 '35,000개' 오탐)", _canon_num("100명") == "mag:100")
 ok("P10: _canon_num 10x 유지", _canon_num("10x") == "10배")  # P18b: x→배 동등화 (2026-11-10 실측)
 ok("P18b: _canon_num 10x == 10배 != 11배", _canon_num("10x") == _canon_num("10배") != _canon_num("11배"))
 
