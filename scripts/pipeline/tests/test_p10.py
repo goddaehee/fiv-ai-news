@@ -36,8 +36,8 @@ ok("canon 5만 == 50000", _canon_num("5만") == "mag:50000")
 ok("canon 3천 == 3000", _canon_num("3천") == "mag:3000")
 ok("canon % 유지", _canon_num("30%") == "30%")
 ok("canon 배 유지", _canon_num("2배") == "2배")
-ok("canon 명 유지", _canon_num("100명") == "100명")
-ok("canon 개 유지", _canon_num("400개") == "400개")
+ok("canon 명 투명화 (P20: 개수 단위)", _canon_num("100명") == "mag:100")
+ok("canon 개 투명화 (P20: 개수 단위)", _canon_num("400개") == "mag:400")
 ok("canon 10x 유지", _canon_num("10x") == "10배")  # P18b: x→배 동등화 (2026-11-10 실측)
 
 # --- P0-4: NUM_RE S-1 lookbehind ---
