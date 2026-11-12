@@ -1,0 +1,372 @@
+{
+  "date": "2026-11-12",
+  "title": "5분 AI 뉴스 — 엔비디아 CEO 불확실성과 OpenAI 100억 달러 분기",
+  "heroline": "이사회 보도로 흔들리는 엔비디아, 사상 첫 100억 달러 분기를 기록한 OpenAI",
+  "dek": "11월 12일 AI·보안 주요 뉴스를 다섯 개의 분석과 두 개의 단신으로 정리했습니다.",
+  "tag": "AI 데일리",
+  "briefMin": 3,
+  "readMin": 8,
+  "briefing": [
+    {
+      "id": "nvidia-ceo-uncertainty",
+      "headline": "이사회 결정 임박 보도에 주가 하락",
+      "summary": "창업자 겸 CEO 젠슨 황의 교체가 이사회에서 논의된다는 보도가 나오며 주가가 떨어졌습니다."
+    },
+    {
+      "id": "openai-quarterly-revenue",
+      "headline": "직전 분기 67억 달러 대비 급증",
+      "summary": "OpenAI의 분기 매출이 처음으로 100억 달러를 넘은 것으로 보도됐습니다."
+    },
+    {
+      "id": "anthropic-ipo-demand",
+      "headline": "기관·개별 수요가 몰리는 초대형 상장",
+      "summary": "앤스로픽 IPO가 청약 마감을 앞두고 여러 배 초과를 기록한 것으로 전해집니다."
+    },
+    {
+      "id": "cisco-broadworks-kev",
+      "headline": "CISA KEV 등록, 패치 적용이 곧 대응",
+      "summary": "CISA가 이미 패치가 나온 두 취약점을 실제 공격이 확인된 목록에 올렸습니다."
+    },
+    {
+      "id": "notion-fireworks-transcripts",
+      "headline": "일부 워크스페이스 대상, 제3자 인프라 경유 침해",
+      "summary": "AI 인프라 제공사 침해로 노션 AI 채팅 기록이 일부 노출됐습니다."
+    },
+    {
+      "id": "tsmc-ai-investment",
+      "headline": "파운드리가 고객사 지분에 직접 진입",
+      "summary": "TSMC가 두 AI 모델 기업에 10억 달러를 투자할 계획으로 보도됐습니다."
+    },
+    {
+      "id": "maersk-ransomware",
+      "headline": "인수로 물려받은 레거시 시스템 경유 침해",
+      "summary": "머스크가 인수 과정에서 넘어온 구형 시스템의 데이터 유출을 확인하고 랜섬웨어 협박을 받았습니다."
+    }
+  ],
+  "keywords": [
+    "엔비디아",
+    "OpenAI 매출",
+    "앤스로픽 IPO",
+    "CISA KEV",
+    "Fireworks AI",
+    "TSMC 투자"
+  ],
+  "mainEvent": "엔비디아 CEO 교체 논의 보도와 OpenAI 분기 매출 100억 달러 돌파",
+  "keynums": [
+    {
+      "val": "$10B",
+      "lab": "OpenAI 분기 매출",
+      "sub": "보도 기준, 첫 100억 달러 돌파"
+    },
+    {
+      "val": "50%",
+      "lab": "전 분기 대비 증가율",
+      "sub": "보도 인용 수치"
+    },
+    {
+      "val": "$6.7B",
+      "lab": "직전 분기 매출",
+      "sub": "2분기 실적"
+    },
+    {
+      "val": "$1B",
+      "lab": "TSMC 투자 규모",
+      "sub": "앤스로픽·OpenAI 대상"
+    },
+    {
+      "val": "33년",
+      "lab": "젠슨 황 재임 기간",
+      "sub": "창업자 CEO"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "11/11 15:04",
+      "d": "CISA, 시스코·오픈웨이브 취약점 KEV 등록"
+    },
+    {
+      "t": "11/11 23:41",
+      "d": "앤스로픽 IPO 청약 여러 배 초과 보도"
+    },
+    {
+      "t": "11/12 01:14",
+      "d": "OpenAI 분기 매출 100억 달러 보도"
+    },
+    {
+      "t": "11/12 03:16",
+      "d": "TSMC의 10억 달러 투자 계획 보도"
+    },
+    {
+      "t": "11/12 05:54",
+      "d": "노션, Fireworks AI 침해 공개"
+    },
+    {
+      "t": "11/12 08:28",
+      "d": "엔비디아 이사회 CEO 교체 논의 보도"
+    }
+  ],
+  "intro": "11월 12일 목요일 발행. AI 업계는 어젯밤부터 엔비디아 경영 불확실성과 앤스로픽 IPO 수요, OpenAI의 분기 매출 돌파 소식이 겹치며 시장과 보안 뉴스가 함께 몰린 하루입니다.",
+  "analysis": [
+    {
+      "id": "nvidia-ceo-uncertainty",
+      "n": 1,
+      "title": "1. 엔비디아 이사회, 젠슨 황 교체 논의 — 재임 33년의 불확실성",
+      "bullets": [
+        "이사회가 창업자 겸 CEO 젠슨 황의 교체를 논의 중이라는 보도가 나왔습니다.",
+        "황은 33년간 회사를 이끌어온 창업자입니다.",
+        "의회는 별도 혐의 관련 비공개 브리핑을 요구한 상태입니다."
+      ],
+      "body": [
+        "엔비디아 이사회가 젠슨 황 CEO의 교체를 논의 중이며 결정이 며칠 안에 나올 수 있다는 보도가 나오면서 주가가 하락했습니다. 장 마감 후 거래에서도 주가가 내려간 것으로 전해졌습니다.",
+        "황은 회사를 33년간 이끌어온 창업자로, AI 붐의 상징처럼 여겨져 온 인물입니다. 최근에는 중국 간첩 혐의를 받는 인물과의 관계를 둘러싼 의회 소환 요구와, 직속 임원과의 추가 관계 의혹 보도가 잇따랐습니다.",
+        "다만 이사회의 최종 결정 여부와 시점은 아직 보도 수준의 정보이며 회사 측 공식 확인은 없습니다. 두 번째 관계 의혹도 매체 보도 단계로, 사실관계는 미확정입니다.",
+        "CEO 교체가 현실화되면 AI 반도체 공급과 파트너십 일정에 대한 기대가 다시 짜여야 합니다. 관련 계약을 맺고 있는 조직이라면 로드맵 발표 일정을 주의 깊게 지켜볼 상황입니다."
+      ],
+      "extra": "그 밖에: 같은 시각 르몽드와 뉴욕타임스가 각기 다른 관계 의혹을 보도하며 사안이 확대되는 흐름입니다. 이 칸의 다른 소식과 겹치지 않는 경영 리스크 국면입니다.",
+      "takeaway": "창업자 1인 체제의 불확실성이 그동안 안정적으로 여겨졌던 공급 계약의 리스크로 달라진 지점입니다. 엔비디아 기반 인프라 계약이 있다면 로드맵 발표 일정부터 확인하면 됩니다.",
+      "tags": [
+        "엔비디아",
+        "경영",
+        "반도체"
+      ],
+      "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/11/nvidias-stock-drops-as-board-reportedly-preps-to-oust-ceo-jensen-huang/",
+          "kind": "news"
+        },
+        {
+          "handle": "NBC Connecticut · nbcconnecticut.com",
+          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQckdTejlGeHM3U1A5eGUxaEpNVHhENEc0TFhEQ1o5X0NGRkN3LVN6bFI1RGk0akdLSWE4VUVxWmhXczBIU0tSMWl1SkRsSW1CVHF4eFM5UHN4N0pZRE5zU3BOenNfXzFSRTZBaVhSMUFlS2NxRm9xM3JXZXN1LVV1UGkzSG93Q05CVUFfMWxJT2NieHAtQW9rUU9Ob19QNW5FX25DbnYxNHB0NWJ0SE1kMUxmamtFX3pyUVZkSmw2NNIBxwFBVV95cUxQdWh0UGJOcEFUQVlET2otM0RCX012RVdCY0poTWthQzVBWmdnRTNvbEd5ZTlDdFBuOXBfdzRfVUJ2VHkwWGIwYTJBZTFRU1ktOWhOYVo3eHdGMjZtMHpUa0FPYjI2M3pQZ3dHRlpjQ1NlX1h6dWhQZ21rZHJPeHVVVk9uYTlRU29aUjJ2TXlvbjhYd0xmTDFtaDRuN0pFTDJicTZQUWhNNGdOa2NZci1wZ2JReWtKUEd5U0NjSC1KVVdjNFpobk93?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.nbcconnecticut.com"
+        },
+        {
+          "handle": "Le Monde.fr · lemonde.fr",
+          "url": "https://news.google.com/rss/articles/CBMiiwJBVV95cUxNVVB0dDJEQW85QUdlQ25MajUyc2QyeUI2RzhGMU1tMFl0ZGlZeUJlOGozbW9RZUhDbDlkZGhEbzVCVk84SjVSOHBhRm9vcW8tbGctS09oVnpKaFhmS1lRcmFRN2dIWm1lRTVSYmFKSEh4dG83aWtab3RvOE53YWRzT3g0WFdlY0M1OXN6SGZNbzI2bnN0cDdKWHMyTHladmV1Q2xmakljNExxbXctWWFKOXBLNEpBNzl5S29QYUJHelR5TVVKaFlrMzJVNXgyMERkNmdtSjB5dklPcEhxZ3lPQzY3OEVmQS1hM0Zqb2hIajU4Y1VKZlFUQVUzc196X3ZNbWdRMWRCUlhSOTA?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.lemonde.fr"
+        },
+        {
+          "handle": "The Verge AI",
+          "url": "https://www.theverge.com/tech/1031652/jensen-huang-rumor",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "openai-quarterly-revenue",
+      "n": 2,
+      "title": "2. OpenAI 분기 매출 첫 100억 달러, 직전 분기 대비 50% 증가",
+      "bullets": [
+        "분기 매출이 $10B를 처음으로 넘은 것으로 보도됐습니다.",
+        "직전 분기 $6.7B 대비 약 50% 증가한 수치입니다.",
+        "회사 공식 실적 공시가 아닌 언론 보도 기반입니다."
+      ],
+      "body": [
+        "OpenAI의 분기 매출이 처음으로 100억 달러를 넘은 것으로 보도됐습니다. 직전 분기 67억 달러에서 약 50% 오른 규모입니다. AI 업계는 최근 수조 원대 기업가치 논의와 함께 수익성에 대한 의심이 커져 왔습니다. 이번 수치는 그런 우려 속에서 매출 자체는 여전히 빠르게 늘고 있다는 신호로 읽힙니다. 다만 이는 언론 보도 수치이고 회사의 공식 감사 실적은 아닙니다. 매출 증가율이 손실 축소와 직결되는지도 이번 보도만으로는 확인되지 않습니다.",
+        "동시에 TSMC의 투자 계획처럼 대형 파트너의 자금 유입 소식도 이어지고 있어, 산업 전반의 지출 규모가 당분간 유지될 가능성이 있습니다. 도입 예산을 짜는 조직은 연 단위 가격 정책 변화를 함께 감안할 상황입니다."
+      ],
+      "extra": "그 밖에: 같은 날 Bloomberg은 OpenAI와 앤스로픽의 높은 기업가치가 벤처캐피털의 조정 우려를 키운다고 짚었습니다. 매출과 밸류에이션의 간극 논쟁이 함께 흐르는 국면입니다.",
+      "takeaway": "매출 성장 속도에서 읽히는 의미는 손실 논쟁과 별개로 수요가 아직 확대 국면이라는 점입니다. 도입 예산 회의에는 연간 계약 기준 비용 추이를 비교 기준으로 삼으면 됩니다.",
+      "tags": [
+        "OpenAI",
+        "매출",
+        "AI 비즈니스"
+      ],
+      "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/11/openais-quarterly-revenue-reportedly-crosses-10b-for-the-first-time/",
+          "kind": "news"
+        },
+        {
+          "handle": "Bloomberg · bloomberg.com",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNVzBRbmVLSUFUYS1uMjVUUVZVaTFQQmZhTmRGNklQRjhLc1B3MnJPWW1fNkNua014V3NzS2hWREJ2d3YtVElhTXc5VHBId1N2aTJ3M2MwdE5nWmtTT2ZSdDhXSzlyTzdta0RMOFVUTTJqV0ZPWndsc2ZBVHgzTFA0aWFPMnRrcVJHZ1Jmd0FNZHNzU0p5cTZDV050MzJPajlTdWVyMXIwQ2UybFdmNnVYMW5IVVE?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.bloomberg.com"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-ipo-demand",
+      "n": 3,
+      "title": "3. 앤스로픽 IPO 청약 여러 배 초과, 개별 투자자 유입 주목",
+      "bullets": [
+        "청약이 여러 배 초과된 것으로 알려졌습니다.",
+        "상장이 일주일 앞으로 다가왔습니다.",
+        "일부 애널리스트는 공모가 범위에서 저평가라고 평가했습니다."
+      ],
+      "body": [
+        "앤스로픽의 IPO 청약이 여러 배 초과된 것으로 전해졌습니다. 상장이 일주일 앞으로 다가온 가운데 나온 소식입니다. 블룸버그는 청약 초과를, 로이터는 개별 투자자의 기록적 매수 유입 가능성을 각각 보도했습니다. 모닝스타는 공모가 범위가 회사 가치를 낮게 책정했다는 평가를 내놓기도 했습니다.",
+        "다만 청약 초과 배수는 익명 소식 인용 보도이며 최종 공모가와 상장 후 주가는 결정되지 않았습니다. 같은 낈 블룸버그는 AI 과열 의심과 초대형 IPO가 부딪힌다는 시각도 함께 전했습니다.",
+        "청약이 몰리면 공모가가 상단에 못 박힐 가능성이 커지고, 상장 직후 변동성도 그만큼 커질 수 있습니다. AI 예산의 대부분을 단일 업체에 두고 있는 조직이라면 이번 상장을 시장 온도계로 활용할 수 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "청약 수요가 공모가 상단과 상장 후 변동성에 미칠 영향이 큽니다. AI 도입 예산 회의에는 이번 상장을 시장 온도 가늠 지표로 반영해 두면 됩니다.",
+      "tags": [
+        "앤스로픽",
+        "IPO",
+        "투자"
+      ],
+      "sources": [
+        {
+          "handle": "Bloomberg · bloomberg.com",
+          "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNMGtLeG5WQUVLcHhzM3Y1YUFGamt6TFVZYzZJc1JaSEpNNHcwaTJqaGxXdjF5bm9MWnVrWmNadTlyLUZ1cjVCSmVUeUhsOEZLWnBRbnN6X0tqYmRfdGMzakdrWmdOeGNHR01kc0dlTm9tQ0hLLS1lQWt4ZWYyMllYNG9TYWFVTnpPUzFwYlE4ODBRNkVmZ0FRc2kwWGRISHAyQ2l6VlRXMDZLRGhGUmVSMHE2OGZKUQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.bloomberg.com"
+        },
+        {
+          "handle": "Reuters · reuters.com",
+          "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPSkc4cW15aGVaZG4tLTR1YVpRUWJzNXVtQ0RyR2d1bEFXTFFIU2xhWEduUmxTUFJWZEt0cVh3ZDNxNnRwV2k0WFlnMlNycWpycVVSNGl0Qy1NMlhvZVBUWVhVVGhISDZpcUxBdGVFQnRXRzhCTGZYZVEzUEh1MjlBOFZ6X2p3eG4tUlF3a3NNUXhzYzU5d0NmcVhqS1QzcG5DMUItVWlDdlJ3U1ZoU0tscy1xa3Fxbnh2dHhPYmpNQ1VZOUk0?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.reuters.com"
+        },
+        {
+          "handle": "Morningstar · global.morningstar.com",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQY1hSaVQ0ZjlQWE1Oa1JBZXV4YmM4eTM1MmNYMnlTd1hMZ2x2NWFNaWp3NUFjZFRvMWN0azRLZVdQelkwWS13V1F0dFh2eHRjZ1ZuNExQOXd1c2lnUmxsMGNFUUtmeUxmUHloZzJvb3pfOUljQ2lXS25JRDUwWGhtb2hBcGRoRU9iWHZyd1h3NjZOYkE4SW94eFZxbW8?oc=5",
+          "kind": "news",
+          "origin_url": "https://global.morningstar.com"
+        },
+        {
+          "handle": "Morningstar · morningstar.com",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQaE1sMEd0cWpuY2pydEhEMjgxbS0zS3QxNGx2a3QtNC1QZ3NrWmZhUzVfcERDV1d4ZkNKa1psaU5nUGxJZVRKaWRfakNMSEtBNkxmbjE4bWF1MWtnOUFrMUI2WlB2Q29rSTUyMkVzSzRBWlE0WWZIMWJDUWJ3bWpaWnVZTk45cmFlNkpFdjV1T2w?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.morningstar.com"
+        }
+      ]
+    },
+    {
+      "id": "cisco-broadworks-kev",
+      "n": 4,
+      "title": "4. 시스코·오픈웨이브 취약점, 패치 있음에도 실제 공격 지속",
+      "bullets": [
+        "CISA가 두 취약점을 실제 공격 확인 목록(KEV)에 추가했습니다.",
+        "대상은 시스코 BroadWorks와 오픈웨이브 제품입니다.",
+        "패치는 이미 배포된 상태입니다."
+      ],
+      "body": [
+        "미국 사이버보안인프라보안청(CISA)이 시스코 BroadWorks와 오픈웨이브 메시징 제품의 취약점 두 건을 알려진 악용 목록(KEV)에 올렸습니다. 두 취약점 모두 이미 패치가 배포된 상태임에도 실제 공격에 활용되고 있습니다.",
+        "KEV는 CISA가 실제 익스플로잇이 확인된 취약점을 나열해 연방 기관에 수정을 명하는 목록입니다. 통신 인프라 소프트웨어가 대상이라 통신사와 기업 음성 시스템 운영 조직이 영향권입니다. 다만 패치가 나왔다는 사실과 현장 적용은 다른 문제입니다. 업무 시간 외 점검 창 확보나 버전 호환이 걸림돌로 남는 경우가 많습니다.",
+        "패치가 이미 존재한다는 점에서 이번 대응의 핵심은 기술이 아니라 자산 목록 대조입니다. 해당 제품을 쓰는 조직은 이번 주 안에 적용 완료가 목표입니다."
+      ],
+      "extra": "그 밖에: 같은 날 커넥트와이즈 ScreenConnect 환경을 노리는 공격이 MSP 수십 곳에 피해를 줬다는 보도도 나왔습니다. 관리형 서비스 제공사를 쓰는 조직이라면 함께 점검할 국면입니다.",
+      "takeaway": "패치가 이미 나와 있는데도 공격이 계속된다는 점이 중요해진 이유는 대응 실패의 원인이 기술 부재가 아니라 적용 지연이기 때문입니다. KEV 등록 항목과 자산 목록 대조를 이번 분기 점검 체크리스트에 넣어 두시면 됩니다.",
+      "tags": [
+        "보안",
+        "취약점",
+        "CISA"
+      ],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/cisco-broadworks-and-openwave-flaws.html",
+          "kind": "news"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/cisa-flags-cisco-broadworks-flaw-as-actively-exploited-in-attacks/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "notion-fireworks-transcripts",
+      "n": 5,
+      "title": "5. 노션, Fireworks AI 침해로 AI 채팅 기록 일부 노출",
+      "bullets": [
+        "AI 인프라 제공사 Fireworks AI에서 보안 침해가 발생했습니다.",
+        "노션 AI 채팅 기록 일부가 노출됐습니다.",
+        "영향은 소수의 워크스페이스로 알려졌습니다."
+      ],
+      "body": [
+        "노션이 AI 인프라 제공사인 Fireworks AI의 보안 침해로 자사 AI 채팅 기록 일부가 노출됐다고 공개했습니다. 영향 범위는 소수의 워크스페이스로 전해졌습니다.",
+        "AI 기능을 자체 인프라가 아닌 외부 제공사에서 돌리는 구조가 늘면서, 이번처럼 제3자 경유 유출이 새로운 사고 유형이 되고 있습니다. 기업 입장에서는 계약서상 처리 주체와 실제 데이터 처리 위치가 어긋나는 지점이 됩니다. 다만 노출 건수와 기록의 민감도는 회사 발표 수준의 '소수'라는 표현 이상으로 확인되지 않습니다. 침해 경위와 기간도 추가 조각이 필요합니다. AI 기능 도입 검토 시 채팅 기록이 어느 인프라를 거치는지 확인하는 절차가 앞으로는 표준 항목이 될 가능성이 높습니다."
+      ],
+      "extra": "",
+      "takeaway": "AI 기능의 데이터 흐름이 외부 인프라를 경유한다는 사실이 계약 검토 지점이 바뀐 대목입니다. AI 도입 심사에는 백엔드 처리 위치와 유출 시 통보 절차를 표준 질문으로 넣어 두면 됩니다.",
+      "tags": [
+        "데이터 유출",
+        "노션",
+        "AI 인프라"
+      ],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/notion-says-fireworks-breach-exposed-customer-ai-chat-transcripts/",
+          "kind": "news"
+        },
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/fireworks-ai-breach-widens-to-expose.html",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "tsmc-ai-investment",
+      "n": 6,
+      "title": "6. TSMC, 앤스로픽·OpenAI에 10억 달러 투자 계획",
+      "bullets": [
+        "TSMC가 앤스로픽과 OpenAI에 $1B를 투자할 계획으로 보도됐습니다.",
+        "제조 파트너가 고객사에 직접 출자하는 구조입니다.",
+        "투자 비율 세부 조건은 아직 확인되지 않습니다."
+      ],
+      "body": [
+        "TSMC가 앤스로픽과 OpenAI에 10억 달러를 투자할 계획이라고 보도됐습니다. 파운드리 업체가 주요 고객인 AI 모델 기업의 지분에 직접 진입하는 구조입니다.",
+        "AI 수요가 반도체 공급 능력과 맞물리는 국면에서, 제조사와 고객의 관계가 단순 납품을 넘어 자본 결속으로 이동하는 흐름으로 읽힙니다. 같은 날 OpenAI의 매출 소식과 겹쳐 관심이 커진 소식입니다. 다만 투자 배분 비율과 시점 등 세부 조건은 아직 보도 수준이며 공식 발표 내용은 확인되지 않습니다. 규제 검토 여부도 미확정입니다.",
+        "이런 투자가 늘면 칩 수급 협상에서 자본 관계가 우선순위 변수가 될 수 있습니다. 장기 공급 계약을 다루는 조직은 발표 후속 내용을 지켜볼 필요가 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "파운드리가 고객사에 출자하는 구조가 등장한 것이 공급망 협상의 전제가 달라진 의미입니다. 반도체 수급 계약 검토에는 이번 투자 구도를 비교 기준으로 반영해 두면 됩니다.",
+      "tags": [
+        "TSMC",
+        "투자",
+        "AI 반도체"
+      ],
+      "sources": [
+        {
+          "handle": "Ars Technica · arstechnica.com",
+          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNanhKZDVUckJDOTUyaHpuU1ozRV9Rc1I0czVKZmtueDFsM3pDTjRJZTFMQ0RDREhKcHRtTXIzQ2Zmdm1TWWNGbFN1RUE0dHBjWTNjV1VSR0lLTktuNVRrTnQxY0hfV0VXWUkzRnFyQ2otV0duQjdUVkdFcC1fWm9WQV9MN3k0Y3Y2YTY4d2w0dm56QUVyVlNaTlZmMi1QdTg?oc=5",
+          "kind": "news",
+          "origin_url": "https://arstechnica.com"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "엔비디아 CEO 거취 불확실성이 반도체 공급 기대를 흔듭니다.",
+    "grow": "OpenAI 매출과 TSMC 투자가 수요 확대 국면을 뒷받침합니다.",
+    "caution": "패치가 있어도 공격이 계속되는 점, 제3자 AI 인프라 경유 유출이 주의 신호입니다.",
+    "heat": "앤스로픽 IPO 청약 초과로 시장 관심이 한껏 높아졌습니다."
+  },
+  "tips": [
+    {
+      "title": "KEV 목록 대조로 패치 우선순위 매기기",
+      "body": "CISA의 알려진 악용 취약점 목록을 자산 목록과 겹쳐 보고, 통신 시스템부터 적용 순서를 정합니다.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "AI 채팅 기록의 저장 위치 확인",
+      "body": "AI 기능 계약 전에 기록이 자체 인프라에 남는지 외부 제공사를 거치는지를 문서로 받아 둡니다.",
+      "via": "BleepingComputer"
+    },
+    {
+      "title": "매출 보도는 공시와 구분해 읽기",
+      "body": "분기 매출 뉴스를 예산 근거로 쓸 때는 보도 기반 수치임을 각주로 남겨 둡니다.",
+      "via": "TechCrunch"
+    },
+    {
+      "title": "관리형 서비스 제공사 원격 접속 점검",
+      "body": "MSP를 쓰는 조직은 ScreenConnect 등 원격 접속 환경의 계정과 세션 로그를 점검합니다.",
+      "via": "BleepingComputer"
+    },
+    {
+      "title": "상장 일정을 예산 캘린더에 표시",
+      "body": "앤스로픽 상장 전후 시장 변동성이 AI 지출 심리에 영향을 줄 수 있어 일정을 기록해 둡니다.",
+      "via": "Reuters"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": false
+}
