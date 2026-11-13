@@ -1,0 +1,342 @@
+{
+  "date": "2026-11-13",
+  "title": "5분 AI 뉴스 — 젠승 황 사임, GitHub 대규모 계정 탈취, Anthropic IPO 6배 초과 청약",
+  "heroline": "젠슉 황 엔비디아 CEO 사임",
+  "dek": "젠슉 황 엔비디아 CEO 사임 소식이 AI 업계 전반을 흔들었습니다. Windows 권한 상승 제로데이와 PTC 제품 결함, GitHub 자격증명 탈취 캠페인까지 보안 뉴스도 몰렸습니다.",
+  "tag": "ai-daily",
+  "briefMin": 3,
+  "readMin": 9,
+  "briefing": [
+    {
+      "id": "jensen-huang-resigns",
+      "headline": "젠슉 황 엔비디아 CEO 사임",
+      "summary": "공동창업자이자 AI 붐의 대표 얼굴이던 황이 관계 스캔들로 사임했습니다. 미·중 AI 경쟁 국면이라 국가 안보 변수로도 확대되고 있습니다."
+    },
+    {
+      "id": "github-wfx-loot",
+      "headline": "GitHub 계정 4,837개 탈취, 61,764개 저장소 스캔",
+      "summary": "wfx-loot으로 명명된 캠페인에서 탈취 계정으로 저장소를 뒤지고 시크릿 탈취 풀리퀘스트를 밀어 넣었습니다. 클라우드 자격증명 노출이 핵심 위험입니다."
+    },
+    {
+      "id": "anthropic-ipo-demand",
+      "headline": "Anthropic IPO, 약 6배 초과 청약 보도",
+      "summary": "블룸버그 보도를 로이터가 전하며 청약 수요가 공급을 크게 앞서는 흐름이 확인됐습니다. 황 사임 여파로 상장 난도가 높아졌다는 분석도 나옵니다."
+    },
+    {
+      "id": "signdrop-zero-day",
+      "headline": "SignDrop 제로데이, Windows CLFS 권한 상승 주장",
+      "summary": "CLFS 드라이버를 악용해 로컬 사용자가 SYSTEM 권한을 얻는다는 개념 증명 코드가 공개됐습니다. 패치와 실제 악용 여부는 아직 확인되지 않았습니다."
+    },
+    {
+      "id": "ptc-windchill-rce",
+      "headline": "PTC, Windchill·FlexPLM 치명적 결함 패치",
+      "summary": "악용 성공 시 원격 코드 실행으로 이어질 수 있는 결함에 대한 패치가 나왔습니다. 제조업 PLM 환경 노출 점검이 필요합니다."
+    },
+    {
+      "id": "frontier-ai-lawsuit",
+      "headline": "프론티어 AI 개발 중단 요구 소송",
+      "summary": "OpenAI, 구글, Anthropic을 상대로 프론티어 모델 개발 중단을 구체적으로 요구하는 소송이 제기됐습니다. 규제 논쟁이 법정으로 옮겨갔다는 평가가 나옵니다."
+    },
+    {
+      "id": "google-search-ai-mode",
+      "headline": "구글 검색 AI 모드, Gemini 4 Hydrogen 탑재",
+      "summary": "복잡한 질의 이해와 시각 응답이 개선된 검색 업그레이드가 발표됐습니다. 링크 노출 방식 변화도 함께 소개됐습니다."
+    },
+    {
+      "id": "nectar-creator-agent",
+      "headline": "Nectar, 크리에이터 발굴 에이전트 출시",
+      "summary": "브랜드의 인플루언서 마케팅에서 발굴·아웃리치·성과 추적까지 자동화하는 에이전트가 나왔습니다. 마케팅 업무 자동화 사례가 늘어나는 흐름입니다."
+    }
+  ],
+  "keywords": [
+    "엔비디아",
+    "젠슉 황",
+    "GitHub 보안",
+    "Anthropic IPO",
+    "제로데이",
+    "AI 에이전트"
+  ],
+  "mainEvent": "젠슉 황 엔비디아 CEO 사임",
+  "keynums": [
+    {
+      "val": "4,837개",
+      "lab": "탈취된 GitHub 계정",
+      "sub": "BleepingComputer 보도"
+    },
+    {
+      "val": "61,764개",
+      "lab": "스캔된 저장소",
+      "sub": "wfx-loot 캠페인"
+    },
+    {
+      "val": "약 6배",
+      "lab": "Anthropic IPO 초과 청약",
+      "sub": "블룸버그 보도"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "11/12 20:33",
+      "d": "PTC, Windchill·FlexPLM 치명적 결함 패치 발표"
+    },
+    {
+      "t": "11/13 02:50",
+      "d": "SignDrop 제로데이 보도"
+    },
+    {
+      "t": "11/13 03:48",
+      "d": "젠슉 황 사임 보도 확산"
+    },
+    {
+      "t": "11/13 06:31",
+      "d": "Anthropic IPO 약 6배 초과 청약 보도"
+    },
+    {
+      "t": "11/13 07:25",
+      "d": "GitHub 계정 탈취 캠페인 보도"
+    }
+  ],
+  "intro": "11월 13일 금요일 발행. 엔비디아 젠슉 황 CEO의 사임이 여러 매체를 통해 동시에 전해지며 AI 업계 최대 화제가 됐고, Windows 제로데이와 PTC 패치, GitHub 대규모 계정 탈취까지 보안 소식이 겹친 하루입니다.",
+  "analysis": [
+    {
+      "id": "jensen-huang-resigns",
+      "n": 1,
+      "title": "1. 젠슉 황 엔비디아 CEO 사임, AI 공급망의 얼굴이 바뀌는 순간",
+      "bullets": [
+        "엔비디아 공동창업자이자 CEO인 황이 사임했습니다",
+        "미·중 AI 인프라 경쟁 상황이라 국가 안보 논의로 번질 수 있다는 보도",
+        "후속 경영진과 지분·파트너십 변화는 아직 미확정"
+      ],
+      "body": [
+        "엔비디아의 젠슉 황 CEO가 사임했습니다. 그는 공동창업자이자 사장을 겸하며 AI 붐을 이끈 상징적인 인물이었습니다. 사임은 Megaspeed 임원과의 관계가 알려진 뒤에 이어졌습니다.",
+        "미국과 중국이 가장 진보한 AI 인프라를 두고 경쟁하는 시점이라, 이번 사임이 국가 안보에 미칠 영향이 크다는 보도가 나왔습니다. 로이터는 황과 관련된 또 다른 관계의 존재를 추가로 전했으며, 관련 상대의 이름은 공개되지 않았습니다.",
+        "다만 후속 경영진 구성, 회사의 대응 조치, 대형 고객사와의 계약 변화는 아직 확인되지 않았습니다. 엔비디아가 초기에 발표했다는 투자 관련 조치의 구체적 내용도 보도 수준으로만 알려져 있습니다.",
+        "거래 중단이나 공급 차질은 보도되지 않았지만, AI 반도체 공급망의 대표 얼굴이 빠지는 만큼 파트너사들과 규제 기관의 움직임이 향후 관전 포인트로 보입니다."
+      ],
+      "extra": "",
+      "takeaway": "AI 반도체의 대표 경영자가 빠지면서 산업 전반의 신뢰와 협상 구도가 달라진 지점이 이번 사안의 무게입니다. 엔비디아의 후속 경영진 발표와 주요 고객사 대응부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Courthouse News · courthousenews.com",
+          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQYW1femlfRjNlV3dYVzZjYklVMmkzZ3U5S1h4c25tV2k2LWQ0a3ROODFLR2M3MW9idHBGMThpVEkxSEs0YVRxX2VRSURaTXFxYVpjQ0E4VjQzLU9KZzNycDVuelVGbjhNRklmVXZQOXBsRlpQbWVKN2FsVFZDZFpORW9vWUZ6eWlUWlB3ZlIyYWN4andWamtsUlY4N0pJVXM1TTBfSUZoOHdwb0RtYVRxUVRwUTNCT3VrN3FmcnBaTQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.courthousenews.com"
+        },
+        {
+          "handle": "The Verge AI",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1030422/nvidia-jensen-huang-ai-china-alice-huang",
+          "kind": "news"
+        },
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/12/jensen-huang-was-having-a-third-affair-reuters-reports/",
+          "kind": "news"
+        },
+        {
+          "handle": "Gizmodo · gizmodo.com",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPZHRscWw3d1lJdWs2SDI2QmJGY3dfWWdMbTVXcmF0MG1UaGZsX1RIN3JYN1Z3a1lyYVFhbFBvZFRKdkRJQmU4WTNsOHJ2U0ZKVVVXVEJSbF9Bb1BoNDVYU1VtMGN2LTJhOG5fTE1sQkhPRzlHejBnLXJEWXlLbTlBVV9jZ19HQQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://gizmodo.com"
+        }
+      ]
+    },
+    {
+      "id": "signdrop-zero-day",
+      "n": 2,
+      "title": "2. SignDrop 제로데이, CLFS 드라이버 권한 상승 주장",
+      "bullets": [
+        "SignDrop이라는 이름의 공개 개념 증명이 CLFS 드라이버를 겨냥",
+        "일반 로컬 사용자가 SYSTEM 권한을 얻는다는 주장",
+        "마이크로소프트의 패치·CVE 할당은 아직 확인되지 않음"
+      ],
+      "body": [
+        "SignDrop이라 불리는 제로데이 익스플로잇 코드가 이번 주 초 공개됐다는 보도가 나왔습니다. 이 코드는 Windows의 CLFS(공용 로그 파일 시스템) 드라이버를 악용해 일반 로컬 사용자가 SYSTEM 권한을 얻을 수 있다고 주장합니다.",
+        "CLFS는 Windows의 로깅 하위 시스템으로, 이런 구성 요소의 권한 상승 결함은 멀웨어가 초기 침투 뒤 단말을 완전히 장악하는 디딤돌로 쓰입니다. 보안 기능의 일부가 공격 통로로 바뀐다는 점이 이번 사안의 쟁점입니다.",
+        "다만 현재 확인된 것은 공개된 개념 증명의 주장 수준이며, 마이크로소프트의 공식 패치 여부와 CVE 번호 할당은 보도에서 확인되지 않았습니다. 실제 악용 사례도 아직 보고되지 않았습니다.",
+        "로컬 권한 상승은 기본적으로 공격자가 이미 시스템에 발을 들인 상태를 전제로 하므로, 다른 침투 경로 차단과 함께 패치 일정을 지켜보는 대응이 필요해 보입니다."
+      ],
+      "extra": "",
+      "takeaway": "공개 PoC 시점에서 패치가 없다는 상황이 사내 PC 관리 정책에 중요한 영향을 줍니다. 일반 사용자의 로컬 관리자 권한 정책과 CLFS 관련 패치 일정을 체크리스트에 넣어 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/new-signdrop-zero-day-exploit-turns.html",
+          "kind": "news"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "ptc-windchill-rce",
+      "n": 3,
+      "title": "3. PTC, Windchill·FlexPLM 치명적 결함 패치 공개",
+      "bullets": [
+        "Windchill과 FlexPLM에 치명적 등급의 결함 패치 발표",
+        "악용 성공 시 원격 코드 실행 가능",
+        "적용 대상 버전과 운영 노출 여부는 각 사 확인 필요"
+      ],
+      "body": [
+        "PTC가 Windchill과 FlexPLM 소프트웨어의 새로운 치명적 결함에 대한 패치를 공개했습니다. 결함이 악용되면 원격 코드 실행으로 이어질 수 있다고 알려졌습니다.",
+        "Windchill과 FlexPLM은 제품 수명주기 관리(PLM) 소프트웨어로 제조업체의 설계·부품 정보를 다루는 핵심 시스템입니다. 이런 시스템은 인터넷에 노출된 경우 공격 표면이 넓어지며, 침해 시 설계 자산 유출로 이어질 수 있습니다.",
+        "다만 패치의 구체적 적용 범위, 결함의 정확한 심각도 점수, 이미 악용된 사례 여부는 보도에서 완전히 확인되지 않았습니다. 내부 구매품 목록에 두 제품이 있는지부터가 각 조마다 다릅니다. 제조·유통 업계라면 이번 패치를 계기로 PLM 시스템의 대외 노출 여부를 다시 점검하는 흐름이 이어질 전망입니다."
+      ],
+      "extra": "그 밖에: 같은 날 MSP를 겨냥한 웜형 SCKit 멀웨어가 ScreenConnect 공격에 쓰였다는 보도가 BleepingComputer에서 나왔습니다. 관리 서비스 제공업체라면 원격 접속 도구 경로 점검을 함께 고려할 만합니다.",
+      "takeaway": "제조 현장의 핵심 시스템을 겨냥한 치명적 결함 패치라서 소외되기 쉬운 업무용 소프트웨어 관리가 바뀐 대목입니다. Windchill·FlexPLM 운영 여부와 버전을 점검해 패치 계획에 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/ptc-patches-critical-windchill-and.html",
+          "kind": "news"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/apache-http-server-patches-critical-http-2-remote-code-execution-flaw/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "github-wfx-loot",
+      "n": 4,
+      "title": "4. wfx-loot, GitHub 계정 4,837개로 61,764개 저장소 스캔",
+      "bullets": [
+        "4,837개 탈취 계정으로 61,764개 저장소를 탐색",
+        "풀리퀘스트를 열고 시크릿 탈코드를 푸시하는 방식",
+        "유출 대상은 클라우드 자격증명"
+      ],
+      "body": [
+        "GitHub에서 wfx-loot으로 명명된 캠페인이 확인됐습니다. 공격자들은 4,837개의 탈취된 계정을 사용해 61,764개의 저장소를 뒤지고, 풀리퀘스트를 열며 시크릿을 훔치는 코드를 밀어 넣었습니다.",
+        "GitHub 계정은 조직의 코드와 배포 파이프라인으로 이어지는 경우가 많아, 여기서 클라우드 자격증명이 새어 나가면 후속 침해로 직결됩니다. 위조된 기여처럼 보이는 풀리퀘스트는 자동화된 승인 흐름을 타고 들어올 수 있습니다.",
+        "다만 탈취 수법의 정확한 경로, 실제 자격증명 유출 규모, 피해 조직 범위는 아직 보도 수준으로만 알려져 있습니다. 계정 수와 저장소 수도 보도된 값이라 독립 검증 전입니다. 이런 캠페인이 반복되는 만큼 저장소 시크릿 스캔과 다단계 인증, 풀리퀘스트 승인 규칙 같은 기본 방어의 중요성이 다시 부각될 전망입니다."
+      ],
+      "extra": "",
+      "takeaway": "클라우드 자격증명을 노린 조직적 캠페인이라 계정·저장소 관리에 미칠 영향이 큽니다. 소속 팀의 시크릿 스캔 설정과 풀리퀘스트 승인 규칙을 비교 기준으로 삼으면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-compromise-4-800-github-accounts-to-steal-cloud-credentials/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-ipo-demand",
+      "n": 5,
+      "title": "5. Anthropic IPO, 약 6배 초과 청약 보도",
+      "bullets": [
+        "블룸버그 보도를 로이터가 전한 청약 수요 소식",
+        "젠슉 황 사임 여파로 상장 난도가 높아졌다는 분석",
+        "최종 가격 결정과 청약 마감 결과는 미확정"
+      ],
+      "body": [
+        "Anthropic의 IPO 청약이 약 6배 초과된 것으로 알려졌습니다. 블룸버그 뉴스가 보도한 내용을 로이터가 전한 것으로, 수요가 공급을 크게 앞서는 흐름을 보여줍니다.",
+        "Anthropic은 Claude 모델을 운영하는 AI 개발사로, 상장을 앞두고 제조업용 Claude 제품 출시 같은 사업 확장 소식도 이어지고 있습니다. AI 주식에 대한 시장의 관심이 이번 청약 결과로 확인되는 셈입니다.",
+        "다만 초과 청약 배수는 보도 시점의 수요 신호일 뿐 최종 배정가나 공급 물량과 함께 읽어야 하며, 아직 확정된 결과가 아닙니다. 황의 사임이 시장 심리에 어떻게 반영될지도 불확실한 변수입니다. AI 기업 공개 열기가 이어지는 가운데, 시장 변동성이 커지면 청약 전략과 밸류에이션 판단도 다시 조정될 것으로 보입니다."
+      ],
+      "extra": "",
+      "takeaway": "수요가 공급을 크게 앞섰다는 신호는 AI 상장 흐름 읽기에서 중요한 데이터입니다. 청약 마감 결과와 최종 가격이 나오면 투자 판단 기준에 적용해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Reuters · reuters.com",
+          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNN0pUQzVjV3ltd2hkZ29PSjdjWElOb3dmUlNPSG5HMC01V1EzSnlQdUl0Tm9WNnhJdktOamVLa1JWOTF5SGJZYTFrNWpBbElkc1lGUklCUUNVLXhHNWM1M0JmaHZTTmVaODlldER3Ulc3Q19zVGtOUDl1NzdCQWNuYkR5LWRVcXFUOGFTQXFDUDlTb2VLVzE3Z1M2dnlfeFFwSVV0MEpNNzExRHNxTlpsZGcyTlE1bE5LbEdLNGVtczd3M2hra1E?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.reuters.com"
+        },
+        {
+          "handle": "Fortune · fortune.com",
+          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOaGgwMUQ0a24yanhHM3hQZ0owamNHdC1PRGwtV2M2d2x2bks3Z2hWbWpGZ1FmbE5jRXZJR2hmLUUtLU1IRnNYU2EtNWU2UzJrQVFRQ3UwaVJ6SF8wS0RCUDlxVUdfYm9NUnNOMHZPUUc5MDQ1dUxjNjB0VThfcURQM3JXWQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://fortune.com"
+        },
+        {
+          "handle": "Yahoo Finance · finance.yahoo.com",
+          "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOTFRGS1QxUlprRjJ5a0tUV1Q0eXRGSUtWZWlHSHpUVi1ESVZDcmJXVzl4MWRKdC05WnhBSUQ0Y0pWUGdzRG9DclBwR3dXNDVFSlpFaHFFV0RDX3Qwc3RfQmtfOS11dFlMcFlhMV90akRvSXM0RkhaOTZ1RTBvQ1VBTWYtS2VhWHluVk53T1liSTdaS0N6MW5IYUYwbGd6QQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://finance.yahoo.com"
+        },
+        {
+          "handle": "Bloomberg.com · bloomberg.com",
+          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQeWxnOC1MRXVQbUJwaDdiSDE3TzdIbVRyYU5qWnF5YzkycUVPTXV0bUhOWEIzWU1xejMyQXJxaGtHT2dQbk1iTExkc29hYjBpQWRsY3RTaEtsTVhVaFJjOHl5aW5nb0dDYzRwcWxjVXpkbWw1bU5lSFhwVHo4aGw4bHJZYlNZTUVoN2VwYnhBWmNDNURMbXNmN2FvaEVONS1CVG1MY004MzdMbTRJd1E2eQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.bloomberg.com"
+        }
+      ]
+    },
+    {
+      "id": "frontier-ai-lawsuit",
+      "n": 6,
+      "title": "6. 프론티어 AI 개발 중단 요구 소송, 법정으로 옮겨간 규제 논쟁",
+      "bullets": [
+        "OpenAI, 구글, Anthropic이 소송 대상",
+        "프론티어 AI 개발 중단을 구체적으로 요구",
+        "법적 구속력과 심리 일정은 아직 미확정"
+      ],
+      "body": [
+        "OpenAI, 구글, Anthropic이 새 소송의 대상이 됐습니다. 소송은 프론티어 AI 개발을 중단해 달라고 요구하는 내용을 담고 있습니다.",
+        "제기된 주장의 핵심은 이들 개발사가 자사 기술을 통제하지 못한다는 것으로, CBS와 로이터 등 언론이 이 같은 내용을 전했습니다. AI 개발의 안전성 논쟁이 시장과 정책을 넘어 사법 절차로 넘어온 국면입니다.",
+        "다만 소송의 원고, 관할 법원, 요구 조항의 구체적 내용은 보도 요약 수준으로만 알려져 있으며, 개발 중단이라는 극단적 구제가 받아들여질 가능성은 아직 불확실합니다. 별도로 진행 중인 신경망 특허 침해 소송과는 다른 사건입니다. 재판이 길어질 경우 프론티어 모델 출시 일정과 투자 심리에 영향을 줄 수 있다는 관측이 나오는 상황입니다."
+      ],
+      "extra": "",
+      "takeaway": "기술 통제 가능성 자체가 소송의 논거가 됐다는 점이 AI 거버넌스 논의에서 중요해진 이유는 판단의 무대가 법정으로 옮겨갔기 때문입니다. 소장의 구체적 요구 조항과 법원 심리 일정을 체크리스트에 넣어 두시면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Reuters · reuters.com",
+          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPWTR4ak5BdnRmV3hzYTZOcVhBYklWU01YRmtLak03b2hmeC1PMTd5blRQWUkxR2Q1ZXZWRC0xNkNxVDVoN2VOdTVlX1hFMXgwS1Y5TW1fUGt4NThQaEhRVFdna1YxUDhLTnBYUFJ6WTlFajlLM1BZTTRwNk5sWFMydkZtMlJNUnU4MWlDcUN6QmNtVHdUT1pLNXd6QXc4QVk0WmMtM1JxWU5XVC1PUGRIMVJNY2wzN1Z1d2N6WWJkbw?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.reuters.com"
+        },
+        {
+          "handle": "CBS News · cbsnews.com",
+          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5Nd0pKdEtsZnJ6UWhKZlR1dUJNV2UwUDRLSHdfVExwQUhNb3hnLW1vYzFuRWRMNlM1dk53dHZyM3pqQXB6Uy1lNlhQc251N2gyVXdxdEFIMUN0X0hadFdZc0ZCMGNkRnVKYVJCMERNdw?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.cbsnews.com"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "엔비디아 CEO 교체로 AI 산업 지형 흔들림",
+    "grow": "AI 상장 수요와 검색·에이전트 제품 확장",
+    "caution": "제로데이와 대규모 계정 탈취 등 보안 경보 동시 다발",
+    "heat": "황 사임 보도가 여러 매체에서 폭발적으로 확산"
+  },
+  "tips": [
+    {
+      "title": "GitHub 시크릿 스캔 점검",
+      "body": "wfx-loot 같은 캠페인은 풀리퀘스트로 시크릿 탈코드를 밀어 넣습니다. 조직 저장소의 시크릿 스캔과 승인 규칙을 점검해 두세요.",
+      "via": "BleepingComputer"
+    },
+    {
+      "title": "PLM 시스템 패치 확인",
+      "body": "Windchill·FlexPLM을 쓰는 조직이라면 패치 적용 대상 버전과 대외 노출 여부부터 확인하세요.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "마케팅 에이전트 도입 비교",
+      "body": "크리에이터 발굴부터 성과 추적까지 자동화하는 에이전트가 늘고 있습니다. 반복 업무 항목을 정리해 도입 후보를 비교해 보세요.",
+      "via": "TechCrunch"
+    },
+    {
+      "title": "제품 개선 주기 벤치마크",
+      "body": "Amplitude는 코딩 에이전트로 제품 개선을 하루나 이틀 만에 배포한다고 소개했습니다. 자사 배포 주기와 비교해 볼 만한 사례입니다.",
+      "via": "OpenAI"
+    },
+    {
+      "title": "과학 응용 사례 참고",
+      "body": "구글 AI를 활용해 거대 다시마 숲을 복원하는 프로젝트가 소개됐습니다. 비영리·환경 분야 AI 활용 아이디어로 참고할 만합니다.",
+      "via": "Google Blog"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": false
+}
