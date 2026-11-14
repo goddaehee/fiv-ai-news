@@ -1,0 +1,355 @@
+{
+  "date": "2026-11-14",
+  "title": "5분 AI 뉴스 — 보안 취약점 3연속, 앤스로픽 IPO 열기",
+  "heroline": "경계 장비와 윈도우 커널, 제조 PLM까지 — 하루에 털린 구멍 3곳",
+  "dek": "Check Point 게이트웨이 침투, 윈도우 CLFS 권한 상승 익스플로이트, PTC 원격 코드 실행 결함이 같은 주말에 몰렸습니다. 앤스로픽 IPO에 투자자가 몰리는 사이, 에이전트 시장은 랭체인이 30억 달러 가치를 인정받았습니다.",
+  "tag": "AI 데일리",
+  "briefMin": 3,
+  "readMin": 9,
+  "briefing": [
+    {
+      "id": "checkpoint-php2shell-tsga",
+      "headline": "Check Point 게이트웨이 침투, 미보고 백도어 TSGA 등장",
+      "summary": "PHP2Shell 취약점으로 초기 침투 후 TSGA 백도어 심고 ESXi 파일 삭제까지 이어지는 공격이 관찰됐습니다."
+    },
+    {
+      "id": "signdrop-clfs-zero-day",
+      "headline": "SignDrop, 윈도우 CLFS 결함으로 SYSTEM 권한 획득",
+      "summary": "공개 익스플로이트 코드가 로컬 사용자 권한에서 SYSTEM 접근을 가능하게 한다고 주장합니다."
+    },
+    {
+      "id": "ptc-windchill-rce",
+      "headline": "PTC, Windchill·FlexPLM 원격 코드 실행 결함 패치",
+      "summary": "제조업 PLM 소프트웨어의 치명적 취약점에 대한 업데이트가 배포됐습니다."
+    },
+    {
+      "id": "faa-nationwide-ground-stop",
+      "headline": "미 전국 공항 이륙 중단, 안전상 이유로 전면 그라운드 스톱",
+      "summary": "FAA가 안전상 사유로 전국 출발 항공편을 일괄 정지시켰습니다."
+    },
+    {
+      "id": "anthropic-ipo-investor",
+      "headline": "앤스로픽 IPO, 투자자 몰리나 경쟁력 지속성은 의문",
+      "summary": "공모 관심은 높지만 AI 우위의 지속 가능성을 묻는 목소리가 함께 나옵니다."
+    },
+    {
+      "id": "langchain-3b-valuation",
+      "headline": "랭체인 30억 달러 밸류에이션, 고객 7,000개사",
+      "summary": "에이전트 관리 도구 LangSmith의 성장이 투자 평가로 이어졌습니다."
+    },
+    {
+      "id": "nvidia-smuggle-917",
+      "headline": "917대 서버 밀반출 혐의, 말레이시아·싱가포르 조사 확대",
+      "summary": "중국 국적자에 대한 혐의 제기와 함께 관련 업체가 GPU 재고 감사를 발표했습니다."
+    },
+    {
+      "id": "chatgpt-wallet-agents",
+      "headline": "ChatGPT Wallet, AI 에이전트 대리 결제 시범",
+      "summary": "미국 Pro 구독자 대상 제한 롤아웃으로 에이전트가 사용자를 대신해 쇼핑·결제를 수행합니다."
+    }
+  ],
+  "keywords": [
+    "제로데이",
+    "엔터프라이즈 보안",
+    "에이전트",
+    "IPO",
+    "수출 통제"
+  ],
+  "mainEvent": "보안 취약점 집중 발견과 앤스로픽 IPO 뉴스가 같은 날 겹친 하루",
+  "keynums": [
+    {
+      "val": "30억 달러",
+      "lab": "랭체인 밸류에이션",
+      "sub": "TechCrunch 보도"
+    },
+    {
+      "val": "7,000개사",
+      "lab": "LangSmith 고객",
+      "sub": "회사 발표 인용"
+    },
+    {
+      "val": "917대",
+      "lab": "밀반출 서버",
+      "sub": "Tom's Hardware 보도"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "11/12 20:33",
+      "d": "PTC, Windchill·FlexPLM 패치 공개"
+    },
+    {
+      "t": "11/13 02:50",
+      "d": "SignDrop CLFS 익스플로이트 보도"
+    },
+    {
+      "t": "11/13 17:05",
+      "d": "Check Point 게이트웨이 공격 분석 공개"
+    },
+    {
+      "t": "11/14 03:46",
+      "d": "앤스로픽 IPO 관련 WSJ 인터뷰"
+    },
+    {
+      "t": "11/14 04:37",
+      "d": "랭체인 30억 달러 밸류에이션 보도"
+    },
+    {
+      "t": "11/14 07:49",
+      "d": "미 전국 공항 이륙 중단"
+    }
+  ],
+  "intro": "11월 14일 토요일 발행. 하루 사이 엔터프라이즈 보안 취약점 세 건과 미 전국 항공기 이륙 중단이 겹치면서, 시스템 신뢰성이 오늘의 큰 축이 되었습니다.",
+  "analysis": [
+    {
+      "id": "checkpoint-php2shell-tsga",
+      "n": 1,
+      "title": "1. 경계 장비가 침투 입구가 된 구조",
+      "bullets": [
+        "패치 안 된 Check Point 게이트웨이가 초기 침투 경로",
+        "이전에 보고된 적 없는 TSGA 백도어 배포",
+        "ESXi 파일 삭제로 이어지는 후속 공격"
+      ],
+      "body": [
+        "미확인 위협 행위자가 패치되지 않은 Check Point 보안 게이트웨이를 노려 PHP2Shell 취약점으로 초기 접근을 확보한 뒤, TSGA라는 백도어를 심는 공격이 관찰됐습니다. 공격은 ESXi 가상화 환경의 파일 삭제까지 이어지는 것으로 나타났습니다.",
+        "PHP2Shell은 게이트웨이 제품의 웹 인터페이스 취약점을 이용해 명령 실행으로 연결하는 문제로, 방화벽 등 경계 장비 자체가 공격 대상이 된 사례가 최근 잇따르고 있습니다. 방어의 최전선이 역으로 가장 약한 고리가 되는 역전 현상입니다.",
+        "다만 이번 분석은 특정 조직의 피해 규모나 침투 시점을 특정하지 않았습니다. TSGA 백도어도 이번에 처음 보고된 것이라 탐지 시그니처가 아직 충분히 확산되지 않았을 수 있습니다. 해당 제품을 쓰는 조직은 벤더 권고 버전 적용 여부를 재점검할 필요가 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "경계 장비 자체가 초기 침투 경로가 된 점이 방어 우선순위가 달라진 지점입니다. 내부망의 Check Point 게이트웨이 목록부터 확보해 패치 상태를 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/hackers-exploit-php2shell-flaws-in.html",
+          "kind": "news"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/check-point-gateways-hacked-via-php2shell-to-deploy-vmware-esxi-wiper/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "signdrop-clfs-zero-day",
+      "n": 2,
+      "title": "2. 보안 기능이 뚫리는 SignDrop 권한 상승",
+      "bullets": [
+        "CLFS 드라이버 결함을 이용한 공개 익스플로이트",
+        "일반 로컬 사용자 권한에서 SYSTEM 접근 주장",
+        "개념 증명 코드가 이미 공개된 상태"
+      ],
+      "body": [
+        "이번 주 공개된 SignDrop이라는 개념 증명 코드는 윈도우의 CLFS(공용 로그 파일 시스템) 드라이버 결함을 이용해 일반 로컬 사용자가 SYSTEM 최고 권한을 얻을 수 있다고 주장합니다. 익스플로이트 코드가 이미 공개된 상태라 활용 난이도가 낮아졌다는 점이 우려됩니다.",
+        "CLFS는 윈도우의 로그 기반 보안 메커니즘에 쓰이는 구성 요소로, 보안 기능을 지탱하는 드라이버가 권한 상승의 도구로 바뀐 점이 이번 사례의 뒤집힌 지점입니다. 권한 상승 취약점은 단독으로는 침투에 실패한 공격자가 내부에서 제어권을 넓히는 2단계 무기로 흔히 쓰입니다.",
+        "다만 이 주장은 공개된 개념 증명 기준이며 마이크로소프트의 공식 대응 시점과 패치 여부는 아직 보도로 확인되지 않았습니다. 멀티 유저 환경이나 관리형 단말을 운영하는 조직이라면 로컬 계정 권한 최소화가 당장 취할 수 있는 완화책입니다."
+      ],
+      "extra": "",
+      "takeaway": "보안 기능을 담당하는 커널 드라이버가 뚫렸다는 점에서 읽히는 의미는 내부 계정 권한 관리의 가치가 다시 커졌다는 것입니다. 다음 윈도우 보안 업데이트 일정에 CLFS 관련 항목을 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/new-signdrop-zero-day-exploit-turns.html",
+          "kind": "news"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "ptc-windchill-rce",
+      "n": 3,
+      "title": "3. 제조 PLM이 공격면이 되는 순간",
+      "bullets": [
+        "Windchill·FlexPLM 대상 치명적 결함 패치 배포",
+        "악용 시 원격 코드 실행 가능",
+        "제조·유통 업계 폭넓은 사용 제품"
+      ],
+      "body": [
+        "PTC가 자사 제품 수명주기 관리 소프트웨어인 Windchill과 FlexPLM의 치명적 취약점 패치를 공개했습니다. 이 결함이 악용되면 인증 없이도 원격에서 코드 실행이 가능한 것으로 알려졌습니다.",
+        "PLM 소프트웨어는 설계 도면과 부품 정보 등 제조 기업의 핵심 자산을 담는 시스템으로, 사내망 깊숙이 자리 잡은 경우가 많습니다. 공격자가 인터넷에 노출된 PLM 서버를 장악하면 설계 자료 유출뿐 아니라 내부망 확산의 교두보로 쓸 수 있습니다.",
+        "다만 익스플로이트 조건과 실제 악용 흔적은 아직 보도로 확인되지 않았습니다. 패치 적용이 어려운 구버전 환경이라면 당장 인터넷 노출 여부부터 점검하는 것이 순서입니다."
+      ],
+      "extra": "",
+      "takeaway": "제조업의 심장부에 원격 코드 실행이 가능한 구멍이 있었다는 점이 공급망 전체에 미칠 영향이 큽니다. 패치 전후의 시스템 동작을 비교 기준으로 삼아 단계 적용을 검토하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/ptc-patches-critical-windchill-and.html",
+          "kind": "news"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/apache-http-server-patches-critical-http-2-remote-code-execution-flaw/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "faa-nationwide-ground-stop",
+      "n": 4,
+      "title": "4. 전국 동시 이륙 중단이 말해주는 것",
+      "bullets": [
+        "안전상 사유를 명시한 전국 단위 그라운드 스톱",
+        "AI 안전성 경고가 중단 몇 주 전 나온 바 있어",
+        "항공·물류 일정 전반 파장"
+      ],
+      "body": [
+        "미 연방항공청(FAA)이 안전상의 이유를 들어 전국 공항의 출발 항공편을 일괄 정지시켰습니다. 전국 단위 동시 중단은 특정 공항의 국지적 지연과 달리 시스템 수준의 이상을 시사하는 조치입니다.",
+        "배경으로 주목되는 대목은, 한 의원이 이번 중단 몇 주 전 FAA의 AI 도입에 따른 안전 위험을 경고했었다는 보도입니다. 항공 교통 관제에 AI를 도입하는 움직임과 이번 사건의 인과관계는 아직 확인되지 않았습니다. 다만 원인 규명 전까지는 과잉 해석을 경계해야 합니다. 복구 시점과 재발 방책은 후속 발표를 기다려봐야 알 수 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "전국 동시 이륙 중단이라는 극단적 조치는 대형 시스템의 안전 검증 절차가 달라진 지점입니다. 항공·물류 일정 담당자는 복구 공지 채널과 재개 기준부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Hacker News",
+          "url": "https://www.nbcnews.com/news/us-news/faa-orders-nationwide-ground-stop-departing-flights-reasons-safety-rcna609247",
+          "kind": "talk"
+        },
+        {
+          "handle": "Falls Church News-Press Online · fcnp.com",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNUDBfeXNaTGl4UjIxWGRKUjF5aUlVZzBIZ2hRdXR2RWpMcFVrUkVwT3dYaGp3cTdIUzk4dlRGeTlKbjlZVGdtTzRseTFWYXY1TTZCeTllQnExdlM0b21QaUJQM1NZUnFWdnhRZGp2SmRRVGJyZzVHX05FUTJ1aWlLcEZhWGNtaHJfRkplbFFBVmdOQ0NNLW00cTNKWEZKQzEzZ0xISjhmY2JSWnI0UDZmUGlR?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.fcnp.com"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-ipo-investor",
+      "n": 5,
+      "title": "5. IPO 열기와 신뢰성 의문의 동시 존재",
+      "bullets": [
+        "투자자의 공모 참여 몰림",
+        "AI 우위 지속 가능성에 대한 의문 병존",
+        "최고경영자의 낮은 기치 약속 발언"
+      ],
+      "body": [
+        "앤스로픽의 상장을 앞두고 투자자들의 참여가 몰리고 있다는 로이터 보도가 나왔습니다. 최고경영자는 제이미 다이먼과의 대화에서 공모에서 '기대를 낮추고 성과를 초과달성'하겠다는 뜻을 밝힌 것으로 전해졌습니다.",
+        "관심이 높은 이면에는 AI 경쟁 우위가 얼마나 오래갈지 묻는 시각이 함께 있습니다. 또 일각에서는 엔비디아 관련 논란이 한창인 시점의 상장이라는 점을 지적합니다. 공모가 기업 가치 평가의 이정표가 되는만큼 시장의 양면적 태도가 결과를 갈랐습니다.",
+        "다만 공모 가격대와 일정은 아직 확정 발표로 확인되지 않았습니다. 상장 지분의 구조와 의결권, 수익 배분 조항은 공식 문서가 나와야 정확히 알 수 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "투자 유치는 되지만 모델 경쟁력의 지속성을 의심받는 조건이라는 점이 이번 IPO가 중요해진 이유입니다. 공모 설명서가 공개되면 지분 구조와 배당 조항을 체크리스트에 넣어 두시면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "WSJ · wsj.com",
+          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPRHZzSkNrdXkyNGh6enBWc0xtLVE0UkpKM2hadjNwc0wtV2t6SzJHVE9KRXdEYkZRaTZTdVlKanFocEwwLTc0OUJ3SlVacXNiV1RyeEdtTENBLUNKVWZwdTZqc0h6dHlFaFJWeWFESGJ3X216bmdBZHVfci15cmQzbmk4YkZpSGpaNFctWlVPcEkxZGN4M3hXUHg4azd0M3R2WjFjc0ZtTFhjYnpMSm1Od2h2Yzl3SkNB?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.wsj.com"
+        },
+        {
+          "handle": "Reuters · reuters.com",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOckJYSDVUWDh1cTJPb3ptd2pLZmxuNXBtSEJkN0F0WWFucUZuWDgtQ0dZbzZITDBWY3dhSWZqcjcyZl9FdGpHdHJsX1dkbVowTkZ3OWRKd3pwN2NIMnBGZ1AtbDFkMkl6Vm1RZFNsZ2VDOU1nLUVmY2d4UHV2U01ER1pJTmdlSGFDdmsyM2ZhbXlXYVdEb01ERlNybGxWY0RsYlo4QlNxa0NCaUNpQjQw?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.reuters.com"
+        },
+        {
+          "handle": "Axios · axios.com",
+          "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1sUGk1c25oSHF3Vm13T3MwOVlrM2NnYzhrTnhCTjZaTHdOWURwVmlKTTJpZDhta2VtYmRTQVZrM01Qc3B5U1J3clZLZEdzV2REYXJMQWR0QTZEeWptRWljQWFCNkRCanJianRnU0IyYUZfbWhx?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.axios.com"
+        },
+        {
+          "handle": "Barron's · barrons.com",
+          "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE1yaHg4TDhXQUw1LXRIMFh2eWxJRy1PQ2JscTl1S0FXcVpLeHV0a2pDU1I1eXZNel9xOTk5Zl8wbUdwQUtHSEVKdHlscndDb1k5SkFNYVRWbHJxdW0zcVRod0hlMmhMWFR6VEY2YkNnNzJwS2xmMW5CNjgyc1JHQQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.barrons.com"
+        }
+      ]
+    },
+    {
+      "id": "langchain-3b-valuation",
+      "n": 6,
+      "title": "6. 에이전트 관리 도구, 30억 달러 가치 인정",
+      "bullets": [
+        "랭체인 밸류에이션 30억 달러",
+        "LangSmith 고객 7,000개사",
+        "모델·플랫폼 중립적 에이전트 관리"
+      ],
+      "body": [
+        "에이전트 개발 도구로 시작한 랭체인이 30억 달러 밸류에이션을 받았다고 테크크런치가 전했습니다. 회사는 모델과 플랫폼에 중립적인 에이전트 관리 도구 LangSmith의 고객이 7,000개사라고 밝혔습니다.",
+        "LLM 애플리케이션 프레임워크에서 출발한 회사가 관측·운영 도구로 사업 축을 옮긴 뒤 규모를 인정받은 흐름입니다. 특정 모델에 묶이지 않는 중립성이 기업 고객 확보에 유리하게 작용했다는 분석이 나옵니다.",
+        "다만 고객 수와 밸류에이션은 모두 회사 측 제시 값입니다. 계약 규모나 이탈률 같은 세부 지표는 공개되지 않았아, 같은 시장의 경쟁 도구와 직접 비교하기는 어렵습니다."
+      ],
+      "extra": "",
+      "takeaway": "에이전트 관리 도구가 모델 회사와 별개의 독립 시장으로 자리 잡았다는 점이 도구 생태계의 지형이 바뀐 대목입니다. 벤더 평가 시 7,000개사라는 고객 규모를 비교 기준으로 삼으면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/13/ai-agent-startup-langchain-hits-3b-valuation/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "nvidia-smuggle-917",
+      "n": 7,
+      "title": "917대 서버 밀반출 혐의와 조사 확대",
+      "bullets": [
+        "중국 국적자에 대한 혐의 제기",
+        "말레이시아·싱가포르의 칩 조사 강화",
+        "관련 업체의 GPU 재고 감사 발표"
+      ],
+      "body": [
+        "말레이시아와 싱가포르가 엔비디아 AI 칩 관련 조사를 강화하면서, 중국 국적자가 규제 대상 서버 917대를 밀반출한 혐의로 기소됐다고 톰스 하드웨어가 전했습니다. 논란의 중심에 있는 업체는 확보한 모든 규제 대상 GPU를 셈하는 재고 감사를 실시하겠다고 발표했습니다.",
+        "수출 통제를 받는 고성능 칩이 동남아 경유로 우회 이동했다는 의심이 커지는 상황입니다. 최근 엔비디아 관련 잇단 논란과 겹치면서, 하드웨어 공급망의 투명성 요구가 높아지는 배경입니다.",
+        "다만 기소는 혐의 단계이며 재고 감사 결과는 아직 나오지 않았습니다. 실제 유출 규모가 혐의 내용과 일치하는지는 법 절차와 감사 결과를 기다려봐야 합니다."
+      ],
+      "extra": "",
+      "takeaway": "917대 규모 혐의가 공식적으로 제기된 것이 수출 통제의 실효성 점검 계기라는 의미입니다. 감사 결과가 나오면 GPU 조달 계약의 산출국·경유지 조항에 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Tom's Hardware · tomshardware.com",
+          "url": "https://news.google.com/rss/articles/CBMiowNBVV95cUxNLVRQRDJjLUYybzVveW5wWEV2cU9ka3VhQXpvV3dWN00yNS11bzBnb0VDOTNENTVFdjh0ZkdMVDF4bjYxTTFZM0s4YmlsMHFyNUZjREFSRTN2Vi1QVk9mMjNqQ3JpY2hKWGRLUFNFR3ljWl91LWQ3dXhmQlNjdnR1WkMteHV2RklKek9UMElmLWVMa3NPU21yUnJ3akNvVDFBQ05fbW1EMVVOMzloYk5YZnU4di1SZ2VlVWkzOE1iUDVJM3R1OVFfb0E3bXpBLWJiY1pDekhXWUtScUplMU9TYVRSYkxYcmRmNmJTeTdKZ2RsU3NlM3pTalVXLWdwMlU5TmZDc0EwaS1wN3E2ZThQWEtjWDRteGRWZktZNDBIbDN4XzhJckg5akw0NXJHU1hxbUpfenhPVEpQQVFDTEZjOFg4d1VTbmNXSzVsZnZQQ01NTjZsamZDb0F0dE1HaDVQRDRONDRhQzRrOXNhbVFHOHJ3YUNHbEl3TVdkamVvNTRMcnFlVXV6LXBOcmNBaWtEeFBtRkRuNWNjZ1VxWUczdFUxTQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.tomshardware.com"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "경계 장비와 PLM 같은 기업 인프라가 하루에 3곳씩 침투 경로로 지목됐습니다.",
+    "grow": "에이전트 시장은 랭체인 30억 달러 평가로 투자 근거를 쌓았습니다.",
+    "caution": "공개된 익스플로이트와 전국 항공 중단은 원인 규명 전까지 과잉 해석을 경계해야 합니다.",
+    "heat": "앤스로픽 IPO는 참여 열기와 우위 지속성 의문이 동시에 달아오른 화두입니다."
+  },
+  "tips": [
+    {
+      "title": "게이트웨이 패치 대조표 만들기",
+      "body": "PHP2Shell 관련 벤더 권고 버전과 운영 중인 Check Point 게이트웨이 버전을 격주로 대조하는 표를 만들어 두면 이런 사고에 즉시 대응할 수 있습니다.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "PLM 서버 인터넷 노출 점검",
+      "body": "Windchill·FlexPLM 패치 적용이 어려운 구버전이라면 외부망 노출 여부와 접근 제어 목록부터 좁히는 것이 현실적인 완화 순서입니다.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "로컬 계정 권한 최소화",
+      "body": "SignDrop 같은 권한 상승 익스플로이트는 일반 사용자 권한에서 시작하므로, 관리자 권한 부여 기준을 다시 조여 두는 것이 커널 취약점의 보험이 됩니다.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "에이전트 결제 승인선 설계",
+      "body": "ChatGPT Wallet 같은 대리 결제 기능이 조직 계정에 열리기 전에 건당 한도와 승인 단계를 미리 정해 두면 도입 후 사고를 줄일 수 있습니다.",
+      "via": "TechCrunch"
+    },
+    {
+      "title": "GPU 조달 계약 조항 점검",
+      "body": "밀반출 조사가 확대되는 흐름에서는 칩 조달 계약의 산출국·경유지 확인 조항을 벤더 협상에 미리 넣어 두는 편이 안전합니다.",
+      "via": "Tom's Hardware"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": false
+}
