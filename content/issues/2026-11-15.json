@@ -1,0 +1,328 @@
+{
+  "date": "2026-11-15",
+  "title": "엔비디아 충격과 앤스로픽 IPO의 날",
+  "heroline": "AI 업계 리더십 위기 속 결제·보안 인프라가 동시에 움직임",
+  "dek": "젠슨 황 사태 여파와 앤스로픽 IPO, ChatGPT Wallet, 게이트웨이 백도어 공격까지 하루 흐름 정리",
+  "tag": "데일리 AI 브리핑",
+  "briefMin": 3,
+  "readMin": 10,
+  "briefing": [
+    {
+      "id": "checkpoint-php2shell-tsga",
+      "headline": "Check Point 게이트웨이 PHP2Shell 취약점, TSGA 백도어·ESXi 파일 삭제로 이어짐",
+      "summary": "패치 안 된 Check Point 보안 게이트웨이를 PHP2Shell 취약점으로 뚫은 뒤 미보고 백도어를 심고 ESXi 파일을 지우는 공격이 관찰됐습니다."
+    },
+    {
+      "id": "nvidia-huang-exit-fallout",
+      "headline": "젠슨 황 이탈 여파, 복귀 청원 11만 5천 명 이상 동의",
+      "summary": "엔론 머스크 등 기업인들이 황 복귀를 요구하는 청원에 참여했고 아시아 정부들은 칩 공급 영향을 점검 중입니다."
+    },
+    {
+      "id": "anthropic-ipo-wall-street",
+      "headline": "앤스로픽 IPO, 엔비디아 사태 속 월가 신뢰 시험대",
+      "summary": "IPO를 앞둔 앤스로픽 최고경영자는 과약속보다 과실화를 목표로 한다고 밝혔고 빅테크들의 참여가 이어지고 있습니다."
+    },
+    {
+      "id": "chatgpt-wallet-agents",
+      "headline": "ChatGPT Wallet 출시, AI 에이전트의 대리 결제 개시",
+      "summary": "미국 Pro 구독자 대상 제한 롤아웃으로 시작된 기능이 에이전트의 쇼핑·결제 위임 범위를 넓힙니다."
+    },
+    {
+      "id": "fbi-dprk-deepfake-crypto",
+      "headline": "FBI, 딥페이크 화상회의로 4억 달러 이상 암호화폐 절도 발표",
+      "summary": "북한 연계 위협 그룹이 딥페이크 영상통화를 무기로 삼아 4억 달러를 넘는 자금을 훔쳤다고 FBI가 밝혔습니다."
+    },
+    {
+      "id": "postgresql-52-flaws",
+      "headline": "PostgreSQL 52건 취약점 패치, 22년 묵은 인증 RCE 포함",
+      "summary": "객체 생성 권한이 있는 사용자가 서버 코드를 실행할 수 있는 타입 혼동 결함 등 52건이 한 번에 수정됐습니다."
+    },
+    {
+      "id": "ai-lawsuit-development-freeze",
+      "headline": "OpenAI·앤스로픽·구글 등, 개발 중단 요구 소송 직면",
+      "summary": "AI 대형 기업들이 AI 개발 동결을 요구하는 집단 소송의 피고가 되었습니다."
+    }
+  ],
+  "keywords": [
+    "Check Point",
+    "PHP2Shell",
+    "TSGA",
+    "엔비디아",
+    "젠슨 황",
+    "앤스로픽 IPO",
+    "ChatGPT Wallet",
+    "딥페이크"
+  ],
+  "mainEvent": "Check Point 게이트웨이 백도어 공격과 엔비디아·앤스로픽 축의 대규모 지각 변동",
+  "keynums": [
+    {
+      "val": "4억 달러",
+      "lab": "북한 연계 절도 규모",
+      "sub": "FBI 발표"
+    },
+    {
+      "val": "52건",
+      "lab": "PostgreSQL 패치 취약점",
+      "sub": "22년 된 결함 포함"
+    },
+    {
+      "val": "11만 5천 명",
+      "lab": "젠슨 황 복귀 청원 서명",
+      "sub": "토요일 오후 기준"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "11/13 17:05",
+      "d": "Check Point 게이트웨이 TSGA 백도어 공격 보도"
+    },
+    {
+      "t": "11/13 23:28",
+      "d": "FBI, 북한 딥페이크 절도 4억 달러 발표"
+    },
+    {
+      "t": "11/14 01:00",
+      "d": "ChatGPT Wallet 미국 Pro 한정 출시 보도"
+    },
+    {
+      "t": "11/14 03:46",
+      "d": "앤스로픽 최고경영자 IPO 발언 보도"
+    },
+    {
+      "t": "11/15 00:35",
+      "d": "美 재무장관, 엔비디아 GPU 판매 책임론 제기"
+    },
+    {
+      "t": "11/15 06:41",
+      "d": "젠슨 황 복귀 청원 관련 보도"
+    }
+  ],
+  "intro": "11월 15일 일요일 발행. 엔비디아 최고경영자 이탈 여파가 정부와 월가로 번지는 가운데, AI 결제 기능 확대와 게이트웨이 백도어 공격 같은 인프라 변화가 같은 주말에 겹쳤습니다.",
+  "analysis": [
+    {
+      "id": "checkpoint-php2shell-tsga",
+      "n": 1,
+      "title": "1. Check Point 게이트웨이 PHP2Shell 취약점, TSGA 백도어·ESXi 파일 삭제로 이어짐",
+      "bullets": [
+        "패치 안 된 Check Point Security Gateway가 초기 침투 경로",
+        "PHP2Shell 취약점 이후 이전에 보고된 적 없는 백도어 TSGA 설치",
+        "ESXi 파일 삭제로 이어지는 이차 피해 가능성"
+      ],
+      "body": [
+        "정체가 알려지지 않은 위협 행위자가 패치되지 않은 Check Point Security Gateway를 노려 PHP2Shell 취약점으로 초기 접근 권한을 확보한 뒤, 이전에 보고된 적 없는 TSGA 백도어를 배포하고 ESXi 파일을 삭제하는 공격이 관찰됐습니다. 두 매체가 같은 내용을 전하며 당일 보안 이슈의 중심에 올랐습니다.",
+        "Check Point 게이트웨이는 기업 경계 방화벽으로 널리 쓰이는 장비라, 패치가 늦은 설치 기반 자체가 공격자에게 표적 목록이 될 수 있습니다. PHP2Shell은 게이트웨이의 PHP 처리 결함을 이용해 원격에서 셸 권한을 얻는 문제로, 이번 흐름은 그 지점을 디딤돌로 삼은 사례입니다.",
+        "다만 이번 보도는 특정 관찰 사례에 대한 것이어서 전체 기업 피해 규모는 확인되지 않았습니다. TSGA 백도어가 알려진 탐지 시그니처를 피하는 변형인지, ESXi 삭제가 표적형인지 광역형인지도 아직 불확실합니다.",
+        "게이트웨이 장비를 운영하는 조직이라면 이번 사례를 패치 우선순위 재점검의 계기로 삼을 필요가 있습니다. 경계 장비는 안이 아니 밖을 지키는 위치라 한 번 뚫리면 내부 가상화 인프라까지 영향이 이어지는 구조입니다."
+      ],
+      "extra": "",
+      "takeaway": "경계 장비 자체가 침투 입구가 된 사례가 중요해진 이유는 내부 ESXi까지 피해가 이어진 구조 때문입니다. Check Point 게이트웨이 버전과 PHP2Shell 관련 패치 적용 여부부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/hackers-exploit-php2shell-flaws-in.html",
+          "kind": "news"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/check-point-gateways-hacked-via-php2shell-to-deploy-vmware-esxi-wiper/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "nvidia-huang-exit-fallout",
+      "n": 2,
+      "title": "2. 젠슨 황 이탈 여파, 복귀 청원 11만 5천 명 이상 동의",
+      "bullets": [
+        "황 복귀 요구 청원에 머스크 등 기업인 서명",
+        "토요일 오후 기준 서명 11만 5천 명 돌파",
+        "아시아 각국 정부가 칩 공급 약속 확인·영향 점검 착수"
+      ],
+      "body": [
+        "엘론 머스크를 비롯한 기술 임원들이 젠슨 황 엔비디아 최고경영자의 복귀를 요구하는 청원에 서명했고, 청원은 토요일 오후 기준 11만 5천 명 이상의 서명을 모았습니다. 같은 날 아시아 정부들이 칩 공급 약속을 확인하거나 지역 프로젝트 영향을 점검하는 모습이 여러 매체에서 전해졌습니다.",
+        "엔비디아는 AI 학습용 GPU의 사실상 최대 공급자라, 최고경영자 교체는 제품보다 수급 신뢰의 문제로 번집니다. 특히 공급 계약을 정부 차원에서 맺어 온 아시아 지역에서는 리더십 공백이 조달 일정과 직결됩니다.",
+        "다만 청원은 서명 수로 실제 복귀 가능성을 보증하지 않습니다. 미국 재무장관이 엔비디아가 유령회사에 AI GPU를 팔았는지 알고도 팔았는지를 문제 삼는 등 조사 국면이라, 회사 측 책임 소재가 아직 정리되지 않은 상태입니다.",
+        "거대 고객과 정부가 동시에 움직인다는 점에서 이 사태가 단순 인사 문제로 끝나기 어렵다는 관측이 나옵니다. 다만 그 이후 수급 구조가 어떻게 재편될지는 미확정입니다."
+      ],
+      "extra": "그 밖에: 같은 버킷에서 美 재무장관이 엔비디아의 유령회기 GPU 판매 책임론을 제기한 보도와 트럼프 행정부에 미친 파장을 다룬 보도가 함께 전해졌습니다. 리더십 문제와 규제 문제가 동시에 진행 중입니다.",
+      "takeaway": "GPU 수급의 신뢰 축이 흔들린 대목이 이번 사태의 핵심 영향입니다. 엔비디아 기반 조달 계약의 인수 조항과 대체 공급 후보를 비교 기준으로 삼아 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/14/elon-musk-other-tech-execs-sign-petition-calling-on-nvidia-to-reinstate-jensen-huang/",
+          "kind": "news"
+        },
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/14/asian-governments-react-to-nvidia-ceo-jensen-huangs-exit/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-ipo-wall-street",
+      "n": 3,
+      "title": "3. 앤스로픽 IPO, 엔비디아 사태 속 월가 신뢰 시험대",
+      "bullets": [
+        "앤스로픽 최고경영자, IPO에서 '과소 약속·과다 이행' 희망 표명",
+        "엔비디아·알파벳·마이크로소프트·마이크론이 IPO 매수 참여",
+        "AI 회의론이 커지는 시점이라는 평가가 여러 매체에서 병존"
+      ],
+      "body": [
+        "앤스로픽이 IPO를 추진하는 가운데 최고경영자는 제이미 다이먼과의 대화에서 과소 약속하고 과다 이행하는 공모가 되기를 희망한다고 밝혔습니다. 엔비디아, 알파벳, 마이크로소프트, 마이크론 등 주요 기업들이 이번 IPO에 참여하는 것으로 알려졌습니다.",
+        "여러 매체가 이 IPO를 AI 산업 전체에 대한 월가의 신뢰를 시험하는 사건으로 묘사하고 있고, 회의론이 커지는 분위기 속에 진행된다는 점을 함께 짚었습니다. 엔비디아 최고경영자 사태와 시기가 겹치면서 리스크 평가가 더 까다로워진 상황입니다.",
+        "다만 회의론의 근거가 되는 구체적 수치는 아직 공개된 정황에 포함되지 않았습니다. 전략적 투자자 참여가 곧 공모 후 주가 안정을 보장하지도 않습니다.",
+        "AI 모델 기업의 첫 대형 상장이 하드웨어 공급망 위기와 겹치는 점이 이번 공모의 변수입니다. 상장 이후 밸류에이션 논쟁이 다시 불거질 가능성이 있습니다."
+      ],
+      "extra": "그 밖에: 앤스로픽 버킷에는 IPO가 월가의 AI 신뢰를 시험한다는 분석과 함께 다리오 아모데이 최고경영자가 동료 기업들의 반발을 산 경위를 다룬 보도가 이어졌습니다.",
+      "takeaway": "하드웨어 위기와 소프트웨어 상장이 겹친 타이밍이 이번 IPO가 시사하는 지점입니다. AI 섹터 비중이 있는 포트폴리오라면 공모 조건 공개 후 밸류에이션 근거를 비교해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Yahoo Finance · finance.yahoo.com",
+          "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQcHZ4cmtrWmFOWXB6M0oyLWFDX2dJMEdOV3ZVelNIUUxpZDF4ZkdJaU5EZ2t6bUduUk9MaFJleEdsOHAzY3V6bWRzNmpxaTJFVGxYQVFic1BBU2VsUU01TjQ3S2dHNWlhZVhZczVzNi1aNTFLV3FnYmx0SVNsNjh1RC1FX21LZ0V0R0ktaDRLWTJjSWl6MHU1bUlrN3UxN0dXMklxNmV6T0VCalBZWm1aYUZYY05LdXJaWGtpM1c3UUFQb1Q5Q1M0Wk5YWQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://finance.yahoo.com"
+        },
+        {
+          "handle": "The Motley Fool · fool.com",
+          "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQbFVxMm44bG1IQmd4ZE5ObVNpLTJHQVcweHc4T2R3TExkUFV2OFVGOEF0T09URGVWOTNJZXJIUWJKNmFtNVB2dGdaVXo5cjg5Ni1FU3htNHlldFZ4bW16ZVBhRU9iZHdjeEZMeTBzYVUtQWZ6T3ZSYm5oVGR4RjFaSndobHhZQVotNHZjVlMtc3A0NnVZcXlUNWRUOG8ybWpHbkczZjJESQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.fool.com"
+        },
+        {
+          "handle": "The New York Times · nytimes.com",
+          "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE9pZEk3aEVERVZjMlBZYkI0WC11RjNlbVNaaUlya3A3dFFXWjNGbVlLQW1iZjU5R1E3WlY2blpERFl0MjNzSWdzQmpSc0JqWDhsOXJDYWhybjNiYWdjQ2RhQmF3VExyZGl5bVU1cHpMSGtSSThnRFpWdUJldw?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.nytimes.com"
+        },
+        {
+          "handle": "The New York Times · nytimes.com",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPTVpSYzU1cWtsQ0gxRXJPRUdXZlVmc1c5T1V4SlcySnEtd051UUIweW52UzhGOExhNTNrNklaaS1vTmFWZnozN3dic0dVcTZFMVdpRzFYY0FEX3pteHVjSTBmTEZiTjBVWlRKd0FzeFpGazN3Q2NXY1V0SmMxUWxxaW1UOXhDUQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.nytimes.com"
+        }
+      ]
+    },
+    {
+      "id": "chatgpt-wallet-agents",
+      "n": 4,
+      "title": "4. ChatGPT Wallet 출시, AI 에이전트의 대리 결제 개시",
+      "bullets": [
+        "에이전트가 사용자를 대신해 쇼핑·결제 수행",
+        "미국 Pro 구독자 대상 제한적 롤아웃로 시작",
+        "결제 승인 범위 설계가 도입 전 점검 과제"
+      ],
+      "body": [
+        "OpenAI가 ChatGPT Wallet을 출시해 AI 에이전트가 사용자를 대신해 쇼핑하고 결제까지 마칠 수 있는 길을 열었습니다. 기능은 미국 Pro 구독자를 대상으로 한 제한적 롤아웃로 시작됐습니다.",
+        "지금까지 에이전트는 검색·요약 등 읽기 위주 작업이 많았다면, 결제 권한은 쓰기 권한 중에서도 되돌리기 어려운 영역입니다. 이번 출시는 에이전트의 행동 반경이 정보 접근에서 금전 이동으로 옮겨갔다는 점에서 의미가 있습니다.",
+        "다만 초기 대상이 미국 Pro 구독자로 한정돼 있어 일반 사용자 경험은 아직 확인되지 않았습니다. 결제 승인 절차와 분쟁 처리 방식에 대한 세부 규칙도 공개된 정황에서는 구체적으로 다뤄지지 않았습니다.",
+        "에이전트 대리 결제가 자리 잡을지는 이번 제한 롤아웃의 사용 패턴에 달려 있습니다. 도입 초기에는 소액·단발성 거래에서 신뢰가 검증될 가능성이 높습니다."
+      ],
+      "extra": "",
+      "takeaway": "에이전트 권한이 금전 이동까지 확장된 점이 이번 출시에서 달라진 지점입니다. 도입을 검토하는 팀이라면 결제 한도와 승인 단계 설계를 체크리스트에 넣어 두시면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/13/chatgpts-new-wallet-lets-ai-agents-shop-and-check-out-for-you/",
+          "kind": "news"
+        },
+        {
+          "handle": "UkrMedia News · ukrmedia.news",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQSUtSbWgwbERFQk9MNkw2bjJaNzZhaTZhNFhnVVBQTXdyc2xPSkoyU1lzR09KMGFGNTRrQ3VCa295dGpIdFRMdzN5V0czb2Q2SzUxV2pJRmNHbFJ5ZEE3Qm5BYTROUlZZWHlLcm9OSUNreTRMZjFGeFh5d0lVb01PUnVWcGNoeE1Bb2RyUGZQUXM?oc=5",
+          "kind": "news",
+          "origin_url": "https://ukrmedia.news"
+        }
+      ]
+    },
+    {
+      "id": "fbi-dprk-deepfake-crypto",
+      "n": 5,
+      "title": "5. FBI, 딥페이크 화상회의로 4억 달러 이상 암호화폐 절도 발표",
+      "bullets": [
+        "북한 연계 위협 행위자가 딥페이크 영상통화 활용",
+        "암호화폐 절도액 4억 달러 초과로 FBI 파악",
+        "화상 인증 절차가 신종 공격 표적으로 부상"
+      ],
+      "body": [
+        "FBI가 북한과 연계된 위협 행위자들이 딥페이크 영상통화를 이용해 4억 달러를 넘는 암호화폐를 훔쳤다고 발표했습니다. 조사 기관이 특정 국가 연계 그룹의 수법과 피해 규모를 함께 공개한 사례입니다.",
+        "딥페이크는 지금까지 주로 명예훼손이나 허위 정보 유포에 쓰였다면, 이번 사건은 신원을 증명하는 화상 인증 절차 자체를 우회하는 도구로 활용된 점이 다릅니다. 조직 내부자를 가장한 영상통화로 상대방의 판단을 흐리는 방식입니다.",
+        "다만 4억 달러는 FBI가 파악한 규모일 뿐 실제 피해 총액과 다를 수 있고, 관련 수법이 암호화폐 업계 밖에서도 쓰이는지는 확인되지 않았습니다. 단일 사건에 대한 발표라 일반화에는 한계가 있습니다. 얼굴과 목소리를 확인하는 절차가 보안 장치가 아니라 공격면이 되는 상황이 왔다는 점에서 조직 전반의 인증 방식 점검이 필요해졌습니다."
+      ],
+      "extra": "",
+      "takeaway": "화상 인증이 공격 경로로 쓰였다는 점이 이번 발표에서 읽히는 의미는 대면성만 믿는 승인 절차의 위험입니다. 자금 이동 승인에 화상통화가 포함된 조직은 이중 확인 절차를 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/fbi-says-north-korean-hackers-stole.html",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "postgresql-52-flaws",
+      "n": 6,
+      "title": "6. PostgreSQL 52건 취약점 패치, 22년 된 인증 RCE 포함",
+      "bullets": [
+        "타입 혼동 결함으로 객체 생성 권한 사용자가 서버 코드 실행 가능",
+        "업데이트에 취약점 52건이 한 번에 포함",
+        "가장 오래된 결함은 22년 전부터 존재"
+      ],
+      "body": [
+        "PostgreSQL이 타입 혼동 결함을 포함해 총 52건의 보안 취약점을 수정하는 업데이트를 내놨습니다. 문제의 결함은 데이터베이스 객체를 생성할 수 있는 사용자가 서버에서 코드를 실행할 수 있게 하는 것으로, 가장 오래된 것은 22년 동안 방치돼 있었습니다.",
+        "객체 생성 권한은 일반 운영자 계정에도 흔히 부여되는 권한이라, 관리자 전용 취약점보다 공격 반경이 넓을 수 있습니다. 오래된 소프트웨어일수록 이런 결함이 오랫동안 잠복하는 사례가 반복되고 있습니다.",
+        "다만 코드 실행은 인증된 사용자 조건이 붙어 있어, 익명 원격 침투와는 위험 등급이 다릅니다. 각 결함의 심각도가 52건 모두 동일하지 않다는 점도 업데이트 계획을 세울 때 고려할 부분입니다.",
+        "자체 PostgreSQL을 운영하는 팀이라면 이번 업데이트를 정기 패치 주기와 별개로 조기 적용할 근거가 충분합니다. 객체 생성 권한을 가진 계정 목록을 함께 정리해 두면 후속 대응이 빨라집니다."
+      ],
+      "extra": "그 밖에: 같은 날 보안 버킷에는 CISA가 UnrealIRCd의 고위험 명령 삽입 결함을 알려진 취약점 목록에 추가했다는 소식도 있었습니다. IRC 서버를 운영하는 곳은 함께 패치 대상에 넣을 수 있습니다.",
+      "takeaway": "흔한 운영 권한이 서버 코드 실행으로 이어질 수 있었던 점이 영향이 큰 대목입니다. 운영 중인 PostgreSQL 버전과 객체 생성 권한 계정 현황부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/postgresql-patches-52-flaws-including.html",
+          "kind": "news"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "리더십 공백과 규제 압박이 동시에 진입",
+    "grow": "에이전트 결제·IPO 등 상업화 물결",
+    "caution": "게이트웨이 백도어와 딥페이크 절도로 인증·패치 관행 재점검 필요",
+    "heat": "높음"
+  },
+  "tips": [
+    {
+      "title": "게이트웨이 장비 패치 대장 점검",
+      "body": "Check Point 게이트웨이 버전 목록을 만들고 PHP2Shell 관련 패치 적용 여부를 표시해 둡니다.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "화상 승인 절차의 이중 확인 설계",
+      "body": "자금 이동처럼 되돌릴 수 없는 승인에는 화상통화 단독이 아니라 다른 채널 확인을 하나 더 얹는 구조를 만듭니다.",
+      "via": "FBI 발표 보도"
+    },
+    {
+      "title": "PostgreSQL 객체 생성 권한 정리",
+      "body": "이번 패치와 별개로 객체 생성 권한 계정을 줄여 두면 비슷한 결함이 나와도 피해 폭이 줄어듭니다.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "에이전트 결제 한도 설계",
+      "body": "ChatGPT Wallet 같은 대리 결제 기능을 검토할 때는 건당 한도와 승인 필요 구간을 먼저 정해 둡니다.",
+      "via": "TechCrunch"
+    },
+    {
+      "title": "IPO 소식 수용 태도",
+      "body": "앤스로픽 공모 관련 기사는 기대와 회의가 섞여 있으니 공개된 조건 수치만 근거로 삼아 정리합니다.",
+      "via": "WSJ·Yahoo Finance 보도"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": false
+}
