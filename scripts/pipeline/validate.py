@@ -1018,6 +1018,8 @@ def check_quality(
     collected_by_url: dict | None = None,
     *,
     monitor: bool = False,
+    attempt: int | None = None,
+    attempts_total: int | None = None,
 ) -> tuple[list[str], list[str]]:
     """내용 품질 게이트. (errors, warnings) — warnings는 실패시키지 않는다."""
     errors: list[str] = []
@@ -1134,11 +1136,34 @@ def check_quality(
         btext = " ".join(body) if isinstance(body, list) else str(body)
         if btext and len(btext) < 50:
             warnings.append(f"analysis[{i}].body: 50자 미만 ({len(btext)}자)")
-        # P14: 밀도 경고 — 차단은 하지 않는다. 본문·출처 밀도의 주 레버는
-        # 프롬프트 요구량이고, 게이트는 부족분을 눈에 보이게만 한다
-        # (LLM이 안정적으로 못 채우는 hard 게이트는 결호를 부른다는 P9 교훈).
-        if btext and len(btext) < 500:
-            warnings.append(f"analysis[{i}].body: 본문 합계 500자 미만 ({len(btext)}자) — 밀도 부족")
+        # P23 (5차 평가 P5): BODY-TOTAL — attempt-aware 2단계 게이트.
+        # attempt 1~2(최종 전): 600자 미만이면 error → 재시도+피드백으로 수렴.
+        # 최종 attempt(또는 attempt 미지정·모니터): 600자 미만은 warning,
+        # 500자 미만만 error(절대 하한). monitor 모드에서는 과거 발행호가
+        # 전수 FAIL되는 것을 막기 위해 error를 내지 않는다 (P21 분리 원칙).
+        _total = len(btext)
+        if btext and _total < 600:
+            _is_final = monitor or attempt is None or (
+                attempts_total is not None and attempt >= attempts_total
+            )
+            if monitor:
+                warnings.append(
+                    f"analysis[{i}].body: 본문 합계 600자 미만 ({_total}자) — 밀도 부족"
+                )
+            elif _is_final:
+                if _total < 500:
+                    errors.append(
+                        f"analysis[{i}].body: 본문 합계 500자 미만 ({_total}자) — BODY-TOTAL"
+                    )
+                else:
+                    warnings.append(
+                        f"analysis[{i}].body: 본문 합계 600자 미만 ({_total}자) — 밀도 부족"
+                    )
+            else:
+                errors.append(
+                    f"analysis[{i}].body: 본문 합계 600자 미만 ({_total}자) — BODY-TOTAL"
+                    f" (attempt {attempt}/{attempts_total})"
+                )
         nsrc = len(a.get("sources") or [])
         if nsrc < 3:
             warnings.append(f"analysis[{i}].sources: 3개 미만 ({nsrc}개) — 출처 밀도 부족")
@@ -1610,6 +1635,21 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
                     "analysis_id": a.get("id"),
                     "coverage": cov,
                 })
+    # P23 (5차 평가 P5): 본문 밀도 부족 — 600자 미만이면 sidecar에 실어
+    # 다음 attempt 피드백으로 연결한다. 수집 자체는 attempt와 무관하게
+    # 항상 한다 (최종 attempt에서도 기록으로 남는다).
+    for i, a in enumerate(analyses):
+        _body = a.get("body", "")
+        _btext = " ".join(_body) if isinstance(_body, list) else str(_body)
+        if _btext and len(_btext) < 600:
+            errors.append({
+                "code": "BODY-TOTAL",
+                "analysis_index": i,
+                "analysis_id": a.get("id"),
+                "length": len(_btext),
+                "required": 600,
+                "deficit": 600 - len(_btext),
+            })
     for i, a in enumerate(analyses):
         status = _slot_status(a)
         if not status["numbers"]:
@@ -1881,6 +1921,12 @@ def main() -> int:
                     help="P21: 발행 후 모니터 모드 (freshness-check 전용). collected 스냅샷 없이 "
                          "이미 발행된 호를 검증할 때, 발행 시점 판정을 재현할 수 없는 numbers 슬롯만 "
                          "판정 보류하고 나머지는 그대로 검사한다. 발행 게이트에는 쓰지 말 것.")
+    ap.add_argument("--attempt", type=int, default=None,
+                    help="P23: run.py 재시도 루프의 현재 attempt (1부터). "
+                         "없으면 최종 attempt 의미로 BODY-TOTAL을 완화 판정한다.")
+    ap.add_argument("--attempts-total", type=int, default=3,
+                    help="P23: 재시도 총 횟수 (기본 3). attempt와 함께 BODY-TOTAL "
+                         "2단계 게이트의 최종 여부를 가른다.")
     args = ap.parse_args()
     date_str = args.date or datetime.now(KST).strftime("%Y-%m-%d")
     collected_urls: set[str] | None = None
@@ -1906,7 +1952,8 @@ def main() -> int:
         issue = json.loads(f.read_text(encoding="utf-8"))
         bag = check(issue, collected_by_url)
         qerr, qwarn = check_quality(issue, collected_urls, prev, date_str, collected_by_url,
-                                    monitor=args.monitor)
+                                    monitor=args.monitor, attempt=args.attempt,
+                                    attempts_total=args.attempts_total)
         bag.extend(qerr)
         if bag:
             failed += 1
