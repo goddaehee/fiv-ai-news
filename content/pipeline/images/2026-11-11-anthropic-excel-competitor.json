@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-11",
+  "analysis": "anthropic-excel-competitor",
+  "title": "2. Anthropic 엑셀 경쟁 제품 공개, 마이크로소프트 주가 하락",
+  "src": "/img/2026-11-11/anthropic-excel-competitor-f77897b3.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: two overlapping geometric grids, one bold new grid of colorful cells sliding over an older gray spreadsheet grid, symbolizing a new challenger reshaping an established tool. Clean modern palette. No text, no numbers, no people, no logos, no charts.",
+  "prompt_hash": "f77897b3",
+  "alt": "오래된 회색 격자 위에 알록달록한 새 격자가 겹쳐지는 추상 일러스트"
+}
