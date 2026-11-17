@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-14",
+  "analysis": "checkpoint-php2shell-tsga",
+  "title": "1. 경계 장비가 침투 입구가 된 구조",
+  "src": "/img/2026-11-14/checkpoint-php2shell-tsga-4f1d8f14.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration: a glowing perimeter wall with a small crack, a thin stream of light slipping through the gap, dark blue and teal palette, minimalist geometric shapes, flat vector style, no text, no numbers, no people, no logos, no charts, wide 16:9 composition",
+  "prompt_hash": "4f1d8f14",
+  "alt": "균열이 생긴 경계 벽 틈으로 빛의 흐름이 스며드는 추상 일러스트"
+}
