@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-12",
+  "analysis": "openai-quarterly-revenue",
+  "title": "2. OpenAI 분기 매출 첫 100억 달러, 직전 분기 대비 50% 증가",
+  "src": "/img/2026-11-12/openai-quarterly-revenue-581a0bc8.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract illustration, wide 16:9 composition: ascending stepped terraces of soft glowing light rising steeply toward the upper right, a gradient sky from deep indigo to warm amber, small floating geometric orbs drifting upward, a sense of rapid growth and momentum. No text, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "581a0bc8",
+  "alt": "급성장하는 빛의 계단과 떠오르는 기하학적 조각들을 담은 추상 일러스트"
+}
