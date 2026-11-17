@@ -152,6 +152,15 @@
           "url": "https://www.theverge.com/tech/1031652/jensen-huang-rumor",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-12/nvidia-ceo-uncertainty-8c50f4a5.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "절벽 끝의 오래된 나무와 금빛·푸른빛으로 갈린 황혼 하늘, 불확실한 전환을 담은 추상 일러스트",
+          "width": 1200,
+          "height": 800
+        }
       ]
     },
     {
@@ -185,6 +194,15 @@
           "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNVzBRbmVLSUFUYS1uMjVUUVZVaTFQQmZhTmRGNklQRjhLc1B3MnJPWW1fNkNua014V3NzS2hWREJ2d3YtVElhTXc5VHBId1N2aTJ3M2MwdE5nWmtTT2ZSdDhXSzlyTzdta0RMOFVUTTJqV0ZPWndsc2ZBVHgzTFA0aWFPMnRrcVJHZ1Jmd0FNZHNzU0p5cTZDV050MzJPajlTdWVyMXIwQ2UybFdmNnVYMW5IVVE?oc=5",
           "kind": "news",
           "origin_url": "https://www.bloomberg.com"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-12/openai-quarterly-revenue-581a0bc8.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "급성장하는 빛의 계단과 떠오르는 기하학적 조각들을 담은 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -234,6 +252,15 @@
           "kind": "news",
           "origin_url": "https://www.morningstar.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-12/anthropic-ipo-demand-3d2f73ae.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛의 강줄기가 하나의 밝은 문으로 모이고 등불이 떠오르는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -268,6 +295,15 @@
           "url": "https://www.bleepingcomputer.com/news/security/cisa-flags-cisco-broadworks-flaw-as-actively-exploited-in-attacks/",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-12/cisco-broadworks-kev-8a8360ef.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "금빛 이음새로 메워진 균열 석벽 위 빛나는 방패, 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -301,6 +337,15 @@
           "url": "https://thehackernews.com/2026/11/fireworks-ai-breach-widens-to-expose.html",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-12/notion-fireworks-transcripts-a8d46c85.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛나는 봉투에서 빈 종이 조각들이 밤하늘로 흩어지는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -330,6 +375,15 @@
           "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNanhKZDVUckJDOTUyaHpuU1ozRV9Rc1I0czVKZmtueDFsM3pDTjRJZTFMQ0RDREhKcHRtTXIzQ2Zmdm1TWWNGbFN1RUE0dHBjWTNjV1VSR0lLTktuNVRrTnQxY0hfV0VXWUkzRnFyQ2otV0duQjdUVkdFcC1fWm9WQV9MN3k0Y3Y2YTY4d2w0dm56QUVyVlNaTlZmMi1QdTg?oc=5",
           "kind": "news",
           "origin_url": "https://arstechnica.com"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-12/tsmc-ai-investment-59f9149f.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛의 산 아래 기하학적 구조물에서 황금빛 강이 먼 도시로 흐르는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }
