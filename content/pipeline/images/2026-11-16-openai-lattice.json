@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-16",
+  "analysis": "openai-lattice",
+  "title": "4. GPT-6 Astra, 표준모형 격자 정의 증명에 투입",
+  "src": "/img/2026-11-16/openai-lattice-62f0aa58.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration, wide 16:9 composition: a luminous three-dimensional lattice grid floating in dark space, geometric nodes connected by fine glowing lines, a soft spiral of light tracing a path through the grid, a sense of an abstract mathematical structure being carefully defined. Deep indigo and cyan palette, minimalist. No text, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "62f0aa58",
+  "alt": "빛나는 격자 구조를 통과하는 빛의 궤적을 상징하는 격자 추상 일러스트"
+}
