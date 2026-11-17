@@ -24,12 +24,15 @@ def test_retry_succeeds_on_third_attempt():
     sh_calls = []
     sleep_calls = []
     validate_results = [1, 1, 0]  # 2회 실패 후 성공
+    validate_calls = []
 
     def fake_sh(cmd):
         sh_calls.append(cmd)
         return 0
 
-    def fake_validate():
+    # P23: draft_with_retry는 run_validate(sidecar, attempt)로 호출한다.
+    def fake_validate(sidecar=None, attempt=None):
+        validate_calls.append(attempt)
         return validate_results.pop(0)
 
     rc = run.draft_with_retry(
@@ -45,6 +48,7 @@ def test_retry_succeeds_on_third_attempt():
     # --attempt 값이 1, 2, 3 순서인지
     attempts = [cmd[cmd.index("--attempt") + 1] for cmd in sh_calls]
     assert attempts == ["1", "2", "3"], f"attempt 1/2/3 순서, got {attempts}"
+    assert validate_calls == [1, 2, 3], f"validate도 attempt 1/2/3 전달, got {validate_calls}"
     assert sleep_calls == [10, 10], f"재시도 사이 2회 sleep, got {sleep_calls}"
     print("PASS: 2회 실패 → 3회째 성공")
 
@@ -56,7 +60,7 @@ def test_retry_all_fail():
     rc = run.draft_with_retry(
         ["draft.py"],
         _mock_issue(exists=True),
-        lambda: 1,  # 항상 실패
+        lambda sidecar=None, attempt=None: 1,  # 항상 실패
         max_attempts=3,
         sh_fn=lambda cmd: 0,
         sleep_fn=lambda s: sleep_calls.append(s),
@@ -74,7 +78,7 @@ def test_first_attempt_success_no_sleep():
     rc = run.draft_with_retry(
         ["draft.py"],
         _mock_issue(exists=True),
-        lambda: 0,  # 첫 시도 성공
+        lambda sidecar=None, attempt=None: 0,  # 첫 시도 성공
         max_attempts=3,
         sh_fn=lambda cmd: (sh_calls.append(cmd), 0)[1],
         sleep_fn=lambda s: sleep_calls.append(s),
@@ -97,7 +101,7 @@ def test_draft_failure_retries():
     rc = run.draft_with_retry(
         ["draft.py"],
         _mock_issue(exists=True),
-        lambda: 0,
+        lambda sidecar=None, attempt=None: 0,
         max_attempts=3,
         sh_fn=fake_sh,
         sleep_fn=lambda s: None,
@@ -112,7 +116,7 @@ def test_issue_not_created_retries():
     rc = run.draft_with_retry(
         ["draft.py"],
         _mock_issue(exists=False),  # 파일 없음
-        lambda: 0,
+        lambda sidecar=None, attempt=None: 0,
         max_attempts=2,
         sh_fn=lambda cmd: 0,
         sleep_fn=lambda s: None,
@@ -128,7 +132,7 @@ def test_max_attempts_one_no_retry():
     rc = run.draft_with_retry(
         ["draft.py"],
         _mock_issue(exists=True),
-        lambda: 1,
+        lambda sidecar=None, attempt=None: 1,
         max_attempts=1,
         sh_fn=lambda cmd: (sh_calls.append(cmd), 0)[1],
         sleep_fn=lambda s: (_ for _ in ()).throw(AssertionError("sleep 호출되면 안 됨")),
