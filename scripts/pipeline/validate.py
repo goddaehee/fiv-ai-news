@@ -787,6 +787,7 @@ _NEUTRAL_MEDIA = {
 # 라벨이 명확한 사이트명인데 URL 도메인이 다르면 표기 오류 의심
 _LABEL_DOMAINS = {
     "hacker news": "news.ycombinator.com",
+    "hn ai": "news.ycombinator.com",  # P22: HN AI 집계자 피드 라벨 감지용
     "github": "github.com",
     "reddit": "reddit.com",
     "arxiv": "arxiv.org",
@@ -1580,6 +1581,35 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
                 "analysis_index": i,
                 "analysis_id": a.get("id"),
             })
+    # P22 (5차 평가 P4c): 출처 얇음 — coverage≥2인 이야기인데 출처가 1개뿐이면
+    # 재시도 피드백으로 교차보도 보충을 유도한다. hard 게이트가 아니라 피드백
+    # 코드만 둔다. coverage=1 단독·kind=doc 단독은 제외(억지 패딩·결호 방지).
+    # coverage는 수집 스냅샷의 story_groups에서 도출한다 (cluster.item_coverage).
+    if collected_by_url:
+        try:
+            from cluster import item_coverage
+            _cov_map = item_coverage(list(collected_by_url.values()))
+        except Exception:
+            _cov_map = {}
+        for i, a in enumerate(analyses):
+            srcs = [s for s in (a.get("sources") or [])
+                    if isinstance(s, dict) and str(s.get("url") or "").startswith("http")]
+            if len(srcs) != 1:
+                continue
+            if (srcs[0].get("kind") or "") == "doc":
+                continue
+            cov = 0
+            for s in srcs:
+                it = collected_by_url.get(url_core(str(s.get("url") or "")))
+                if it is not None:
+                    cov = max(cov, _cov_map.get(id(it), 0))
+            if cov >= 2:
+                errors.append({
+                    "code": "SOURCES-THIN",
+                    "analysis_index": i,
+                    "analysis_id": a.get("id"),
+                    "coverage": cov,
+                })
     for i, a in enumerate(analyses):
         status = _slot_status(a)
         if not status["numbers"]:
