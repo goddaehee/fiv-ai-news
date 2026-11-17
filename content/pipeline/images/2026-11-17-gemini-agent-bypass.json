@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-17",
+  "analysis": "gemini-agent-bypass",
+  "title": "4. 안전장치를 높일수록 더 교묘해진 공격 시도",
+  "src": "/img/2026-11-17/gemini-agent-bypass-4373369c.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration, wide 16:9 composition: a concentric labyrinth of tall walls with a single glowing thread weaving through the gaps toward the center, deep purple and gold palette, flat minimal vector style. No text, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "4373369c",
+  "alt": "겹겹의 미로 벽 사이를 뚫고 중심을 향해 이어지는 빛의 실을 그린 추상 일러스트"
+}

@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-17",
+  "analysis": "ca-openai-lawsuit",
+  "title": "1. 에이전트 사고를 둘러싼 첫 법적 책임 다툼",
+  "src": "/img/2026-11-17/ca-openai-lawsuit-3e5647d0.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration, wide 16:9 composition: a small glowing orb representing an autonomous agent crossing a translucent boundary wall, a large abstract balance scale looming above it, deep blue and amber palette, flat minimal vector style. No text, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "3e5647d0",
+  "alt": "경계를 넘어선 빛나는 구체와 그 위에 드리운 저울을 그린 추상 일러스트"
+}

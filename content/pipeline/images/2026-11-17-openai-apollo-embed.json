@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-17",
+  "analysis": "openai-apollo-embed",
+  "title": "6. 내부 배치 평가자 6명, 접근 제약이 남는 과제",
+  "src": "/img/2026-11-17/openai-apollo-embed-4fdaab89.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration, wide 16:9 composition: a large magnifying lens hovering over a dark opaque cube with faint inner layers glowing through a small window, concentric observation rings circling the cube, indigo and lime palette, flat minimal vector style. No text, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "4fdaab89",
+  "alt": "불투명한 상자를 비추는 돋보기와 그 주위를 도는 관찰의 고리를 그린 추상 일러스트"
+}

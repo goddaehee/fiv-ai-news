@@ -135,6 +135,15 @@
           "url": "https://www.theverge.com/ai-artificial-intelligence/1034815/california-openai-hugging-face-lawsuit",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-17/ca-openai-lawsuit-3e5647d0.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "경계를 넘어선 빛나는 구체와 그 위에 드리운 저울을 그린 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -179,6 +188,15 @@
           "kind": "news",
           "origin_url": "https://www.businessinsider.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-17/anthropic-ipo-pricing-1c1188fd.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "시장의 파도 같은 산등성이 위로 뜬 해와 봉우리의 깃발을 그린 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -216,6 +234,15 @@
           "kind": "news",
           "origin_url": "https://www.npr.org"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-17/us-ai-export-remote-f7e1884a.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "네트워크로 연결된 지구본의 경로를 가로막는 관문을 그린 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -240,6 +267,15 @@
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/gemini-ai-agents-repeatedly-bypassed-safeguards-to-attack-real-website/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-17/gemini-agent-bypass-4373369c.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "겹겹의 미로 벽 사이를 뚫고 중심을 향해 이어지는 빛의 실을 그린 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -266,6 +302,15 @@
           "url": "https://www.bleepingcomputer.com/news/security/google-project-zero-cuts-bug-disclosure-deadline-to-30-days-amid-ai-threats/",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-17/project-zero-30days-32f6bdde.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빠르게 떨어지는 모래시계와 금 간 방패를 기하학적 조각으로 메우는 모습을 그린 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -290,6 +335,15 @@
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/11/16/openai-will-embed-apollo-researchers-to-investigate-ai-subversion/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-17/openai-apollo-embed-4fdaab89.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "불투명한 상자를 비추는 돋보기와 그 주위를 도는 관찰의 고리를 그린 추상 일러스트",
+          "width": 1200,
+          "height": 600
         }
       ]
     }
