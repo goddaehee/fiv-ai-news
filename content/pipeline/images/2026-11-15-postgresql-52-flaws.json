@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-15",
+  "analysis": "postgresql-52-flaws",
+  "title": "6. PostgreSQL 52건 취약점 패치, 22년 된 인증 RCE 포함",
+  "src": "/img/2026-11-15/postgresql-52-flaws-f6271161.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration: stacked stone layers with one deep old crack being sealed by a band of light, deep green and amber palette, minimalist geometric shapes, flat vector style, no text, no numbers, no people, no logos, no charts, wide 16:9 composition",
+  "prompt_hash": "f6271161",
+  "alt": "오래된 균열이 빛의 띠로 봉합되는 켜켜이 쌓인 돌층 추상 일러스트"
+}
