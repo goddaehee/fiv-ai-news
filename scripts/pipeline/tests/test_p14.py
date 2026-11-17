@@ -5,6 +5,10 @@
 - 분석 4~5개 vs 원본 7개 → select MAX_MAIN 5→7, 프롬프트 "main_topics 전부 1:1"
 - 본문 ~340자 vs 원본 ~750자 → 프롬프트 본문 합계 500자+·문단당 140자 안팎,
   게이트는 warning으로 가시화만 (hard 게이트는 결호 위험 — P9 교훈)
+- P23 (5차 평가 P5): 500자 기준으로는 평균 391자에 머물러 프롬프트를
+  700자 목표·문단당 200~250자·3문단 역할 재배정으로 상향하고, BODY-TOTAL
+  attempt-aware 2단계 게이트(최종 전 error·최종은 500자 하한만 error)로
+  피드백 수렴을 붙인다. 재료는 summary 절단 180→450자로 확장.
 - 출처 1.8개 vs 원본 4.7개 → 프롬프트 기본 3개, attach_sources 상한 2→4,
   payload 버킷 아이템 3→5개
 - 오타 게이트 부재 ("Open아AI" 발행) → TYPO-001: U+FFFD + 영문-한글-영문
@@ -51,11 +55,15 @@ main, rest = select_buckets(_many)
 ok("서로 다른 도메인 9개 → main 7개", len(main) == 7 and len(rest) == 2)
 
 
-# --- 2. 프롬프트 밀도 요구 ---
+# --- 2. 프롬프트 밀도 요구 (P23: 500자+ → 700자 목표·600자 미달) ---
 ok("프롬프트: analysis briefing 상위 1:1 + 개수 하한", "analysis는 briefing 상위 5~7개의 id와 1:1" in PROMPT and "최소 5개" in PROMPT)
-ok("프롬프트: 본문 합계 500자 이상", "기사당 본문 합계 500자 이상" in PROMPT)
+ok("프롬프트: 본문 합계 700자 목표·600자 미만 미달", "기사당 본문 합계 700자 목표·600자 미만이면 미달" in PROMPT)
+ok("프롬프트: 문단당 200~250자·3문단", "body 3문단(문단당 2~3문장, 200~250자" in PROMPT)
+ok("프롬프트: 500자 기준 잔재 없음", "본문 합계 500자 이상" not in PROMPT)
 ok("프롬프트: 출처는 그 이야기의 아이템만 (P16 — 3개 패딩 금지)", "바로 그 이야기의 아이템에서만" in PROMPT and "3개 기본" not in PROMPT)
 ok("프롬프트: 본문 구성 지침", "본문 구성: 첫 문단=무슨 일인가" in PROMPT)
+ok("프롬프트: 문단 역할 재배정 (측정 조건)", "회사 발표 수치와 그 측정 조건" in PROMPT)
+ok("프롬프트: 자기 검수 지시", "출력 전에 기사마다 본문 글자 수를 셉니다" in PROMPT)
 ok("프롬프트: 지어내기 금지 재강조", "지어내면 호가 폐기됩니다" in PROMPT)
 
 
@@ -92,9 +100,11 @@ def _base_issue():
         "analysis": [{
             "id": "a", "title": "1. OpenAI 새 모델", "bullets": ["핵심 사실 하나", "둘째 사실"],
             "body": [
-                "OpenAI가 새 모델을 공개했습니다. 응답 속도는 2배 빨라지고 가격은 30% 내렸습니다.",
-                "이전 모델과 비교하면 생성 속도가 크게 올랐고, 이번 수치는 회사가 공개한 과제 100개로 잰 평균값입니다.",
-                "다만 평가는 영어 과제뿐이라 다른 언어에서는 확인되지 않았고, 가격은 API 호출 기준이라 구독 요금과는 다릅니다.",
+                # P23: 정상 호 본문은 600자 이상으로 유지한다 (BODY-TOTAL이
+                # 최종 attempt 의미의 기본 호출에서도 error를 내지 않게).
+                "OpenAI가 새 모델을 공개했습니다. 응답 속도는 2배 빨라지고 가격은 30% 내렸습니다. 새 모델은 기존 모델과 같은 방식으로 호출할 수 있고, 문서도 같은 날 함께 열렸습니다. 회사는 이번 공개를 개발자 대상 행사에서 발표했으며, 적용 대상은 이용자 전체라고 밝혔습니다. 기존 모델을 쓰던 이용자는 설정을 바꾸지 않고도 새 모델을 선택할 수 있습니다.",
+                "이전 모델과 비교하면 생성 속도가 크게 올랐고, 이번 수치는 회사가 공개한 과제 100개로 잰 평균값입니다. 과제 묶음은 영어 과제로 구성돼 있고, 긴 문서 과제나 다른 언어 과제는 포함되지 않았습니다. 응답 속도와 가격 인하는 같은 과제 묶음에서 나온 값이라 실제 업무 조건과는 다를 수 있습니다.",
+                "다만 평가는 영어 과제뿐이라 다른 언어에서는 확인되지 않았고, 가격은 API 호출 기준이라 구독 요금과는 다릅니다. 외부 독립 측정은 아직 공개되지 않았고, 회사가 밝힌 수치만으로 실제 효과를 단정할 수는 없습니다. 도입을 검토하는 쪽은 영어 외 과제 점수와 실제 호출량을 함께 확인하면 됩니다.",
             ],
             "takeaway": "속도가 바뀐 점이 중요합니다. 적용 전에 자기 과제 점수부터 확인하면 됩니다.",
             "tags": ["OpenAI"], "sources": [{"handle": "OpenAI", "url": "https://openai.com/a", "kind": "doc"}],
@@ -135,22 +145,42 @@ fb = render_feedback(_sidecar)
 ok("render_feedback: TYPO-001 처방 렌더링", "TYPO-001" not in fb and "Open아AI" in fb and "고쳐 쓰세요" in fb)
 
 
-# --- 5. 밀도 warning (차단 아님) ---
+# --- 5. 밀도 게이트 — P23 attempt-aware BODY-TOTAL (2단계) ---
+# 기본 호출(attempt 미지정)은 최종 attempt 의미: 600자 미만은 warning,
+# 500자 미만만 error. 최종 전 attempt에서는 600자 미만도 error.
+thin = _base_issue()
+thin["analysis"][0]["body"] = ["가" * 260, "나" * 260]  # 합계 521자
+_qe, qw = check_quality(thin, None, None, "2026-10-24", attempt=1, attempts_total=3)
+ok("BODY-TOTAL: 최종 전 attempt에서 600자 미만 → error",
+   any("BODY-TOTAL" in e for e in _qe))
+_qe3, qw3 = check_quality(thin, None, None, "2026-10-24", attempt=3, attempts_total=3)
+ok("BODY-TOTAL: 최종 attempt에서 500자 이상이면 error 없음", not any("BODY-TOTAL" in e for e in _qe3))
+ok("BODY-TOTAL: 최종 attempt에서 600자 미만 → 밀도 warning", any("밀도 부족" in w for w in qw3))
+_qe0, qw0 = check_quality(thin, None, None, "2026-10-24")
+ok("BODY-TOTAL: attempt 미지정은 최종 의미 (error 없음)", not any("BODY-TOTAL" in e for e in _qe0))
+
+floor = _base_issue()
+floor["analysis"][0]["body"] = ["가" * 200, "나" * 200]  # 합계 401자
+_qef, _ = check_quality(floor, None, None, "2026-10-24", attempt=3, attempts_total=3)
+ok("BODY-TOTAL: 최종 attempt에서도 500자 미만은 error", any("BODY-TOTAL" in e for e in _qef))
+_qem, qwm = check_quality(floor, None, None, "2026-10-24", monitor=True)
+ok("BODY-TOTAL: monitor 모드에서는 error 없음 (과거 호 보호)", not any("BODY-TOTAL" in e for e in _qem))
+ok("BODY-TOTAL: monitor 모드에서도 밀도 warning은 남음", any("밀도 부족" in w for w in qwm))
+
 short = _base_issue()
 _qe, qw = check_quality(short, None, None, "2026-10-24")
-ok("본문 500자 미만 → 밀도 warning", any("밀도 부족" in w for w in qw))
 ok("출처 3개 미만 → 출처 밀도 warning", any("출처 밀도 부족" in w for w in qw))
-ok("밀도 부족은 error가 아님", not _qe)
 
 dense = _base_issue()
-dense["analysis"][0]["body"] = ["가" * 260, "나" * 260]
+dense["analysis"][0]["body"] = ["가" * 310, "나" * 310]  # 합계 621자
 dense["analysis"][0]["sources"] = [
     {"handle": "A", "url": "https://openai.com/a", "kind": "doc"},
     {"handle": "B", "url": "https://anthropic.com/b", "kind": "doc"},
     {"handle": "C", "url": "https://google.com/c", "kind": "doc"},
 ]
-_qe3, qw3 = check_quality(dense, None, None, "2026-10-24")
-ok("밀도 충족 시 밀도 warning 없음", not any("밀도" in w for w in qw3))
+_qe3, qw3 = check_quality(dense, None, None, "2026-10-24", attempt=1, attempts_total=3)
+ok("밀도 충족 시 BODY-TOTAL error·밀도 warning 없음",
+   not any("BODY-TOTAL" in e for e in _qe3) and not any("밀도" in w for w in qw3))
 
 print(f"\nP14: {PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)
