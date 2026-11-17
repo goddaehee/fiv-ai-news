@@ -53,7 +53,9 @@ def draft_with_retry(draft_cmd: list[str], issue, run_validate, max_attempts: in
             sidecar = None
             if pipe_dir is not None and date:
                 sidecar = Path(pipe_dir) / f"{date}.validate-errors.attempt{attempt}.json"
-            v = run_validate(sidecar)
+            # P23: 현재 attempt를 validate에 전달해 BODY-TOTAL 2단계 게이트가
+            # 최종 전 attempt에서는 error, 최종 attempt에서는 완화 판정하게 한다.
+            v = run_validate(sidecar, attempt)
             if v == 0:
                 return 0
             print(f"[run] validate failed on attempt {attempt} — retrying", file=sys.stderr)
@@ -133,7 +135,7 @@ def main() -> int:
     if args.provider:
         draft_cmd.extend(["--provider", args.provider])
 
-    def run_validate(json_out: Path | None = None) -> int:
+    def run_validate(json_out: Path | None = None, attempt: int | None = None) -> int:
         vcmd = [
             sys.executable,
             str(HERE / "validate.py"),
@@ -143,6 +145,8 @@ def main() -> int:
             str(collected),
             str(issue),
         ]
+        if attempt is not None:
+            vcmd.extend(["--attempt", str(attempt), "--attempts-total", str(max_attempts)])
         if json_out is not None:
             vcmd.extend(["--json-out", str(json_out)])
         prev_date = (datetime.strptime(date, "%Y-%m-%d") - timedelta(days=1)).strftime("%Y-%m-%d")
