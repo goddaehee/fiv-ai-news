@@ -24,6 +24,21 @@ const KIND_LABEL: Record<SourceKind, string> = {
   news: "언론 보도",
 };
 
+// P22 (5차 평가 P4a): origin_url은 발행처 홈페이지 URL이라 경로가 없다.
+// 경로가 있는 기사 단위 URL일 때만 직행 링크로 쓰고, 홈페이지형이면
+// Google News 중계 링크(s.url)를 유지한다 — 무조건 교체하면 근거 기사에
+// 도달할 수 없게 된다.
+function sourceHref(s: { url: string; origin_url?: string }): string {
+  try {
+    if (s.origin_url && new URL(s.origin_url).pathname !== "/") {
+      return s.origin_url;
+    }
+  } catch {
+    // malformed origin_url → s.url로 폴백
+  }
+  return s.url;
+}
+
 function shortTitle(title: string) {
   const t = title.replace(/^\d+\.\s*/, "").replace(/^🆕\s*/, "");
   return t.length > 22 ? `${t.slice(0, 20)}…` : t;
@@ -223,8 +238,8 @@ export function ArticleView({
             ) : null}
             {sec.sources.map((s) => (
               <a
-                key={s.url + s.handle}
-                href={s.url}
+                key={sourceHref(s) + s.handle}
+                href={sourceHref(s)}
                 target="_blank"
                 rel="noopener noreferrer"
                 title={KIND_LABEL[s.kind]}
