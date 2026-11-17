@@ -1015,6 +1015,8 @@ def check_quality(
     prev: dict | None,
     date_str: str | None,
     collected_by_url: dict | None = None,
+    *,
+    monitor: bool = False,
 ) -> tuple[list[str], list[str]]:
     """내용 품질 게이트. (errors, warnings) — warnings는 실패시키지 않는다."""
     errors: list[str] = []
@@ -1150,7 +1152,7 @@ def check_quality(
     warnings.extend(p0_warn)
 
     # 11. 2주차: 깊이 슬롯 게이트 + 근거 연결 + 문체 패스
-    d_err, d_warn = check_depth(issue, collected_by_url)
+    d_err, d_warn = check_depth(issue, collected_by_url, monitor=monitor)
     errors.extend(d_err)
     warnings.extend(d_warn)
 
@@ -1733,12 +1735,18 @@ def _slot_status(a: dict) -> dict[str, bool]:
     return {"what": what, "context": context, "numbers": numbers, "limits": limits, "why": why}
 
 
-def check_depth(issue: dict, collected_by_url: dict | None = None) -> tuple[list[str], list[str]]:
+def check_depth(issue: dict, collected_by_url: dict | None = None, *, monitor: bool = False) -> tuple[list[str], list[str]]:
     """깊이 슬롯 + 근거 연결 + 문체 패스. (errors, warnings).
 
     P2: numbers 슬롯이 missing이고 입력(summary)의 수치 후보가 2개 미만이면
     해당 슬롯을 생략률 계산에서 제외(excused)한다. 입력에 없는 걸 요구하지 않는다.
     조인 불가 시(collected_by_url=None·URL 불일치)는 기존 경로(fail-closed).
+
+    P21 (5차 평가 P2): monitor=True는 발행 후 모니터 전용 모드다. collected
+    스냅샷은 gitignore 대상이라 freshness-check의 체크아웃에는 존재할 수 없고,
+    따라서 발행 시점의 numbers 제외 판정(입력 수치 후보 대조)을 사후에
+    재현할 수 없다. 모니터 모드에서는 numbers 슬롯을 판정 보류(제외)로 두고
+    나머지 슬롯·구조만 판정한다. 발행 게이트(기본값)는 기존대로 fail-closed.
     """
     errors: list[str] = []
     warnings: list[str] = []
@@ -1761,6 +1769,14 @@ def check_depth(issue: dict, collected_by_url: dict | None = None) -> tuple[list
                 total_excused += 1
                 warnings.append(
                     f"analysis[{i}].depth: numbers 슬롯 제외 (입력 수치 후보 {n_cand}개 < 2)"
+                )
+            elif monitor:
+                # P21: 모니터 모드 — collected 스냅샷이 없어 발행 시점 제외
+                # 판정을 재현할 수 없으므로 numbers 슬롯은 판정 보류(제외).
+                missing.remove("numbers")
+                total_excused += 1
+                warnings.append(
+                    f"analysis[{i}].depth: numbers 슬롯 판정 보류 (모니터 모드 — collected 스냅샷 없음)"
                 )
         total_missing += len(missing)
         if len(missing) > 1:
@@ -1831,6 +1847,10 @@ def main() -> int:
     ap.add_argument("--collected", type=Path, help="수집 스냅샷 JSON (URL ⊆ 검사)")
     ap.add_argument("--prev", type=Path, help="전날 호 JSON (재탕 검사)")
     ap.add_argument("--json-out", type=Path, help="P9: 구조화 에러 리포트를 JSON으로 저장 (피드백 sidecar)")
+    ap.add_argument("--monitor", action="store_true",
+                    help="P21: 발행 후 모니터 모드 (freshness-check 전용). collected 스냅샷 없이 "
+                         "이미 발행된 호를 검증할 때, 발행 시점 판정을 재현할 수 없는 numbers 슬롯만 "
+                         "판정 보류하고 나머지는 그대로 검사한다. 발행 게이트에는 쓰지 말 것.")
     args = ap.parse_args()
     date_str = args.date or datetime.now(KST).strftime("%Y-%m-%d")
     collected_urls: set[str] | None = None
@@ -1855,7 +1875,8 @@ def main() -> int:
     for f in args.files:
         issue = json.loads(f.read_text(encoding="utf-8"))
         bag = check(issue, collected_by_url)
-        qerr, qwarn = check_quality(issue, collected_urls, prev, date_str, collected_by_url)
+        qerr, qwarn = check_quality(issue, collected_urls, prev, date_str, collected_by_url,
+                                    monitor=args.monitor)
         bag.extend(qerr)
         if bag:
             failed += 1
