@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-15",
+  "analysis": "checkpoint-php2shell-tsga",
+  "title": "1. Check Point 게이트웨이 PHP2Shell 취약점, TSGA 백도어·ESXi 파일 삭제로 이어짐",
+  "src": "/img/2026-11-15/checkpoint-php2shell-tsga-da7b04f8.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration: a fortress gate standing slightly ajar, a faint shadow slipping through the gap, deep navy and amber palette, minimalist geometric shapes, flat vector style, no text, no numbers, no people, no logos, no charts, wide 16:9 composition",
+  "prompt_hash": "da7b04f8",
+  "alt": "틈이 벌어진 요새 문 사이로 희미한 그림자가 스며드는 추상 일러스트"
+}
