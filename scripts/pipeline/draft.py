@@ -179,6 +179,7 @@ def render_feedback(sidecar) -> str:
     NUMBERS-UNGROUNDED 외에 EMPTY-001 · TPL-001 · TAKEAWAY-DUP ·
     TAKEAWAY-TPL · QUOTA-001도 렌더링한다.
     P15: ANALYSIS-COUNT (분석 개수 하한 미달) 추가.
+    P24: KEYNUMS-SEMANTIC (keynums 의미 오류) 추가.
     sidecar가 없거나 커버 대상 에러가 없으면 빈 문자열.
     """
     try:
@@ -315,6 +316,39 @@ def render_feedback(sidecar) -> str:
                 "  그 keynums 항목을 삭제하거나, analysis 본문·bullets에 실제로 있는 수치로 교체하세요. "
                 "keynums는 analysis로 작성한 기사의 수치에서만 뽑습니다."
             )
+            continue
+        # P24: keynums 의미 오류 피드백 (KEYNUMS-SEMANTIC). run #99에서 이
+        # 에러가 sidecar에 실리지 않아 재시도가 같은 깨진 항목을 반복했다.
+        # 사유별로 처방을 나눈다 — lab/sub는 고칠 대상 그 자체라 인용한다.
+        if e.get("code") == "KEYNUMS-SEMANTIC":
+            idx = e.get("keynum_index")
+            reason = e.get("reason")
+            if reason == "val-no-number":
+                blocks.append(
+                    f"- keynums[{idx}]의 val '{e.get('val') or ''}'에 숫자가 없습니다. "
+                    "이대로면 호 전체가 폐기됩니다.\n"
+                    "  그 항목을 삭제하거나, val을 analysis 본문·bullets에 실제로 있는 "
+                    "수치로 교체하세요."
+                )
+            elif reason in ("lab-feed-name", "lab-domain-only", "lab-empty"):
+                blocks.append(
+                    f"- keynums[{idx}]의 lab '{e.get('lab') or ''}'이(가) 잘못됐습니다. "
+                    "피드명·매체명·도메인만으로는 lab이 될 수 없습니다.\n"
+                    "  lab에는 그 수치가 무엇을 뜻하는지 지표 이름으로 쓰세요 "
+                    "(예: '취약점 공개 기한', '분기 매출')."
+                )
+            elif reason == "sub-internal":
+                blocks.append(
+                    f"- keynums[{idx}]의 sub에 편집 내부 문구가 들어갔습니다.\n"
+                    "  sub는 독자에게 보이는 설명 문장으로 다시 쓰세요. "
+                    "수집·초안 같은 내부 작업 표현은 빼세요."
+                )
+            else:  # not-object 등
+                blocks.append(
+                    f"- keynums[{idx}] 항목의 형식이 잘못됐습니다.\n"
+                    '  {"val": "수치", "lab": "지표 이름", "sub": "독자에게 보이는 설명"} '
+                    "형태의 객체로 쓰세요."
+                )
             continue
         # P17: 톱뉴스 누락 피드백 (MUST-COVER). 빠진 이야기를 제목으로 짚어
         # 다음 attempt가 그 이야기를 analysis로 승격하게 한다.

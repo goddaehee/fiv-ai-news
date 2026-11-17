@@ -310,6 +310,37 @@ _KEYNUM_BAD_SUB = ("수집 요약", "수집 항목", "수집 기준", "초안", 
 _KEYNUM_DOMAIN_ONLY = re.compile(r"^[a-z0-9.-]+\.(com|net|org|io|ai|co|kr)$", re.IGNORECASE)
 
 
+def keynums_semantic_findings(issue: dict) -> list[dict]:
+    """P24: KEYNUMS-SEMANTIC 판정을 구조화해 반환한다.
+
+    check_keynums_semantics(게이트)와 collect_structured_errors(피드백)가
+    같은 판정을 공유한다 — KEYNUMS-LINK의 keynums_link_findings와 같은 방식.
+    반환: [{keynum_index, reason, val?, lab?, sub?}]
+    reason: not-object | val-no-number | lab-empty | lab-feed-name |
+            lab-domain-only | sub-internal
+    """
+    findings: list[dict] = []
+    for i, k in enumerate(issue.get("keynums") or []):
+        if not isinstance(k, dict):
+            findings.append({"keynum_index": i, "reason": "not-object"})
+            continue
+        val = str(k.get("val") or "").strip()
+        lab = str(k.get("lab") or "").strip()
+        sub = str(k.get("sub") or "").strip()
+        if not val or not re.search(r"\d", val):
+            findings.append({"keynum_index": i, "reason": "val-no-number", "val": val})
+        if not lab:
+            findings.append({"keynum_index": i, "reason": "lab-empty"})
+        else:
+            if any(p in lab for p in _KEYNUM_BAD_LAB):
+                findings.append({"keynum_index": i, "reason": "lab-feed-name", "lab": lab})
+            if _KEYNUM_DOMAIN_ONLY.match(lab):
+                findings.append({"keynum_index": i, "reason": "lab-domain-only", "lab": lab})
+        if any(p in sub for p in _KEYNUM_BAD_SUB):
+            findings.append({"keynum_index": i, "reason": "sub-internal", "sub": sub})
+    return findings
+
+
 def check_keynums_semantics(issue: dict, bag: list[str]) -> None:
     """P12: keynums 의미 검증 — 개수만으로는 깨진 항목을 못 잡는다.
 
@@ -317,25 +348,23 @@ def check_keynums_semantics(issue: dict, bag: list[str]) -> None:
     아니며, (3) sub에 내부 문자열이 없어야 한다.
     val 단위까지 NUM_RE로 강제하지는 않는다 — 정상 발행본에 '125건', '2조 달러',
     '128GB'처럼 NUM_RE 밖 단위가 실제로 쓰이기 때문이다.
+    P24: 판정 본체는 keynums_semantic_findings로 분리 (피드백과 공유).
     """
-    for i, k in enumerate(issue.get("keynums") or []):
-        if not isinstance(k, dict):
+    for f in keynums_semantic_findings(issue):
+        i = f["keynum_index"]
+        reason = f["reason"]
+        if reason == "not-object":
             err(f"keynums[{i}]", "KEYNUMS-SEMANTIC: 항목이 객체가 아님", bag)
-            continue
-        val = str(k.get("val") or "").strip()
-        lab = str(k.get("lab") or "").strip()
-        sub = str(k.get("sub") or "").strip()
-        if not val or not re.search(r"\d", val):
-            err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: val에 숫자가 없음 ({val!r})", bag)
-        if not lab:
+        elif reason == "val-no-number":
+            err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: val에 숫자가 없음 ({f['val']!r})", bag)
+        elif reason == "lab-empty":
             err(f"keynums[{i}]", "KEYNUMS-SEMANTIC: lab이 비어 있음", bag)
-        else:
-            if any(p in lab for p in _KEYNUM_BAD_LAB):
-                err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: lab에 피드명·내부 문자열 포함 ({lab!r})", bag)
-            if _KEYNUM_DOMAIN_ONLY.match(lab):
-                err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: lab이 도메인뿐임 ({lab!r})", bag)
-        if any(p in sub for p in _KEYNUM_BAD_SUB):
-            err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: sub에 내부 문자열 포함 ({sub!r})", bag)
+        elif reason == "lab-feed-name":
+            err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: lab에 피드명·내부 문자열 포함 ({f['lab']!r})", bag)
+        elif reason == "lab-domain-only":
+            err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: lab이 도메인뿐임 ({f['lab']!r})", bag)
+        elif reason == "sub-internal":
+            err(f"keynums[{i}]", f"KEYNUMS-SEMANTIC: sub에 내부 문자열 포함 ({f['sub']!r})", bag)
 
 
 # ---------------------------------------------------------------------------
@@ -1381,6 +1410,29 @@ _NUM_WORD_RE = re.compile(
     re.IGNORECASE,
 )
 
+# P24: 합성 표기 "A+B" (입력 스캔 전용). "90+30"처럼 +로 묶인 두 숫자는
+# 각 숫자 뒤에 단위가 없어 NUM_RE가 잡지 못한다. 단위는 합성 표기 바로
+# 뒤에 붙은 단위(_PAIR_UNIT_RE), 또는 같은 입력 텍스트에서 구성 숫자가
+# 단위와 함께 등장할 때의 단위(_PAIR_COMP_UNIT_RE)를 전파해 정한다.
+_PLUS_PAIR_RE = re.compile(r"(\d[\d,]*(?:\.\d+)?)\s*\+\s*(\d[\d,]*(?:\.\d+)?)")
+_PAIR_UNIT_RE = re.compile(
+    r"\s*-?\s*(days?|hours?|hrs?|minutes?|mins?|percent|%|일|시간|분)",
+    re.IGNORECASE,
+)
+_PAIR_COMP_UNIT_RE = (
+    r"(?<![\d.]){v}\s*(days?|hours?|hrs?|minutes?|mins?|percent|%|일|시간|분)"
+)
+_PAIR_UNIT_MAP = {
+    "day": "일", "days": "일",
+    "hour": "시간", "hours": "시간", "hr": "시간", "hrs": "시간",
+    "minute": "분", "minutes": "분", "min": "분", "mins": "분",
+    "percent": "%", "%": "%", "일": "일", "시간": "시간", "분": "분",
+}
+
+
+def _pair_unit_canon(token: str) -> str:
+    return _PAIR_UNIT_MAP.get(str(token or "").lower(), "")
+
 
 def _input_number_count(a: dict, collected_by_url: dict | None) -> int | None:
     """analysis 입력(summary)에 있던 검증기 통과 수치 후보 수.
@@ -1434,9 +1486,11 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
         if it is None:
             continue
         matched = True
+        item_texts: list[str] = []
         # P8: title도 스캔 (payload에 title이 들어가므로)
         for text in (it.get("title") or "", it.get("summary") or ""):
             text = _normalize_num_text(text)
+            item_texts.append(text)
             for m in NUM_RE_VALIDATE.finditer(text):
                 raw = m.group(0)
                 norm = _canon_num(raw)
@@ -1538,6 +1592,36 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
                 if norm not in input_nums:
                     input_nums.add(norm)
                     allowed_raw.append(m.group(0))
+        # P24: 합성 표기 "A+B" 분해. 입력 "90+30 disclosure policy"는 구성
+        # 숫자 뒤에 단위가 없어 위 스캔들이 "90"을 잡지 못했고, LLM이
+        # "90일 유예 후 추가 30일"로 정확히 풀어쓰자 "90일"이 미근거로
+        # 차단됐다 (2026-11-17호 run #99, attempt 1~3 공통 오탐).
+        # 원문에 명시된 "A+B" 패턴에서만 구성 숫자를 허용한다 — 임의의
+        # 숫자 쌍을 합성하지는 않는다. 단위는 합성 표기 뒤에 붙은 단위,
+        # 또는 같은 입력에서 구성 숫자가 단위와 함께 등장할 때의 단위를
+        # 두 구성 숫자 모두에 전파한다. 단위를 확정할 수 없으면 넣지
+        # 않는다 (단위 없는 합성만으로 단위 있는 출력을 근거로 삼지 않음).
+        joined_text = " ".join(item_texts)
+        for pm in _PLUS_PAIR_RE.finditer(joined_text):
+            comps = [g.replace(",", "") for g in (pm.group(1), pm.group(2))]
+            units: set[str] = set()
+            um = _PAIR_UNIT_RE.match(joined_text, pm.end())
+            if um:
+                units.add(_pair_unit_canon(um.group(1)))
+            for v in comps:
+                for um2 in re.finditer(
+                        _PAIR_COMP_UNIT_RE.format(v=re.escape(v)),
+                        joined_text, re.IGNORECASE):
+                    units.add(_pair_unit_canon(um2.group(1)))
+            if not units:
+                continue
+            for v in comps:
+                for u in sorted(units):
+                    norm = f"{v}{u}"
+                    if norm not in input_nums:
+                        input_nums.add(norm)
+            if pm.group(0) not in allowed_raw:
+                allowed_raw.append(pm.group(0))
     if not matched:
         return out
     out["joined"] = True
@@ -1578,6 +1662,7 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
     P11: SOURCES-MISSING · NUMBERS-UNGROUNDED 외에 EMPTY-001 · TPL-001 ·
     TAKEAWAY-DUP · TAKEAWAY-TPL · QUOTA-001도 수집한다.
     P15: ANALYSIS-COUNT (분석 개수 하한 미달 + analysis 없는 briefing id) 추가.
+    P24: KEYNUMS-SEMANTIC (keynums 의미 오류) 추가.
     """
     errors: list[dict] = []
     analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
@@ -1741,6 +1826,12 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
             "keynum_index": f["keynum_index"],
             "val": f["val"],
         })
+    # P24: keynums 의미 오류 — run #99에서 KEYNUMS-SEMANTIC 에러가 sidecar에
+    # 없어 재시도가 이유를 모른 채 같은 항목을 반복했다. 판정은 게이트와
+    # 같은 findings를 쓴다. lab/sub는 고칠 대상 그 자체라 인용한다
+    # (TYPO-001과 같은 원칙).
+    for f in keynums_semantic_findings(issue):
+        errors.append({"code": "KEYNUMS-SEMANTIC", **f})
     # P17: 불릿 병합 비문 — 위치와 꼬리를 실어 다음 attempt가 정확히 고치게.
     for f in body_fragment_findings(issue):
         errors.append({
