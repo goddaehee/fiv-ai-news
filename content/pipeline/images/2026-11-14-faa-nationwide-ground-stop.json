@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-14",
+  "analysis": "faa-nationwide-ground-stop",
+  "title": "4. 전국 동시 이륙 중단이 말해주는 것",
+  "src": "/img/2026-11-14/faa-nationwide-ground-stop-26063358.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration: a calm dawn sky with small paper-plane silhouettes held still above a horizontal pause bar, soft gradient, minimalist flat style, no text, no numbers, no people, no logos, no charts, wide 16:9 composition",
+  "prompt_hash": "26063358",
+  "alt": "새벽 하늘 아래 종이비행기들이 정지 표시 위에 멈춰 선 추상 일러스트"
+}
