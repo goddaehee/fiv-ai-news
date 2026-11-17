@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-14",
+  "analysis": "signdrop-clfs-zero-day",
+  "title": "2. 보안 기능이 뚫리는 SignDrop 권한 상승",
+  "src": "/img/2026-11-14/signdrop-clfs-zero-day-8f40f421.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration: a cracked protective shield above rising layered steps, deep navy and amber tones, minimalist flat geometric style, no text, no numbers, no people, no logos, no charts, wide 16:9 composition",
+  "prompt_hash": "8f40f421",
+  "alt": "금빛 균열이 난 방패 아래 층층이 쌓인 계단이 상승하는 추상 일러스트"
+}
