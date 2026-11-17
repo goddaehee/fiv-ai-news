@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-13",
+  "analysis": "signdrop-zero-day",
+  "title": "2. SignDrop 제로데이, CLFS 드라이버 권한 상승 주장",
+  "src": "/img/2026-11-13/signdrop-zero-day-1349eb10.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration, wide 16:9 composition: layered translucent security barriers, a thin crack of light breaking through the innermost layer, deep blue and violet tones, sense of a hidden flaw inside a sealed system. Flat modern illustration style. No text, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "1349eb10",
+  "alt": "겹겹의 반투명 보안 장벽 가장 안쪽 층을 뚫고 새어 나오는 가는 빛줄기의 추상 일러스트"
+}
