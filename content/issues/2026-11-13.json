@@ -139,6 +139,15 @@
           "kind": "news",
           "origin_url": "https://gizmodo.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-13/jensen-huang-resigns-8efacde2.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "어두운 풍경 위로 빛나는 네트워크 노드들이 이어지고, 중심의 밝은 노드에서 이웃 노드로 빛이 넘어가는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -170,6 +179,15 @@
           "url": "https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges/",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-13/signdrop-zero-day-1349eb10.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "겹겹의 반투명 보안 장벽 가장 안쪽 층을 뚫고 새어 나오는 가는 빛줄기의 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -200,6 +218,15 @@
           "url": "https://www.bleepingcomputer.com/news/security/apache-http-server-patches-critical-http-2-remote-code-execution-flaw/",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-13/ptc-windchill-rce-e7ee0db1.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "산업용 톱니바퀴와 디지털 격자를 커다란 반투명 방패가 감싸는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -224,6 +251,15 @@
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/hackers-compromise-4-800-github-accounts-to-steal-cloud-credentials/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-13/github-wfx-loot-ad96a60d.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "작은 빛의 무리가 어두운 코드 블록의 들판을 가로질러 먼 금고 문을 향해 흐르는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -269,6 +305,15 @@
           "kind": "news",
           "origin_url": "https://www.bloomberg.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-13/anthropic-ipo-demand-7186a669.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "금빛 빛의 흐름들이 모여 높이 솟은 빛나는 관문을 향해 상승하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -300,6 +345,15 @@
           "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5Nd0pKdEtsZnJ6UWhKZlR1dUJNV2UwUDRLSHdfVExwQUhNb3hnLW1vYzFuRWRMNlM1dk53dHZyM3pqQXB6Uy1lNlhQc251N2gyVXdxdEFIMUN0X0hadFdZc0ZCMGNkRnVKYVJCMERNdw?oc=5",
           "kind": "news",
           "origin_url": "https://www.cbsnews.com"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-13/frontier-ai-lawsuit-1ea0d220.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛나는 기하학적 형태의 정의의 저울이 거대한 추상 신경망 격자와 마주한 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }
