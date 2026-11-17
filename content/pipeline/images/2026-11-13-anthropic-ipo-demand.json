@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-13",
+  "analysis": "anthropic-ipo-demand",
+  "title": "5. Anthropic IPO, 약 6배 초과 청약 보도",
+  "src": "/img/2026-11-13/anthropic-ipo-demand-7186a669.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract editorial illustration, wide 16:9 composition: converging streams of light rising toward a tall glowing gateway, gold and navy palette, sense of overwhelming demand and upward momentum before a market debut. Flat modern illustration style. No text, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "7186a669",
+  "alt": "금빛 빛의 흐름들이 모여 높이 솟은 빛나는 관문을 향해 상승하는 추상 일러스트"
+}
