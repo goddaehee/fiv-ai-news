@@ -74,13 +74,17 @@ ok("IPO는 별도 그룹", len(ipo_g) == 1 and ipo_g[0]["coverage"] == 1)
 ok("GNews 라벨이 같아도 origin 도메인으로 매체 구분",
    duet_g and len(duet_g[0]["sources"]) >= 3)
 
-# --- 2. payload_items: coverage 우선 정렬 + 대표 1개 ------------------------
+# --- 2. payload_items: coverage 우선 정렬 + 대표 노출 ------------------------
 
 pl = payload_items(DUET + IPO)
 ok("페이로드 첫 항목이 Duet (coverage 우선)", "duet" in pl[0][0]["title"].lower())
 ok("페이로드 첫 항목 coverage >= 3", pl[0][1] >= 3)
-ok("같은 이야기는 대표 1개만 (Duet 중복 제거)",
-   sum(1 for it, _ in pl if "duet" in it["title"].lower()) <= 2)  # 제목 변형 2그룹까지 허용
+# P22: coverage≥2 그룹은 대표 2개까지 노출 (1차 선택부터 교차보도 가능하게).
+# coverage=1 그룹은 대표 1개.
+ok("coverage≥2 그룹은 대표 2개 노출",
+   sum(1 for it, _ in pl if "duet" in it["title"].lower()) == 2)
+ok("coverage=1 그룹은 대표 1개",
+   sum(1 for it, _ in pl if "ipo" in it["title"].lower()) == 1)
 ok("IPO도 페이로드에 포함", any("ipo" in it["title"].lower() for it, _ in pl))
 
 # --- 3. security 버킷 룰 -----------------------------------------------------
