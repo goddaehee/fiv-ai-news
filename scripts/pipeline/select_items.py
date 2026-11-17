@@ -12,6 +12,8 @@ import re
 from collections import Counter
 from datetime import datetime, timezone
 
+from cluster import _outlet_key
+
 MAX_MAIN = 7
 MIN_MAIN = 3
 TARGET_MAIN = 5  # P15: 메인 목표 개수. 미달 시 쿼터를 단계적으로 완화해 채운다.
@@ -97,8 +99,10 @@ def score_bucket(items: list[dict], now: datetime | None = None) -> dict:
     """버킷(같은 주제 기사 묶음)을 4개 축으로 채점. 반환: {impact, novelty, relevance, evidence, total}."""
     now = now or datetime.now(timezone.utc)
 
-    # 영향도: 몇 개 매체가 다뤘는지
-    sources = {str(it.get("source") or "") for it in items}
+    # 영향도: 몇 개 매체가 다뤘는지 — 피드 라벨이 아니라 실발행처 기준
+    # (P22: Google News 한 피드 안의 여러 매체를 1개로 과소 계산하던 문제.
+    # _outlet_key는 origin_url 도메인으로 구분한다.)
+    sources = {_outlet_key(it) for it in items}
     impact = 0 if len(sources) <= 1 else (1 if len(sources) == 2 else 2)
 
     # 새로움: 가장 최근 기사 기준
