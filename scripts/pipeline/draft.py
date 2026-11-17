@@ -246,6 +246,16 @@ def render_feedback(sidecar) -> str:
                 "  URL은 입력에 있는 것을 한 글자도 바꾸지 않고 그대로 복사하고, 지어내지 마세요."
             )
             continue
+        # P22 (5차 평가 P4c): 출처 얇음 — coverage≥2인 이야기인데 출처가 1개뿐이다.
+        if e.get("code") == "SOURCES-THIN":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            blocks.append(
+                f'- analysis id "{aid}"의 sources가 1개뿐인데, 이 이야기는 {e.get("coverage")}개 매체가 다뤘습니다.\n'
+                '  입력 buckets에서 같은 이야기의 다른 매체 아이템을 찾아 sources에 하나 더 넣으세요. '
+                '다른 이야기의 아이템으로 채우지 마세요.\n'
+                "  URL은 입력에 있는 것을 한 글자도 바꾸지 않고 그대로 복사하고, 지어내지 마세요."
+            )
+            continue
         # P11: 빈 시사점 피드백 (EMPTY-001).
         if e.get("code") == "EMPTY-001":
             aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
@@ -592,16 +602,22 @@ def _shares_rare_token(item: dict, first: dict,
     return any(df.get(t, 0) <= thresh for t in shared)
 
 
-def payload_items(items: list[dict], limit: int = 5) -> list[tuple[dict, int]]:
+def payload_items(items: list[dict], limit: int = 6) -> list[tuple[dict, int]]:
     """P16: 버킷 페이로드 선별. 같은 이야기는 대표 1개만 싣고, 교차보도
     (coverage) 높은 이야기부터, 동률이면 최신순으로 채운다.
 
     기존의 수집 순서 앞 5개 절단은 톱뉴스를 버킷 뒤쪽에 묻었다
     (2026-10-23 실측: Claude Duet는 anthropic 버킷 8번째, PHP 보안
-    뉴스는 openai 버킷 16번째에서 절단)."""
+    뉴스는 openai 버킷 16번째에서 절단).
+
+    P22 (5차 평가 P4c): coverage≥2 그룹은 대표 2개까지 노출해 LLM이 1차
+    선택부터 교차보도를 넣을 수 있게 한다. 상한은 5→6으로 함께 올린다
+    (2개 노출이 다른 이야기를 밀어내지 않게)."""
     reps: list[tuple[dict, int]] = []
     for g in story_groups(items):
         reps.append((g["items"][0], g["coverage"]))
+        if g["coverage"] >= 2 and len(g["items"]) > 1:
+            reps.append((g["items"][1], g["coverage"]))
 
     def _ts(it: dict) -> float:
         try:
@@ -626,6 +642,13 @@ def _is_relay_url(url) -> bool:
     return extract_domain(str(url or "")) == "news.google.com"
 
 
+# P22 (5차 평가 P4b): 집계자 피드 — HN AI / Hacker News는 외부 매체 기사
+# 링크를 그대로 전달하는 집계자라, 피드명을 라벨로 쓰면 "Business Insider
+# 기사가 💬 HN AI"가 된다. "The Hacker News"(보안 전문지,
+# thehackernews.com)와 혼동하지 않게 정확 일치만 적용한다.
+_AGGREGATOR_SOURCES = frozenset({"HN AI", "Hacker News"})
+
+
 def source_entry(it: dict) -> dict:
     """P19: 수집 아이템 → 발행본 출처 항목의 결정적 조립 (라벨·kind 교정).
 
@@ -635,6 +658,9 @@ def source_entry(it: dict) -> dict:
       도메인으로 "Reuters · reuters.com" 형태. kind는 news로 강제한다
       (중계지는 원문 문서가 아니므로 doc=공식 문서가 될 수 없다).
     - 직행 링크: 라벨은 피드명(그 자체가 발행처·섹션명), kind는 아이템 kind.
+    - P22: 집계자 피드(HN AI / Hacker News)에서 온 직행 링크는 피드명이
+      발행처가 아니므로 URL 도메인 기준으로 라벨·kind를 교정한다.
+      HN 토론 페이지 자체(news.ycombinator.com)는 talk + 피드명을 유지한다.
     """
     entry = {
         "handle": it.get("source") or "source",
@@ -651,6 +677,13 @@ def source_entry(it: dict) -> dict:
             entry["handle"] = domain
         elif name:
             entry["handle"] = name
+    elif it.get("source") in _AGGREGATOR_SOURCES:
+        # P22: 집계자 피드 직행 링크 — 라벨·kind을 URL 도메인 기준으로 교정.
+        dom = extract_domain(str(entry["url"] or ""))
+        if dom and dom != "news.ycombinator.com":
+            entry["kind"] = "news"
+            name = str(it.get("publisher") or "").strip()
+            entry["handle"] = f"{name} · {dom}" if name else dom
     if entry["kind"] not in KINDS:
         entry["kind"] = "doc"
     # P5: Google News <source url> 실발행처 — 검증기의 도메인 계산에 사용
@@ -813,6 +846,31 @@ def attach_sources(issue: dict, snap: dict,
                 outlets.add(_outlet_key(cand))
                 cur_doms.add(cand_dom)
                 print(f"attach_sources: '{a.get('id')}' 같은 이야기 출처 보충: "
+                      f"{str(cand.get('title') or '')[:50]}")
+        # P22: 2차 패스 — 1차 보충 풀이 비어 단일 출처로 남은 경우, 그룹이
+        # 쪼개져 같은 이야기가 다른 그룹에 있는 경우를 전체 테이블에서 찾는다.
+        # 전체 탐색이라 1차보다 엄격하게 overlap+희귀 토큰 공유를 둘 다 요구하고,
+        # 2개까지만 채운다 (무관 출처 패딩 방지).
+        if picked_items and len(picked) == 1:
+            for cand in table:
+                if len(picked) >= 2:
+                    break
+                core = url_core(str(cand.get("url") or ""))
+                if not core or core in have:
+                    continue
+                if not (_source_overlap(a, cand) > 0
+                        and _shares_rare_token(cand, picked_items[0], title_df, n_snap)):
+                    continue
+                cand_dom = _item_domain(cand)
+                if (cand_dom and cand_dom not in cur_doms
+                        and domain_counts.get(cand_dom, 0) >= quota_cap):
+                    continue  # 보충이 쿼터 위반의 marginal 원인이 되지 않게
+                picked.append(source_entry(cand))
+                picked_items.append(cand)
+                have.add(core)
+                outlets.add(_outlet_key(cand))
+                cur_doms.add(cand_dom)
+                print(f"attach_sources: '{a.get('id')}' 같은 이야기 출처 2차 보충: "
                       f"{str(cand.get('title') or '')[:50]}")
         a["sources"] = picked
         # QUOTA 카운트 갱신: 보충으로 새로 들어온 도메인만 반영 (1차분은 시드済)
