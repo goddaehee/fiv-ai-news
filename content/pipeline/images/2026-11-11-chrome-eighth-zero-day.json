@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-11",
+  "analysis": "chrome-eighth-zero-day",
+  "title": "3. 크롬, 올해 8번째 실공격 제로데이 패치 배포",
+  "src": "/img/2026-11-11/chrome-eighth-zero-day-68305a1c.webp",
+  "model": "media.generate_image",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: a large glowing shield with a bright patch sealing a crack, a row of small warning triangles fading into the background, symbolizing an urgent security update fixing a flaw already under attack. Deep blue tones with a warm accent. No text, no numbers, no people, no logos, no charts.",
+  "prompt_hash": "68305a1c",
+  "alt": "균열을 빛나는 조각이 메우는 파란 방패와 경고 삼각형들의 추상 일러스트"
+}
