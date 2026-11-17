@@ -143,6 +143,15 @@
           "kind": "news",
           "origin_url": "https://www.barrons.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-16/nvidia-anthropic-week-a7ac7f7d.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "한 주에 겹친 두 대형 이벤트를 앞두고 두 빛이 한 점으로 모이는 모습을 상징하는 구체 추상 일러스트",
+          "width": 1200,
+          "height": 600
+        }
       ]
     },
     {
@@ -181,6 +190,15 @@
           "kind": "news",
           "origin_url": "https://finance.yahoo.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-16/anthropic-ipo-pressure-9a373889.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "한정된 자금이 몇 개의 넓은 흐름으로 모이는 모습을 상징하는 빛의 흐름 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -205,6 +223,15 @@
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/tsmc-employee-data-breach-linked-to-cloud-provider/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-16/tsmc-breach-389c4677.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "금 가는 투명한 방패와 그 뒤로 이어진 연결망을 상징하는 보안 침해 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -231,6 +258,15 @@
           "url": "https://openai.com/index/step-toward-defining-the-standard-model",
           "kind": "doc"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-16/openai-lattice-62f0aa58.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛나는 격자 구조를 통과하는 빛의 궤적을 상징하는 격자 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -256,6 +292,15 @@
           "url": "https://www.businessinsider.com/reddit-traffic-down-13-percent-similarweb-google-ai-overviews-2026-11",
           "kind": "talk"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-16/reddit-ai-overviews-c909cc78.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "넓은 빛의 강이 밝은 고리에 흡수되며 좁아지는 모습을 상징하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -280,6 +325,15 @@
           "handle": "NVIDIA Blog",
           "url": "https://blogs.nvidia.com/blog/ai-day-seoul-wrapup/",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-16/ai-day-seoul-c1c804a4.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "수많은 빛의 점들이 모인 중앙 무대 위로 기계 팔이 솟은 모습을 상징하는 피지컬 AI 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }
