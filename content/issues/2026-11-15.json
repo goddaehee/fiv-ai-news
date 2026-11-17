@@ -128,6 +128,15 @@
           "url": "https://www.bleepingcomputer.com/news/security/check-point-gateways-hacked-via-php2shell-to-deploy-vmware-esxi-wiper/",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-15/checkpoint-php2shell-tsga-da7b04f8.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "틈이 벌어진 요새 문 사이로 희미한 그림자가 스며드는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -158,6 +167,15 @@
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/11/14/asian-governments-react-to-nvidia-ceo-jensen-huangs-exit/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-15/nvidia-huang-exit-fallout-3dbddc1f.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "꼭대기 조각이 들려 올라간 거대한 기둥과 퍼져 나가는 동심원 파문 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -204,6 +222,15 @@
           "kind": "news",
           "origin_url": "https://www.nytimes.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-15/anthropic-ipo-wall-street-a8373f59.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "밝은 지평선으로 열리는 큰 문과 솟아오르는 계단 형태 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -236,6 +263,15 @@
           "kind": "news",
           "origin_url": "https://ukrmedia.news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-15/chatgpt-wallet-agents-4460a4bb.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "열린 지갑에서 흘러나온 빛나는 실이 작은 소포들과 이어지는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -260,6 +296,15 @@
           "handle": "The Hacker News",
           "url": "https://thehackernews.com/2026/11/fbi-says-north-korean-hackers-stole.html",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-15/fbi-dprk-deepfake-crypto-b27f2ba1.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "왜곡된 파문과 균열이 있는 화면을 담은 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -286,6 +331,15 @@
           "handle": "The Hacker News",
           "url": "https://thehackernews.com/2026/11/postgresql-patches-52-flaws-including.html",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-15/postgresql-52-flaws-f6271161.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "오래된 균열이 빛의 띠로 봉합되는 켜켜이 쌓인 돌층 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }
