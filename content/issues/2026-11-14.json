@@ -129,6 +129,15 @@
           "url": "https://www.bleepingcomputer.com/news/security/check-point-gateways-hacked-via-php2shell-to-deploy-vmware-esxi-wiper/",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-14/checkpoint-php2shell-tsga-4f1d8f14.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "균열이 생긴 경계 벽 틈으로 빛의 흐름이 스며드는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -158,6 +167,15 @@
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-14/signdrop-clfs-zero-day-8f40f421.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "금빛 균열이 난 방패 아래 층층이 쌓인 계단이 상승하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -189,6 +207,15 @@
           "url": "https://www.bleepingcomputer.com/news/security/apache-http-server-patches-critical-http-2-remote-code-execution-flaw/",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-14/ptc-windchill-rce-df5d695b.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "공장 실루엣이 와이어프레임 조각으로 흩어져 해체되는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -218,6 +245,15 @@
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNUDBfeXNaTGl4UjIxWGRKUjF5aUlVZzBIZ2hRdXR2RWpMcFVrUkVwT3dYaGp3cTdIUzk4dlRGeTlKbjlZVGdtTzRseTFWYXY1TTZCeTllQnExdlM0b21QaUJQM1NZUnFWdnhRZGp2SmRRVGJyZzVHX05FUTJ1aWlLcEZhWGNtaHJfRkplbFFBVmdOQ0NNLW00cTNKWEZKQzEzZ0xISjhmY2JSWnI0UDZmUGlR?oc=5",
           "kind": "news",
           "origin_url": "https://www.fcnp.com"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-14/faa-nationwide-ground-stop-26063358.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "새벽 하늘 아래 종이비행기들이 정지 표시 위에 멈춰 선 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -263,6 +299,15 @@
           "kind": "news",
           "origin_url": "https://www.barrons.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-14/anthropic-ipo-investor-8475becc.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "반투명 계단이 밝은 지평선을 향해 오르고 돋보기 형태가 떠 있는 추상 일러스트",
+          "width": 1200,
+          "height": 800
+        }
       ]
     },
     {
@@ -287,6 +332,15 @@
           "handle": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/11/13/ai-agent-startup-langchain-hits-3b-valuation/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-14/langchain-3b-valuation-8a6dbd1d.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "중앙 허브를 중심으로 빛나는 노드들이 연결된 네트워크 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -313,6 +367,15 @@
           "url": "https://news.google.com/rss/articles/CBMiowNBVV95cUxNLVRQRDJjLUYybzVveW5wWEV2cU9ka3VhQXpvV3dWN00yNS11bzBnb0VDOTNENTVFdjh0ZkdMVDF4bjYxTTFZM0s4YmlsMHFyNUZjREFSRTN2Vi1QVk9mMjNqQ3JpY2hKWGRLUFNFR3ljWl91LWQ3dXhmQlNjdnR1WkMteHV2RklKek9UMElmLWVMa3NPU21yUnJ3akNvVDFBQ05fbW1EMVVOMzloYk5YZnU4di1SZ2VlVWkzOE1iUDVJM3R1OVFfb0E3bXpBLWJiY1pDekhXWUtScUplMU9TYVRSYkxYcmRmNmJTeTdKZ2RsU3NlM3pTalVXLWdwMlU5TmZDc0EwaS1wN3E2ZThQWEtjWDRteGRWZktZNDBIbDN4XzhJckg5akw0NXJHU1hxbUpfenhPVEpQQVFDTEZjOFg4d1VTbmNXSzVsZnZQQ01NTjZsamZDb0F0dE1HaDVQRDRONDRhQzRrOXNhbVFHOHJ3YUNHbEl3TVdkamVvNTRMcnFlVXV6LXBOcmNBaWtEeFBtRkRuNWNjZ1VxWUczdFUxTQ?oc=5",
           "kind": "news",
           "origin_url": "https://www.tomshardware.com"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-14/nvidia-smuggle-917-4ce44a0a.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "쌓인 컨테이너 사이 틈으로 빛나는 화물 하나가 빠져나가는 황혼의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }
