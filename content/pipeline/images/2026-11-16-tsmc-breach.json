@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-16",
+  "analysis": "tsmc-breach",
+  "title": "3. TSMC 직원 정보 유출, 6.9GB의 무게",
+  "src": "/img/2026-11-16/tsmc-breach-389c4677.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration, wide 16:9 composition: a translucent crystalline shield with a hairline crack, thin streams of light escaping through the crack, a lattice of connected nodes stretching behind it, a sense of third-party risk in a supply chain. Muted steel blue and slate palette, minimalist. No text, no numbers, no people, no faces, no logos, no charts.",
+  "prompt_hash": "389c4677",
+  "alt": "금 가는 투명한 방패와 그 뒤로 이어진 연결망을 상징하는 보안 침해 추상 일러스트"
+}
