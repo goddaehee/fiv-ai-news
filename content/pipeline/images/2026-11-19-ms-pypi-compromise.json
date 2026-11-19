@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-19",
+  "analysis": "ms-pypi-compromise",
+  "title": "1. MS 공식 PyPI 패키지에 악성 버전 두 개 게시",
+  "src": "/img/2026-11-19/ms-pypi-compromise-9b6dc541.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat vector illustration, wide 16:9 composition: a chain of glowing interconnected package boxes representing a software supply chain, one box cracked open with dark tendrils leaking out, a translucent shield forming around the remaining boxes, deep blue and teal palette, clean minimal geometric shapes, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "9b6dc541",
+  "alt": "공급망의 상자 하나가 갈라져 어둠이 새어 나오고, 나머지를 방패가 감싸는 청록색 추상 일러스트"
+}

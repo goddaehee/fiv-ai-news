@@ -130,6 +130,15 @@
           "url": "https://thehackernews.com/2026/11/attackers-compromise-microsofts-agent.html",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-19/ms-pypi-compromise-9b6dc541.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "공급망의 상자 하나가 갈라져 어둠이 새어 나오고, 나머지를 방패가 감싸는 청록색 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -154,6 +163,15 @@
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/ukraine-fbi-arrest-ransomware-gang-members-tied-to-40m-in-ransoms/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-19/ransomware-arrests-23474135.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛줄기가 스치는 네트워크 위에서 자물쇠가 조각나며 부서지는 남색과 호박색 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -185,6 +203,15 @@
           "url": "https://www.theverge.com/tech/1036880/nvidia-rtx-spark-ai-mini-pc-desktops",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-19/rtx-spark-pcs-0cd3509e.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "작은 빛나는 큐브 주위로 회로 무늬와 파동이 퍼지는 보라·청록 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -215,6 +242,15 @@
           "url": "https://www.theverge.com/ai-artificial-intelligence/1037151/school-districts-ditching-google",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-19/google-schools-search-f81c6af7.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "펼친 책에서 돋보기 빛길과 갈림길 두 갈래로 나뉘는 호박·청록 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -239,6 +275,15 @@
           "handle": "reuters.com",
           "url": "https://www.reuters.com/technology/palo-alto-buy-ai-startup-applied-compute-45-billion-2026-11-18/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-19/paloalto-appliedcompute-28383b30.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "두 개의 방패가 맞물려 네트워크 그리드 위의 큰 보호막이 되는 파랑·금색 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }
