@@ -1288,7 +1288,15 @@ except ImportError:
 
     def _normalize_num_text(text: str) -> str:
         t = re.sub(r"(?<=\d)[-_](?=[A-Za-z])", " ", text or "")
-        return re.sub(r"(?<=\d),(?=\d)", "", t)
+        t = re.sub(r"(?<=\d),(?=\d)", "", t)
+        # P26/P26b: 분수 마스킹 (draft.normalize_num_text와 동일 유지).
+        t = re.sub(
+            r"\d+(?:\.\d+)?(?:\s*(?:조|억|만|천|백|십))*\s*분\s*의"
+            r"(?=\s*\d+(?:\.\d+)?\s*(?:분|시간|일|초|개|명|건|회|달러|원|%|배|억|만|조|천))",
+            "분수", t)
+        return re.sub(
+            r"\d+(?:\.\d+)?(?:\s*(?:조|억|만|천|백|십))*\s*분\s*의\s*\d+(?:\.\d+)?",
+            "분수", t)
 
 
 # P10: 크기(magnitude) 단위 → 10의 거듭제곱 지수.
@@ -1479,13 +1487,57 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
     input_nums: set[str] = set()
     allowed_raw: list[str] = []
     matched = False
+    scan_items: list[dict] = []
+    seen_cores: set[str] = set()
     for s in a.get("sources") or []:
         if not isinstance(s, dict):
             continue
-        it = collected_by_url.get(url_core(str(s.get("url") or "")))
-        if it is None:
+        core = url_core(str(s.get("url") or ""))
+        it = collected_by_url.get(core)
+        if it is None or core in seen_cores:
             continue
         matched = True
+        seen_cores.add(core)
+        scan_items.append(it)
+    if not matched:
+        return out
+    # P26: 허용 집합을 같은 스토리 그룹의 수집 아이템까지 넓힌다.
+    # analysis 출처에 없는 교차보도 아이템의 수치가 본문에 정확히 번역돼도
+    # 차단되던 오탐 (2026-11-19호: $81.3 Billion → 813억이 미근거 차단).
+    # 그룹 판정은 cluster.story_groups와 동일 기준이며, 같은 이야기의
+    # 다른 매체 보도만 넓힌다 (무관 이야기는 흡수하지 않는다).
+    # P26b (재리뷰 지적): 그룹 병합(Jaccard 0.28)은 정렬용 근사치라
+    # 같은 회사 다른 사건도 묶인다 (SearchGPT vs Sora 0.40 실측).
+    # 확장에는 엄격 기준을 적용한다 — 후보가 자체 출처 아이템과 제목
+    # 토큰을 3개 이상 공유할 때만 허용한다 (짧은 제목은 2개 공유로
+    # 임계값을 넘기 때문이다). 유입 상한 2개.
+    try:
+        from cluster import story_groups as _story_groups
+        from cluster import _story_tokens as _story_toks
+        _own_toks = [_story_toks(str(it.get("title") or ""))
+                     for it in scan_items]
+        _added = 0
+        for _g in _story_groups(list(collected_by_url.values())):
+            if _added >= 2:
+                break
+            _gcores = {url_core(str(x.get("url") or "")) for x in _g["items"]}
+            if not (_gcores & seen_cores):
+                continue
+            for _x in _g["items"]:
+                if _added >= 2:
+                    break
+                _xc = url_core(str(_x.get("url") or ""))
+                if _xc in seen_cores:
+                    continue
+                _xt = _story_toks(str(_x.get("title") or ""))
+                if not any(len(_xt & _ot) >= 3 for _ot in _own_toks):
+                    continue
+                seen_cores.add(_xc)
+                scan_items.append(_x)
+                _added += 1
+    except Exception:
+        pass
+    for it in scan_items:
         item_texts: list[str] = []
         # P8: title도 스캔 (payload에 title이 들어가므로)
         for text in (it.get("title") or "", it.get("summary") or ""):
@@ -1622,8 +1674,6 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
                         input_nums.add(norm)
             if pm.group(0) not in allowed_raw:
                 allowed_raw.append(pm.group(0))
-    if not matched:
-        return out
     out["joined"] = True
     out["allowed_raw"] = allowed_raw
     # 출력 수치 추출 — 필드별 (위치 추적용). P8: extra 포함.

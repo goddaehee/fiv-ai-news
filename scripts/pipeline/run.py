@@ -34,14 +34,24 @@ def draft_with_retry(draft_cmd: list[str], issue, run_validate, max_attempts: in
     _sh = sh_fn or sh
     _sleep = sleep_fn or time.sleep
     rc = 1
-    for attempt in range(1, max_attempts + 1):
+    attempt = 0
+    total = max_attempts
+    bonus_used = False
+    while attempt < total:
+        attempt += 1
         cmd = list(draft_cmd) + ["--attempt", str(attempt)]
-        # P9: 피드백 주입 — attempt 2부터 직전 시도 검증 리포트 전달
+        # P9: 피드백 주입 — attempt 2부터 직전 시도 검증 리포트 전달.
+        # P26: 직전 sidecar가 없으면(타임아웃으로 sidecar 미생성) 그 전
+        # sidecar까지 거슬러 올라가 가장 최근 것을 쓴다 — 보너스 attempt도
+        # 이전 검증 피드백을 받아야 하기 때문이다 (render_feedback이
+        # 그보다 앞선 sidecar까지 합쳐 주므로 최신 1개만 넘기면 된다).
         if attempt > 1 and pipe_dir is not None and date:
-            prev_sidecar = Path(pipe_dir) / f"{date}.validate-errors.attempt{attempt - 1}.json"
-            if prev_sidecar.exists():
-                cmd += ["--feedback", str(prev_sidecar)]
-        print(f"[run] draft attempt {attempt}/{max_attempts}", file=sys.stderr)
+            for _k in range(attempt - 1, 0, -1):
+                prev_sidecar = Path(pipe_dir) / f"{date}.validate-errors.attempt{_k}.json"
+                if prev_sidecar.exists():
+                    cmd += ["--feedback", str(prev_sidecar)]
+                    break
+        print(f"[run] draft attempt {attempt}/{total}", file=sys.stderr)
         rc = _sh(cmd)
         if rc != 0:
             print(f"[run] draft failed (rc={rc}) on attempt {attempt}", file=sys.stderr)
@@ -60,9 +70,19 @@ def draft_with_retry(draft_cmd: list[str], issue, run_validate, max_attempts: in
                 return 0
             print(f"[run] validate failed on attempt {attempt} — retrying", file=sys.stderr)
             rc = v
-        if attempt < max_attempts:
+        # P26: 마지막 attempt가 LLM 타임아웃(rc=5)으로 죽으면 스텝 제한
+        # 30분 안에 여유가 있어(3 attempt ~10분) 1회 추가 시도한다.
+        # 검증 실패(rc!=5)는 추가 시도를 받지 않는다 — 3회면 충분하다는
+        # 기존 판단을 유지한다. 보너스 attempt는 --attempt 4로 돌며
+        # validate는 attempt>=total이라 최종 attempt로 완화 판정한다.
+        if rc == 5 and not bonus_used and attempt >= total:
+            bonus_used = True
+            total += 1
+            print(f"[run] timeout on final attempt — bonus attempt {total}",
+                  file=sys.stderr)
+        if attempt < total:
             _sleep(10)
-    print(f"[run] all {max_attempts} attempts failed — failing closed", file=sys.stderr)
+    print(f"[run] all {total} attempts failed — failing closed", file=sys.stderr)
     return rc
 
 
