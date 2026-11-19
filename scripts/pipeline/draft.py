@@ -538,6 +538,37 @@ def extract_json(text: str) -> dict:
     raise ValueError("model did not return parseable JSON")
 
 
+REPAIR_JSON_PROMPT = """당신은 '5분 AI 뉴스' JSON 수리 보조입니다. 주어진 텍스트는 초안 JSON이지만 파싱이 안 되는 상태입니다.
+규칙:
+- 원래 내용을 그대로 살려 유효한 JSON 객체 하나로만 고쳐서 돌려줍니다. 다른 텍스트를 덧붙이지 않습니다.
+- 잘린 뒷부분은 문법에 맞게 닫되, 기존 텍스트·숫자는 임의로 바꾸거나 새로 창작하지 않습니다.
+- 출력은 JSON 객체 하나만입니다."""
+
+
+def _parse_or_repair_json(raw: str, chat_fn) -> tuple[dict | None, str | None]:
+    """JSON 파싱 + 같은 attempt 내 재수리.
+
+    P26: extract_json이 실패하면 attempt가 rc=1 크래시로 통째로 소모됐다
+    (JSON이 깨진 샘플은 재시도해도 같은 attempt 예산을 쓴다). 수리 호출
+    1회로 원본 JSON만 고쳐 다시 파싱한다. 수리도 실패하면 (None, 에러)를
+    돌려 호출부가 sidecar를 남기고 rc=4로 다음 attempt에 넘기게 한다.
+    chat_fn은 user 텍스트를 받아 LLM 원문 응답을 돌려주는 호출부이다.
+    """
+    try:
+        return extract_json(raw), None
+    except ValueError as e:
+        err = str(e)
+    try:
+        repaired = chat_fn(raw)
+    except Exception as e:
+        print(f"[draft] JSON repair call failed: {e}", file=sys.stderr)
+        return None, err
+    try:
+        return extract_json(repaired), None
+    except ValueError as e2:
+        return None, f"{err} (수리 후에도 파싱 실패: {e2})"
+
+
 def slug(s: str) -> str:
     s = re.sub(r"[^a-zA-Z0-9가-힣]+", "-", (s or "").lower()).strip("-")
     return (s[:36] or "s")
@@ -921,6 +952,76 @@ def attach_sources(issue: dict, snap: dict,
         # QUOTA 카운트 갱신: 보충으로 새로 들어온 도메인만 반영 (1차분은 시드済)
         for d in {_item_domain(it) for it in picked_items if _item_domain(it)} - counted:
             domain_counts[d] = domain_counts.get(d, 0) + 1
+    # P26: MUST-COVER 보강 — validate MUST-COVER 게이트와 같은 기준
+    # (must_cover_stories의 urls 집합)으로, 어느 analysis도 그 이야기의
+    # 아이템을 출처로 안 갖고 있으면 이야기와 가장 겹치는 analysis에
+    # 대표 아이템을 붙인다. MUST-COVER와 수치 오탐이 같은 근원이다:
+    # 톱스토리 수치가 든 아이템이 출처에서 빠지면 그 수치가 본문에서
+    # 미근거로 차단된다 (2026-11-19호 $81.3B → 813억).
+    # - 이야기와 겹치는 analysis가 없으면 붙이지 않는다 (무관 패딩 금지 —
+    #   그 경우 MUST-COVER 게이트가 재시도를 부른다).
+    # - 이미 4개 출처면 붙이지 않는다 (기존 출처를 밀어내지 않음).
+    # - QUOTA-001의 marginal 원인이 되면 붙이지 않는다 (P17b/c와 동일 기준).
+    try:
+        _mc = must_cover_stories(snap.get("items") or [])
+    except Exception:
+        _mc = []
+    for st in _mc:
+        st_cores = {url_core(u) for u in (st.get("urls") or [])}
+        if not st_cores:
+            continue
+        covered = any(
+            url_core(str(s.get("url") or "")) in st_cores
+            for a in analyses
+            for s in (a.get("sources") or [])
+            if isinstance(s, dict)
+        )
+        if covered:
+            continue
+        st_items = [it for it in table
+                    if url_core(str(it.get("url") or "")) in st_cores]
+        if not st_items:
+            continue
+        # P26b (재리뷰 지적): 부착 bar 상향 + 차순위 순회.
+        # - _source_overlap은 제목에 영문 토큰이 없으면 판정 불가를 1로
+        #   반환(fail-open)한다. 그런 아이템은 후보에서 제외한다 — 아니면
+        #   무관한 첫 analysis에 무조건 붙고, MUST-COVER 게이트가 출처
+        #   URL만 보기 때문에 본문에 없는 톱뉴스도 통과해 버린다.
+        # - bar: 본문 겹침 2개 이상, 또는 본문 1개 + 제목 토큰 공유.
+        #   회사명 1개만 겹치는 경우(Google 등)는 제목 공유가 없으면 제외.
+        # - 후보 쌍을 겹침 순으로 정렬해 상한·쿼터에 걸리면 차순위를 시도한다.
+        pairs: list[tuple[int, int, dict, dict]] = []
+        for a in analyses:
+            a_title_toks = _src_title_tokens(a.get("title"))
+            for it in st_items:
+                it_toks = _src_title_tokens(it.get("title"))
+                if not it_toks:
+                    continue
+                ov = _source_overlap(a, it)
+                title_ov = len(a_title_toks & it_toks)
+                if ov >= 2 or (ov >= 1 and title_ov >= 1):
+                    pairs.append((-ov, -title_ov, a, it))
+        pairs.sort(key=lambda p: (p[0], p[1]))
+        for _neg_ov, _neg_tov, a, it in pairs:
+            picked = a.get("sources") or []
+            if len(picked) >= 4:
+                continue
+            cand_dom = _item_domain(it)
+            if cand_dom:
+                _have = {url_core(str(s.get("url") or ""))
+                         for s in picked if isinstance(s, dict)}
+                _cur_doms = {_item_domain(x) for x in table
+                             if url_core(str(x.get("url") or "")) in _have
+                             and _item_domain(x)}
+                if (cand_dom not in _cur_doms
+                        and domain_counts.get(cand_dom, 0) >= quota_cap):
+                    continue
+            a["sources"] = picked + [source_entry(it)]
+            if cand_dom:
+                domain_counts[cand_dom] = domain_counts.get(cand_dom, 0) + 1
+            print(f"attach_sources: '{a.get('id')}' MUST-COVER 보강: "
+                  f"{str(it.get('title') or '')[:50]}")
+            break
     return issue
 
 
@@ -1178,6 +1279,25 @@ def expand_korean_compound(text: str) -> str:
     return _COMP_SPAN_RE.sub(_sub, text)
 
 
+# P26: 한국어 분수 "N분의 M" (예: "4분의 1" = 1/4). "분의"의 "분"이
+# 분(시간) 단위로 추출돼 미근거로 차단되던 오탐 (2026-11-19호 실측:
+# 본문 "4분의 1을 넘는 28%"에서 "4분"이 차단돼 attempt 소모).
+# 수치 추출 전에 분수 표현 전체를 마스킹한다 — 매칭 전용 텍스트에만
+# 적용되며 화면·저장 텍스트는 건드리지 않는다. 실제 "4분"(시간)은
+# "분의"가 뒤따르지 않아 마스킹되지 않는다.
+# P26b: "100만분의 1"처럼 분자 앞에 한글 단위(만·억·조)가 붙은 분수와
+# "4분 의 1" 같은 공백 변형도 마스킹한다. 분모에 단위가 붙은 경우
+# ("30분의 10분" — 30분 중 10분)는 "N분의"만 지우고 "M+단위"는
+# 정상 수치로 남겨 검증한다. 마스킹된 분수는 검증에서 면제되므로
+# 허위 분수가 통과할 수 있는 사각지대가 있다 — 정석은 분수→소수·
+# 퍼센트 정규화(1/4 ↔ 25%)이며 백로그로 남긴다.
+_FRACTION_RE = re.compile(
+    r"\d+(?:\.\d+)?(?:\s*(?:조|억|만|천|백|십))*\s*분\s*의\s*\d+(?:\.\d+)?")
+_FRACTION_PREFIX_RE = re.compile(
+    r"\d+(?:\.\d+)?(?:\s*(?:조|억|만|천|백|십))*\s*분\s*의"
+    r"(?=\s*\d+(?:\.\d+)?\s*(?:분|시간|일|초|개|명|건|회|달러|원|%|배|억|만|조|천))")
+
+
 def normalize_num_text(text: str) -> str:
     """수치 매칭 전 전처리. validate.py와 공유 (단일 소스).
 
@@ -1189,10 +1309,15 @@ def normalize_num_text(text: str) -> str:
     P20: 한국어 복합수 전개. "2억 5천만" → "250000000",
     "3만5000개" → "35000개". 입력·출력 양쪽에 똑같이 적용돼 대조가 맞는다.
     단일 단위("3만", "1.4조")는 전개하지 않고 _canon_num에 맡긴다.
+    P26: 한국어 분수 마스킹. "4분의 1" → "분수" (매칭용).
     """
     t = re.sub(r"(?<=\d)[-_](?=[A-Za-z])", " ", text or "")
     t = re.sub(r"(?<=\d),(?=\d)", "", t)
-    return expand_korean_compound(t)
+    t = expand_korean_compound(t)
+    # P26b: 분모에 단위가 붙은 분수 ("30분의 10분")는 접두사만 마스킹해
+    # "10분"을 정상 수치로 남긴 뒤, 나머지 분수를 통째로 마스킹한다.
+    t = _FRACTION_PREFIX_RE.sub("분수", t)
+    return _FRACTION_RE.sub("분수", t)
 
 
 def number_mentions(summary: str) -> list[str]:
@@ -1886,6 +2011,23 @@ def skeleton(snap: dict) -> dict:
     }
 
 
+# P26b: attempt별 LLM 타임아웃 (초). 보너스 attempt(4차)는 120초로 짧게
+# 잡고 저노력 재시도도 하지 않는다 — 이미 추가 기회라 1회만 시도해
+# 30분 스텝 예산을 지킨다. 현실적 최악(전 attempt 타임아웃):
+# (300+150)+(240+120)+(180+90) + 보너스 120 + 대기 30 ≈ 1,230초.
+# 단, 병리적 최악(매 attempt 타임아웃 직전 성공 + JSON·요약 수리 2종
+# 최대 소모 + 검증 실패 4연속)은 약 1,950초로 30분 예산을 넘을 수
+# 있다 — 재리뷰에서 확인된 관찰 사항으로, 현실 경로에서는 도달하지
+# 않는다. 수리 호출은 attempt당 최대 2회, 각 min(_to, 120)초.
+_ATTEMPT_TIMEOUTS = {1: 300, 2: 240, 3: 180, 4: 120}
+
+
+def _should_retry_timeout(attempt: int) -> bool:
+    """타임아웃 후 저노력 재시도를 할 attempt인가. 보너스 attempt(4차)는
+    추가 기회라 재시도 없이 1회만 시도한다."""
+    return attempt <= 3
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--collected", type=Path, required=True)
@@ -1979,10 +2121,10 @@ def main() -> int:
         }
         print(f"drafting provider={name} model={model} buckets={len(payload['buckets'])} temp={args.temperature}", flush=True)
         # P7: attempt별 타임아웃 단축 — 3회가 20분 step 안에 들어가도록.
-        # 1차 300s, 2차 240s, 3차 180s. LLM_TIMEOUT 환경변수가 설정되면 그것을 우선 사용.
-        _attempt_timeouts = {1: 300, 2: 240, 3: 180}
+        # 1차 300s, 2차 240s, 3차 180s, 보너스 4차 120s (_ATTEMPT_TIMEOUTS).
+        # LLM_TIMEOUT 환경변수가 설정되면 그것을 우선 사용.
         _env_to = os.environ.get("LLM_TIMEOUT")
-        _to = int(_env_to) if _env_to else _attempt_timeouts.get(args.attempt, 180)
+        _to = int(_env_to) if _env_to else _ATTEMPT_TIMEOUTS.get(args.attempt, 180)
         # P9: 직전 시도의 검증 에러를 user 메시지 맨 끝(payload JSON 뒤)에 피드백으로 주입.
         # 차단 수치는 넣지 않고 허용 목록만 제시 (역설적 앵커 방지).
         user_text = json.dumps(payload, ensure_ascii=False)
@@ -1994,6 +2136,11 @@ def main() -> int:
         try:
             raw = chat(url, key, model, user_text, temperature=args.temperature, timeout=_to)
         except TimeoutError as e:
+            # P26b: 보너스 attempt(4차)는 재시도 없이 1회만 시도한다 —
+            # 30분 스텝 예산을 지키기 위해서이다.
+            if not _should_retry_timeout(args.attempt):
+                print(f"{e}; no retry on bonus attempt", flush=True)
+                return 5
             print(f"{e}; retrying with reasoning_effort=low", flush=True)
             try:
                 # P18: 재시도 타임아웃은 절반 — 3 attempt 최악 합산이 step
@@ -2012,7 +2159,21 @@ def main() -> int:
             raw_path.write_text(raw, encoding="utf-8")
         except Exception:
             pass
-        issue = extract_json(raw)
+        # P26: JSON 파싱 실패 시 같은 attempt 내 재수리 — extract_json이
+        # 죽으면 attempt가 rc=1 크래시로 통째로 소모됐다. 수리 호출 1회로
+        # 원본 JSON만 고쳐 다시 파싱하고, 수리도 실패하면 sidecar를 남겨
+        # 다음 attempt의 피드백에 포함시킨다 (rc=4, 스키마 에러와 동일 경로).
+        issue, _json_err = _parse_or_repair_json(
+            raw,
+            lambda user: chat(url, key, model, user,
+                              system=REPAIR_JSON_PROMPT,
+                              temperature=args.temperature,
+                              timeout=min(_to, 120)),
+        )
+        if issue is None:
+            _write_schema_sidecar(pipe, snap["date"], args.attempt,
+                                  f"JSON 파싱 실패: {_json_err}")
+            return 4
         issue["date"] = snap["date"]
         try:
             issue = normalize(issue, snap)
