@@ -179,6 +179,9 @@ def main() -> int:
     # 그래도 validate를 못 넘기면 fail-closed (AGENTS.md: 규칙 깨면 배포 안 함).
     # P9: sidecar 피드백 주입 (pipe_dir/date 전달 → attempt 2+에 --feedback).
     max_attempts = 3 if args.llm else 1
+    # P27: draft에도 총 시도 횟수를 넘겨 최종 attempt에서 불릿 병합
+    # 결정적 확장을 적용하게 한다 (validate의 --attempts-total과 같은 값).
+    draft_cmd.extend(["--attempts-total", str(max_attempts)])
     rc = draft_with_retry(draft_cmd, issue, run_validate, max_attempts,
                           pipe_dir=pipe, date=date)
     if rc == 0:
