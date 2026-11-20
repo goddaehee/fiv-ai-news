@@ -46,7 +46,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc|news. 공식 블로그·문서만 doc. 언론 보도는 news, Google News 중계 링크도 news.
 - briefing 6~8 (중요도 순 선정. 뉴스가 적은 날은 5개도 가능 — 억지 채우기 금지), analysis는 briefing 상위 5~7개의 id와 1:1 (개수 규칙은 아래 별도 항목), bullets 3, body 3문단(문단당 4~6문장, 200~250자, 기사당 본문 합계 700자 목표·600자 미만이면 미달), tips 4~5, keynums 4~6, timeline 4~6.
-- 본문 구성: 첫 문단=무슨 일인가(핵심 사실 + 기술 스펙 — 모델명·가격·일정 등 입력에 있는 것만), 둘째 문단=회사 발표 수치와 그 측정 조건(과제 묶음·언어·분모·기준선·비교 대상 — 회사 발표와 외부 측정을 한 단에 섞지 않는다), 셋째 문단=배경·맥락 + 한계·반론·전망(외부 측정이 있을 때만 누가 어디서 쟀는지 명시). 분량은 새 사실을 만들지 말고 배경 설명·맥락·비교·해석으로 채웁니다. 숫자는 입력의 number_mentions에서 복사해 쓰고, 없는 숫자는 만들지 않습니다. 출력 전에 기사마다 본문 글자 수를 셉니다. 600자 미만이면 배경·맥락·비교 문장을 완전한 문장으로 추가합니다. 문단을 쪼개 개수로 채우지 않습니다. 입력에 없는 세부 사실(인용·사례·수치)을 지어내면 호가 폐기됩니다. **본문 문단은 반드시 완전한 문장으로 끝냅니다** (…입니다/…됩니다 + 마침표). 명사형으로 끊긴 조각 문장(…전망, …해짐)으로 문단을 끝내거나 불릿 문구를 문단 끝에 이어붙이면 호가 폐기됩니다.
+- 본문 구성: 첫 문단=무슨 일인가(핵심 사실 + 기술 스펙 — 모델명·가격·일정 등 입력에 있는 것만), 둘째 문단=회사 발표 수치와 그 측정 조건(과제 묶음·언어·분모·기준선·비교 대상 — 회사 발표와 외부 측정을 한 단에 섞지 않는다), 셋째 문단=배경·맥락 + 한계·반론·전망(외부 측정이 있을 때만 누가 어디서 쟀는지 명시). 분량은 새 사실을 만들지 말고 배경 설명·맥락·비교·해석으로 채웁니다. 숫자는 입력의 number_mentions에서 복사해 쓰고, 없는 숫자는 만들지 않습니다. **이름을 세어 만든 개수는 쓰지 않습니다. 입력 요약에 나열된 업체·인물·제품 이름을 세어 '8개 업체'처럼 숫자로 만드는 것은 금지입니다. 입력에 아라비아 숫자로 적힌 값만 씁니다** (P27: 2026-11-19·20호에서 "8개 보안업체"가 2연속 차단됐다 — 요약에 8곳이 나열돼 있어 LLM이 세어 썼으나 게이트는 세기 추론을 검증할 수 없다). 출력 전에 기사마다 본문 글자 수를 셉니다. 600자 미만이면 배경·맥락·비교 문장을 완전한 문장으로 추가합니다. 문단을 쪼개 개수로 채우지 않습니다. 입력에 없는 세부 사실(인용·사례·수치)을 지어내면 호가 폐기됩니다. **본문 문단은 반드시 완전한 문장으로 끝냅니다** (…입니다/…됩니다 + 마침표). 명사형으로 끊긴 조각 문장(…전망, …해짐)으로 문단을 끝내거나 불릿 문구를 문단 끝에 이어붙이면 호가 폐기됩니다.
 - analysis 개수 규칙 (P15): briefing이 6개 이상이면 analysis는 **최소 5개**이며, 5개 미만이면 호 전체가 폐기됩니다. 어느 briefing에 analysis를 붙일지는 중요도 순으로 정하되, 입력의 main_topics(주요 버킷)에 속한 이야기가 우선이고 출처 도메인이 서로 겹치지 않게 고릅니다. analysis가 붙지 않은 briefing은 단신으로 둡니다. main_topics는 버킷 이름이라 briefing id와 글자 그대로 대응하지 않으니, 개수와 우선순위 판단에만 씁니다.
 - 깊이 슬롯: 기사마다 아래 5개를 출력 전에 스스로 셉니다. 한 기사에서 2개 이상 비우면 그 기사는 실패입니다.
   전체 슬롯의 10%를 초과해 비우면 호 전체가 폐기됩니다. "근거 없음"이라고 적어도 슬롯을 통과시키지 못합니다.
@@ -642,7 +642,10 @@ def _source_overlap(a: dict, item: dict) -> int:
     toks = _src_title_tokens(item.get("title"))
     if not toks:
         return 1  # 판정 불가(제목에 영문 토큰 없음) → 무관으로 보지 않는다
-    text = _analysis_text(a).lower()
+    # P27: ID 폴백 제목("2. nvidia-china-chips")은 겹침 계산에서 제외한다.
+    # 폴백 제목의 영문 토큰이 본문과 무관하게 겹침을 만들어, 잘못 복사된
+    # 출처를 "관련 있음"으로 살려낸다 (2026-11-20호 attempt 3).
+    text = _analysis_text(a, include_title=not _title_is_id_fallback(a)).lower()
     return sum(1 for t in toks if t in text)
 
 
@@ -927,7 +930,13 @@ def attach_sources(issue: dict, snap: dict,
         # 쪼개져 같은 이야기가 다른 그룹에 있는 경우를 전체 테이블에서 찾는다.
         # 전체 탐색이라 1차보다 엄격하게 overlap+희귀 토큰 공유를 둘 다 요구하고,
         # 2개까지만 채운다 (무관 출처 패딩 방지).
-        if picked_items and len(picked) == 1:
+        # P27: doc-kind 분석에는 2차 보충을 하지 않는다. 공식 문서 단독
+        # 출처는 그 자체로 완결된 이야기라 패딩이 필요 없고, 보충이 다른
+        # 이야기의 아이템을 붙여 DEPTH 함정을 만든다 (2026-11-20호 attempt 3:
+        # Performance Factory(doc)에 IPO 소송 기사가 붙어 numbers·why 슬롯
+        # 입력 후보가 생겼으나 LLM이 그 수치를 안 쓰는 것이 옳았는데도
+        # DEPTH 에러가 됐다). P22 SOURCES-THIN도 kind=doc 단독을 제외한다.
+        if picked_items and len(picked) == 1 and (picked_items[0].get("kind") or "") != "doc":
             for cand in table:
                 if len(picked) >= 2:
                     break
@@ -1117,7 +1126,8 @@ def _para_complete(p: str) -> bool:
     return bool(_PARA_TERM_RE.search(p) or _PARA_END_RE.search(p))
 
 
-def thicken_body(body: list[str], bullets: list[str]) -> list[str]:
+def thicken_body(body: list[str], bullets: list[str],
+                 final_attempt: bool = False) -> list[str]:
     """본문 문단을 정리하고, 짧은 완결 문단만 앞 문단에 병합한다.
 
     P17: 불릿 이어붙이기 제거. 짧은 문단(<90자) 끝에 불릿을 붙이면 불릿의
@@ -1131,7 +1141,15 @@ def thicken_body(body: list[str], bullets: list[str]) -> list[str]:
     39903110797 실측, 전부 '…입니다.' 종결). 완결 문장끼리의 병합은
     비문을 만들지 않고, 합쳐진 문단은 완결 문장으로 끝난다. 조각 문단
     (종결 없음)은 병합으로 숨기지 않고 BODY-FRAG 게이트에 남긴다.
-    20자 미만은 _is_fragment 판정 범위 밖이라 건드리지 않는다."""
+    20자 미만은 _is_fragment 판정 범위 밖이라 건드리지 않는다.
+    P27: 최종 attempt에서만 불릿 병합 결정적 확장 — 본문 합계가 600자에
+    못 미치면 완결 문장인 불릿을 새 문단으로 덧붙여 600자까지 채운다
+    (2026-11-20호 attempt 2: 4개 분석이 544~571자에서 요동하며 최종
+    attempt까지 수렴하지 못했다. PR #122 문장 수 지시만으로는 문턱
+    근처 요동이 남는다). P17 비문 교훈을 지켜, 완결 문장
+    (_para_complete)인 불릿만 새 문단으로 붙이고 명사형 불릿은 건드리지
+    않으며, 이미 본문에 있는 문구는 중복으로 붙이지 않는다. 최종 attempt가
+    아니면 LLM이 스스로 길게 쓰도록 두기 위해 동작하지 않는다."""
     out = [(raw or "").strip() for raw in (body or [])]
     out = [p for p in out[:6] if p]
     i = 1
@@ -1146,6 +1164,20 @@ def thicken_body(body: list[str], bullets: list[str]) -> list[str]:
            and _para_complete(out[0]) and _para_complete(out[1])):
         out[0] += " " + out[1]
         del out[1]
+    if final_attempt:
+        total = sum(len(p) for p in out)
+        joined = " ".join(out)
+        for b in (bullets or []):
+            if total >= 600 or len(out) >= 6:
+                break
+            b = (b or "").strip()
+            if not b or not _para_complete(b):
+                continue
+            if b in joined:
+                continue
+            out.append(b)
+            joined += " " + b
+            total += len(b)
     return out
 
 
@@ -1376,14 +1408,18 @@ def _fallback_keynum(item: dict, seen: set) -> dict | None:
     return None
 
 
-def normalize(issue: dict, snap: dict | None = None) -> dict:
+def normalize(issue: dict, snap: dict | None = None,
+              final_attempt: bool = False) -> dict:
     """Coerce sloppy LLM JSON into the house schema so check() does not crash.
 
     P10: snap을 받으면 keynums 폴백을 수집 전체에서 채운다.
     P12: 폴백은 유효한 keynum(수치+설명 lab+발행처 sub)을 만들 수 있을 때만 충원.
     P10 (Gemini안): summary→headline 복제 폴백 제거. 필수 키가 없으면
     합성 대신 SchemaError를 던져 재시도 피드백에 포함시킨다
-    (DUP-001 유령 에러 원천 제거)."""
+    (DUP-001 유령 에러 원천 제거).
+    P27: final_attempt=True면 thicken_body가 본문 600자 미만인 분석에
+    완결 문장 불릿을 새 문단으로 병합한다 (결정적 확장). 최종 attempt가
+    아니면 False(기본값)라 기존 동작과 같다."""
     brief = []
     for i, b in enumerate(_list(issue.get("briefing")), start=1):
         if isinstance(b, str):
@@ -1408,6 +1444,7 @@ def normalize(issue: dict, snap: dict | None = None) -> dict:
     ids = {b["id"] for b in brief}
 
     analysis = []
+    _headline_missing = 0
     for i, a in enumerate(_list(issue.get("analysis")), start=1):
         if isinstance(a, str):
             a = {"title": a, "body": [a]}
@@ -1415,6 +1452,11 @@ def normalize(issue: dict, snap: dict | None = None) -> dict:
             continue
         hid = _text(a.get("id")) or (brief[i - 1]["id"] if i - 1 < len(brief) else f"s{i}")
         title = _text(a.get("title") or a.get("headline")) or hid
+        if not _text(a.get("title") or a.get("headline")):
+            # P27: 헤드라인 누락 카운트 (전량 누락 시 아래에서 SchemaError).
+            # ID 폴백 제목은 렌더링·겹침 판정을 오염시키므로, 전량 누락은
+            # 합성하지 않고 재시도 피드백으로 돌린다 (P10 패턴).
+            _headline_missing += 1
         bullets = [_text(x) for x in _list(a.get("bullets")) if _text(x)]
         body = [_text(x) for x in _list(a.get("body")) if _text(x)]
         if not bullets:
@@ -1423,7 +1465,7 @@ def normalize(issue: dict, snap: dict | None = None) -> dict:
             bullets.append("교차검증 전입니다. 공식 페이지를 열어 수치를 다시 보면 됩니다.")
         if not body:
             body = [title]
-        body = thicken_body(body, bullets)
+        body = thicken_body(body, bullets, final_attempt=final_attempt)
         tags = [_text(x).strip() for x in _list(a.get("tags")) if _text(x).strip()]
         # P0: 내부 ID 폴백 금지. 비어 있으면 비운 채로 두고 validate가 판단한다.
         tags = [t for t in tags if t != hid]
@@ -1453,6 +1495,15 @@ def normalize(issue: dict, snap: dict | None = None) -> dict:
                 "sources": sources[:6],
             }
         )
+
+    # P27: 헤드라인 전량 누락 — ID 폴백 제목("2. nvidia-china-chips")으로
+    # 호를 채우지 않고 SchemaError로 빨리 실패시켜 다음 attempt 피드백에
+    # 포함시킨다 (2026-11-20호 attempt 3: 6개 분석 전부 헤드라인 없음).
+    # 메시지에 "summary"를 넣지 않는다 — draft main의 요약 수리 경로가
+    # 헤드라인 문제에 잘못 타는 것을 막는다. 일부만 누락된 경우는
+    # ID 폴백 + 겹침 제외(_title_is_id_fallback)로 진행한다.
+    if analysis and _headline_missing >= len(analysis):
+        raise SchemaError("analysis headline 전량 누락 — 제목 없이 발행할 수 없습니다")
 
     keynums = []
     for k in _list(issue.get("keynums") or issue.get("keyNumbers")):
@@ -1652,8 +1703,23 @@ def _id_tokens(analysis_id) -> set[str]:
     return {p for p in re.split(r"[-_]", str(analysis_id or "").lower()) if len(p) >= 2}
 
 
-def _analysis_text(a: dict) -> str:
-    parts = [str(a.get("title") or "")]
+def _title_is_id_fallback(a: dict) -> bool:
+    """normalize이 제목을 ID로 대체했는지 (헤드라인 누락 폴백).
+
+    P27: LLM 출력에 헤드라인이 전량 없으면 normalize이 ID를 제목으로
+    쓴다 ("2. nvidia-china-chips"). 이 제목의 영문 토큰(nvidia)이
+    _source_overlap 판정을 오염시켜, 잘못 복사된 URL이 "관련 있음"으로
+    살아남았다 (2026-11-20호 attempt 3: Alibaba CBM URL). 제목이
+    "{n}. {id}" 형태의 순수 슬러그이면 ID 폴백이다."""
+    title = str(a.get("title") or "")
+    title = re.sub(r"^\s*\d+\.\s*", "", title).strip()
+    aid = str(a.get("id") or "").strip()
+    return (bool(title) and bool(aid) and title.lower() == aid.lower()
+            and re.fullmatch(r"[a-z0-9][a-z0-9-]*", title) is not None)
+
+
+def _analysis_text(a: dict, include_title: bool = True) -> str:
+    parts = [str(a.get("title") or "")] if include_title else []
     for key in ("bullets", "body"):
         v = a.get(key)
         if isinstance(v, list):
@@ -2037,6 +2103,9 @@ def main() -> int:
     ap.add_argument("--force-skeleton", action="store_true")
     ap.add_argument("--temperature", type=float, default=0.2)
     ap.add_argument("--attempt", type=int, default=1)
+    ap.add_argument("--attempts-total", type=int, default=3,
+                    help="P27: 재시도 총 횟수. attempt가 총 횟수에 도달하면 "
+                         "normalize이 최종 attempt로 보고 불릿 병합 결정적 확장을 적용한다.")
     ap.add_argument("--feedback", type=Path, help="P9: 직전 attempt의 validate 에러 sidecar (피드백 주입용)")
     args = ap.parse_args()
     snap = json.loads(args.collected.read_text(encoding="utf-8"))
@@ -2175,8 +2244,10 @@ def main() -> int:
                                   f"JSON 파싱 실패: {_json_err}")
             return 4
         issue["date"] = snap["date"]
+        # P27: 최종 attempt 여부를 normalize에 전달 (불릿 병합 결정적 확장).
+        _final = args.attempt >= args.attempts_total
         try:
-            issue = normalize(issue, snap)
+            issue = normalize(issue, snap, final_attempt=_final)
         except SchemaError as e:
             # P18: summary 누락은 통째 생략 샘플이 반복되는 패턴이라
             # attempt를 버리기 전에 수리 호출 1회로 복구를 시도한다.
@@ -2190,7 +2261,7 @@ def main() -> int:
                                       timeout=min(_to, 120)))
                 if repaired:
                     try:
-                        issue = normalize(issue, snap)
+                        issue = normalize(issue, snap, final_attempt=_final)
                     except SchemaError as e2:
                         e = e2
                         repaired = False
