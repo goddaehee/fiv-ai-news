@@ -1537,6 +1537,76 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
                 _added += 1
     except Exception:
         pass
+    # P27: 페이로드 확장 — LLM이 실제로 본 입력(버킷 페이로드)에서 온
+    # 정확한 수치까지 차단되던 오탐 (2026-11-20호 run 44656448099:
+    # "starts trading" 요약의 $111.50·$83·$1.5T가 본문에 쓰였으나,
+    # 그 아이템이 출처에서 빠져 NUMBERS-UNGROUNDED로 3 attempt 전부 실패).
+    # 스토리 그룹이 쪼개져 P26 확장이 닿지 않는 경우를 다룬다 — 차단된
+    # 세 아이템(WSJ $1.5T·Verge $111·TC $83)은 전부 싱글턴 그룹이라
+    # 그룹 소속 조건에서 이미 막히므로, 토큰 기준 완화(3→2)만으로는
+    # 아무것도 고쳐지지 않는다 (11/20 수집본 실측).
+    # 범위는 LLM 가시 입력(버킷당 최대 6개 대표)으로 한정하고, analysis
+    # ID 토큰(브리핑 슬러그)과 제목 토큰을 1개 이상 공유하는 아이템만
+    # 허용한다. 조건 4종 (모두 충족해야 허용):
+    # (a) LLM 가시 입력 — 그 analysis 버킷의 페이로드(최대 6개 대표)에
+    #     들어 있을 것. LLM이 보지 못한 아이템의 수치는 허용하지 않는다.
+    # (b) 이야기 일치 — 제목 토큰이 analysis ID 토큰(브리핑 슬러그)과
+    #     1개 이상 공유할 것 (SearchGPT vs Sora: Sora는 id "searchgpt"와
+    #     공유 토큰 0이라 차단).
+    # (c) 확증 — 공유 토큰이 analysis의 인용 출처 제목에도 있을 것.
+    #     ID의 일반어("agent")만으로 다른 이야기가 붙는 것을 막는다
+    #     (2026-11-20호: Gemini 분석에 MS PyPI 아이템이 "agent" 공유로
+    #     붙을 뻔했다 — 인용 출처 제목에는 "agent"가 없다).
+    # (d) P26과 역할 분리 — 같은 스토리 그룹 아이템은 P26의 엄격 기준
+    #     (제목 토큰 3개 이상 공유)이 판단한다. P27은 그룹이 쪼개진
+    #     경우만 다룬다 (deepmind-robotics vs quantum: 같은 그룹이라
+    #     P26 기준(공유 2개)으로 차단 유지).
+    # 잔존 리스크: 페이로드 대표인 같은 회사 다른 이야기 아이템이 ID
+    # 토큰을 공유하면 누출될 수 있다. 페이로드 6개 상한이 노출을 제한한다.
+    try:
+        from draft import payload_items as _payload_items
+        from cluster import cluster as _cluster
+        from cluster import _story_tokens as _story_toks27
+        _buckets27 = _cluster(list(collected_by_url.values()))
+        _b_of27: dict[int, str] = {}
+        for _bn27, _bits27 in _buckets27.items():
+            for _x27 in _bits27:
+                _b_of27[id(_x27)] = _bn27
+        from collections import Counter as _Counter27
+        _bc27 = _Counter27(_b_of27.get(id(_it27), "other")
+                            for _it27 in scan_items)
+        _bucket27 = _bc27.most_common(1)[0][0] if _bc27 else "other"
+        _idtoks27 = _story_toks27(str(a.get("id") or ""))
+        if _idtoks27:
+            _grp_of27: dict[str, int] = {}
+            _own_grps27: set[int] = set()
+            for _gi27, _g27 in enumerate(_story_groups(
+                    list(collected_by_url.values()))):
+                for _x27 in _g27["items"]:
+                    _xc27 = url_core(str(_x27.get("url") or ""))
+                    _grp_of27[_xc27] = _gi27
+                    if _xc27 in seen_cores:
+                        _own_grps27.add(_gi27)
+            _own_toks27: set[str] = set()
+            for _it27 in scan_items:
+                _own_toks27 |= _story_toks27(str(_it27.get("title") or ""))
+            for _pit27, _pcov27 in _payload_items(
+                    _buckets27.get(_bucket27, [])):
+                _pc27 = url_core(str(_pit27.get("url") or ""))
+                if _pc27 in seen_cores:
+                    continue
+                if _grp_of27.get(_pc27) in _own_grps27:
+                    continue  # (d) 같은 그룹은 P26 기준이 판단한다
+                _shared27 = (_story_toks27(str(_pit27.get("title") or ""))
+                             & _idtoks27)
+                if not _shared27:
+                    continue  # (b) ID 토큰 공유 없음
+                if not (_shared27 & _own_toks27):
+                    continue  # (c) 인용 출처 제목으로 확증 안 됨
+                seen_cores.add(_pc27)
+                scan_items.append(_pit27)
+    except Exception:
+        pass
     for it in scan_items:
         item_texts: list[str] = []
         # P8: title도 스캔 (payload에 title이 들어가므로)
