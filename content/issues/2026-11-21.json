@@ -1,0 +1,376 @@
+{
+  "date": "2026-11-21",
+  "title": "리만 가설 증명 주장과 PHP 긴급 패치, AI 주식 급락까지 — 11월 21일 AI 뉴스",
+  "heroline": "수학자의 리만 가설 증명 주장이 167년 난제를 흔들고, 보안 패치와 시장 급락이 같은 날 겹쳤습니다",
+  "dek": "Anthropic 소속 수학자의 증명 주장, PHP 치명적 취약점 수정, AI 도구를 쓴 실제 침해 사례, 그리고 월가의 AI 발매까지 하루 동안 확인된 주요 소식을 정리했습니다.",
+  "tag": "AI 데일리",
+  "briefMin": 3,
+  "readMin": 13,
+  "briefing": [
+    {
+      "id": "riemann-claude",
+      "headline": "리만 가설 증명 주장, Claude 활용 167년 난제 도전",
+      "summary": "Anthropic 소속 수학자가 Claude의 도움을 받아 리만 가설을 증명했다고 주장했습니다. 여러 매체가 동시에 보도한 당일 최대 화제입니다."
+    },
+    {
+      "id": "php-critical-patch",
+      "headline": "PHP 보안 업데이트, 18개 결함 중 7개 치명적 등급",
+      "summary": "PHP 재단이 원격 코드 실행으로 이어질 수 있는 치명적 취약점 묶음을 수정했습니다. 지원되는 모든 PHP 버전이 대상입니다."
+    },
+    {
+      "id": "cairn-zero-day",
+      "headline": "자율 침투 도구 Cairn, 실제 공격에 악용된 사례 보고",
+      "summary": "오픈소스 AI 침투 테스트 프레임워크가 위협 행위자에게 쓰여 의료 영상 애플리케이션의 제로데이를 찾아내고 서버를 장악했습니다."
+    },
+    {
+      "id": "amd-openai-gpu",
+      "headline": "AMD 차기 GPU 설계, OpenAI 협업으로 PPA 14% 개선",
+      "summary": "OpenAI의 GPT 모델이 AMD 플래그십 GPU 설계 최적화에 쓰였고, 새 CPU 개발에도 활용되고 있다고 전해졌습니다."
+    },
+    {
+      "id": "anthropic-ipo-selloff",
+      "headline": "Anthropic 상장 첫날 주가 하락, AI 시총 4조 달러 증발",
+      "summary": "월가에서 AI 관련 우려가 커지는 가운데 Anthropic이 상장했고, 주가는 데뷔에서부터 뒤집혔습니다. S&P 500과 다우는 조정권에 들어갔습니다."
+    },
+    {
+      "id": "trump-datacenter-penalty",
+      "headline": "해외 AI 데이터센터 건설 미국 기업, 제재 검토 방침",
+      "summary": "트럼프 대통령이 다른 나라에 AI 데이터센터를 짓는 미국 기업에 불이익을 줄 계획이라고 밝혔습니다. 여러 매체가 동시에 전했습니다."
+    },
+    {
+      "id": "bell-canada-agentic",
+      "headline": "벨 캐나다 침해, '에이전틱' 해커에 기업 고객 데이터 유출",
+      "summary": "통신사 벨 캐나다가 에이전틱 공격자의 침해를 확인하고 기업 고객 데이터 유출 사실을 밝혔습니다."
+    },
+    {
+      "id": "whatsapp-patch",
+      "headline": "WhatsApp 패치 3건, 안드로이드 악용 의심 취약점 포함",
+      "summary": "WhatsApp이 보안 취약점 3건을 수정했습니다. 그중 하나는 사기 메시지에 악용됐을 것으로 의심되는 안드로이드 버그입니다."
+    }
+  ],
+  "keywords": [
+    "리만 가설",
+    "Claude",
+    "PHP 보안",
+    "Cairn",
+    "AMD GPU",
+    "Anthropic IPO",
+    "데이터센터",
+    "제로데이"
+  ],
+  "mainEvent": "리만 가설 증명 주장과 AI 보안·시장 소식이 몰린 하루",
+  "keynums": [
+    {
+      "val": "167년",
+      "lab": "리만 가설 연혁",
+      "sub": "매체 보도 기준"
+    },
+    {
+      "val": "18개",
+      "lab": "PHP 결함",
+      "sub": "이번 업데이트 수정 대상"
+    },
+    {
+      "val": "7개",
+      "lab": "치명적 PHP 취약점",
+      "sub": "원격 코드 실행 포함"
+    },
+    {
+      "val": "14%",
+      "lab": "AMD GPU PPA 개선",
+      "sub": "OpenAI 협업 성과"
+    },
+    {
+      "val": "4조 달러",
+      "lab": "AI 관련 시가총액 감소",
+      "sub": "WSJ 보도"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "11/21 09:33",
+      "d": "리만 가설 증명 주장 보도"
+    },
+    {
+      "t": "11/21 09:47",
+      "d": "대만 기업향 엔비디아 칩 판매 승인 보도"
+    },
+    {
+      "t": "11/21 08:36",
+      "d": "Anthropic IPO와 AI 시장 평가 보도"
+    },
+    {
+      "t": "11/21 03:51",
+      "d": "벨 캐나다 데이터 유출 확인"
+    },
+    {
+      "t": "11/21 02:30",
+      "d": "Cairn 악용 침해 사례 보고"
+    },
+    {
+      "t": "11/20 00:18",
+      "d": "PHP 치명적 취약점 패치 발표"
+    }
+  ],
+  "intro": "11월 21일 토요일 발행. 수학의 오랜 난제에 대한 증명 주장이 여러 매체를 동시에 흔들었고, 같은 날 PHP 치명적 취약점 패치와 AI 도구를 악용한 실제 침해 사례, 그리고 월가의 AI 주가 급락까지 겹쳤습니다.",
+  "analysis": [
+    {
+      "id": "riemann-claude",
+      "n": 1,
+      "title": "167년 난제에 대한 증명 주장, 검증 앞둔 단계",
+      "bullets": [
+        "Anthropic 소속 수학자가 Claude 도움을 받은 증명 주장",
+        "뉴욕타임스 등 여러 매체가 같은 날 보도",
+        "학계 검증 통과 여부는 아직 확인되지 않음"
+      ],
+      "body": [
+        "뉴욕타임스가 Anthropic 소속 수학자가 Claude의 도움을 받아 리만 가설을 증명했다는 주장을 보도했습니다. 리만 가설은 소수의 분포를 다루는 문제로 제기된 지 167년이 지난 미해결 난제입니다. 다른 매체들도 같은 주장을 잇달아 전했으며, AI가 정통 수학 증명 과정에 실제로 기여했는지가 쟁점이 되고 있습니다. 증명 자체는 아직 주장 단계라는 점이 보도 전체에 명시돼 있습니다. Anthropic은 이 연구를 지원하는 회사이기도 해서, 결과의 독립적 검증 필요성이 더욱 크게 지적됩니다.",
+        "증명의 정당성을 판단할 수 있는 구체적 수치나 검증 조건은 이번 보도에서 제시되지 않았습니다. 증명이 통과해야 할 동료 평가와 학계 검토 절차가 아직 남아 있고, 그 절차를 누가 언제 진행하는지도 확정되지 않았습니다. 다만 문제 자체가 167년간 풀리지 않은 난제였다는 점에서, 주장만으로는 결론으로 삼을 수 없다는 것이 수학계의 일반적 관행과 같습니다. AI가 증명 과정에서 한 역할의 범위도 세부적으로 공개되지 않았습니다.",
+        "배경에는 대형 언어모델이 난제 수준의 추론 작업에 쓰이려는 흐름이 있습니다. 다만 이번 주장은 당사자 쪽에서 나온 것이고, 외부 수학자 집단의 검증 결과는 아직 공개되지 않았습니다. 증명이 채택되기까지는 상당한 시간과 반론 검토가 필요하며, 기각될 가능성도 열려 있습니다. 연구 검토를 담당하는 쪽은 증명 논문 전문과 보조 역할에 대한 기술을 함께 확인해야 합니다."
+      ],
+      "extra": "그 밖에: 워싱턴포스트도 같은 주장을 별도 취재로 보도해, 교차보도 매체 수가 여럿으로 늘었습니다. 각 매체는 증명 검증이 끝나지 않았다는 전제를 공통으로 붙였습니다.",
+      "takeaway": "증명 주장의 발표 채널이 회사 쪽이라는 점이 신뢰 판단을 좌우하는 지점이 달라진 지점입니다. 최종 판단은 동료 평가 결과가 나온 뒤로 미루고, 지금은 증명 논문의 공개 범위부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The New York Times · nytimes.com",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQMU96R3pxbVo0NDIzSUl5Szd6T0VkZzRUY1F3RE9NUnRPWU1tbnBRZkVPOWNDclpHX3hUTXo1QndXdENHb2Q1cFU2WnVwLWp0eG00dDFWcTBNR042Y3NFdUdtZGY4ODZUSnRTMFZGUnNFNFYyRGdvaHJCdVNra2k0T2NTeDZnbTdHcE83WQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.nytimes.com"
+        },
+        {
+          "handle": "IBM · ibm.com",
+          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOdVkzQlNDalFhcHRTSENWWER3cHp5NDBSZGYxbnVkWUZGN0tDSndSSVFEU21lQ3N4N3htZGtZS3o5RlJzRVVCQXNRX2Npc2VGZmp5TWpQSXVhcFNQVEJsRXFpa3hMSHhac0xzbkRnUllnNlJtY3VjWFBkYnFVZU9vbVhCQQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.ibm.com"
+        },
+        {
+          "handle": "The Washington Post · washingtonpost.com",
+          "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQWnR2Ny1uWG1YVUdRQmI2QlEyUkFoalhFZFp3Rng1ZWVlRVR4SHVzaHFnRnZuNWFfRmM5YkpVNFJCSmNHWFk2WDJia1lfOG1mYVY5MHZjY2F1d05XMlhHRUVlVklvc2RiWUR4aURGLWh4MGJMZWFsOW1Obm0taDVHek54Tk1GckZpYl80QXRncVNIbmxLdHlWUkZqMGJfSktFQ0hFV1VJWVQzZDZjbHN6Z3I0LS1aVGNJTElMZ2QzWHo2QQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.washingtonpost.com"
+        },
+        {
+          "handle": "Business Insider · businessinsider.com",
+          "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOMWN0cGwxa2RJY0tiMk5sdjNWeHZzbXhfbEVGamdHaDdaT3diaWhpdlBYd2dzQThqVXpKZlg2VjZWOWlYNUlwS2NPRjBtbjEwXzYzTVVsUktBcmtfbXBqYkJ4OEh1cFJNSWdjb3hLUWlOT29zd1hYV1B3VFhnTGVwTDVvN2kwaHF5XzRycTNEM2JkNHVPQmFTZ3dyNVdWMG01em5BYk1OT1lWZw?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.businessinsider.com"
+        }
+      ]
+    },
+    {
+      "id": "php-critical-patch",
+      "n": 2,
+      "title": "2. 치명적 7건 포함 18개 결함, 전 버전 업데이트 대상",
+      "bullets": [
+        "PHP 재단, 보안 업데이트로 18개 취약점 수정",
+        "치명적 7건 중 일부는 인증 없는 원격 코드 실행 가능",
+        "지원되는 모든 PHP 버전이 특정 조건에서 영향"
+      ],
+      "body": [
+        "PHP 개발팀이 보안 업데이트를 내놓고 18개 취약점을 수정했습니다. 이 가운데 치명적 등급 7건이 포함돼 있고, 인증되지 않은 공격자가 취약한 서버에서 원격으로 코드를 실행할 수 있는 버그가 있다고 전해졌습니다. 대표 취약점은 CVE-2026-115560으로 추적됩니다. 이번 릴리스는 사전 공지 뒤에 이뤄졌고, 프로젝트 유지 관리자들은 지원되는 모든 PHP 버전이 특정 조건에서 영향을 받는다고 알렸습니다. PHP를 쓰는 서비스 운영자에게는 즉시 적용이 권고되는 성격의 업데이트입니다.",
+        "18개와 7개라는 수치는 각각 전체 수정 결함 수와 치명적 등급 수를 가리키며, 매체별 집계 기준에 따라 표현이 다릅니다. 취약점은 지원되는 PHP 버전 전반이 특정 조건 아래에서 영향을 받는다는 것이 프로젝트 쪽 설명입니다. 원격 코드 실행 가능성은 공격자가 인증 없이 접근할 수 있는 배포 환경을 전제로 한 설명이며, 실제 악용 사례 여부는 이번 발표에서 확인되지 않았습니다. 패치 적용 여부에 따라 노출 폭이 달라지므로 버전 확인이 우선입니다.",
+        "PHP는 웹 서비스의 넓은 층에서 쓰이는 만큼, 이런 치명적 결함 묶음이 나오면 미갱신 서버가 표적이 되는 것이 반복된 패턴입니다. 다만 이번 취약점들이 실제 공격에 쓰였다는 보고는 아직 확인되지 않았고, 악용 가능 조건이 모든 환경에 해당하는 것도 아닙니다. 운영 담당자는 자기 서비스의 PHP 버전과 노출 조건을 대조한 뒤 업데이트를 적용하는 순서가 안전합니다. 패치가 어려운 환경이라면 해당 조건에 대한 완화 대책을 함께 점검해야 합니다."
+      ],
+      "extra": "",
+      "takeaway": "이번 패치에서 읽히는 의미는 취약점 개수보다 인증 없는 원격 코드 실행 가능성이 전 버전에 걸쳐 있다는 점입니다. 운영 서버의 PHP 버전과 노출 조건을 대조한 결과를 이번 주 배포 계획에 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/php-security-updates-fix-18-flaws-including-critical-rce-bugs/",
+          "kind": "news"
+        },
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/php-fixes-7-critical-flaws-including.html",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "cairn-zero-day",
+      "n": 3,
+      "title": "3. 침투 테스트용 AI 도구, 공격자 손에 들어간 실제 사례",
+      "bullets": [
+        "오픈소스 프레임워크 Cairn을 위협 행위자가 사용",
+        "의료 영상 애플리케이션의 제로데이 발견 뒤 서버 장악",
+        "공격 경위와 피해 규모는 아직 미확인"
+      ],
+      "body": [
+        "위협 행위자가 오픈소스 AI 침투 테스트 프레임워크 Cairn을 사용해 의료 영상 애플리케이션의 알려지지 않은 취약점을 찾아내고 서버를 장악한 사례가 보고됐습니다. 보안 매체들이 같은 날 이 사실을 전하며, 자율적으로 취약점 탐색이 가능한 도구가 방어가 아니라 공격에 쓰인 실제 사례로 다뤘습니다. 표적은 의료 분야 애플리케이션이었고, 발견된 취약점은 제로데이였다는 점에서 패치가 존재하지 않는 상태에서 침해가 일어났습니다. 공격 성립 과정의 세부 기술 정보는 매체 보도 수준에서만 공개됐습니다.",
+        "이 사례에서 확인된 구체적 수치는 아직 없으며, 침해 규모나 피해 범위의 분모도 공개되지 않았습니다. 보도는 도구의 종류와 표적 애플리케이션, 결과인 서버 장악까지만 확인된 사실로 다루고 있습니다. 제로데이라는 점은 취약점이 공개 전이라 패치가 없었다는 뜻이고, 이는 곧 동종 시스템에 대한 추가 침해 가능성으로 이어집니다. 공격이 언제 시작됐는지, 얼마나 오래 지속됐는지도 미확인입니다.",
+        "Cairn 같은 자율 침투 도구는 원래 보안 점검을 위해 만들어진 이중 사용 성격의 기술입니다. 다만 이번 사례는 그런 도구가 방어자가 아닌 공격자의 손에서 실제 결과를 낳았다는 점에서, AI 보안 도구의 접근 통제와 공개 수위를 다시 보게 하는 대목입니다. 의료 시스템을 운영하는 쪽은 자체 애플리케이션에 대한 긴급 점검과 이상 접근 로그 확인이 우선입니다. 도구 도입을 검토하는 보안 팀은 사내 사용 범위와 권한 설계를 이번 사례와 비교해 보는 것이 안전합니다."
+      ],
+      "extra": "",
+      "takeaway": "방어용으로 만들어진 자율 AI 도구가 공격에 쓰여 실제 장악까지 이어진 점이 향후 도구 도입 심사에 미칠 영향이 큽니다. 자율 점검 도구의 실행 권한과 로그 보존 기준을 이번 사례와 비교 기준으로 삼으면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-use-autonomous-ai-tool-cairn-to-find-zero-day-take-over-server/",
+          "kind": "news"
+        },
+        {
+          "handle": "BleepingComputer · bleepingcomputer.com",
+          "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPZGVzUFN6Uk45UC1rS1JqSUc0b2tyLWhHSXR2a2hKX08xWlZjcW9veHpJM2FRQUVuM1JRSk5LSEpZSkpBa2RkVklXTHBvclFHN09oa3dYMjBDeU9ScTRWelNYeW1fdk1iVDFFaVcxSVp1ZDNtOER5aDdnblhYelZMeWxzZjVIYkFYU2haQU1kVVhTV1l6dFdaeG0zMkI3MElBZURWNFkwUXFJeW4yVTBDYm9TQUFwNWQzM1E?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.bleepingcomputer.com"
+        }
+      ]
+    },
+    {
+      "id": "amd-openai-gpu",
+      "n": 4,
+      "title": "4. GPT 모델의 설계 개입, PPA 14% 개선 성과",
+      "bullets": [
+        "OpenAI가 AMD 차기 플래그십 GPU 설계 최적화 지원",
+        "PPA 기준 14% 개선, 새 CPU 개발에도 활용",
+        "수치는 발표 측 주장, 독립 검증은 아직 없음"
+      ],
+      "body": [
+        "OpenAI가 AMD의 차기 플래그십 GPU 설계 개선에 협업으로 참여해 성능·전력·면적을 함께 잣는 PPA 기준으로 14% 개선을 이뤘다고 전해졌습니다. GPT 모델이 이 설계 최적화 과정에 쓰였고, 같은 방식이 AMD의 새 CPU 개발에도 활용되고 있다는 보도입니다. AI 모델이 반도체 설계 자체에 투입된 사례로 주목되는 대목입니다. 보도는 AMD 경영진의 발표를 인용해 이 성과를 전했습니다.",
+        "14%라는 수치는 PPA라는 복합 지표를 기준으로 한 발표 측 주장입니다. PPA는 성능과 전력, 면적을 함께 보는 지표라 어떤 항목에 얼마나 기여했는지 세부 분해는 공개되지 않았습니다. 비교 기준이 되는 이전 설계안과 측정 조건도 발표 요약 수준에서만 다뤄졌습니다. 따라서 이 값이 실제 양산 제품에서 그대로 나타날지는 아직 미확정입니다.",
+        "배경에는 AI 수요를 잡기 위한 칩 업체들의 경쟁이 있고, 설계 단계의 AI 활용은 그 경쟁의 새 무기로 읽힙니다. 다만 이번 14%는 협업 당사자들이 제시한 수치이고 외부 독립 검증은 아직 없습니다. GPU 조달을 검토하는 쪽은 이 수치를 참고선으로만 두고, 실제 제품 출시 후의 벤치마크 결과를 기다리는 것이 순서입니다. 설계 도구 도입을 고민하는 팀이라면 이번 협업에서 쓰인 작업 흐름의 공개 자료를 체크리스트에 넣어 두는 것도 방법입니다."
+      ],
+      "extra": "",
+      "takeaway": "AI 모델이 칩 설계의 품질 기준에 직접 개입했다는 점이 하드웨어 개발 일정 관점에서 중요해진 이유입니다. 도입 판단은 양산 제품의 독립 벤치마크가 나온 뒤로 미루고, 지금은 발표된 PPA 측정 조건을 체크리스트에 넣어 두시면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Tom's Hardware · tomshardware.com",
+          "url": "https://news.google.com/rss/articles/CBMiqgJBVV95cUxNUGdyZW9IT1FpNVFKckhfR0N6dTQ2U0JFUm5UbUczQTlUREs4VTYwYXdLYlB3VXVZZ29ROHZxQkR4TnRqVHMtRWdpZ3VuVTJBd2x6QWk4ZlZNWENfLTY3bE1MN25UdEt0NWJ2a254cXZ0MXNwV3oxVEVlemFodVJyTGxBRUFLTjE5N1c1TUZXTTFlOXpZTnVTWk5UUjRiSHJHSHJwWThPVk41SlZ0dXZidERpTXhwWWJweXJOWkNOYVZlYlJwcVZndDdEUUNCV1ktOGR1ZUx2V1gyQnFaT050M2hhT3JnMEF1NFFsaUxPZDBHRWh1Y18xTThXNG8xT05NSGZIaXNnQWVQejVrVUhKb2tyT01ndVhZa19LUG9iTlM0V3JoYlVkQXdB?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.tomshardware.com"
+        },
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/business/customer-stories/hebbia",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-ipo-selloff",
+      "n": 5,
+      "title": "5. 데뷔 날 뒤집힌 주가, 4조 달러 증발의 맥락",
+      "bullets": [
+        "Anthropic, 월가 상장 첫날 주가 하락",
+        "WSJ, AI 관련 시가총액 4조 달러 감소 집계",
+        "S&P 500·다우 모두 조정권 진입"
+      ],
+      "body": [
+        "Anthropic이 월가에 상장했으나 첫날 주가가 뒤집혔습니다. 여러 매체가 AI 우려가 커지는 분위기 속에서 나온 부진한 데뷔라고 평가했습니다. 같은 날 월스트리트저널은 AI 관련 시가총액이 4조 달러 증발한 것으로 집계되며 이 상장의 굴곡이 그 흐름을 닫았다고 전했습니다. 로이터는 급락으로 S&P 500과 다우가 모두 조정권에 들어갔다고 보도했습니다. AI 기업 공개가 시장 회복의 계기가 되지 못했다는 해석이 공통적으로 깔려 있습니다.",
+        "4조 달러는 월스트리트저널이 AI 관련 종목 군의 시가총액 변화로 잡아 낸 값입니다. 조정권 진입은 주가가 최근 고점 대비 일정 폭 하락한 상태를 가리키는 시장 관례 표현이며, 기준 고점의 정의는 매체마다 다를 수 있습니다. 주가 하락의 폭과 거래량 같은 세부 수치는 이번 요약에서 확인되지 않았습니다. 회사 쪽 발표 수치와 시장 집계 수치를 한데 섞어 해석하지 않도록 구분이 필요합니다.",
+        "배경에는 AI 투자 집중에 대한 시장의 피로감과 밸류에이션 부담이 자주 거론되어 온 흐름이 있습니다. 다만 하루 변동으로 AI 산업의 구조적 전망이 바뀌었다고 단정할 근거는 없고, 상장 초기 주가는 변동성이 크다는 점도 감안해야 합니다. AI 관련 예산을 잡는 쪽은 이번 급락이 실적 모멘텀 부재에서 나온 것인지 정책 불확실성에서 나온 것인지 구분해 볼 필요가 있습니다. 분기 단위 투자 판단을 담당하는 쪽은 상장 이후 거래 흐름과 실적 발표 일정부터 확인하면 됩니다."
+      ],
+      "extra": "",
+      "takeaway": "대형 AI 기업의 상장이 시장 심리를 되돌리지 못했다는 점이 투자 심리의 방향이 바뀐 대목입니다. 예산과 포지션 판단은 거래일 흐름과 다음 실적 발표 일정부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "WSJ · wsj.com",
+          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQNlRWTmU1NlRGMjRnb2JGWUVrSTk4V3dTRWgyb2hlSXF6Y0FtVi1tREhvSUFPby1IVkphYVlXdGtpR2pvYmltRnpaUkI3RFBMeG05aExMWUs4Yi1rb05oTlBvNWpRUFhSNWc2NlRER205T1QzZU5PbVcwaTJEU1hpM1M2ZDFtd2RNamMtS2trTGtjWThBTXZ3MFJ6bEYxTTdxMmExQ1cwRXVTYk9OOENzTA?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.wsj.com"
+        },
+        {
+          "handle": "Reuters · reuters.com",
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOY0VmbDFSZy1pMm1jZlE3SG1PMDdjcHdmZnp3WWFQbTBSSHBndDktSEhpRFB4MkRYZUhTQXFhNm9YY0pwNlczMkxtOF9ZMVA2R1VHN2k1MmE3VkN6d292amFiX1JKUUxVcmN4NmxFTGYwbkhlakpkeTZ4eE5yRkxxTTlubE9PUU1jWmtrZVF6RjhiMWhhYmp2Q29Ucy1aMm13T0F0WTMwSGRBZWdQV3pyRjlZRm9pUEVnV0EzQQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.reuters.com"
+        },
+        {
+          "handle": "Yahoo Finance · finance.yahoo.com",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQV3dOZlc3N2c4UXkySVk4bUFjN3RFdy1ldjRKcXdJSlJYelZmU1RRN0NsNWVlQ0thZmxQOWhnMEg4c2RUcFJKTGYtU0JsMlRYN0k4QWRqakVPazBPSkJDWmxLNjIxSlJmSWdOMXhmUnhhZlpFQkNJendNb0VkRjJlTE5JRi1NSDZQV3FaRENSTXhkNXJqNWJRMkFJUQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://finance.yahoo.com"
+        },
+        {
+          "handle": "wsj.com",
+          "url": "https://www.wsj.com/finance/stocks/anthropics-ipo-bust-punctuates-4-trillion-ai-wipeout-on-wall-street-f1f1ec90",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "trump-datacenter-penalty",
+      "n": 6,
+      "title": "6. 해외 데이터센터 제재 발언, 구체 수단은 미확정",
+      "bullets": [
+        "트럼프, 해외 AI 데이터센터 건설 기업에 제재 방침 언급",
+        "여러 매체가 같은 발언을 동시 보도",
+        "집행 수단과 시점은 아직 확인되지 않음"
+      ],
+      "body": [
+        "트럼프 대통령이 다른 나라에 AI 데이터센터를 짓는 미국 기술 기업에 불이익을 줄 계획이라고 밝혔다고 여러 매체가 전했습니다. 국내 투자를 유도하고 해외 건설을 억제하려는 취지로 읽히는 발언입니다. 같은 내용이 여러 지역 매체를 통해 같은 날 잇달아 보도되면서, AI 인프라 투자 입지 선택에 대한 정책 리스크가 다시 주목받았습니다. 발언의 정확한 문맥과 대상 기업 범위는 매체 요약 수준에서만 확인됩니다.",
+        "이번 발언에서 구체적 수치나 법적 수단은 확인되지 않았습니다. 제재의 형태가 세제 불이익인지, 규제적 조치인지도 미확정이며, 시행 시점이나 대상 판정 기준도 발표되지 않았습니다. 따라서 지금 단계에서는 정책 방향의 신호로만 받아들이는 것이 적절합니다. 데이터센터 입지를 계획 중인 기업에는 투자 지연 판단의 근거가 될 수 있지만, 확정된 규칙은 없다는 점을 분리해 봐야 합니다.",
+        "배경에는 AI 컴퓨팅 수요를 두고 국가 간 유치 경쟁이 격화된 흐름이 있습니다. 미국 정책은 데이터센터 전력과 부지, 반도체 수출 규제 등 여러 방향에서 AI 인프라 비용에 영향을 주어 왔습니다. 다만 이번 발언이 실제 정책으로 이어질지, 이어진다면 어느 범위에 적용될지는 불확실합니다. 해외 입지를 검토 중인 인프라 담당자는 발언 이후 추가 발표와 법안 동향을 추적해 두는 것이 실무적으로 필요합니다. 투자 승인 일정이 잡혀 있다면 정책 리스크 시나리오를 의사결정 문서에 반영해 두면 됩니다."
+      ],
+      "extra": "",
+      "takeaway": "정책 최상위에서 해외 입지 선택 자체에 제재를 검토한다는 점이 글로벌 인프라 투자 판단에 반영해야 할 변수로 읽힙니다. 해외 후보 입지가 있다면 승인 절차의 조건부 항목으로 정책 리스크 검토를 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "ABC7 Bay Area · abc7news.com",
+          "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPY2RUaU1Ec3pkRTdvdjgtbS14eXdpaTdTa1Y5TlI1Tmg2OG9fODh5aHhnOWFlU0pwbWVoQUZaNkUwSnFxS0JVOXRIVXFBd3FfY1RROHVfdHN0UHY2dEFsWk5mOENDRUs4V3RyME9qUkRrZVNxV2tMaUhYUEYxMTAyc3F2YzZ1SHV6ZzJoMm8weWVsZjFReWZneHFkS1Q5VnQ2akJ6aWE4Snh1dXcycnh1bGdJSmZOR3lvY19ydk1n?oc=5",
+          "kind": "news",
+          "origin_url": "https://abc7news.com"
+        },
+        {
+          "handle": "www.hometownstations.com · hometownstations.com",
+          "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQU2pYN2Nvdk5mOHphbEhGaC1XcjctcF9yZklhYWFxbTlCOUtlWGZ1WEJIcEhOaEJlM21Hbkh1bHA5T2d4bGxndzdORTEyQXhMY0lpa0JRU1l0OWhubC1URm5OTGNUMWl3LVJEMkpDTGlDUFNjMUxEYjZTZHZYbnBwd1ZjZGJZZXNmdWhEUEVvaV9tbTdZczFJWUo5YVoxRW1JZXAxN2dvMG00cDlycnhzUWRGanpyN2diSFhlVU5kQVUzcUcxWW45WkUzYU1rUDQ?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.hometownstations.com"
+        },
+        {
+          "handle": "ABC News - Breaking News, Latest News and Videos · abcnews.com",
+          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOXzZtTzFabmQ1dkJOQ1VfVi1xbzdHeDR5dnJ2TzVCc2NIc3JrQVRJTXBGWVY5NFl1YUltSWExM013b18wZWlZbHZ1ZXRTa1Vja1pscFNZNE9raHlqc3FhRDBKNWFSZm1EQUdxMDJhSjRhY1ZPNkQ1ZGVqbHczcU5qNktxaFlfQUlGYThBYUROSzkwYjNTQlFta1lBQ29hbkXSAaQBQVVfeXFMUDl1ajJqM05vYkFNbENfbnZxMy11MG95RUgyV1JkbXkyTWw5c0VqbmZFNmY0Nk9iWklMd182aDZiaEtraTMybUY1Q3JRTDl0bmNOdW1MeFhOQ0w3VkFBUVdWMzI2Uk40YmtSQkRKZ0dZYVNBTnFkYkN6b3hsblNvdGNIR0NISzg0TEtvYVZLQ3ktQ0VpMG8yRkNNYU9YajkxVE5TSGU?oc=5",
+          "kind": "news",
+          "origin_url": "https://abcnews.com"
+        },
+        {
+          "handle": "CBC · cbc.ca",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQZklNaE5Lbkc0SGpFSFhKT1o3N2h2Z0JVM28zTEhqRE1vVGgtdVBDY2Q2elRTNmZJSkc1OVZhR2l4bm9oYUNySC10SV9FdDZicmFDeVZXWFlEMDU2WVotS18yVTBFQVNmakdCckFWR3J3ZE5zUHJpcWhUVGhUSW1NeGdYX1BRdw?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.cbc.ca"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "AI가 미증유 난제 증명과 칩 설계 같은 최전선 작업에 이름을 올렸습니다",
+    "grow": "AMD 협업 사례처럼 AI 모델이 하드웨어 개발 도구로 확장되는 흐름입니다",
+    "caution": "자율 침투 도구의 실제 악용과 치명적 PHP 취약점이 같은 날 겹쳤습니다",
+    "heat": "리만 가설 증명 주장을 둘러싼 관심이 하루 만에 여러 매체로 번졌습니다"
+  },
+  "tips": [
+    {
+      "title": "PHP 버전 점검을 오늘 안에",
+      "body": "이번 업데이트는 지원되는 모든 PHP 버전이 특정 조건에서 영향을 받습니다. 운영 서버 목록을 만들어 버전과 적용 상태를 한 번에 확인해 두는 것이 순서입니다.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "자율 점검 도구의 권한 설계 점검",
+      "body": "침투 테스트용 AI 도구가 공격에 쓰인 사례가 확인됐습니다. 사내에서 쓰는 자율 도구라면 실행 권한 범위와 로그 보존 기준을 다시 점검해 두면 좋습니다.",
+      "via": "BleepingComputer"
+    },
+    {
+      "title": "설계 성과 수치는 조건과 함께 읽기",
+      "body": "PPA 14% 개선은 발표 측이 제시한 값이고 측정 조건의 세부 분해는 공개되지 않았습니다. 이런 협업 발표 수치를 내부 보고에 인용할 때는 출처와 조건을 함께 남겨 두는 것이 안전합니다.",
+      "via": "Tom's Hardware"
+    },
+    {
+      "title": "증명 주장은 검증 결과와 함께 보관",
+      "body": "리만 가설 관련 보도는 아직 동료 평가 전의 주장입니다. 팀 위키나 노트에 정리할 때 '미검증 주장' 상태를 표시해 두면 나중에 혼동이 줄어듭니다.",
+      "via": "The New York Times"
+    },
+    {
+      "title": "상장 초기 주가로 판단 서두르지 않기",
+      "body": "Anthropic의 첫날 주가는 시장 전체의 AI 우려와 겹친 결과입니다. 개별 기업 평가는 거래 흐름이 안정된 뒤 실적 지표로 하는 것이 오류를 줄입니다.",
+      "via": "Reuters"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": false
+}
