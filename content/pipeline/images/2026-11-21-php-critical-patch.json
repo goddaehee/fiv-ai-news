@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-21",
+  "analysis": "php-critical-patch",
+  "title": "2. 치명적 7건 포함 18개 결함, 전 버전 업데이트 대상",
+  "src": "/img/2026-11-21/php-critical-patch-c2b59ff4.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration of software security patching: a cracked shield made of translucent geometric panels being sealed by glowing threads of light, deep blue and teal palette, calm and protective mood, no text, no numbers, no people, no logos, no charts, wide 16:9 composition",
+  "prompt_hash": "c2b59ff4",
+  "alt": "금이 간 방패가 빛의 실로 봉합되는 보안 패치 추상 일러스트"
+}

@@ -156,6 +156,15 @@
           "kind": "news",
           "origin_url": "https://www.businessinsider.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-21/riemann-claude-310cc5b9.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "오랜 수학 난제의 증명을 앞둔 단계를 상징하는 빛의 나선 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -185,6 +194,15 @@
           "handle": "The Hacker News",
           "url": "https://thehackernews.com/2026/11/php-fixes-7-critical-flaws-including.html",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-21/php-critical-patch-c2b59ff4.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "금이 간 방패가 빛의 실로 봉합되는 보안 패치 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -217,6 +235,15 @@
           "kind": "news",
           "origin_url": "https://www.bleepingcomputer.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-21/cairn-zero-day-209b70a1.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "어두운 회로 미로에 붉은 균열이 번지는 숨은 결함 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -247,6 +274,15 @@
           "handle": "OpenAI News",
           "url": "https://openai.com/business/customer-stories/hebbia",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-21/amd-openai-gpu-b12ac705.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛의 파동을 내뿜는 차세대 칩 코어 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -291,6 +327,15 @@
           "url": "https://www.wsj.com/finance/stocks/anthropics-ipo-bust-punctuates-4-trillion-ai-wipeout-on-wall-street-f1f1ec90",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-21/anthropic-ipo-selloff-113bdbc8.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "상장 첫날 급락을 상징하는 붉은 기하학 조각의 하강 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -334,6 +379,15 @@
           "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQZklNaE5Lbkc0SGpFSFhKT1o3N2h2Z0JVM28zTEhqRE1vVGgtdVBDY2Q2elRTNmZJSkc1OVZhR2l4bm9oYUNySC10SV9FdDZicmFDeVZXWFlEMDU2WVotS18yVTBFQVNmakdCckFWR3J3ZE5zUHJpcWhUVGhUSW1NeGdYX1BRdw?oc=5",
           "kind": "news",
           "origin_url": "https://www.cbc.ca"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-21/trump-datacenter-penalty-d589f1ed.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "폭풍구름 아래 빛나는 서버 타워들이 선 세계 지도 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }

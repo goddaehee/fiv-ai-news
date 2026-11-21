@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-21",
+  "analysis": "amd-openai-gpu",
+  "title": "4. GPT 모델의 설계 개입, PPA 14% 개선 성과",
+  "src": "/img/2026-11-21/amd-openai-gpu-b12ac705.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration of a next-generation computer chip: a glowing crystalline processor core radiating concentric waves of light across a dark circuit landscape, deep purple and cyan palette, futuristic mood, no text, no numbers, no people, no logos, no charts, wide 16:9 composition",
+  "prompt_hash": "b12ac705",
+  "alt": "빛의 파동을 내뿜는 차세대 칩 코어 추상 일러스트"
+}

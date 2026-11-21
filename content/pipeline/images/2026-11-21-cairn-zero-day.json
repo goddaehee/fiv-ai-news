@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-21",
+  "analysis": "cairn-zero-day",
+  "title": "3. 침투 테스트용 AI 도구, 공격자 손에 들어간 실제 사례",
+  "src": "/img/2026-11-21/cairn-zero-day-209b70a1.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration of a hidden flaw inside a digital system: a dark maze of glowing circuit-like lines with a single thin fissure of red light breaking through, ominous yet abstract, deep navy and crimson palette, no text, no numbers, no people, no logos, no charts, wide 16:9 composition",
+  "prompt_hash": "209b70a1",
+  "alt": "어두운 회로 미로에 붉은 균열이 번지는 숨은 결함 추상 일러스트"
+}
