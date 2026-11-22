@@ -143,6 +143,15 @@
           "kind": "news",
           "origin_url": "https://securityaffairs.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-22/monai-zero-day-63614995.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "발광하는 노드 미로를 탐험하며 벽의 균열을 발견하는 자율 에이전트 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -181,6 +190,15 @@
           "kind": "news",
           "origin_url": "https://www.newscientist.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-22/riemann-claim-862fecfc.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "끝없이 쌓인 백지 더미가 소용돌이치며 솟아오르는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -213,6 +231,15 @@
           "kind": "news",
           "origin_url": "https://www.fool.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-22/anthropic-ipo-40bc5a7d.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "황혼의 도시 스카이라인 한가운데 선 금고 문과 엇갈리는 금빛·푸른 파도 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -237,6 +264,15 @@
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/rackspace-spot-breach-let-hackers-access-customer-kubernetes-secrets/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-22/rackspace-spot-422d58f2.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "금 간 구름 블록에서 열쇠가 흘러나오는 클라우드 침해 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -263,6 +299,15 @@
           "url": "https://www.bleepingcomputer.com/news/security/fbi-reportedly-hacked-again-this-time-targeting-nationwide-police-database/",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-22/fbi-ncic-7105cf5c.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "균열이 난 방패가 빛나는 데이터 흐름을 지키는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -288,6 +333,15 @@
           "url": "https://news.google.com/rss/articles/CBMi4gJBVV95cUxQOEk5R3RqeFhEYzA4QVZKV1E4eTF2RUIyeENWcy15Z0l1M3J0NnBIdGlOcTRaQjhkYXcweUhuX1F1dDVXdDdkMlNSbDZnNlRKbUZlRS1YOXg1NzRfc1ZOYzAybXEtQlF6WU9IaHlRSkZzWjhRbXRFM0N1OG9KY0N3ZmlmYko3Q0dESlhsbWNoSTFnMXQtTUdIaDlwcllxcVl6cGRKSjlaMUh1WU1IMnUxOWE1X3kxNkxqNHozbXZVSHdwazJhb3M3MW56U1IyLVR3MUM4SGlGSlNab1k1ZzVzelAzbXVid0lZRldIVGZRSWNrNUEtMTg2RVVwNE16SFY4LXJtQ0tac3N2am11RkRCSWdIQk9JRTYyVTV2a3R0ZGxDRzNoZ2lWbFVQRGY1emRFUml3MDNDU2NGR3lKYmw0TWZuaGlNTGZrbHhxOGNxdm9UbHFMUllrRXg0VEg0bUxVbkE?oc=5",
           "kind": "news",
           "origin_url": "https://www.tomshardware.com"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-22/tufazip-compression-9ce40a5d.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "큰 큐브가 신경망 깔때기를 지나 작은 큐브로 줄어드는 압축 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }

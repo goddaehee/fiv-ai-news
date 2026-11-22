@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-22",
+  "analysis": "tufazip-compression",
+  "title": "6. tufazip, AI 트랜스포머로 무손실 압축 실험",
+  "src": "/img/2026-11-22/tufazip-compression-9ce40a5d.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration, wide 16:9 composition: a huge soft-edged cube on the left gradually shrinking through a funnel of layered neural-network-like arcs into a tiny glowing cube on the right, with a slow spiral of abstract gears and hourglass shapes in the background. Teal and warm sand palette, flat modern vector style, soft gradients, no people, no faces, no text, no numbers, no logos, no charts.",
+  "prompt_hash": "9ce40a5d",
+  "alt": "큰 큐브가 신경망 깔때기를 지나 작은 큐브로 줄어드는 압축 추상 일러스트"
+}

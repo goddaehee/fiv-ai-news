@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-22",
+  "analysis": "rackspace-spot",
+  "title": "4. 랙스페이스 Spot 침해, 쿠버네티스 시크릿까지 노출",
+  "src": "/img/2026-11-22/rackspace-spot-422d58f2.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration, wide 16:9 composition: a stylized cloud made of soft geometric blocks floating above a server room of glowing abstract racks, one block cracked open with a small broken padlock shape and faint key silhouettes drifting out. Slate blue and warm orange palette, flat modern vector style, soft gradients, no people, no faces, no text, no numbers, no logos, no charts.",
+  "prompt_hash": "422d58f2",
+  "alt": "금 간 구름 블록에서 열쇠가 흘러나오는 클라우드 침해 추상 일러스트"
+}

@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-22",
+  "analysis": "monai-zero-day",
+  "title": "1. AI 에이전트가 찾아낸 제로데이, MONAI Label 침해 사건",
+  "src": "/img/2026-11-22/monai-zero-day-63614995.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract editorial illustration, wide 16:9 composition: a small autonomous robot-like agent made of soft geometric shapes exploring a vast dark maze of glowing interconnected nodes and pathways, discovering one faintly glowing crack in the maze wall. Deep teal and amber palette, flat modern vector style, soft gradients, no people, no faces, no text, no numbers, no logos, no charts.",
+  "prompt_hash": "63614995",
+  "alt": "발광하는 노드 미로를 탐험하며 벽의 균열을 발견하는 자율 에이전트 추상 일러스트"
+}
