@@ -314,8 +314,12 @@ ok("bucket_domain: validate.extract_domain과 동일",
 
 def _scored(name, url, source):
     # score_bucket을 통과하도록(5점 이상) 현실적인 아이템 구성
+    # P29: 단독 출처 버킷은 6점이 필요하므로 교차보도 2개 아이템으로 구성한다
+    # (2번째 아이템은 커버리지용 — 도메인 판정은 items[0] 기준이라 그대로).
     items = [{"title": f"OpenAI GPT 발표 {name}", "summary": "성능이 30% 향상됨",
-              "url": url, "source": source, "published": _P4_NOW}]
+              "url": url, "source": source, "published": _P4_NOW},
+             {"title": f"OpenAI GPT 발표 {name} 후속", "summary": "후속 보도",
+              "url": "https://techcrunch.com/x", "source": "Wire", "published": _P4_NOW}]
     return (name, items)
 
 # 도메인 중복 제거 + P15 목표 개수 완화: 엄격 패스에서는 같은 도메인 1개만
