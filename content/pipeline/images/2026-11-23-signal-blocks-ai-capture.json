@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-23",
+  "analysis": "signal-blocks-ai-capture",
+  "title": "3. Signal, 기기 내 AI가 대화를 읽는 것을 기본 차단",
+  "src": "/img/2026-11-23/signal-blocks-ai-capture-e0920a6f.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: a glowing shield made of overlapping translucent panels protecting a small sealed envelope shape, dark background with soft green accents, a few abstract eye-like shapes turned away outside the shield, clean minimal style, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "e0920a6f",
+  "alt": "봉투를 감싸는 빛나는 방패와 바깥의 눈 모양 추상 일러스트"
+}

@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-23",
+  "analysis": "glinet-cloud-flaw",
+  "title": "4. GL.iNet 클라우드 관리 서비스 허점으로 라우터 감염",
+  "src": "/img/2026-11-23/glinet-cloud-flaw-bcdfcc20.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: a small home network hub device with tangled glowing threads reaching down from a dark cloud above, one thread frayed and glowing red, muted slate and teal palette, clean minimal style, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "bcdfcc20",
+  "alt": "어두운 구름에서 내려온 실타래와 집 공유기가 있는 추상 일러스트"
+}

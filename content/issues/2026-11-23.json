@@ -136,6 +136,15 @@
           "kind": "news",
           "origin_url": "https://finance.yahoo.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-23/anthropic-ipo-claude-traffic-c7d3455c.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛나는 문과 위로 오르는 계단, 기하학적 도형이 흘러오르는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -167,6 +176,15 @@
           "kind": "news",
           "origin_url": "https://news.bgov.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-23/openai-chief-scientist-limits-b23bbaf1.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "모래시계 아래 두 갈래로 갈라지는 길의 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -197,6 +215,15 @@
           "url": "https://thehackernews.com/2026/11/signal-blocks-ai-agents-from-reading.html",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-23/signal-blocks-ai-capture-e0920a6f.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "봉투를 감싸는 빛나는 방패와 바깥의 눈 모양 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -222,6 +249,15 @@
           "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-glinet-cloud-flaw-to-infect-routers-kvm-devices/",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-23/glinet-cloud-flaw-bcdfcc20.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "어두운 구름에서 내려온 실타래와 집 공유기가 있는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -246,6 +282,15 @@
           "handle": "The Hacker News",
           "url": "https://thehackernews.com/2026/11/gnupg-warns-critical-gpgme-flaw-could.html",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-23/gpgme-critical-flaw-7e20f578.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "퍼즐 조각으로 흩어지는 열쇠와 금 간 유리 표면의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -277,6 +322,15 @@
           "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPemFDcTcyNmVvMzhJeFdLX2VQNFdHdGZFX01XbjYyTDBYbE5OOUs4NllpdHlDalluUHR5eGhQZW44S2ZmdGh4ME1Fd0VLN2RHclpxLWU2OTNvM1RJUkwyQmQtTjQydUduM05rQ25PemdYNmYxdXgzOXZmTXk3S0tBMmIwUEtpTlBMZEs4RzB5UGd1RUR5LUM0?oc=5",
           "kind": "news",
           "origin_url": "https://www.businessinsider.com"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-23/badbox-botnet-return-e114e894.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "어두운 격자 위로 파도처럼 번지는 빛나는 사각형들의 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }

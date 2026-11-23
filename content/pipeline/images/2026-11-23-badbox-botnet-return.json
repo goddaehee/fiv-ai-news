@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-23",
+  "analysis": "badbox-botnet-return",
+  "title": "6. BADBOX 봇넷, 40 billion 일일 광고 요청으로 재기",
+  "src": "/img/2026-11-23/badbox-botnet-return-e114e894.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: a grid of small glowing television-like rectangles, many lit up in a spreading wave pattern across a dark field, red and orange glow against deep charcoal, clean minimal style, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "e114e894",
+  "alt": "어두운 격자 위로 파도처럼 번지는 빛나는 사각형들의 추상 일러스트"
+}

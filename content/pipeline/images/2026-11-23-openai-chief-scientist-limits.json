@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-23",
+  "analysis": "openai-chief-scientist-limits",
+  "title": "2. AI 개발 속도 제한을 두려면 속도부터 정의해야",
+  "src": "/img/2026-11-23/openai-chief-scientist-limits-b23bbaf1.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: a winding road splitting into two diverging paths beneath a large translucent hourglass, soft gradients in slate blue and amber, a small abstract compass shape floating above the fork, clean minimal style, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "b23bbaf1",
+  "alt": "모래시계 아래 두 갈래로 갈라지는 길의 추상 일러스트"
+}

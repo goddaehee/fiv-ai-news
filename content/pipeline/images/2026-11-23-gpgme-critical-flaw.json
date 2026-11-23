@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-23",
+  "analysis": "gpgme-critical-flaw",
+  "title": "5. 악성 OpenPGP 키가 GPGME 메모리 결함을 유발",
+  "src": "/img/2026-11-23/gpgme-critical-flaw-7e20f578.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: an old brass key dissolving into scattered puzzle pieces above a cracked glass surface, amber and slate palette, soft light from the cracks, clean minimal style, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "7e20f578",
+  "alt": "퍼즐 조각으로 흩어지는 열쇠와 금 간 유리 표면의 추상 일러스트"
+}
