@@ -45,8 +45,12 @@ _NOW = (datetime.now(timezone.utc) - timedelta(hours=1)).strftime("%Y-%m-%dT%H:%
 
 
 def _scored(name, url, source):
+    # P29: 단독 출처 버킷은 메인 문턱 6점이라 교차보도 2개 아이템으로 구성한다
+    # (2번째 아이템은 커버리지용 — 도메인 판정은 items[0] 기준이라 그대로).
     items = [{"title": f"OpenAI GPT 발표 {name}", "summary": "성능이 30% 향상됨",
-              "url": url, "source": source, "published": _NOW}]
+              "url": url, "source": source, "published": _NOW},
+             {"title": f"OpenAI GPT 발표 {name} 후속", "summary": "후속 보도",
+              "url": "https://techcrunch.com/x", "source": "Wire", "published": _NOW}]
     return (name, items)
 
 

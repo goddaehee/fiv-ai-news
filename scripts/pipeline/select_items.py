@@ -19,6 +19,19 @@ MIN_MAIN = 3
 TARGET_MAIN = 5  # P15: 메인 목표 개수. 미달 시 쿼터를 단계적으로 완화해 채운다.
 SCORE_CUTOFF = 5
 SOURCE_QUOTA = 0.25
+# P29: 단독 출처 버킷의 메인 진입 문턱. 교차보도 없는 이야기는 다른 축에서
+# 1점을 더 받아야 메인이 된다 (11-22·11-23호 출처 평균 2.00 < 2.5 실측).
+SINGLE_SOURCE_CUTOFF = SCORE_CUTOFF + 1
+
+
+def _coverage(items: list[dict]) -> int:
+    """버킷이 몇 개 매체(실발행처 기준)에서 다뤄졌는지."""
+    return len({_outlet_key(it) for it in items})
+
+
+def _main_cutoff(items: list[dict]) -> int:
+    """메인 진입 최소 점수. 단독 출처(커버리지 1)는 6점, 교차보도는 5점."""
+    return SINGLE_SOURCE_CUTOFF if _coverage(items) <= 1 else SCORE_CUTOFF
 
 
 def bucket_domain(items: list[dict]) -> str:
@@ -158,6 +171,10 @@ def select_buckets(
         if len(main) >= MAX_MAIN:
             rest.append((name, items, s))
             continue
+        # P29: 단독 출처 버킷은 문턱(6점) 미달 시 메인에서 제외하고 단신으로.
+        if s["total"] < _main_cutoff(items):
+            rest.append((name, items, s))
+            continue
         top_source = str(items[0].get("source") or "")
         if top_source in used_sources:
             rest.append((name, items, s))
@@ -185,6 +202,9 @@ def select_buckets(
                     break
                 if name in main_names:
                     continue
+                # P29: 완화 단계에서도 단독 출처 문턱은 유지한다.
+                if s["total"] < _main_cutoff(items):
+                    continue
                 top_source = str(items[0].get("source") or "")
                 if not relax_source and top_source in used_sources:
                     continue
@@ -193,6 +213,19 @@ def select_buckets(
                 used_sources.add(top_source)
             if len(main) >= TARGET_MAIN:
                 break
+        rest = [t for t in rest if t[0] not in main_names]
+
+    # P29: 완화 후에도 MIN_MAIN에 못 미치면(얇은 날) 문턱을 풀고 채운다.
+    # 점수 컷(5점)은 그대로 유지 — 점수 미달 버킷은 메인이 되지 않는다.
+    if len(main) < MIN_MAIN:
+        main_names = {m[0] for m in main}
+        for name, items, s in scored:
+            if len(main) >= MIN_MAIN:
+                break
+            if name in main_names:
+                continue
+            main.append((name, items, s))
+            main_names.add(name)
         rest = [t for t in rest if t[0] not in main_names]
 
     return main, rest
