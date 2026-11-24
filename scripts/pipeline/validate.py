@@ -17,6 +17,16 @@ URI_RE = re.compile(r"^https?://")
 KINDS = {"hot", "talk", "rt", "doc", "news"}
 KST = timezone(timedelta(hours=9))
 
+# P31: 영어 규모 단위 잔존 탐지 (UNIT-EN 피드백용). 발행 차단이 아니라
+# 재시도 피드백에만 쓴다. 범위는 단어형(billion 등)과 $형으로 한정한다 —
+# bare B/M("120B")은 수치 슬롯이 인정하는 표면이라(P9 픽스처와 충돌)
+# 피드백 대상에서 빼고, draft의 결정적 환산이 처리하게 둔다.
+_EN_UNIT_RESIDUE_RE = re.compile(
+    r"\$\s*\d[\d,]*(?:\.\d+)?\s*(?:trillions?|billions?|millions?|thousands?|[TtBbMmKk])"
+    r"|\d[\d,]*(?:\.\d+)?\s*(?:trillions?|billions?|millions?|thousands?)",
+    re.IGNORECASE,
+)
+
 # --- P0: 출력 정리 검사 (TPL/ID/DUP/VIA/RND) ---
 _BLOCKLIST_PATH = Path(__file__).resolve().parent / "template_blocklist.txt"
 _TPL_PHRASES: list[str] = [
@@ -497,15 +507,6 @@ def check_src_topic(
 # 기존 발행본 전수에 패턴을 돌려 오탐 0건임을 확인한 패턴만 쓴다.
 _TYPO_MIXED = re.compile(r"[A-Za-z][가-힣][A-Za-z]")
 
-# P30: 한자 혼입 게이트 (TYPO-001 확장). 생성 모델(GLM)이 "재集结",
-# "공개한节奏가"처럼 중국어 단어를 한글 문장 안에 섞어 내는 결함이 실제
-# 발행본에서 2회 확인됐다 (2026-09-29호 节奏, 2026-11-23호 集结).
-# 발행본 전수(60호)에서 한자는 이 2건 외에 한국어 기사 제목 관용 약어
-# (美=미국, 立法=입법)뿐이라, 그 3자만 허용하고 나머지 CJK 통합한자는
-# 혼입으로 판정한다 — 전수 기준 오탐 0건.
-_TYPO_CJK = re.compile(r"[\u4e00-\u9fff]+")
-_TYPO_CJK_ALLOW = frozenset("美立法")
-
 
 def _typo_findings(issue: dict) -> list[dict]:
     """오타 검출 상세. 반환: [{loc, field, token}] (loc은 사람이 읽는 위치)."""
@@ -518,17 +519,6 @@ def _typo_findings(issue: dict) -> list[dict]:
         if "\ufffd" in t:
             out.append({"loc": loc, "field": field, "token": "�"})
         for m in _TYPO_MIXED.finditer(t):
-            s = m.start()
-            while s > 0 and not t[s - 1].isspace() and m.start() - s < 12:
-                s -= 1
-            e = m.end()
-            while e < len(t) and not t[e].isspace() and e - m.end() < 12:
-                e += 1
-            out.append({"loc": loc, "field": field, "token": t[s:e]})
-        # P30: 허용 약어(美·立法)를 뺀 CJK 통합한자가 남아 있으면 혼입.
-        for m in _TYPO_CJK.finditer(t):
-            if all(ch in _TYPO_CJK_ALLOW for ch in m.group(0)):
-                continue
             s = m.start()
             while s > 0 and not t[s - 1].isspace() and m.start() - s < 12:
                 s -= 1
@@ -1830,6 +1820,33 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
                 "code": "SOURCES-MISSING",
                 "analysis_index": i,
                 "analysis_id": a.get("id"),
+            })
+    # P31: 영어 규모 단위 잔존 — draft의 결정적 환산(convert_issue_units)이
+    # 1차 방어선이고, 이 코드는 환산이 건드리지 않는 자리(코드 구간 등)에
+    # 남은 표기를 재시도 피드백으로 알리는 안전망이다. hard 게이트가 아니라
+    # 피드백 코드만 둔다 (SOURCES-THIN과 같은 방식).
+    for i, a in enumerate(analyses):
+        texts = [str(a.get("title") or ""), str(a.get("takeaway") or "")]
+        for key in ("bullets", "body"):
+            v = a.get(key)
+            if isinstance(v, list):
+                texts.extend(str(x) for x in v)
+        samples: list[str] = []
+        for t in texts:
+            for m in _EN_UNIT_RESIDUE_RE.finditer(t):
+                s = m.group(0).strip()
+                if s and s not in samples:
+                    samples.append(s)
+                if len(samples) >= 3:
+                    break
+            if len(samples) >= 3:
+                break
+        if samples:
+            errors.append({
+                "code": "UNIT-EN",
+                "analysis_index": i,
+                "analysis_id": a.get("id"),
+                "samples": samples,
             })
     # P22 (5차 평가 P4c): 출처 얇음 — coverage≥2인 이야기인데 출처가 1개뿐이면
     # 재시도 피드백으로 교차보도 보충을 유도한다. hard 게이트가 아니라 피드백

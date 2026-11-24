@@ -80,9 +80,31 @@ def _story_tokens(title: str) -> set[str]:
     return _story_raw_tokens(t)
 
 
+# P31: 경량 어미 정규화. 매체마다 제목 문구가 달라 같은 이야기가 쪼개지는
+# 사례의 상당수는 복수형 표기 차이였다 (실측: "Customer Secrets" vs
+# "customers' API credentials" — Jaccard 0.25로 문턱 0.28에 못 미쳐 분리).
+# 형태소 수준의 보수적 정규화만 한다 — 5자 미만, ss/us/is 종결, 예외 단어는
+# 건드리지 않는다. 전체 병합의 연쇄 흡수 이력(P16 주석)이 있어 유사도
+# 기준 자체는 바꾸지 않는다.
+_STEM_KEEP = {"news"}
+
+
+def _stem_token(tok: str) -> str:
+    if len(tok) < 5 or tok in _STEM_KEEP:
+        return tok
+    if tok.endswith("ies"):
+        return tok[:-3] + "y"
+    if tok.endswith(("ches", "shes", "sses", "xes", "zes")):
+        return tok[:-2]
+    if tok.endswith("s") and not tok.endswith(("ss", "us", "is")):
+        return tok[:-1]
+    return tok
+
+
 def _story_raw_tokens(title: str) -> set[str]:
     s = re.split(r"[^0-9a-zA-Z]+", (title or "").lower())
-    return {p for p in s if len(p) >= 3 and p not in _STORY_STOPWORDS}
+    return {_stem_token(p) for p in s
+            if len(p) >= 3 and p not in _STORY_STOPWORDS}
 
 
 def _story_sim(a: set[str], b: set[str]) -> float:

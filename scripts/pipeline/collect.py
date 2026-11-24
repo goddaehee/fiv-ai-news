@@ -12,6 +12,7 @@ import re
 import ssl
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
@@ -206,6 +207,126 @@ def parse_feed(xml: bytes, source: str, kind: str, limit: int = 40) -> list[dict
     return items
 
 
+# ---------------------------------------------------------------------------
+# P31: Google News 중계 링크 → 기사 직행 URL 해소.
+# 중계 링크(news.google.com/rss/articles/…)는 브라우저에서 간이 페이지를
+# 거쳐 원문으로 넘어가는 구조라, 발행본 출처가 "원문으로 바로 가는 링크"가
+# 아니었다 (6차 패널 평가 공통 지적). 수집 단계에서 링크의 최종 목적지만
+# 확인해 item["url"]을 직행 URL로 교체한다 — 원문 본문을 긁는 것이 아니라
+# RSS가 준 링크의 목적지 확인이다. 실패하면 중계 링크를 그대로 둔다
+# (best-effort — 해소 실패가 수집을 막지 않는다). 원본 중계 링크는
+# relay_url에 남긴다.
+# ---------------------------------------------------------------------------
+
+_GNEWS_DECODE_ENDPOINT = "https://news.google.com/_/DotsSplashUi/data/batchexecute?rpcids=Fbv4je"
+_BROWSER_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+
+
+def _fetch_text(url: str, timeout: int = 12, data: bytes | None = None) -> str | None:
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={"User-Agent": _BROWSER_UA,
+                 "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout, context=CTX) as res:
+            return res.read().decode("utf-8", "replace")
+    except Exception:
+        return None
+
+
+def decode_gnews_response(resp: str | None) -> str | None:
+    """batchexecute 응답에서 기사 URL만 뽑는다. 형식이 어긋나면 None."""
+    if not resp:
+        return None
+    try:
+        body = resp.split("\n", 1)[1] if resp.startswith(")]}'") else resp
+        outer = json.loads(body)
+        decoded = json.loads(outer[0][2])
+        url = decoded[1]
+        return url if isinstance(url, str) and url.startswith("http") else None
+    except Exception:
+        return None
+
+
+def resolve_relay_url(url: str, fetch_text=_fetch_text) -> str | None:
+    """중계 링크 1건 해소. 페이지의 data-n-a-* 서명을 읽어 Google News의
+    디코드 호출로 실제 기사 URL을 얻는다. 어느 단계든 실패하면 None."""
+    page = fetch_text(url)
+    if not page:
+        return None
+    m_id = re.search(r'data-n-a-id="([^"]+)"', page)
+    m_ts = re.search(r'data-n-a-ts="([^"]+)"', page)
+    m_sg = re.search(r'data-n-a-sg="([^"]+)"', page)
+    if not (m_id and m_ts and m_sg):
+        return None
+    try:
+        ts = int(m_ts.group(1))
+    except ValueError:
+        return None
+    inner = ["garturlreq",
+             [["X", "X", ["X", "X"], None, None, 1, 1, "US:en", None, 180,
+               None, None, None, None, None, 0, None, None,
+               [1608992183, 723558691]],
+              "X", "X", 1, [1, 1, 1], 1, 1, None, 0, 0, None, 0],
+             m_id.group(1), ts, m_sg.group(1)]
+    payload = [["Fbv4je", json.dumps(inner), None, "generic"]]
+    body = urllib.parse.urlencode(
+        {"f.req": json.dumps([payload])}).encode("utf-8")
+    resp = fetch_text(_GNEWS_DECODE_ENDPOINT, data=body)
+    return decode_gnews_response(resp)
+
+
+def _is_relay(url: str) -> bool:
+    from urllib.parse import urlparse
+    try:
+        return (urlparse(url or "").hostname or "") == "news.google.com"
+    except Exception:
+        return False
+
+
+def resolve_gnews_links(items: list[dict], resolver=resolve_relay_url,
+                        max_workers: int = 8) -> int:
+    """items의 중계 링크를 직행 URL로 교체하고, 해소로 생긴 URL 중복을
+    제거한다. 반환: 교체 건수. resolver 주입은 테스트용."""
+    targets = [it for it in items if _is_relay(str(it.get("url") or ""))]
+    if not targets:
+        return 0
+    from concurrent.futures import ThreadPoolExecutor
+
+    def _one(it: dict) -> None:
+        try:
+            direct = resolver(str(it.get("url") or ""))
+        except Exception:
+            direct = None
+        if direct:
+            it["relay_url"] = it["url"]
+            it["url"] = direct
+
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        list(ex.map(_one, targets))
+    # 병렬 1차에서 실패한 건은 동시 요청 throttling인 경우가 많아(실측:
+    # 직렬 재시도 시 ~3초에 성공), 워커를 줄여 한 번만 더 시도한다.
+    retry = [it for it in targets if not it.get("relay_url")]
+    if retry:
+        with ThreadPoolExecutor(max_workers=3) as ex:
+            list(ex.map(_one, retry))
+    resolved = sum(1 for it in targets if it.get("relay_url"))
+    # 해소 결과 직행 URL이 직접 피드 아이템과 같아지면 같은 기사이므로
+    # 먼저 수집된 쪽만 남긴다 (스냅샷 순서는 직접 피드가 앞이다).
+    seen: set[str] = set()
+    kept: list[dict] = []
+    for it in items:
+        u = str(it.get("url") or "")
+        if u and u in seen:
+            continue
+        seen.add(u)
+        kept.append(it)
+    items[:] = kept
+    return resolved
+
+
 def hn_algolia(hours: int = 36) -> list[dict]:
     since = int(time.time()) - hours * 3600
     url = (
@@ -286,6 +407,11 @@ def collect() -> dict:
     if stale:
         print(f"  stale(48h+) dropped: {stale}")
     uniq = fresh
+    # P31: Google News 중계 링크를 기사 직행 URL로 해소 (best-effort).
+    # 신선도 필터를 통과한 아이템만 대상이라 호출 수가 제한된다.
+    n_resolved = resolve_gnews_links(uniq)
+    if n_resolved:
+        print(f"  gnews direct links resolved: {n_resolved}")
     # P5: 도메인 분포 로그 — origin_url 우선으로 유효 도메인 확인
     from urllib.parse import urlparse
     from collections import Counter
