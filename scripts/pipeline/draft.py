@@ -42,6 +42,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - tips의 title과 body는 서로 다르게 씁니다. via는 실제 출처명 (디버그 값 금지).
 - 같은 시사점을 여러 칸에 복붙하지 않습니다.
 - sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. **sources는 그 기사가 다루는 바로 그 이야기의 아이템에서만** 고른다. 다른 이야기의 아이템을 넣으면 출처 오염으로 호 전체가 폐기된다. **같은 이야기를 다룬 다른 매체의 아이템은 교차보도 출처이므로 함께 넣어도 되고, 가능하면 2~3개를 넣는다.** 그 이야기의 아이템이 1개뿐이면 1개만 넣는다. 비어 있으면 호 전체가 폐기된다. example.com 금지.
+- 금액·규모 단위는 한국어 독자 표기로 환산해 씁니다. $7.5B, 40 billion, 350 million 같은 영어 단위를 그대로 옮기지 말고 75억 달러, 400억, 3억 5,000만처럼 씁니다. 크기는 원문과 정확히 같아야 합니다 (1 billion = 10억, 1 million = 100만). 통화가 없는 규모(사용자 수·파라미터)는 숫자 단위만 환산합니다.
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
 - kind는 hot|talk|rt|doc|news. 공식 블로그·문서만 doc. 언론 보도는 news, Google News 중계 링크도 news.
@@ -79,7 +80,6 @@ sources: [{"url": "<입력 buckets의 실제 링크 그대로>"}, {"url": "<입�
 - 전체 분량: briefMin 5, readMin은 실제 분량 기준이며 normalize에서 글자 수로 계산합니다.
 - 확인 안 된 인수는 미확정이라고 밝힙니다. 회사 자체 측정은 본문에 그 사실을 적습니다.
 - 과장 형용사(혁명, 폭발) 금지. 숫자로 강도를 전합니다.
-- 본문에 한자를 섞지 않습니다. 중국어 단어를 한글 문장 안에 넣으면 호가 폐기됩니다. '미국'·'입법' 같은 말은 한자 약어로 줄이지 말고 한글로 풀어 씁니다.
 
 출력은 JSON 객체 하나만. 스키마 키: date,title,heroline,dek,tag,briefMin,readMin,briefing,keywords,mainEvent,keynums,timeline,intro,analysis,mood,tips,method.
 
@@ -258,6 +258,16 @@ def render_feedback(sidecar) -> str:
                 "  URL은 입력에 있는 것을 한 글자도 바꾸지 않고 그대로 복사하고, 지어내지 마세요."
             )
             continue
+        # P31: 영어 규모 단위 잔존 — 한국어 단위로 환산해 다시 쓰게 한다.
+        if e.get("code") == "UNIT-EN":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            samples = ", ".join(str(x) for x in (e.get("samples") or []))
+            blocks.append(
+                f'- analysis id "{aid}"에 영어 규모 단위 표기({samples})가 남아 있습니다.\n'
+                "  한국어 단위로 환산해 다시 쓰세요 (1 billion = 10억, 1 million = 100만, $7.5B → 75억 달러). "
+                "크기와 통화는 원문 그대로 유지하고, 통화가 없는 규모는 숫자 단위만 환산하세요."
+            )
+            continue
         # P23 (5차 평가 P5): 본문 밀도 부족 — 숫자를 새로 만들지 말고
         # 배경·맥락·측정 조건·비교를 완전한 문장으로 덧붙이게 한다.
         if e.get("code") == "BODY-TOTAL":
@@ -304,8 +314,7 @@ def render_feedback(sidecar) -> str:
         if e.get("code") == "TYPO-001":
             blocks.append(
                 f"- {e.get('loc') or '본문'}에 깨진 문자·오타 '{e.get('token') or ''}'가 있습니다.\n"
-                "  입력 원문의 표기 그대로 고쳐 쓰세요. 비슷한 다른 단어로 바꾸거나 없는 단어를 만들지 마세요.\n"
-                "  한자가 섞인 경우면 같은 뜻의 한글 단어로 풀어 쓰세요 (예: 재集结 → 다시 모임)."
+                "  입력 원문의 표기 그대로 고쳐 쓰세요. 비슷한 다른 단어로 바꾸거나 없는 단어를 만들지 마세요."
             )
             continue
         # P16: keynums-기사 단절 피드백 (KEYNUMS-LINK). 홈 카드 수치가 어떤
@@ -938,9 +947,15 @@ def attach_sources(issue: dict, snap: dict,
         # Performance Factory(doc)에 IPO 소송 기사가 붙어 numbers·why 슬롯
         # 입력 후보가 생겼으나 LLM이 그 수치를 안 쓰는 것이 옳았는데도
         # DEPTH 에러가 됐다). P22 SOURCES-THIN도 kind=doc 단독을 제외한다.
-        if picked_items and len(picked) == 1 and (picked_items[0].get("kind") or "") != "doc":
+        # P31: 상한을 "진입 시점 개수 + 1"로 일반화한다 — 출처 1개면 2개까지
+        # (기존과 동일), 출처 2개면 3개까지 같은 엄격 기준으로 채운다.
+        # 출처 평균이 2.0에 머문 한 원인이 2개에서 멈추는 상한이었다
+        # (6차 평가 실측: 11-22호 [4,3,2,1,1,1]). 판정 기준(overlap+희귀
+        # 토큰 동시 충족, 쿼터 캡)은 그대로라 패딩 위험은 기존과 같다.
+        if picked_items and len(picked) in (1, 2) and (picked_items[0].get("kind") or "") != "doc":
+            _cap = len(picked) + 1
             for cand in table:
-                if len(picked) >= 2:
+                if len(picked) >= _cap:
                     break
                 core = url_core(str(cand.get("url") or ""))
                 if not core or core in have:
@@ -1352,6 +1367,154 @@ def normalize_num_text(text: str) -> str:
     # "10분"을 정상 수치로 남긴 뒤, 나머지 분수를 통째로 마스킹한다.
     t = _FRACTION_PREFIX_RE.sub("분수", t)
     return _FRACTION_RE.sub("분수", t)
+
+
+# ---------------------------------------------------------------------------
+# P31: 영어 규모 단위 → 한국어 단위 환산 (결정적 후처리).
+# 6차 패널 평가에서 "40 billion, 350 million, 7.5B"가 한국어 본문에 그대로
+# 남은 것이 공통 지적이었다 (11-23·11-24호 실측). LLM이 원문 표기를 복사하는
+# 패턴이라 프롬프트만으로는 재발해, normalize 뒤에 결정적으로 환산한다.
+# 크기는 정확히 보존한다 — validate의 수치 게이트가 크기 기준으로 대조하므로
+# (normalize_num_text 공유) 환산 전후 크기가 같으면 게이트를 그대로 통과한다.
+# 통화는 임의로 바꾸지 않는다: $·dollars는 "달러"로, won은 "원"으로만 옮기고,
+# 통화가 없는 규모(사용자 수·파라미터 등)는 숫자 단위만 환산한다.
+# 백틱 코드 구간은 건드리지 않는다. 회사명 "3M" 같은 표기를 지키려고
+# 한 자리 정수 + B/M은 뒤에 규모 명사(파라미터·달러 등)가 올 때만 환산한다.
+# ---------------------------------------------------------------------------
+
+_UNIT_WORD_SCALE = {"trillion": 12, "billion": 9, "million": 6, "thousand": 3}
+_UNIT_LETTER_SCALE = {"t": 12, "b": 9, "m": 6, "k": 3}
+
+_EN_UNIT_DOLLAR_RE = re.compile(
+    r"\$\s*(?P<num>\d[\d,]*(?:\.\d+)?)\s*"
+    r"(?P<unit>trillions?|billions?|millions?|thousands?|[TtBbMmKk])"
+    r"(?![A-Za-z])(?:\s*(?:dollars?|usd|달러))?",
+    re.IGNORECASE,
+)
+_EN_UNIT_WORD_RE = re.compile(
+    r"(?<![0-9A-Za-z.])(?P<num>\d[\d,]*(?:\.\d+)?)\s*"
+    r"(?P<unit>trillions?|billions?|millions?|thousands?)"
+    r"(?![A-Za-z])(?:\s*(?P<cur>dollars?|usd|won))?",
+    re.IGNORECASE,
+)
+_EN_UNIT_BARE_RE = re.compile(
+    r"(?<![0-9A-Za-z.])(?P<num>\d+\.\d+|\d{2,}|\d(?=\s*[BM]\s*(?:파라미터|토큰|달러|원|명|개|건|대|사용자|이용자|규모|시장)))"
+    r"\s*(?P<unit>[BM])(?![A-Za-z])"
+)
+
+
+def _trim_num(x: float) -> str:
+    s = f"{x:.4f}".rstrip("0").rstrip(".")
+    return s or "0"
+
+
+def _fmt_korean_amount(v: float) -> str:
+    """절대 규모를 한국어 단위 문자열로. 7.5e9→'75억', 3.5e8→'3억 5,000만',
+    1.2e12→'1조 2,000억', 4e10→'400억', 3.5e5→'35만'."""
+    iv = round(v)
+    if abs(v - iv) <= 1e-9 * max(1.0, abs(v)):
+        v = float(iv)
+    if v >= 1e12:
+        if v % 1e12 == 0:
+            return f"{int(v // 1e12):,}조"
+        if v % 1e8 == 0:
+            return f"{int(v // 1e12):,}조 {int((v % 1e12) // 1e8):,}억"
+        return f"{_trim_num(v / 1e12)}조"
+    if v >= 1e8:
+        if v % 1e8 == 0:
+            return f"{int(v // 1e8):,}억"
+        if v % 1e4 == 0:
+            return f"{int(v // 1e8):,}억 {int((v % 1e8) // 1e4):,}만"
+        return f"{_trim_num(v / 1e8)}억"
+    if v >= 1e4:
+        if v % 1e4 == 0:
+            return f"{int(v // 1e4):,}만"
+        return f"{_trim_num(v / 1e4)}만"
+    if v == int(v):
+        return f"{int(v):,}"
+    return _trim_num(v)
+
+
+def _unit_scale(unit: str) -> int:
+    u = unit.lower().rstrip("s")
+    if u in _UNIT_WORD_SCALE:
+        return _UNIT_WORD_SCALE[u]
+    return _UNIT_LETTER_SCALE[u]
+
+
+def _convert_segment(seg: str) -> str:
+    def _dollar(m: re.Match) -> str:
+        v = float(m.group("num").replace(",", "")) * 10 ** _unit_scale(m.group("unit"))
+        return f"{_fmt_korean_amount(v)} 달러"
+
+    def _word(m: re.Match) -> str:
+        v = float(m.group("num").replace(",", "")) * 10 ** _unit_scale(m.group("unit"))
+        out = _fmt_korean_amount(v)
+        cur = (m.group("cur") or "").lower()
+        if cur == "won":
+            out += " 원"
+        elif cur:
+            out += " 달러"
+        return out
+
+    def _bare(m: re.Match) -> str:
+        v = float(m.group("num").replace(",", "")) * 10 ** _unit_scale(m.group("unit"))
+        return _fmt_korean_amount(v)
+
+    seg = _EN_UNIT_DOLLAR_RE.sub(_dollar, seg)
+    seg = _EN_UNIT_WORD_RE.sub(_word, seg)
+    seg = _EN_UNIT_BARE_RE.sub(_bare, seg)
+    return seg
+
+
+def convert_english_units(text: str) -> str:
+    """본문 텍스트의 영어 규모 단위를 한국어 단위로 환산한다.
+    백틱 코드 구간(`...`) 안은 모델명·식별자일 수 있어 건드리지 않는다."""
+    if not text:
+        return text or ""
+    parts = re.split(r"(`[^`]*`)", text)
+    for i in range(0, len(parts), 2):
+        parts[i] = _convert_segment(parts[i])
+    return "".join(parts)
+
+
+def convert_issue_units(issue: dict) -> dict:
+    """발행본 텍스트 필드 전체에 단위 환산을 적용한다 (URL·id·날짜 제외)."""
+
+    def _field(d: dict, key: str) -> None:
+        if isinstance(d.get(key), str):
+            d[key] = convert_english_units(d[key])
+
+    def _list_field(d: dict, key: str) -> None:
+        if isinstance(d.get(key), list):
+            d[key] = [convert_english_units(x) if isinstance(x, str) else x
+                      for x in d[key]]
+
+    for key in ("title", "heroline", "dek", "intro", "mainEvent"):
+        _field(issue, key)
+    for b in issue.get("briefing") or []:
+        if isinstance(b, dict):
+            _field(b, "headline")
+            _field(b, "summary")
+    for a in issue.get("analysis") or []:
+        if isinstance(a, dict):
+            _field(a, "title")
+            _list_field(a, "bullets")
+            _list_field(a, "body")
+            _field(a, "extra")
+            _field(a, "takeaway")
+    for k in issue.get("keynums") or []:
+        if isinstance(k, dict):
+            _field(k, "val")
+            _field(k, "lab")
+    for t in issue.get("timeline") or []:
+        if isinstance(t, dict):
+            _field(t, "d")
+    for t in issue.get("tips") or []:
+        if isinstance(t, dict):
+            _field(t, "title")
+            _field(t, "body")
+    return issue
 
 
 def number_mentions(summary: str) -> list[str]:
@@ -2274,6 +2437,9 @@ def main() -> int:
                 _write_schema_sidecar(pipe, snap["date"], args.attempt, str(e))
                 return 4
         issue["date"] = snap["date"]
+        # P31: 영어 규모 단위 환산 (결정적 후처리 — validate 전에 적용해
+        # 수치 게이트가 환산된 표기로 대조하게 한다. 크기는 보존된다.)
+        issue = convert_issue_units(issue)
         issue = attach_sources(issue, snap, ref_table=ref_table)
         issue["draft"] = True
     else:
