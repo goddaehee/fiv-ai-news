@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-24",
+  "analysis": "claude-ship",
+  "title": "1. AI 에이전트가 코드 승인 권한을 넘겨받는 구조",
+  "src": "/img/2026-11-24/claude-ship-71c91c67.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: a stream of geometric code blocks flowing through a glowing approval gate, a small checkmark-shaped light at the gate, deep blue and teal palette, clean minimal style, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "71c91c67",
+  "alt": "코드 블록이 승인 게이트를 통과하는 추상 일러스트"
+}

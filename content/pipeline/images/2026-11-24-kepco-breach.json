@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-24",
+  "analysis": "kepco-breach",
+  "title": "3. 내부망 침해로 두 시스템 접근, 150만 명 영향",
+  "src": "/img/2026-11-24/kepco-breach-3c681f71.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: a glowing power-grid network of nodes and lines, one pathway cracked open with a dark intrusion wedge splitting two connected hubs, dark blue palette with amber warning glow, clean minimal style, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "3c681f71",
+  "alt": "전력망 노드 사이로 침입한 틈이 보이는 추상 일러스트"
+}

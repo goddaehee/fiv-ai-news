@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-24",
+  "analysis": "openrouter-provider",
+  "title": "6. 프롬프트 유출 3곳 제외, 무보관 약속 무너진 사례",
+  "src": "/img/2026-11-24/openrouter-provider-b3c2994f.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: a broken privacy shield with thin streams of light leaking through its cracks, a small open gate beside it, muted purple and gray palette, clean minimal style, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "b3c2994f",
+  "alt": "금이 간 방패에서 빛이 새는 추상 일러스트"
+}
