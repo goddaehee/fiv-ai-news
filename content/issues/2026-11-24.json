@@ -1,0 +1,320 @@
+{
+  "date": "2026-11-24",
+  "title": "5분 AI 뉴스",
+  "heroline": "Claude Ship이 코드 리뷰·승인까지 맡는 시대",
+  "dek": "GL.iNet 클라우드 취약점 악용, 한전 150만 건 유출, 아마존 7.5B 규모 인수까지 — 에이전트와 보안이 한 자리에 겹친 하루",
+  "tag": "AI 뉴스",
+  "briefMin": 3,
+  "readMin": 11,
+  "briefing": [
+    {
+      "id": "claude-ship",
+      "headline": "Claude Ship, 에이전트의 코드 리뷰·수정·승인 처리",
+      "summary": "Anthropic이 개발자용 신규 기능을 공개해 AI 에이전트가 코드 변경을 검토하고 수정하고 승인까지 맡을 수 있게 됨. 여러 매체가 동시에 보도했습니다."
+    },
+    {
+      "id": "glinet-cloud-malware",
+      "headline": "GL.iNet 클라우드 취약점, 라우터·KVM 기기 악성코드 감염",
+      "summary": "원격 관리 서비스의 허점을 통해 고객 기기에 악성코드가 심어졌고, 제조사는 이번 주에 취약점을 막고 침입 경로를 차단했다고 밝혔습니다."
+    },
+    {
+      "id": "kepco-breach",
+      "headline": "한전 내부망 침해, 고객·직원 150만 명 데이터 노출",
+      "summary": "위협 행위자가 내부망에 들어와 고객·직원·협력업체 정보가 담긴 두 개 시스템에 접근한 사실이 공식 확인됐습니다."
+    },
+    {
+      "id": "amazon-decart-deal",
+      "headline": "아마존, Decart AI 최적화 기술 인수 — 7.5B 달러 규모",
+      "summary": "자체 칩 판매 준비에 맞춰 최적화 기술과 연구팀을 통째로 흡수하는 거래로 알려졌습니다."
+    },
+    {
+      "id": "richpanel-gpt6",
+      "headline": "Richpanel, 30일 동안 고객지원 50% 자동화 도달",
+      "summary": "고객사 사례가 공식 문서로 공개됐고, 대화·도구·절차 역할을 모델별로 나눠 구성한 방식이 소개됩니다."
+    },
+    {
+      "id": "openrouter-provider",
+      "headline": "OpenRouter, 프롬프트 유출 업체 3곳 플랫폼 제외",
+      "summary": "데이터 보관 정책을 위반한 인퍼런스 제공사들이 보안 업체 연구진의 통보로야 침해 사실을 알게 된 뒤 퇴출됐습니다."
+    },
+    {
+      "id": "shirudo-runtime",
+      "headline": "OpenAI·시스코, 리눅스 보호 런타임 Shirudo 오픈소스 공개",
+      "summary": "패치 적용 중인 시스템을 지키는 목적의 런타임으로, 두 회사가 공동으로 내놨습니다."
+    }
+  ],
+  "keywords": [
+    "Claude Ship",
+    "GL.iNet",
+    "KEPCO",
+    "Decart",
+    "Shirudo",
+    "OpenRouter"
+  ],
+  "mainEvent": "Claude Ship 출시와 글로벌 AI 보안 사고들",
+  "keynums": [
+    {
+      "val": "7.5B 달러",
+      "lab": "아마존–Decart 거래 규모",
+      "sub": "언론 보도 기준"
+    },
+    {
+      "val": "150만 명",
+      "lab": "한전 데이터 유출 영향",
+      "sub": "한전 공식 확인"
+    },
+    {
+      "val": "50%",
+      "lab": "Richpanel 지원 자동화 비율",
+      "sub": "OpenAI 게시 사례"
+    },
+    {
+      "val": "30일",
+      "lab": "Richpanel 자동화 도달 기간",
+      "sub": "OpenAI 게시 사례"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "11/24 05:05",
+      "d": "Claude Ship 출시, 로이터 보도"
+    },
+    {
+      "t": "11/24 05:54",
+      "d": "한전 데이터 유출 공식 확인"
+    },
+    {
+      "t": "11/24 06:20",
+      "d": "OpenAI·시스코, Shirudo 공개"
+    },
+    {
+      "t": "11/24 07:05",
+      "d": "Claude Ship, 테크크런치 확대 보도"
+    },
+    {
+      "t": "11/23 18:04",
+      "d": "GL.iNet 취약점 악용, 보안 공지 업데이트"
+    },
+    {
+      "t": "11/24 02:14",
+      "d": "아마존의 Decart 인수 보도"
+    }
+  ],
+  "intro": "11월 24일 화요일 발행. 코드 리뷰를 에이전트가 승인하는 도구가 나오는가 하면, 클라우드 관리망과 공기업 내부망에서는 침해 확인 소식이 잇따랐습니다.",
+  "analysis": [
+    {
+      "id": "claude-ship",
+      "n": 1,
+      "title": "1. AI 에이전트가 코드 승인 권한을 넘겨받는 구조",
+      "bullets": [
+        "에이전트가 코드 변경을 검토하고 직접 고치는 수준까지 확대",
+        "여러 매체가 같은 날 일제히 보도한 당일 주요 소식",
+        "승인 권한 이양이 핵심 논점으로 소개됨"
+      ],
+      "body": [
+        "Anthropic이 개발자 대상 신기능 Claude Ship을 공개했습니다. 이 도구는 AI 에이전트가 코드 변경을 검토하고, 문제를 수정하고, 최종 승인까지 처리할 수 있게 만들어진 것이 핵심입니다. 같은 날 로이터와 테크크런치를 비롯한 여러 매체가 잇달아 보도했으며, 출시 목적은 개발자가 코드를 더 빨리 출시하도록 돕는 것으로 전해졌습니다. 기존에는 코드 생성이나 리뷰 보조까지만 AI에 맡기는 경우가 많았는데, 이번에는 승인이라는 권한 있는 단계까지 범위가 넓어진 점이 이번 발표의 차별점입니다.",
+        "이번 발표는 회사 측 발표와 언론 보도로 확인되는 사실이며, 별도의 벤치마크 수치나 성과 측정값은 공개되지 않았습니다. 어떤 규모의 저장소, 어떤 언어와 코드베이스에서 어디까지 안정적으로 동작하는지에 대한 조건도 아직 구체적으로 밝혀지지 않았습니다. 범위는 개발자와 개발 팀 대상이고, 개인 개발자와 대규모 조직에서 체감이 다를 수 있다는 점은 남아 있습니다.",
+        "배경에는 에이전트가 개발 업무 전반을 수행하게 하려는 업계 흐름이 있습니다. 다만 자동 승인은 단순 반복 검토를 넘어 품질과 안정성 판단을 코드에 대한 권한 이양으로 처리하는 일이라, 검토 결과를 사람이 최종 확인하는 절차를 어디에 둘지가 각 팀의 숙제입니다. 에이전트가 승인을 잘못 내는 경우의 되돌림 방안이나 감사 흔적에 대한 안내도 확인이 필요합니다."
+      ],
+      "extra": "",
+      "takeaway": "리뷰뿐 아니라 승인 권한까지 에이전트에 넘어가는 구조가 개발 팀의 품질 게이트를 바꿀 수 있습니다. 도입을 검토하는 팀은 승인 로그와 되돌림 절차부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "TechCrunch · techcrunch.com",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPOUdkSUFqUUdSaDIwclBOdjhNS2ltR3hsOW4tQTlMTzAzVjVrazZLN3J1eWJsYm02NDBOcUFlLXdoRV9CY3F2OHdwb215cm5mamdRZTBBS19keDhieXZiQ080SnJlTFVsNEpjNkEzMlBjOUhTSHNHTzZwNHJiYTBzSnpDemUwdFNxTXNDRHB3VEs5cnhIUTJpZ1FMd3Z1OTBXRG00Q0dlSmlqUW53eEd2dDJKaVJlRDVQdXFB?oc=5",
+          "kind": "news",
+          "origin_url": "https://techcrunch.com"
+        },
+        {
+          "handle": "Reuters · reuters.com",
+          "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNVURIRFNoWllBMDkzLVhtNFloSkdUTFZ2ZmZWN2pMMm52ckI0N1dXT3pVX0VDa3NZYW1YNW5NMVlVdkJCSXVTTGJVc0RxVVNndnhCdTA2dDRIVFIyempCd0MxTEc4SzJoTHJsZGVNTTNDRUlmN1RWb0tzRWRzX2RBZzFkLTlFQkF3VllOUV9ReHg0VHQ4cWtld3psMWpiYTVDZER3UUJ0cXpseWpj?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.reuters.com"
+        },
+        {
+          "handle": "MarkTechPost · marktechpost.com",
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNVG1KWnZ3U0RzWUpsWUplSWlGLXBqaDNmOURyZjE0NW1qblJCa2cwSDh3cDNnY1hGZ3MxNGVreFVCWjlsTldla2NFdmhzczU0bzJHdndGUXVwV3VSTzNyVFVzbk9XQWljdzhWMkZZQmpTQzc1eFphb0xOcHpvQXZzbzFPWE9kQ1otOHfSAYoBQVVfeXFMTVRtSlp2d1NEc1lKbFlKZUlpRi1wamgzZjlEcmYxNDVtam5SQmtnMEg4d3AzZ2NYRmdzMTRla3hVQlo5bE5XZWtjRXZoc3M1NG8yR3Z3RlF1cFd1Uk8zclRVc25PV0FpY3c4VjJGWUJqU0M3NXhaYW9MTnB6b0F2c28xT1hPZENaLTh3?oc=5",
+          "kind": "news",
+          "origin_url": "https://www.marktechpost.com"
+        },
+        {
+          "handle": "Gizmodo · gizmodo.com",
+          "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPRHk5S3NHTnc0MGJFNTlFbVdBRVhMRWFFUlozVzVrNk5lT0tsMHRfeW15ajY4SHptM0tCVkwtemNqYkJ0ekFGOW9IcWpCdjR6LVRFMHpUWmQ1QmFtcWtqbENhbzVYMVFNQm1iekh4YzJ3Wk5xNlJIVFNFLXVfbEVyamVDVWoyc1YyMW5mUDY4czRUODcyVmRaOExxelJHemwyRUVIdjlkWE5NUUw2S0IxUW1RdFZGdw?oc=5",
+          "kind": "news",
+          "origin_url": "https://gizmodo.com"
+        }
+      ]
+    },
+    {
+      "id": "glinet-cloud-malware",
+      "n": 2,
+      "title": "2. 클라우드 관리망 뚫린 뒤 백도어·리버스 셸 흔적",
+      "bullets": [
+        "원격 관리 서비스 취약점을 통한 악성코드 설치 확인",
+        "일부 피해 기기에서 백도어·리버스 셸 보고",
+        "침입 경로는 차단, 기존 감염 확인은 별도 과제"
+      ],
+      "body": [
+        "여행용 라우터와 원격 접속 KVM 하드웨어로 알려진 GL.iNet이 보안 공지를 업데이트하며 침해 사실을 확인했습니다. 공격자는 GoodCloud라는 클라우드 원격 관리 서비스의 취약점을 이용해 일부 고객의 라우터와 KVM 기기에 맞춤형 악성코드를 심었습니다. 제조사는 취약점을 식별해 조치를 마치고 공격자가 쓰던 접근 경로를 차단했으며, 이 경로로는 더 감염될 수 없다고 밝혔습니다. 블리핑컴퓨터 보도에 따르면 피해 사용자 중 일부는 백도어와 리버스 셸, 즉 원격에서 기기를 조종할 수 있는 흔적을 발견했습니다.",
+        "이번 내용은 제조사의 공식 보안 공지와 보안 전문 매체 두 곳의 교차 보도로 확인됩니다. 다만 유출·감염의 정확한 규모나 침해 시작 시점에 대한 수치는 아직 공개되지 않았습니다. 감염이 확인된 기기의 범위, 어떤 펌웨어 버전이 영향을 받는지도 공지 문서 기준으로 정리되는 중입니다.",
+        "클라우드 관리 서비스는 편의를 위해 관리 채널을 하나로 묶는 구조라, 그 채널이 뚫리면 연결된 모든 기기가 한 번에 위험해진다는 점이 이번 사고의 교훈으로 읽힙니다. 경로가 막혔다고 이미 심어진 악성코드가 사라지는 것은 아니므로, 해당 기기를 쓰는 사용자는 펌웨어 갱신과 기기 초기화 같은 정리 절차를 별도로 밟아야 합니다. 원격 관리 기능을 켜둘지 재검토하는 것도 필요합니다."
+      ],
+      "extra": "그 밖에: 같은 날 열린 보안 소식으로 마이크로소프트가 Azure API 관리 서비스의 취약점이 악용돼 저장된 API 자격 증명이 도난당했다고 경고한 사실이 확인됩니다. 관련 보도는 이 항목의 출처에는 포함되지 않아 별도 확인이 필요합니다.",
+      "takeaway": "관리 편의를 위해 묶은 클라우드 채널이 공격의 현관이 된 사례입니다. GL.iNet 기기 사용자는 보안 공지의 펌웨어 갱신 지침부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/hackers-exploited-glinet-cloud-flaw-to.html",
+          "kind": "news"
+        },
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-glinet-cloud-flaw-to-infect-routers-kvm-devices/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "kepco-breach",
+      "n": 3,
+      "title": "3. 내부망 침해로 두 시스템 접근, 150만 명 영향",
+      "bullets": [
+        "위협 행위자의 내부망 침해 후 두 시스템 접근 확인",
+        "고객·직원·협력업체 데이터가 함께 담겨 있음",
+        "영향 인원 150만 명, 한전 공식 확인"
+      ],
+      "body": [
+        "한국전력공사가 데이터 유출 사실을 공식 확인했습니다. 위협 행위자가 한전의 내부망에 침입했고, 고객과 직원, 협력업체 정보가 담긴 두 개 시스템에 접근했습니다. 유출 영향은 150만 명 규모로 알려졌으며, 블리핑컴퓨터가 보도한 내용입니다. 발전·송배전을 담당하는 공기업의 내부망이 외부 위협 행위자에게 열렸다는 점에서 단순 개인정보 사고를 넘는 무게로 다뤄지고 있습니다.",
+        "이번 수치의 출처는 한전의 확인 내용을 전한 보도이며, 접근된 두 시스템에 담긴 데이터 항목이 정확히 무엇인지, 유출과 접근의 구간이 어디까지인지에 대한 세부 사항은 아직 알려진 범위가 제한적입니다. 침해 경로나 공격 수법에 대한 구체적 정보도 확인되지 않았습니다. 영향 인원은 고객·직원·협력업체를 포함해 잰 값이라는 점도 함께 이해할 필요가 있습니다.",
+        "한국은 최근 몇 년간 대형 개인정보 유출이 반복된 만큼, 이번 사고 역시 알림 절차와 피해자 안내가 관심사입니다. 다만 아직 침해 경로가 확인되지 않은 상태라 원인 분석 결과를 기다리며 피해자 안내가 늦어질 가능성이 남습니다. 한전 서비스를 쓰는 개인은 공식 안내 채널의 추가 공지를 주시하고, 비밀번호와 인증 수단을 점검해 두는 것이 대응의 시작입니다."
+      ],
+      "extra": "",
+      "takeaway": "핵심 인프라 운영사의 내부망 침해 확인은 개인정보 사고를 넘는 안정성 문제입니다. 한전 이용자는 공식 안내 채널의 후속 공지부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/south-koreas-power-giant-kepco-confirms-data-breach-impacting-15-million/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "amazon-decart-deal",
+      "n": 4,
+      "title": "7.5B 달러에 AI 최적화 기술 확보, 칩 판매 대비",
+      "bullets": [
+        "Decart의 최적화 기술과 연구팀 인수",
+        "거래 규모는 언론 보도 기준 7.5B 달러",
+        "자체 칩 판매 준비가 배경으로 소개됨"
+      ],
+      "body": [
+        "아마존이 Decart의 AI 최적화 기술과 연구팀을 인수하는 거래를 진행했습니다. 테크크런치 보도에 따르면 거래 규모는 언론에 알려진 바 기준 7.5B 달러이며, 아마존이 자체 학습용 칩을 외부에 판매할 준비를 하는 상황에서 이뤄진 결정입니다. 인수 대상은 기술만이 아니라 연구팀을 포함한 인력까지 아우르는 것으로 알려졌습니다.",
+        "거래 규모는 언론이 전한 알려진 값이지 양사의 공식 확정 발표로 확인된 수치인지는 구분해 둘 필요가 있습니다. 최적화 기술이 어떤 워크로드, 어떤 규모의 학습과 추론 환경에서 측정된 성과를 갖는지에 대한 조건도 이번 보도에는 포함되지 않았습니다. 인수 완료 시점과 통합 일정에 대한 구체적 안내도 아직 확인되지 않았습니다.",
+        "배경에는 GPU 중심의 인프라 비용을 줄이려는 업계의 흐름이 있습니다. 아마존은 자체 칩을 확대해 온 만큼, 그 칩이 실제 워크로드에서 제 성능을 내도록 돕는 최적화 소프트웨어의 가치가 커진 상황입니다. 다만 최적화 기술은 워크로드마다 효과가 다르므로, 이 인수가 칩 판매 경쟁력으로 이어질지는 앞으로의 실적에서 판별됩니다. 거래가 확정되면 통합 이후 제품 반영 계획을 확인하는 것이 다음 관전점입니다."
+      ],
+      "extra": "",
+      "takeaway": "칩 판매를 앞두고 최적화 소프트웨어를 인수로 확보한 점에서 자체 인프라 사업의 완성도 경쟁이 치열해진 것이 의미입니다. 관련 업계 종사자는 통합 이후 제품 로드맵을 비교 기준으로 삼으면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/23/amazon-snaps-up-decarts-ai-optimization-tech-for-7-5b-as-it-prepares-to-sell-trainium-chips/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "richpanel-gpt6",
+      "n": 5,
+      "title": "30일 만에 지원 업무 50% 자동화한 구성",
+      "bullets": [
+        "고객지원 자동화 50%, 기간 30일 기준",
+        "대화·도구·절차를 모델별로 나눠 구성",
+        "OpenAI가 공식 고객 사례로 게시"
+      ],
+      "body": [
+        "OpenAI가 고객사 사례를 공식 문서로 게시했습니다. Richpanel이라는 고객지원 기업은 AI 지원 에이전트에 도구와 절차를 갖춰주는 역할과 대화를 맡는 역할을 서로 다른 모델에 나눠 구성했고, 절차와 도구에는 GPT-6 Astra와 GPT-6.1 Sol, 대화에는 GPT-6 Luna를 썼습니다. OpenAI가 소개한 바에 따르면 이 구성으로 기업들이 30일 동안 고객지원 업무의 50%를 자동화했다고 합니다.",
+        "이 수치는 회사가 공개한 사례 게시물에 담긴 값으로, 측정 분모가 어느 고객사의 어느 지원 채널인지, 티켓 유형이 무엇인지에 대한 세부 조건은 문서 요약에서 확인되지 않습니다. 자동화율 50%는 지원 업무 전체가 아니라 해당 사례의 도입 범위 기준일 수 있다는 점을 염두에 둬야 합니다. 독립적인 외부 측정은 아직 공개되지 않았습니다.",
+        "고객지원은 대화 품질과 절차 정확성이 동시에 요구되는 영역이라, 역할별 모델 분리는 하나의 모델로 전부를 처리하던 초기 방식과 비교되는 설계입니다. 다만 도입 효과는 상품 유형과 문의 구성에 따라 달라지므로 같은 비율을 기대하기는 어렵습니다. 지원 자동화를 검토하는 팀은 자기 티켓 유형에서 자동화 가능 비율부터 따로 재보고 설계를 잡는 것이 순서입니다."
+      ],
+      "extra": "",
+      "takeaway": "역할별 모델 분리가 자동화 안정성의 핵심으로 제시된 점이 도입 설계에 중요한 참고가 됩니다. 지원 자동화를 검토하는 팀은 자기 티켓 유형별 자동화 가능 비중부터 재보고 구성을 정하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "OpenAI News",
+          "url": "https://openai.com/business/customer-stories/richpanel-ai-customer-support",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "openrouter-provider",
+      "n": 6,
+      "title": "6. 프롬프트 유출 3곳 제외, 무보관 약속 무너진 사례",
+      "bullets": [
+        "데이터 처리 정책 위반 업체 3곳 플랫폼 제외",
+        "무보관 설정 요청까지 저장된 정황",
+        "침해 인지는 외부 연구진 통보로 시작"
+      ],
+      "body": [
+        "OpenRouter가 자사 플랫폼에서 세 개의 AI 인퍼런스 제공사를 제외했습니다. 이들은 고지한 데이터 처리 정책을 위반해 민감한 데이터를 노출했고, 그 경위가 확인되면서 퇴출 조치가 이뤄졌습니다. 해커뉴스 보도에 따르면 산업 사이버보안 업체 Dragos가 이번 주 밝힌 바로는 공격자들이 세 제공사 내부에서 데이터를 훔친 기간이 수개월에 걸쳤고, 연구진이 알려주기 전까지 세 곳 모두 침해 사실을 알지 못했습니다. 일부 유출된 요청은 프롬프트가 저장되지 않아야 한다는 무보관 설정으로 표시돼 있었던 것으로 알려졌습니다.",
+        "이 내용은 OpenRouter의 조치와 보안 업체의 조사 결과를 전한 보도로 확인됩니다. 다만 유출된 요청의 규모, 침해가 시작된 정확한 시점 등의 수치는 확인된 범위 밖입니다. 무보관 표시가 실제 저장을 막지 못했다는 정황은 정책과 실제 인프라 동작 사이의 간극을 보여주는 대목입니다.",
+        "AI 게이트웨이는 여러 제공사에 요청을 분산시키는 구조라, 이용자 입장에서는 어느 제공사가 요청을 처리했는지 알기 어렵다는 특성이 있습니다. 이번 사례는 무보관 약속만 믿기보다 처리 주체와 계약 조건을 확인하는 절차의 필요성을 보여줍니다. 다중 제공사를 쓰는 팀은 무보관 조건이 실제로 어떻게 검증되는지 문서로 확인해 두면 됩니다."
+      ],
+      "extra": "",
+      "takeaway": "무보관 약속이 실제 저장을 막지 못한 점이 신뢰 검증 체계에 미칠 영향이 큽니다. 다중 제공사를 쓰는 팀은 무보관 조건의 검증 방식을 계약 문서에 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/openrouter-drops-ai-providers-over-leaked-prompts-and-secrets/",
+          "kind": "news"
+        },
+        {
+          "handle": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/openrouter-drops-3-providers-after.html",
+          "kind": "news"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "코드 승인 권한이 에이전트로 넘어가는 등 역할 경계가 하루에 여러 곳에서 움직였습니다.",
+    "grow": "아마존의 인수와 지원 자동화 사례처럼 도입·투자 흐름은 계속 확장 국면입니다.",
+    "caution": "클라우드 관리망과 공기업 내부망 침해 확인이 겹쳐 하루 사이 경계 필요성이 커졌습니다.",
+    "heat": "Claude Ship 보도가 여러 매체에서 동시에 나오며 관심이 한 지점에 쏠렸습니다."
+  },
+  "tips": [
+    {
+      "title": "클라우드 관리 기능 점검",
+      "body": "GL.iNet 기기를 쓴다면 보안 공지의 펌웨어 갱신 지침을 먼저 적용하고, 원격 관리 기능이 필요한지 다시 정하면 됩니다.",
+      "via": "The Hacker News"
+    },
+    {
+      "title": "에이전트 승인 흔적 남기기",
+      "body": "AI에 코드 승인을 맡기기 전에 어떤 조건에서 자동 승인이 허용되는지와 되돌림 절차를 문서로 정해 두면 됩니다.",
+      "via": "TechCrunch"
+    },
+    {
+      "title": "무보관 조건 실제 확인",
+      "body": "AI 제공사와 계약할 때 무보관 설정이 저장·로그 수준에서 어떻게 검증되는지 문서 확인을 요청해 두면 됩니다.",
+      "via": "BleepingComputer"
+    },
+    {
+      "title": "지원 자동화 도입 전 자체 측정",
+      "body": "자기 티켓 유형별로 자동화 가능 비율을 먼저 재보고 역할별 모델 구성을 잡으면 도입 기대치가 현실에 가까워집니다.",
+      "via": "OpenAI"
+    },
+    {
+      "title": "공기업 유출 후속 공지 주시",
+      "body": "한전 관련 개인정보가 걱정된다면 공식 안내 채널의 추가 공지를 주시하고 비밀번호·인증 수단을 점검해 두면 됩니다.",
+      "via": "BleepingComputer"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": false
+}
