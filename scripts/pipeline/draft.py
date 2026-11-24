@@ -79,6 +79,7 @@ sources: [{"url": "<입력 buckets의 실제 링크 그대로>"}, {"url": "<입�
 - 전체 분량: briefMin 5, readMin은 실제 분량 기준이며 normalize에서 글자 수로 계산합니다.
 - 확인 안 된 인수는 미확정이라고 밝힙니다. 회사 자체 측정은 본문에 그 사실을 적습니다.
 - 과장 형용사(혁명, 폭발) 금지. 숫자로 강도를 전합니다.
+- 본문에 한자를 섞지 않습니다. 중국어 단어를 한글 문장 안에 넣으면 호가 폐기됩니다. '미국'·'입법' 같은 말은 한자 약어로 줄이지 말고 한글로 풀어 씁니다.
 
 출력은 JSON 객체 하나만. 스키마 키: date,title,heroline,dek,tag,briefMin,readMin,briefing,keywords,mainEvent,keynums,timeline,intro,analysis,mood,tips,method.
 
@@ -303,7 +304,8 @@ def render_feedback(sidecar) -> str:
         if e.get("code") == "TYPO-001":
             blocks.append(
                 f"- {e.get('loc') or '본문'}에 깨진 문자·오타 '{e.get('token') or ''}'가 있습니다.\n"
-                "  입력 원문의 표기 그대로 고쳐 쓰세요. 비슷한 다른 단어로 바꾸거나 없는 단어를 만들지 마세요."
+                "  입력 원문의 표기 그대로 고쳐 쓰세요. 비슷한 다른 단어로 바꾸거나 없는 단어를 만들지 마세요.\n"
+                "  한자가 섞인 경우면 같은 뜻의 한글 단어로 풀어 쓰세요 (예: 재集结 → 다시 모임)."
             )
             continue
         # P16: keynums-기사 단절 피드백 (KEYNUMS-LINK). 홈 카드 수치가 어떤
