@@ -507,6 +507,15 @@ def check_src_topic(
 # 기존 발행본 전수에 패턴을 돌려 오탐 0건임을 확인한 패턴만 쓴다.
 _TYPO_MIXED = re.compile(r"[A-Za-z][가-힣][A-Za-z]")
 
+# P30: 한자 혼입 게이트 (TYPO-001 확장). 생성 모델(GLM)이 "재集结",
+# "공개한节奏가"처럼 중국어 단어를 한글 문장 안에 섞어 내는 결함이 실제
+# 발행본에서 2회 확인됐다 (2026-09-29호 节奏, 2026-11-23호 集结).
+# 발행본 전수(60호)에서 한자는 이 2건 외에 한국어 기사 제목 관용 약어
+# (美=미국, 立法=입법)뿐이라, 그 3자만 허용하고 나머지 CJK 통합한자는
+# 혼입으로 판정한다 — 전수 기준 오탐 0건.
+_TYPO_CJK = re.compile(r"[\u4e00-\u9fff]+")
+_TYPO_CJK_ALLOW = frozenset("美立法")
+
 
 def _typo_findings(issue: dict) -> list[dict]:
     """오타 검출 상세. 반환: [{loc, field, token}] (loc은 사람이 읽는 위치)."""
@@ -519,6 +528,17 @@ def _typo_findings(issue: dict) -> list[dict]:
         if "\ufffd" in t:
             out.append({"loc": loc, "field": field, "token": "�"})
         for m in _TYPO_MIXED.finditer(t):
+            s = m.start()
+            while s > 0 and not t[s - 1].isspace() and m.start() - s < 12:
+                s -= 1
+            e = m.end()
+            while e < len(t) and not t[e].isspace() and e - m.end() < 12:
+                e += 1
+            out.append({"loc": loc, "field": field, "token": t[s:e]})
+        # P30: 허용 약어(美·立法)를 뺀 CJK 통합한자가 남아 있으면 혼입.
+        for m in _TYPO_CJK.finditer(t):
+            if all(ch in _TYPO_CJK_ALLOW for ch in m.group(0)):
+                continue
             s = m.start()
             while s > 0 and not t[s - 1].isspace() and m.start() - s < 12:
                 s -= 1
