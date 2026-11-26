@@ -61,6 +61,9 @@ export function ArticleView({
   older?: { date: string; title: string };
 }) {
   const [progress, setProgress] = useState(0);
+  // P34 (6라운드 개선 3번): 목차는 모바일에서 기본 접힘 + 토글. 데스크톱은
+  // CSS(display:contents)라 기존처럼 전부 펼쳐진다.
+  const [tocOpen, setTocOpen] = useState(false);
   // 미검증(초안 · 교차검증 전) 수치와 플레이스홀더는 공개 지면에 노출하지 않는다
   const publicKeynums = issue.keynums.filter(isPublicKeyNum);
   const firstId = issue.analysis[0]?.id ?? issue.briefing[0]?.id;
@@ -96,15 +99,25 @@ export function ArticleView({
       </p>
       <h1>{issue.heroline}</h1>
 
-      <nav className="issue-toc" aria-label="이 호 목차">
-        <a href="#brief">5분 브리핑</a>
-        {issue.analysis.map((sec, idx) => (
-          <a key={sec.id} href={`#sec-${sec.id}`}>
-            {idx + 1}. {shortTitle(sec.title)}
-          </a>
-        ))}
-        <a href="#mood">감정·온도</a>
-        <a href="#tips">실무 팁</a>
+      <nav className={`issue-toc${tocOpen ? " open" : ""}`} aria-label="이 호 목차">
+        <button
+          type="button"
+          className="issue-toc-toggle"
+          aria-expanded={tocOpen}
+          onClick={() => setTocOpen((v) => !v)}
+        >
+          목차 · 분석 {issue.analysis.length}개 <span aria-hidden="true">{tocOpen ? "▴" : "▾"}</span>
+        </button>
+        <div className="issue-toc-links" onClick={() => setTocOpen(false)}>
+          <a href="#brief">5분 브리핑</a>
+          {issue.analysis.map((sec, idx) => (
+            <a key={sec.id} href={`#sec-${sec.id}`}>
+              {idx + 1}. {shortTitle(sec.title)}
+            </a>
+          ))}
+          <a href="#mood">감정·온도</a>
+          <a href="#tips">실무 팁</a>
+        </div>
       </nav>
 
       <section className="news-brief" id="brief" aria-labelledby="brief-heading">
