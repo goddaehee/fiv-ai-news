@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-26",
+  "analysis": "drupal-fail2install",
+  "title": "1. Drupal 코어 RCE 취약점, 실제 공격과 11월 27일 패치 마감 동시 발생",
+  "src": "/img/2026-11-26/drupal-fail2install-aabd4a27.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: a large digital shield with a visible crack being sealed by a glowing patch, deep blue and amber palette, minimalist geometric shapes, soft gradients, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "aabd4a27",
+  "alt": "균열이 난 방패를 빛나는 패치가 메우는 추상 일러스트"
+}

@@ -136,6 +136,15 @@
           "url": "https://thehackernews.com/2026/11/hackers-exploit-two-geoserver-flaws-as.html",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-26/drupal-fail2install-aabd4a27.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "균열이 난 방패를 빛나는 패치가 메우는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -165,6 +174,15 @@
           "handle": "BleepingComputer",
           "url": "https://www.bleepingcomputer.com/news/security/infratrust-warns-of-exploited-supply-chain-flaws-in-network-appliances/",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-26/panos-fragnesia-d23d5313.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "맞물린 두 개의 사슬 고리가 닫힌 관문으로 향하는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -196,6 +214,15 @@
           "url": "https://thehackernews.com/2026/11/hackers-found-way-around-github-sha.html",
           "kind": "news"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-26/1password-breach-35e608a7.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "살짝 열린 금고 문 틈으로 빛나는 흐름이 새어 나오는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -225,6 +252,15 @@
           "handle": "The Hacker News",
           "url": "https://thehackernews.com/2026/11/google-researcher-shows-how-single-bit.html",
           "kind": "news"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-26/nuget-malware-2d25af09.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "평범해 보이는 상자 안에 숨은 갈고리가 드러나는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -257,6 +293,15 @@
           "kind": "news",
           "origin_url": "https://www.benzinga.com"
         }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-26/openai-chat-work-merge-1b518bf2.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "두 갈래 흐름이 하나의 강으로 합쳐지는 추상 일러스트",
+          "width": 1200,
+          "height": 675
+        }
       ]
     },
     {
@@ -281,6 +326,15 @@
           "handle": "OpenAI News",
           "url": "https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities",
           "kind": "doc"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-26/gpt6-protein-857d5489.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "빛나는 리본이 나선 구조로 모여드는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     },
@@ -319,6 +373,15 @@
           "url": "https://finance.yahoo.com/markets/stocks/article/anthropic-stock-sinks-further-below-ipo-price-as-investors-sour-on-the-amodei-ai-bet-100918869.html",
           "kind": "news",
           "origin_url": "https://finance.yahoo.com"
+        }
+      ],
+      "images": [
+        {
+          "src": "/img/2026-11-26/anthropic-amodei-freewill-40d18703.webp",
+          "caption": "AI 생성 일러스트 (실제 사진 아님)",
+          "alt": "나침반 바늘이 따뜻한 지평선을 가리키고 차가운 톱니바퀴가 뒤로 물러나는 추상 일러스트",
+          "width": 1200,
+          "height": 675
         }
       ]
     }

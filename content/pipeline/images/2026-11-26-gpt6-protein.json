@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-26",
+  "analysis": "gpt6-protein",
+  "title": "6. GPT-6 모델, 추론·코드 실행만으로 단백질 설계 입증",
+  "src": "/img/2026-11-26/gpt6-protein-857d5489.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: a molecular helix assembling from flowing ribbons of light, teal and violet palette, minimalist geometric shapes, soft gradients, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "857d5489",
+  "alt": "빛나는 리본이 나선 구조로 모여드는 추상 일러스트"
+}

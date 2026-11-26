@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-26",
+  "analysis": "openai-chat-work-merge",
+  "title": "5. OpenAI, ChatGPT 챗·워크 통합과 단일 사용량 계량으로 전환",
+  "src": "/img/2026-11-26/openai-chat-work-merge-1b518bf2.webp",
+  "model": "Muse media pipeline (media.generate_image)",
+  "prompt": "Abstract flat illustration, wide 16:9 composition: two flowing streams merging into a single river beneath one circular gauge, soft green and blue palette, minimalist geometric shapes, soft gradients, no text, no numbers, no people, no logos, no charts",
+  "prompt_hash": "1b518bf2",
+  "alt": "두 갈래 흐름이 하나의 강으로 합쳐지는 추상 일러스트"
+}
