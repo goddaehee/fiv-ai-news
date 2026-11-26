@@ -42,6 +42,7 @@ PROMPT = """당신은 '5분 AI 뉴스' 편집장입니다. 영어 RSS 묶음을 
 - tips의 title과 body는 서로 다르게 씁니다. via는 실제 출처명 (디버그 값 금지).
 - 같은 시사점을 여러 칸에 복붙하지 않습니다.
 - sources.url 은 입력 buckets에 있는 실제 http(s) 링크를 그대로 복사. URL을 지어내거나 ref 번호 등으로 바꾸지 않는다. **sources는 그 기사가 다루는 바로 그 이야기의 아이템에서만** 고른다. 다른 이야기의 아이템을 넣으면 출처 오염으로 호 전체가 폐기된다. **같은 이야기를 다룬 다른 매체의 아이템은 교차보도 출처이므로 함께 넣어도 되고, 가능하면 2~3개를 넣는다.** 그 이야기의 아이템이 1개뿐이면 1개만 넣는다. 비어 있으면 호 전체가 폐기된다. example.com 금지.
+- 검증에서 무관 출처로 지적된 출처는 다음 시도에서 같은 이야기의 아이템으로 교체합니다. 교체할 아이템이 입력에 없으면 그 출처를 빼고, 다른 이야기의 아이템으로 채우지 않습니다. 회사명만 겹치고 사건이 다른 아이템은 같은 이야기가 아닙니다.
 - 금액·규모 단위는 한국어 독자 표기로 환산해 씁니다. $7.5B, 40 billion, 350 million 같은 영어 단위를 그대로 옮기지 말고 75억 달러, 400억, 3억 5,000만처럼 씁니다. 크기는 원문과 정확히 같아야 합니다 (1 billion = 10억, 1 million = 100만). 통화가 없는 규모(사용자 수·파라미터)는 숫자 단위만 환산합니다.
 - briefing.id 는 영문 소문자 슬러그 (jev, claude-docs). 숫자 금지.
 - mood는 문자열 금지. {"shift":"...","grow":"...","caution":"...","heat":"..."} 객체.
@@ -431,6 +432,52 @@ def render_feedback(sidecar) -> str:
                 "호 전체가 폐기됩니다.\n"
                 "  summary를 headline과 다른 정보(수치·배경·전개)로 다시 쓰세요. "
                 "headline 문장을 그대로 옮기면 안 됩니다."
+            )
+            continue
+        # P32 0단계: 출처 정합성 피드백 (SRC-REL-001/101 · SRC-TOPIC).
+        # 지금까지 이 판정은 warning 로그에만 남고 재시도에 닿지 않았다.
+        # 앵커 방지: 무관 출처의 내용은 인용하지 않고 도메인만 짚는다.
+        if e.get("code") == "SRC-REL-001":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            doms = ", ".join(e.get("domains") or []) or "타 회사 도메인"
+            blocks.append(
+                f'- analysis id "{aid}"의 sources가 전부 주제 회사와 무관한 '
+                f"회사 도메인({doms})입니다.\n"
+                "  그 출처들을 빼고, 입력 buckets에서 이 기사가 다루는 바로 그 "
+                "이야기의 아이템으로 교체하세요. 맞는 아이템이 없으면 출처를 "
+                "줄이세요 — 다른 이야기의 아이템으로 채우지 마세요."
+            )
+            continue
+        if e.get("code") == "SRC-REL-101":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            blocks.append(
+                f'- analysis id "{aid}"의 출처 라벨 \'{e.get("handle") or ""}\'와 '
+                f'실제 URL 도메인({e.get("domain") or ""})이 다릅니다.\n'
+                "  라벨이 아니라 입력 buckets의 실제 URL을 기준으로 출처를 "
+                "고르세요. 라벨과 도메인이 어긋난 출처는 표기 오류이므로 "
+                "교체하거나 빼세요."
+            )
+            continue
+        if e.get("code") == "SRC-TOPIC":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            blocks.append(
+                f'- analysis id "{aid}"의 출처 중 {e.get("domain") or "일부"} '
+                "출처가 본문과 무관해 보입니다 (출처 제목의 핵심 단어가 본문에 "
+                "없습니다).\n"
+                "  그 출처를 같은 이야기의 아이템으로 교체하거나 빼세요. "
+                "다른 이야기의 아이템으로 채우지 마세요."
+            )
+            continue
+        # P32 1단계: 고립 출처 피드백 (SRC-ORPHAN-001). 회사명만 겹치고
+        # 사건이 다른 출처가 이 경우다 — 겹치는 회사명이 아니라 사건
+        # (제품명·사건명)이 같은 아이템으로 교체하게 한다.
+        if e.get("code") == "SRC-ORPHAN-001":
+            aid = e.get("analysis_id") or f"analysis[{e.get('analysis_index')}]"
+            blocks.append(
+                f'- analysis id "{aid}"의 출처 중 {e.get("domain") or "일부"} '
+                "출처가 본문의 어느 문장과도 연결되지 않습니다 (고립 출처).\n"
+                "  회사명만 겹치고 사건이 다른 출처입니다. 그 출처를 빼거나, "
+                "본문이 다루는 바로 그 사건의 아이템으로 교체하세요."
             )
             continue
         if e.get("code") != "NUMBERS-UNGROUNDED":

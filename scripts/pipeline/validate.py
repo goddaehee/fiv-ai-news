@@ -465,6 +465,45 @@ def _title_key_tokens(title) -> set[str]:
     return toks
 
 
+def _src_check_text(a: dict) -> str:
+    """SRC 계열 판정용 analysis 전체 텍스트 (제목·시사점·불릿·본문, 소문자)."""
+    parts = [str(a.get("title") or ""), str(a.get("takeaway") or "")]
+    for k in ("bullets", "body"):
+        v = a.get(k) or []
+        parts.extend(str(x) for x in (v if isinstance(v, list) else [v]))
+    return " ".join(parts).lower()
+
+
+def src_topic_findings(
+    issue: dict, collected_by_url: dict | None = None
+) -> list[dict]:
+    """P32 0단계: SRC-TOPIC 판정의 구조화 결과. check_src_topic(게이트
+    문자열)과 collect_structured_errors(피드백)가 같은 판정을 공유한다.
+    반환: [{analysis_index, domain, title}]"""
+    if not collected_by_url:
+        return []
+    out: list[dict] = []
+    for i, a in enumerate(issue.get("analysis") or []):
+        if not isinstance(a, dict):
+            continue
+        text = _src_check_text(a)
+        for s in a.get("sources") or []:
+            if not isinstance(s, dict):
+                continue
+            it = collected_by_url.get(url_core(str(s.get("url") or "")))
+            if not it:
+                continue
+            toks = _title_key_tokens(it.get("title"))
+            if toks and not any(t in text for t in toks):
+                out.append({
+                    "analysis_index": i,
+                    "domain": _source_domain(s, collected_by_url)
+                    or extract_domain(str(s.get("url") or "")),
+                    "title": str(it.get("title") or ""),
+                })
+    return out
+
+
 def check_src_topic(
     issue: dict, collected_by_url: dict | None = None
 ) -> list[str]:
@@ -474,30 +513,67 @@ def check_src_topic(
     SRC-REL은 회사 도메인 기반이라 중립 매체(TechCrunch 등) 내부의
     교차 오염을 못 잡는다. 오탐 시 발행이 막히면 안 되므로 warning 전용.
     draft.attach_sources의 결정적 필터와 같은 기준을 쓴다."""
+    return [
+        f"SRC-TOPIC analysis[{f['analysis_index']}].sources: 본문과 무관한 "
+        f"출처 의심 ({f['title'][:50]})"
+        for f in src_topic_findings(issue, collected_by_url)
+    ]
+
+
+def _title_token_df(items) -> tuple[dict[str, int], int]:
+    """스냅샷 아이템 제목 전체에서 핵심 토큰의 등장 아이템 수 (희귀도용).
+    draft._title_df와 같은 계산을 validate 안에서 하기 위한 복제 —
+    임계(max(3, 5%))도 draft._shares_rare_token과 동일하게 맞춘다."""
+    df: dict[str, int] = {}
+    pool = [it for it in (items or []) if isinstance(it, dict)]
+    for it in pool:
+        for t in _title_key_tokens(it.get("title")):
+            df[t] = df.get(t, 0) + 1
+    return df, len(pool)
+
+
+def src_orphan_findings(
+    issue: dict, collected_by_url: dict | None = None
+) -> list[dict]:
+    """P32 1단계 SRC-ORPHAN-001: 붙은 출처가 analysis의 어느 문장과도
+    희귀 토큰으로 연결되지 않으면 고립 출처로 판정한다 (warning 전용).
+
+    SRC-TOPIC과의 차이: 겹침 기준을 '제목 토큰 아무거나 1개'가 아니라
+    '그날 스냅샷에서 드문 토큰(제품명·사건명)'으로 올린다. 회사명·일반어만
+    겹치는 출처 — 예: 본문에 GitHub가 등장한다는 이유로 붙은 GitHub SHA
+    우회 기사 (2026-11-26호 분석 3) — 는 연결로 치지 않는다.
+    attach 필터의 면제(첫 출처 유지·최소 1개 유지)는 적용하지 않는다.
+    제목에 희귀 토큰이 없으면 판정 불가로 건너뛴다 (오탐 방지).
+    반환: [{analysis_index, domain, title}]"""
     if not collected_by_url:
         return []
-    warnings: list[str] = []
+    df, n_items = _title_token_df(collected_by_url.values())
+    if not n_items:
+        return []
+    thresh = max(3, int(0.05 * n_items))
+    out: list[dict] = []
     for i, a in enumerate(issue.get("analysis") or []):
         if not isinstance(a, dict):
             continue
-        parts = [str(a.get("title") or ""), str(a.get("takeaway") or "")]
-        for k in ("bullets", "body"):
-            v = a.get(k) or []
-            parts.extend(str(x) for x in (v if isinstance(v, list) else [v]))
-        text = " ".join(parts).lower()
+        text = _src_check_text(a)
         for s in a.get("sources") or []:
             if not isinstance(s, dict):
                 continue
             it = collected_by_url.get(url_core(str(s.get("url") or "")))
             if not it:
                 continue
-            toks = _title_key_tokens(it.get("title"))
-            if toks and not any(t in text for t in toks):
-                warnings.append(
-                    f"SRC-TOPIC analysis[{i}].sources: 본문과 무관한 출처 의심 "
-                    f"({str(it.get('title'))[:50]})"
-                )
-    return warnings
+            rare = {t for t in _title_key_tokens(it.get("title"))
+                    if df.get(t, 0) <= thresh}
+            if not rare:
+                continue
+            if not any(t in text for t in rare):
+                out.append({
+                    "analysis_index": i,
+                    "domain": _source_domain(s, collected_by_url)
+                    or extract_domain(str(s.get("url") or "")),
+                    "title": str(it.get("title") or ""),
+                })
+    return out
 
 
 # P14: 오타·깨진 문자 게이트 (TYPO-001).
@@ -928,14 +1004,14 @@ def _relevance_classify(a: dict, collected_by_url: dict | None) -> dict:
     return entry
 
 
-def check_source_relevance(
+def src_rel_findings(
     issue: dict, collected_by_url: dict | None = None
-) -> tuple[list[str], list[str]]:
-    """소스-주제 정합성 게이트. (holds, warnings)를 반환.
-    holds(SRC-REL-001/101)는 자동 탈락이 아니라 수동 검토 대상 —
-    호출자가 warnings로 노출한다."""
-    holds: list[str] = []
-    warnings: list[str] = []
+) -> list[dict]:
+    """P32 0단계: SRC-REL-001/101 판정의 구조화 결과.
+    check_source_relevance(게이트 문자열)와 collect_structured_errors
+    (피드백)가 같은 판정을 공유한다 — 판정은 기존 로직 그대로다.
+    반환: [{code, analysis_index, topic, domains, handle, domain, expected}]"""
+    findings: list[dict] = []
     analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
     for i, a in enumerate(analyses):
         # SRC-REL-101: 라벨이 명확한 사이트명인데 URL 도메인이 다름 (주제 식별 불필요)
@@ -947,20 +1023,50 @@ def check_source_relevance(
                 dom = _source_domain(s, collected_by_url)
                 exp = _LABEL_DOMAINS[h]
                 if dom and dom != exp:
-                    holds.append(
-                        f"SRC-REL-101 analysis[{i}].sources: 라벨 '{s.get('handle')}'인데 "
-                        f"URL 도메인은 {dom} (예상 {exp}) — 출처 표기 오류 의심, 수동 확인 필요"
-                    )
+                    findings.append({
+                        "code": "SRC-REL-101",
+                        "analysis_index": i,
+                        "handle": str(s.get("handle") or ""),
+                        "domain": dom,
+                        "expected": exp,
+                    })
                     break
-        # 주제-출처 정합성 (면제 X1/X2/X3 적용)
         entry = _relevance_classify(a, collected_by_url)
         if entry["flag"] == "SRC-REL-001":
-            doms = sorted({d for d, _, _ in entry["sources"]})
+            findings.append({
+                "code": "SRC-REL-001",
+                "analysis_index": i,
+                "topic": entry["topic"],
+                "domains": sorted({d for d, _, _ in entry["sources"]}),
+            })
+    return findings
+
+
+def check_source_relevance(
+    issue: dict, collected_by_url: dict | None = None
+) -> tuple[list[str], list[str]]:
+    """소스-주제 정합성 게이트. (holds, warnings)를 반환.
+    holds(SRC-REL-001/101)는 자동 탈락이 아니라 수동 검토 대상 —
+    호출자가 warnings로 노출한다."""
+    holds: list[str] = []
+    warnings: list[str] = []
+    for f in src_rel_findings(issue, collected_by_url):
+        i = f["analysis_index"]
+        if f["code"] == "SRC-REL-101":
             holds.append(
-                f"SRC-REL-001 analysis[{i}]: 주제 '{entry['topic']}'인데 출처가 전부 "
-                f"타 회사 도메인({', '.join(doms)}) — 주제 무관 출처 의심, 수동 확인 필요"
+                f"SRC-REL-101 analysis[{i}].sources: 라벨 '{f['handle']}'인데 "
+                f"URL 도메인은 {f['domain']} (예상 {f['expected']}) — 출처 표기 오류 의심, 수동 확인 필요"
             )
-        elif entry["flag"] == "SRC-REL-002":
+        elif f["code"] == "SRC-REL-001":
+            holds.append(
+                f"SRC-REL-001 analysis[{i}]: 주제 '{f['topic']}'인데 출처가 전부 "
+                f"타 회사 도메인({', '.join(f['domains'])}) — 주제 무관 출처 의심, 수동 확인 필요"
+            )
+    analyses = [a for a in (issue.get("analysis") or []) if isinstance(a, dict)]
+    for i, a in enumerate(analyses):
+        # 주제-출처 정합성 (면제 X1/X2/X3 적용) — SRC-REL-002는 warning 전용
+        entry = _relevance_classify(a, collected_by_url)
+        if entry["flag"] == "SRC-REL-002":
             others = sorted({d for d, c, _ in entry["sources"] if c == "other"})
             warnings.append(
                 f"SRC-REL-002 analysis[{i}]: 주제 '{entry['topic']}'와 무관한 회사 도메인 "
@@ -1261,6 +1367,14 @@ def check_quality(
 
     # 15. P16: 출처-제목 정합 경고 (SRC-TOPIC) — warning 전용.
     warnings.extend(check_src_topic(issue, collected_by_url))
+
+    # 15b. P32 1단계: 고립 출처 경고 (SRC-ORPHAN-001) — warning 전용.
+    # 희귀 토큰 기준으로 SRC-TOPIC이 못 잡는 회사명 겹침형 오염을 잡는다.
+    for f in src_orphan_findings(issue, collected_by_url):
+        warnings.append(
+            f"SRC-ORPHAN-001 analysis[{f['analysis_index']}].sources: 어느 "
+            f"문장과도 연결되지 않는 고립 출처 의심 ({f['domain']})"
+        )
 
     # 16. P17: 불릿 병합 비문 (BODY-FRAG) — 본문 문단이 문장으로 끝나지
     # 않으면 발행 차단. 근본 원인이던 thicken_body 병합은 제거됐고, 이
@@ -2036,6 +2150,42 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
                     "length": len(p),
                 })
                 break
+    # P32 0단계: SRC 판정 피드백 배선 — SRC-REL·SRC-TOPIC은 warning이라
+    # 발행은 막지 않지만, 지금까지 sidecar에 실리지 않아 다음 attempt의
+    # LLM이 지적을 받지 못했다 (로그에만 남고 끝나는 구조). 판정은 기존
+    # findings 함수를 그대로 재사용한다. 앵커 방지: 무관 출처의 내용은
+    # 싣지 않고 도메인·주제만 구조화한다.
+    _raw_analyses = issue.get("analysis") or []
+
+    def _aid(idx):
+        a = _raw_analyses[idx] if idx < len(_raw_analyses) else None
+        return a.get("id") if isinstance(a, dict) else None
+
+    for f in src_rel_findings(issue, collected_by_url):
+        entry = {
+            "code": f["code"],
+            "analysis_index": f["analysis_index"],
+            "analysis_id": _aid(f["analysis_index"]),
+        }
+        for k in ("topic", "domains", "handle", "domain", "expected"):
+            if f.get(k) is not None:
+                entry[k] = f[k]
+        errors.append(entry)
+    for f in src_topic_findings(issue, collected_by_url):
+        errors.append({
+            "code": "SRC-TOPIC",
+            "analysis_index": f["analysis_index"],
+            "analysis_id": _aid(f["analysis_index"]),
+            "domain": f["domain"],
+        })
+    # P32 1단계: 고립 출처 (SRC-ORPHAN-001) — warning + 피드백으로 시작.
+    for f in src_orphan_findings(issue, collected_by_url):
+        errors.append({
+            "code": "SRC-ORPHAN-001",
+            "analysis_index": f["analysis_index"],
+            "analysis_id": _aid(f["analysis_index"]),
+            "domain": f["domain"],
+        })
     # P17: 톱뉴스 누락 — 어떤 이야기가 빠졌는지 제목으로 짚는다.
     if collected_by_url:
         for st in must_cover_findings(issue, list(collected_by_url.values())):
