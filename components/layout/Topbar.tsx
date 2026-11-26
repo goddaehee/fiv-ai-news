@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Mascot } from "./Mascot";
 import { ThemeToggle } from "./ThemeToggle";
 import { formatDotWeek } from "@/lib/utils";
@@ -25,9 +26,18 @@ export function Topbar({
   latestHeroline: string;
 }) {
   const pathname = usePathname();
+  // P34 (6라운드 개선 3번): 모바일에서 스크롤하면 헤더를 compact로 줄인다.
+  // 실제 축소 스타일은 globals.css의 <=860px 미디어쿼리에만 있어 데스크톱은 불변.
+  const [compact, setCompact] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setCompact(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="topbar">
+    <header className={compact ? "topbar topbar--compact" : "topbar"}>
       <div className="utility-bar">
         <div className="utility-inner">
           <div>

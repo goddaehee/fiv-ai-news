@@ -1769,6 +1769,33 @@ html[data-theme="sepia"] {
     width:52px;
     height:52px;
   }
+  /* P34: 스크롤 시 compact 헤더 — 안내 띠·최신 호 띠를 숨기고 로고 줄을 줄인다.
+     이 미디어쿼리 안에서만 적용되므로 데스크톱 헤더는 바뀌지 않는다. */
+  .topbar-inner {
+    transition:padding .25s ease;
+  }
+  .topbar--compact .utility-bar,
+  .topbar--compact .signal-strip {
+    display:none;
+  }
+  .topbar--compact .topbar-inner {
+    padding-top:10px;
+    padding-bottom:10px;
+  }
+  .topbar--compact .brand-mark {
+    font-size:30px;
+  }
+  .topbar--compact .brand-sub {
+    display:none;
+  }
+  .topbar--compact .page-mascot {
+    width:36px;
+    height:36px;
+  }
+  .topbar--compact .nav a,.topbar--compact .nav button {
+    padding-top:4px;
+    padding-bottom:4px;
+  }
   .feed,.feed-card,.sub-card,.keynum,.site-footer {
     grid-template-columns:1fr;
   }
@@ -2287,6 +2314,29 @@ html[data-theme="sepia"] {
   border-bottom: 1px dashed rgba(128,128,128,.45);
 }
 .issue-toc a:hover { color: var(--color-accent-ink); border-bottom-style: solid; }
+/* P34: 목차 토글은 모바일 전용. 데스크톱에서는 링크 묶음이 display:contents라
+   기존 flex 나열과 픽셀 단위로 동일하게 보인다. */
+.issue-toc-toggle {
+  display: none;
+  font: inherit;
+  font-weight: 800;
+  color: var(--color-fg);
+  background: none;
+  border: 0;
+  padding: 2px 0;
+  cursor: pointer;
+}
+.issue-toc-links { display: contents; }
+@media (max-width: 860px) {
+  .issue-toc-toggle { display: inline-flex; }
+  .issue-toc-links { display: none; }
+  .issue-toc.open .issue-toc-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    width: 100%;
+  }
+}
 .last-read {
   font-style: normal;
   font-size: 11px;
