@@ -576,6 +576,176 @@ def src_orphan_findings(
     return out
 
 
+# ---------------------------------------------------------------------------
+# P33: 말투 교정 게이트 (TERM-001 · TRANS-001 · HEAD-001)
+# '초등학생 이해 가능'을 정식 기준으로 채택하되, 전부 warning + 재시도
+# 피드백으로 시작한다 (error 승격은 발행호 monitor 실측 후 개별 판단).
+# ---------------------------------------------------------------------------
+
+# 용어집 v1 — 2026-11-26호 실측에서 걸린 것부터. kind="name"은 괄호 풀이만
+# 인정하고, kind="acronym"은 한국어 풀이 문구가 같은 단위에 있어도 인정한다.
+_TERM_GLOSSARY: list[dict] = [
+    {"term": "PAN-OS", "kind": "name", "expansions": []},
+    {"term": "RCE", "kind": "acronym", "expansions": ["원격 코드 실행"]},
+    {"term": "KEV", "kind": "acronym", "expansions": ["알려진 악용 취약점"]},
+    {"term": "CMS", "kind": "acronym",
+     "expansions": ["콘텐츠 관리 시스템", "콘텐츠 관리 도구"]},
+    {"term": "익스플로잇", "kind": "name", "expansions": []},
+]
+
+
+def _tone_units(issue: dict) -> list[dict]:
+    """말투 게이트용 읽는 순서 단위: 호 제목 → briefing → analysis.
+    반환: [{loc, analysis_index, briefing_index, text}]"""
+    units: list[dict] = []
+    head = " ".join(str(issue.get(k) or "") for k in ("title", "heroline"))
+    if head.strip():
+        units.append({"loc": "issue", "analysis_index": None,
+                      "briefing_index": None, "text": head})
+    if str(issue.get("intro") or "").strip():
+        units.append({"loc": "intro", "analysis_index": None,
+                      "briefing_index": None,
+                      "text": str(issue.get("intro") or "")})
+    for j, b in enumerate(issue.get("briefing") or []):
+        if not isinstance(b, dict):
+            continue
+        text = " ".join(str(b.get(k) or "") for k in ("headline", "summary"))
+        units.append({"loc": f"briefing[{j}]", "analysis_index": None,
+                      "briefing_index": j, "text": text})
+    for i, a in enumerate(issue.get("analysis") or []):
+        if not isinstance(a, dict):
+            continue
+        parts = [str(a.get("title") or ""), str(a.get("takeaway") or ""),
+                 str(a.get("extra") or "")]
+        for k in ("bullets", "body"):
+            v = a.get(k) or []
+            parts.extend(str(x) for x in (v if isinstance(v, list) else [v]))
+        units.append({"loc": f"analysis[{i}]", "analysis_index": i,
+                      "briefing_index": None, "text": " ".join(parts)})
+    return units
+
+
+def _term_present(text: str, term: str) -> bool:
+    if term.isascii():
+        return re.search(re.escape(term), text, re.IGNORECASE) is not None
+    return term in text
+
+
+def _term_glossed_here(text: str, entry: dict) -> bool:
+    """이 단위 안에서 용어 풀이가 붙어 있는가.
+    표기 2종: 용어 바로 뒤 괄호(PAN-OS(...)) / 한국어 풀이 뒤 괄호 약어
+    (원격 코드 실행(RCE)). 약어형은 풀이 문구 자체가 있어도 인정한다."""
+    term = entry["term"]
+    esc = re.escape(term)
+    flags = re.IGNORECASE if term.isascii() else 0
+    if re.search(esc + r"\s*\(", text, flags):
+        return True
+    if re.search(r"[가-힣]\s*\(\s*" + esc + r"\s*\)", text, flags):
+        return True
+    if entry["kind"] == "acronym":
+        return any(exp in text for exp in entry["expansions"])
+    return False
+
+
+def term_gloss_findings(issue: dict) -> list[dict]:
+    """TERM-001: 전문용어가 풀이 없이 처음 등장하면 그 단위만 지적한다.
+    한 번 풀이된 용어는 이후 풀이 없이 써도 된다 (첫 등장만 본다).
+    반환: [{term, loc, analysis_index, briefing_index}]"""
+    out: list[dict] = []
+    resolved: set[str] = set()
+    reported: set[str] = set()
+    for unit in _tone_units(issue):
+        text = unit["text"]
+        for entry in _TERM_GLOSSARY:
+            term = entry["term"]
+            if term in resolved or not _term_present(text, term):
+                continue
+            if _term_glossed_here(text, entry):
+                resolved.add(term)
+                continue
+            if term not in reported:
+                reported.add(term)
+                out.append({
+                    "term": term,
+                    "loc": unit["loc"],
+                    "analysis_index": unit["analysis_index"],
+                    "briefing_index": unit["briefing_index"],
+                })
+    return out
+
+
+# 번역투 사전 v1 — {phrase(대표 표기), suggestion, forms(실제 대조 표면)}.
+# 선정 기준: 발행본 62호 전수 대조에서 '자유 의향'은 2026-11-26호에서만
+# 8건, 나머지는 0건 (오탐 신호 없음). 이중 피동은 활용형(보여집니다=
+# '보여집')까지 forms에 넣어야 실제 문장에서 잡힌다.
+_TRANS_DICT: list[dict] = [
+    {"phrase": "자유 의향", "suggestion": "자유 의지", "forms": ["자유 의향"]},
+    {"phrase": "보여지", "suggestion": "보이", "forms": ["보여지", "보여집"]},
+    {"phrase": "잊혀지", "suggestion": "잊히", "forms": ["잊혀지", "잊혀집"]},
+    {"phrase": "쓰여지", "suggestion": "쓰이", "forms": ["쓰여지", "쓰여집"]},
+    {"phrase": "읽혀지", "suggestion": "읽히", "forms": ["읽혀지", "읽혀집"]},
+    {"phrase": "닫혀지", "suggestion": "닫히", "forms": ["닫혀지", "닫혀집"]},
+    {"phrase": "의미를 만들", "suggestion": "말이 되거나 이해가 되는 것으로 풀어",
+     "forms": ["의미를 만들"]},
+]
+
+
+def trans_lit_findings(issue: dict) -> list[dict]:
+    """TRANS-001: 번역투 사전 적중. 단위당 표현별 1건.
+    반환: [{phrase, suggestion, loc, analysis_index, briefing_index}]"""
+    out: list[dict] = []
+    for unit in _tone_units(issue):
+        for entry in _TRANS_DICT:
+            if any(form in unit["text"] for form in entry["forms"]):
+                out.append({
+                    "phrase": entry["phrase"],
+                    "suggestion": entry["suggestion"],
+                    "loc": unit["loc"],
+                    "analysis_index": unit["analysis_index"],
+                    "briefing_index": unit["briefing_index"],
+                })
+    return out
+
+
+_HEAD_STRONG = ["입증", "증명", "완벽", "완승"]
+_HEAD_HEDGES = [
+    "추정", "가능성", "불확실", "확인되지 않", "확인된 바 없",
+    "확인된 바가 제한적", "미확정", "단정할 수 없", "단정하기",
+    "검증이 더 필요", "검증되지 않", "첫 단계에 불과",
+]
+
+
+def head_assert_findings(issue: dict) -> list[dict]:
+    """HEAD-001: 제목의 강한 단정이 본문의 조건·추정 서술보다 세면 경고.
+    제목(analysis title, 같은 id의 briefing headline)에 단정 표지가 있고
+    그 기사 본문에 추정 표지가 있을 때만 지적한다 — 본문이 단정을
+    뒷받침하면(추정 표지 없음) 경고하지 않는다.
+    반환: [{marker, analysis_index, analysis_id}]"""
+    out: list[dict] = []
+    brief_by_id = {
+        str(b.get("id")): str(b.get("headline") or "")
+        for b in (issue.get("briefing") or []) if isinstance(b, dict)
+    }
+    for i, a in enumerate(issue.get("analysis") or []):
+        if not isinstance(a, dict):
+            continue
+        heads = [str(a.get("title") or ""),
+                 brief_by_id.get(str(a.get("id") or ""), "")]
+        marker = next((m for m in _HEAD_STRONG
+                       if any(m in h for h in heads)), None)
+        if not marker:
+            continue
+        parts = [str(a.get("takeaway") or "")]
+        for k in ("bullets", "body"):
+            v = a.get(k) or []
+            parts.extend(str(x) for x in (v if isinstance(v, list) else [v]))
+        body_text = " ".join(parts)
+        if any(h in body_text for h in _HEAD_HEDGES):
+            out.append({"marker": marker, "analysis_index": i,
+                        "analysis_id": a.get("id")})
+    return out
+
+
 # P14: 오타·깨진 문자 게이트 (TYPO-001).
 # "Open아AI"처럼 영문 단어 중간에 한글 음절이 끼는 혼합 오타와, 인코딩이
 # 깨진 문자(U+FFFD)를 기계적으로 잡는다. 조사 오류 같은 문법 오타는 패턴으로
@@ -1395,6 +1565,24 @@ def check_quality(
                 "— 그 이야기의 아이템을 sources로 단 analysis 필요"
             )
 
+    # 18. P33: 말투 교정 게이트 — 전부 warning 전용 (피드백으로 수렴).
+    for f in term_gloss_findings(issue):
+        warnings.append(
+            f"TERM-001 {f['loc']}: 전문용어 '{f['term']}'가 풀이 없이 "
+            "처음 등장 — 첫 등장에 쉬운 풀이를 괄호로 붙일 것"
+        )
+    for f in trans_lit_findings(issue):
+        warnings.append(
+            f"TRANS-001 {f['loc']}: 번역투 표현 '{f['phrase']}' — "
+            f"'{f['suggestion']}' 형태로 고칠 것"
+        )
+    for f in head_assert_findings(issue):
+        warnings.append(
+            f"HEAD-001 analysis[{f['analysis_index']}]: 제목의 강한 단정 "
+            f"'{f['marker']}'가 본문의 조건·추정 서술보다 셈 — 단정 수준을 "
+            "본문에 맞출 것"
+        )
+
     return errors, warnings
 
 
@@ -2185,6 +2373,36 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
             "analysis_index": f["analysis_index"],
             "analysis_id": _aid(f["analysis_index"]),
             "domain": f["domain"],
+        })
+    # P33: 말투 교정 게이트 — warning이지만 재시도 피드백에는 실어
+    # 다음 attempt가 고치게 한다 (SRC가 로그에만 남던 전례의 반복 방지).
+    for f in term_gloss_findings(issue):
+        errors.append({
+            "code": "TERM-001",
+            "term": f["term"],
+            "loc": f["loc"],
+            "analysis_index": f["analysis_index"],
+            "briefing_index": f["briefing_index"],
+            "analysis_id": _aid(f["analysis_index"])
+            if f["analysis_index"] is not None else None,
+        })
+    for f in trans_lit_findings(issue):
+        errors.append({
+            "code": "TRANS-001",
+            "phrase": f["phrase"],
+            "suggestion": f["suggestion"],
+            "loc": f["loc"],
+            "analysis_index": f["analysis_index"],
+            "briefing_index": f["briefing_index"],
+            "analysis_id": _aid(f["analysis_index"])
+            if f["analysis_index"] is not None else None,
+        })
+    for f in head_assert_findings(issue):
+        errors.append({
+            "code": "HEAD-001",
+            "marker": f["marker"],
+            "analysis_index": f["analysis_index"],
+            "analysis_id": f["analysis_id"],
         })
     # P17: 톱뉴스 누락 — 어떤 이야기가 빠졌는지 제목으로 짚는다.
     if collected_by_url:
