@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import type { Issue } from "./types";
+import type { AnalysisImage, Issue } from "./types";
 
 export type { Issue };
 
@@ -22,6 +22,22 @@ export function latestIssue() {
 
 export function citationCount(issue: Issue) {
   return issue.analysis.reduce((n, a) => n + a.sources.length, 0);
+}
+
+/**
+ * P36 (6라운드 개선 5번): 호 대표 이미지 — 홈 최근 발행 카드 썸네일용.
+ * 리드 스토리(브리핑 첫 항목과 1:1인 분석)의 이미지를 우선하고,
+ * 없으면 이미지가 있는 첫 분석으로 폴백한다. 이미지가 전혀 없는
+ * 호(초기 호들)는 undefined → 카드는 기존 타이포 썸네일을 유지한다.
+ */
+export function coverImage(issue: Issue): AnalysisImage | undefined {
+  const leadId = issue.briefing[0]?.id;
+  const lead = issue.analysis.find((a) => a.id === leadId);
+  if (lead?.images?.length) return lead.images[0];
+  for (const a of issue.analysis) {
+    if (a.images?.length) return a.images[0];
+  }
+  return undefined;
 }
 
 export function neighbors(date: string) {

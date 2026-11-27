@@ -11,7 +11,40 @@ type Card = {
   dek: string;
   tag: string;
   readMin: number;
+  /** P36: 호 대표 이미지 (리드 분석 일러스트). 없으면 타이포 썸네일. */
+  thumb?: { src: string; alt: string };
 };
+
+/**
+ * P36 (6라운드 개선 5번): 카드 썸네일.
+ * 대표 이미지가 있으면 이미지를 채우고 날짜만 칩으로 얹어 호마다
+ * 얼굴이 달라지게 한다. 이미지가 없거나 로드에 실패하면 기존의
+ * 검은 타이포 썸네일(날짜+헤로라인)로 폴백해 어색하지 않게 유지한다.
+ */
+function CardThumb({ issue }: { issue: Card }) {
+  const [imgOk, setImgOk] = useState(true);
+  if (issue.thumb && imgOk) {
+    return (
+      <div className="fc-thumb">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="fc-img"
+          src={issue.thumb.src}
+          alt={issue.thumb.alt}
+          loading="lazy"
+          onError={() => setImgOk(false)}
+        />
+        <div className="fc-hd fc-hd-chip">{formatDotDate(issue.date)}</div>
+      </div>
+    );
+  }
+  return (
+    <div className="fc-thumb">
+      <div className="fc-hd">{formatDotDate(issue.date)}</div>
+      <div className="fc-hl">{issue.heroline}</div>
+    </div>
+  );
+}
 
 export function Feed({ issues }: { issues: Card[] }) {
   const router = useRouter();
@@ -31,10 +64,7 @@ export function Feed({ issues }: { issues: Card[] }) {
             className="feed-card"
             onClick={() => router.push(`/news/${issue.date}`)}
           >
-            <div className="fc-thumb">
-              <div className="fc-hd">{formatDotDate(issue.date)}</div>
-              <div className="fc-hl">{issue.heroline}</div>
-            </div>
+            <CardThumb issue={issue} />
             <div className="fc-content">
               <div className="fc-meta">
                 <span>{issue.date}</span>

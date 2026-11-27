@@ -6,7 +6,7 @@ import { KeyStrip } from "@/components/home/KeyStrip";
 import { SearchBox } from "@/components/home/SearchBox";
 import { SubscribeForm } from "@/components/home/SubscribeForm";
 import { Welcome } from "@/components/home/Welcome";
-import { ISSUES, citationCount, issuesByMonth, latestIssue } from "@/data/news";
+import { ISSUES, citationCount, coverImage, issuesByMonth, latestIssue } from "@/data/news";
 import { CATALOG, deepDiveSlug } from "@/data/catalog";
 import { REPOS } from "@/data/repos";
 
@@ -63,7 +63,20 @@ export default function HomePage() {
       />
       <KeyStrip />
       <SubscribeForm />
-      <Feed issues={ISSUES.map((i) => ({ date: i.date, title: i.title, heroline: i.heroline, dek: i.dek, tag: i.tag, readMin: i.readMin }))} />
+      <Feed
+        issues={ISSUES.map((i) => {
+          const cover = coverImage(i);
+          return {
+            date: i.date,
+            title: i.title,
+            heroline: i.heroline,
+            dek: i.dek,
+            tag: i.tag,
+            readMin: i.readMin,
+            thumb: cover ? { src: cover.src, alt: cover.alt } : undefined,
+          };
+        })}
+      />
       <Archive
         total={ISSUES.length}
         months={issuesByMonth().map(({ month, items }) => ({
