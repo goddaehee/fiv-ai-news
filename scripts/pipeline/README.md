@@ -49,3 +49,7 @@ python3 scripts/pipeline/run.py --llm --provider glm
 검증이 통과하면 Action이 `content/issues/YYYY-MM-DD.json`을 **main에 바로 푸시**합니다. PR을 만들고 머지할 필요 없습니다. Vercel이 재빌드합니다.
 
 손으로 고친 호는 `draft` 필드가 없어서 파이프라인이 덮지 않습니다.
+
+## 실패 리포트 (P37)
+
+실패하면 `run.py`가 `content/pipeline/<날짜>.failure-report.json`(+ `.md`)에 실패 구조를 남깁니다: 실패 단계(collect/draft/validate), 시도별 draft·validate 결과와 실패 게이트 코드, 시작 슬롯(05:30/08:30) 대비 지연, 복구 상태. 이 파일은 Action 아티팩트(`pipeline-<run_id>`)에 포함되고, 실패 이슈 본문이 그 아티팩트를 가리킵니다. 후속 실행이 발행에 성공하면 같은 파일의 `recovery`가 `recovered`로 갱신됩니다 (Actions는 실행마다 새 체크아웃이라, 이전 실행의 리포트가 로컬에 있을 때만 갱신됩니다).
