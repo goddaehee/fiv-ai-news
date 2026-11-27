@@ -61,6 +61,19 @@ FEEDS = [
         "https://news.google.com/rss/search?q=artificial+intelligence+OR+LLM+when:1d&hl=en-US&gl=US&ceid=US:en",
         "news",
     ),
+    # P35: 보안 교차보도 피드 — 보안 이야기는 Google News AI 쿼리
+    # ("artificial intelligence OR LLM")에 안 걸려 보안 전문 피드 2곳에만
+    # 의존했고, 그 결과 단독 출처가 됐다 (실측: 2026-11-24호 KEPCO는
+    # 스냅샷 234건 중 BleepingComputer 1건뿐, 출처 평균 1.83).
+    # 이 피드로 실측 확인: 같은 KEPCO 유출을 SecurityWeek·Yahoo도 다뤘다.
+    # 쿼리는 침해·랜섬웨어·사이버공격 3종으로 좁게 유지한다 (이름이
+    # "Google News"로 시작하면 parse_feed가 힌트 필터 없이 전수 수집하므로
+    # 넓은 쿼리는 스냅샷을 보안 일반 뉴스로 채운다).
+    (
+        "Google News Security",
+        "https://news.google.com/rss/search?q=data+breach+OR+ransomware+OR+cyberattack+when:1d&hl=en-US&gl=US&ceid=US:en",
+        "news",
+    ),
 ]
 
 AI_HINT = re.compile(
@@ -82,6 +95,7 @@ TAG = re.compile(r"<[^>]+>")
 # P5: 피드별 수집 상한. Google News AI는 limit=40이 수집의 60%를 폐기하므로 100으로 상향.
 FEED_LIMITS = {
     "Google News AI": 100,
+    "Google News Security": 100,
 }
 
 # P5: 신선도 필터 — 48시간 초과 기사는 제외 (데일리 다이제스트 기준)
