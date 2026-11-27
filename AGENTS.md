@@ -30,5 +30,7 @@
 
 영어 규모 단위($7.5B·40 billion·350 million)는 draft.py가 normalize 뒤에 결정적으로 한국어 단위로 환산한다 (P31, convert_issue_units — 크기는 정확히 보존). Google News 중계 링크는 collect.py가 수집 단계에서 기사 직행 URL로 해소한다 (P31, 실패 시 중계 링크 유지).
 
+보안 교차보도 피드 Google News Security가 있다 (P35, data breach·ransomware·cyberattack, when:1d). 보안 이야기는 AI 쿼리에 안 걸려 단독 출처가 되기 쉬워서, 이 피드로 수집 단계부터 2~3개 매체를 확보한다.
+
 원문 사이트와 비교할 때는 구조·밀도만 본다. 문장과 숫자는 1차 문서에서 다시 잰다.
 
