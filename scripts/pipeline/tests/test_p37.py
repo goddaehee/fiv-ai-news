@@ -7,6 +7,11 @@
 content/pipeline/<date>.failure-report.json/.md에 구조화해 남긴다.
 이 테스트는 그 기록 로직(slot 판정·게이트 파싱·리포트 작성·복구 갱신·
 attempt 로그)이 의도대로 동작하는지 검증한다.
+
+P39 확장 (발행 실패 진단 건 2): failed_gates에 WARN 코드(SRC-ORPHAN·
+TERM-001 등)까지 합쳐져 원인 오독을 불렀다. validate가 sidecar 항목에
+severity를 확정해 싣고, 리포트는 hard(실패 게이트)와 warn(경고·피드백
+게이트)을 분리 표기한다 — 그 분리 동작을 여기서 검증한다.
 """
 
 import json
@@ -19,6 +24,7 @@ from unittest.mock import MagicMock
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import run
+import validate
 
 PASS = 0
 FAIL = 0
@@ -79,7 +85,10 @@ with tempfile.TemporaryDirectory() as td:
         {"attempt": 2, "draft_rc": 0, "issue_created": True, "validate_rc": 1},
         {"attempt": 3, "draft_rc": 5, "issue_created": True, "validate_rc": None},
     ]
-    gates = {1: ["NUMBERS-UNGROUNDED"], 2: ["NUMBERS-UNGROUNDED", "TERM-001"]}
+    # P39: hard/warn 분리 형식 — WARN 코드가 실패 게이트에 섞이면 안 된다.
+    gates = {1: {"hard": ["NUMBERS-UNGROUNDED"], "warn": []},
+             2: {"hard": ["NUMBERS-UNGROUNDED"],
+                 "warn": ["TERM-001", "SRC-ORPHAN-001"]}}
     jp = run.write_failure_report(
         pipe, "2026-11-26", started, "draft", 5,
         attempts=attempts, gates_by_attempt=gates,
@@ -90,13 +99,30 @@ with tempfile.TemporaryDirectory() as td:
        rep["date"] == "2026-11-26" and rep["stage"] == "draft" and rep["exit_code"] == 5)
     ok("슬롯·지연 기록", rep["schedule"]["started_slot"] == "08:30"
        and rep["schedule"]["start_delay_min"] == 0)
-    ok("게이트 합집합 (시도별 합산·중복 제거)",
-       rep["failed_gates"] == ["NUMBERS-UNGROUNDED", "TERM-001"])
-    ok("시도별 게이트 부착", rep["attempts"][1]["failed_gates"] == ["NUMBERS-UNGROUNDED", "TERM-001"])
+    ok("실패 게이트는 hard만 (시도별 합산·중복 제거)",
+       rep["failed_gates"] == ["NUMBERS-UNGROUNDED"])
+    ok("경고 게이트는 warn_gates로 분리",
+       rep["warn_gates"] == ["TERM-001", "SRC-ORPHAN-001"])
+    ok("시도별 게이트 분리 부착",
+       rep["attempts"][1]["failed_gates"] == ["NUMBERS-UNGROUNDED"]
+       and rep["attempts"][1]["warn_gates"] == ["TERM-001", "SRC-ORPHAN-001"])
     ok("복구는 awaiting_retry로 시작", rep["recovery"]["status"] == "awaiting_retry")
     md = (pipe / "2026-11-26.failure-report.md").read_text(encoding="utf-8")
     ok("MD에 단계·게이트·복구 상태 포함",
        "draft" in md and "NUMBERS-UNGROUNDED" in md and "awaiting_retry" in md)
+    ok("MD 실패 게이트 줄에 WARN 코드 없음",
+       "- 실패 게이트: NUMBERS-UNGROUNDED" in md
+       and "- 경고·피드백 게이트: TERM-001, SRC-ORPHAN-001" in md)
+
+    # 구 형식(리스트) 게이트는 전부 hard로 호환 처리된다.
+    jp_old = run.write_failure_report(
+        pipe, "2026-11-25", started, "validate", 1,
+        attempts=[{"attempt": 1, "draft_rc": 0, "issue_created": True,
+                   "validate_rc": 1}],
+        gates_by_attempt={1: ["MUST-COVER"]})
+    rep_old = json.loads(jp_old.read_text(encoding="utf-8"))
+    ok("구 형식 리스트는 hard로 호환",
+       rep_old["failed_gates"] == ["MUST-COVER"] and rep_old["warn_gates"] == [])
 
     # 복구 갱신: 14:18 발행 확정 → 05:30 슬롯 대비 528분 지연
     ok("복구 갱신 성공", run.mark_failure_recovered(pipe, "2026-11-26", _dt(14, 18)))
@@ -141,6 +167,28 @@ _rc2 = run.draft_with_retry(
 ok("타임아웃 시 rc=5", _rc2 == 5)
 ok("타임아웃 attempt는 validate_rc None",
    _log2 and _log2[0]["draft_rc"] == 5 and _log2[0]["validate_rc"] is None)
+
+# --- P39: validate severity 확정 ---------------------------------------------
+def _sev(entry, *, is_final=False, monitor=False):
+    out = validate._annotate_severity([dict(entry)], is_final=is_final,
+                                      monitor=monitor)
+    return out[0]["severity"]
+
+
+ok("SRC-TOPIC은 warn", _sev({"code": "SRC-TOPIC"}) == "warn")
+ok("SRC-ORPHAN-001은 warn", _sev({"code": "SRC-ORPHAN-001"}) == "warn")
+ok("TERM-001은 warn", _sev({"code": "TERM-001"}) == "warn")
+ok("SRC-REL-001은 warn(보류)", _sev({"code": "SRC-REL-001"}) == "warn")
+ok("MUST-COVER는 hard", _sev({"code": "MUST-COVER"}) == "hard")
+ok("SOURCES-MISSING은 hard", _sev({"code": "SOURCES-MISSING"}) == "hard")
+ok("BODY-TOTAL 최종 attempt 550자는 warn (완화 구간)",
+   _sev({"code": "BODY-TOTAL", "length": 550}, is_final=True) == "warn")
+ok("BODY-TOTAL 최종 attempt 450자는 hard (절대 하한)",
+   _sev({"code": "BODY-TOTAL", "length": 450}, is_final=True) == "hard")
+ok("BODY-TOTAL 비최종 attempt 550자는 hard",
+   _sev({"code": "BODY-TOTAL", "length": 550}, is_final=False) == "hard")
+ok("BODY-TOTAL monitor는 warn",
+   _sev({"code": "BODY-TOTAL", "length": 450}, monitor=True) == "warn")
 
 print(f"P37 tests: {PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)
