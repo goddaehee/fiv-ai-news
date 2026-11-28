@@ -1750,6 +1750,19 @@ _NUM_WORD_RE = re.compile(
     re.IGNORECASE,
 )
 
+# P41: 영어 점수 표기 (입력 스캔 전용). "(CVSS score: 9.8)"의 소수는 뒤에
+# 단위가 없어 NUM_RE가 잡지 못하지만, LLM이 "9.8점"으로 옮기는 것은 정확한
+# 변환이다 (2026-11-26·27호 Drupal Fail2Install — 사흘 연속 같은 오탐이
+# attempt를 소모했다. 출처 요약에 실재하는 수치였음이 아티팩트로 확정).
+# 점수 문맥(cvss·score·rating·grade 등) 안에서 등장한 소수와 "N/10" 평점
+# 표기만 canon으로 연결한다 — 버전 번호("version 11.2") 같은 무관한 소수를
+# 허용 집합에 넣지 않기 위해 문맥을 한정한다 (P18b·P20과 같은 방식).
+_SCORE_DEC_RE = re.compile(
+    r"(?:cvss|score|scored|rating|rated|grade)\b[^\d]{0,25}?(\d+(?:\.\d+)?)",
+    re.IGNORECASE,
+)
+_OUT_OF_TEN_RE = re.compile(r"(?<![\d.])(\d+(?:\.\d+)?)\s*/\s*10\b")
+
 # P24: 합성 표기 "A+B" (입력 스캔 전용). "90+30"처럼 +로 묶인 두 숫자는
 # 각 숫자 뒤에 단위가 없어 NUM_RE가 잡지 못한다. 단위는 합성 표기 바로
 # 뒤에 붙은 단위(_PAIR_UNIT_RE), 또는 같은 입력 텍스트에서 구성 숫자가
@@ -2043,6 +2056,20 @@ def _numbers_grounded_detail(a: dict, collected_by_url: dict | None) -> dict:
             # 뒤에 단어가 없을 때 제외되고, 소수점 뒤 숫자도 제외된다.
             for m in re.finditer(r"(?<![\d.])(\d{1,3})(?=\s+[A-Za-z])", text):
                 norm = f"mag:{int(m.group(1))}"
+                if norm not in input_nums:
+                    input_nums.add(norm)
+                    allowed_raw.append(m.group(0))
+            # P41: 영어 점수 소수 보강 (위 _SCORE_DEC_RE 주석 참조). 입력
+            # 스캔에서만 점수 문맥의 소수를 canon으로 연결한다 (출력 추출은
+            # 불변). _canon_num("9.8")과 _canon_num("9.8점")이 같은
+            # mag 값이라 표면 쌍이 맞는다.
+            for m in _SCORE_DEC_RE.finditer(text):
+                norm = _canon_num(m.group(1))
+                if norm not in input_nums:
+                    input_nums.add(norm)
+                    allowed_raw.append(m.group(0))
+            for m in _OUT_OF_TEN_RE.finditer(text):
+                norm = _canon_num(m.group(1))
                 if norm not in input_nums:
                     input_nums.add(norm)
                     allowed_raw.append(m.group(0))
