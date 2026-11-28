@@ -889,6 +889,13 @@ def check(issue: dict, collected_by_url: dict | None = None) -> list[str]:
             err(f"briefing[{i}]", "must be object", bag)
             continue
         require(b, ["id", "headline", "summary"], f"briefing[{i}]", bag)
+        # P42: 빈 summary도 missing과 동일하게 hard 판정한다. 지금까지 이
+        # 불변조건은 draft.normalize의 SchemaError만 지켰는데, 요약 수리
+        # fail-soft(draft P42)가 attempt를 살려 validate까지 보내면 여기서
+        # 판정해야 빈 summary가 발행으로 새지 않는다. 게이트 신설이 아니라
+        # 기존 불변조건의 집행 위치 확장이다.
+        if "summary" in b and not str(b.get("summary") or "").strip():
+            err(f"briefing[{i}]", "missing summary", bag)
         ids.append(b.get("id"))
         # P0: 헤드라인 반말체 금지 (명사형 종결). "~했다/내놨다/줄였다" 등
         hl = str(b.get("headline") or "")
@@ -2158,6 +2165,16 @@ def collect_structured_errors(issue: dict, collected_by_url: dict | None) -> lis
             "required": _req,
             "missing_ids": [b.get("id") for b in _briefs if b.get("id") not in _have],
         })
+    # P42: 빈 briefing summary — check()의 hard 판정과 같은 불변조건을
+    # 피드백용 구조화 에러로도 남긴다 (draft의 SCHEMA-001 sidecar와 같은
+    # 코드·문구라 render_feedback가 그대로 렌더링한다). fail-soft로
+    # validate까지 온 attempt가 왜 실패했는지 다음 attempt에 닿게 한다.
+    for i, b in enumerate(_briefs):
+        if not str(b.get("summary") or "").strip():
+            errors.append({
+                "code": "SCHEMA-001",
+                "message": f"briefing[{i + 1}] (id={b.get('id')}): summary 누락 — headline 복제 금지",
+            })
     # P10c: sources 누락 — 재시도 피드백용. LLM이 sources 키를 통째로 생략하는
     # 회귀(10/22: 3회 시도 전부 need ≥1 탈락)에 대응. hollow는 검증 실패이므로
     # 다음 시도에서 고치도록 피드백에 포함한다.

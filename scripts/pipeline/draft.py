@@ -1657,7 +1657,8 @@ def _fallback_keynum(item: dict, seen: set) -> dict | None:
 
 
 def normalize(issue: dict, snap: dict | None = None,
-              final_attempt: bool = False) -> dict:
+              final_attempt: bool = False,
+              allow_missing_summary: bool = False) -> dict:
     """Coerce sloppy LLM JSON into the house schema so check() does not crash.
 
     P10: snap을 받으면 keynums 폴백을 수집 전체에서 채운다.
@@ -1667,7 +1668,10 @@ def normalize(issue: dict, snap: dict | None = None,
     (DUP-001 유령 에러 원천 제거).
     P27: final_attempt=True면 thicken_body가 본문 600자 미만인 분석에
     완결 문장 불릿을 새 문단으로 병합한다 (결정적 확장). 최종 attempt가
-    아니면 False(기본값)라 기존 동작과 같다."""
+    아니면 False(기본값)라 기존 동작과 같다.
+    P42: allow_missing_summary=True는 요약 수리 fail-soft 전용이다 —
+    누락 summary를 합성하지 않고 빈 값으로 통과시키며, 판정은
+    validate의 hard 게이트(briefing summary 필수)가 맡는다."""
     brief = []
     for i, b in enumerate(_list(issue.get("briefing")), start=1):
         if isinstance(b, str):
@@ -1680,7 +1684,7 @@ def normalize(issue: dict, snap: dict | None = None,
             hid = slug(headline or f"s{i}")
         hid = hid.replace(" ", "-")[:40]
         summary = _text(b.get("summary") or b.get("dek"))
-        if not summary:
+        if not summary and not allow_missing_summary:
             raise SchemaError(f"briefing[{i}] (id={hid}): summary 누락 — headline 복제 금지")
         brief.append(
             {
@@ -2187,6 +2191,37 @@ REPAIR_PROMPT = """당신은 '5분 AI 뉴스' 편집 보조입니다. 초안 JSO
 - 출력은 JSON 객체 하나만: {"summaries": {"<id>": "<summary>", ...}}"""
 
 
+def _missing_summary_ids(issue: dict) -> list[str]:
+    """P42: summary/dek가 빈 briefing의 id 목록 (수리 전후 비교용)."""
+    out = []
+    for b in _list(issue.get("briefing")):
+        if isinstance(b, dict) and not _text(b.get("summary") or b.get("dek")):
+            out.append(_text(b.get("id")) or "?")
+    return out
+
+
+def _write_summary_repair_sidecar(pipe: Path, date: str, attempt: int,
+                                  missing_before: list[str],
+                                  still_missing: list[str]) -> None:
+    """P42: 요약 수리 fail-soft 기록. validate sidecar와 파일명이 겹치면
+    validate가 자기 리포트로 덮어쓰므로 별도 이름으로 남긴다."""
+    try:
+        path = pipe / f"{date}.summary-repair.attempt{attempt}.json"
+        rep = {
+            "date": date,
+            "attempt": attempt,
+            "missing_before": missing_before,
+            "fixed": [x for x in missing_before if x not in still_missing],
+            "still_missing": still_missing,
+            "outcome": "fail-soft: proceeded to validation",
+        }
+        path.write_text(json.dumps(rep, ensure_ascii=False, indent=2) + "\n",
+                        encoding="utf-8")
+        print(f"[draft] summary repair sidecar written: {path}", flush=True)
+    except Exception as e:
+        print(f"WARN summary repair sidecar failed: {e}", file=sys.stderr)
+
+
 def _repair_missing_summaries(issue: dict, snap: dict, chat_fn) -> bool:
     """P18: briefing summary 통째 생략 샘플의 수리.
 
@@ -2196,7 +2231,8 @@ def _repair_missing_summaries(issue: dict, snap: dict, chat_fn) -> bool:
     값을 코드로 합성(복제)하는 것은 금지(P10)이므로, 누락 항목만 근거
     (같은 id analysis의 불릿·본문 + headline과 토큰이 겹치는 수집 아이템
     요약)와 함께 LLM에 다시 써 달라고 요청한다. 전부 채워졌을 때만
-    True, 아니면 False → 호출부가 기존 SchemaError 경로를 따른다."""
+    True, 아니면 False → 호출부는 P42 fail-soft 경로를 따른다
+    (부분 성공분은 유지, 남은 누락은 validate가 판정)."""
     briefs = [b for b in _list(issue.get("briefing")) if isinstance(b, dict)]
     missing = [b for b in briefs
                if not _text(b.get("summary") or b.get("dek"))]
@@ -2680,8 +2716,9 @@ def main() -> int:
         except SchemaError as e:
             # P18: summary 누락은 통째 생략 샘플이 반복되는 패턴이라
             # attempt를 버리기 전에 수리 호출 1회로 복구를 시도한다.
-            repaired = False
+            proceed = False
             if "summary" in str(e):
+                _missing_before = _missing_summary_ids(issue)
                 repaired = _repair_missing_summaries(
                     issue, snap,
                     lambda user: chat(url, key, model, user,
@@ -2691,10 +2728,37 @@ def main() -> int:
                 if repaired:
                     try:
                         issue = normalize(issue, snap, final_attempt=_final)
+                        proceed = True
                     except SchemaError as e2:
                         e = e2
-                        repaired = False
-            if not repaired:
+                if not proceed and "summary" in str(e):
+                    # P42: fail-soft — 수리 호출이 깨졌거나 일부만 성공해도
+                    # attempt를 rc=4로 통째로 버리지 않는다 (2026-11-28호
+                    # attempt 2: 수리 7/8 성공인데 스키마 실패로 소모).
+                    # 채워진 summary는 근거 기반 LLM 값이라 유지하고, 남은
+                    # 누락은 합성 없이 빈 값으로 normalize를 통과시킨 뒤
+                    # validate의 hard 게이트가 판정하게 한다. 다른 게이트
+                    # 결과까지 sidecar에 남아 다음 attempt 피드백이
+                    # 풍부해지고, 누락이 남은 한 validate가 실패시키므로
+                    # 빈 summary가 발행되는 경로는 없다. 수리 실패 사실은
+                    # 로그와 전용 sidecar에 남긴다.
+                    _still = _missing_summary_ids(issue)
+                    print(f"[draft] summary repair incomplete: "
+                          f"{len(_missing_before) - len(_still)}/"
+                          f"{len(_missing_before)} fixed; fail-soft "
+                          f"proceeding with {len(_still)} missing "
+                          f"({', '.join(_still)}) — validate will judge",
+                          file=sys.stderr)
+                    _write_summary_repair_sidecar(
+                        pipe, snap["date"], args.attempt,
+                        _missing_before, _still)
+                    try:
+                        issue = normalize(issue, snap, final_attempt=_final,
+                                          allow_missing_summary=True)
+                        proceed = True
+                    except SchemaError as e3:
+                        e = e3
+            if not proceed:
                 # P10 (Gemini안): 합성 대신 명시적 스키마 에러 → sidecar로 남겨
                 # 다음 attempt의 피드백에 포함시킨다.
                 print(f"schema error: {e}", file=sys.stderr)
