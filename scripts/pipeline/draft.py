@@ -19,7 +19,7 @@ from datetime import datetime, timedelta, timezone
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
-from cluster import cluster, rank_buckets, story_groups, _outlet_key, must_cover_stories
+from cluster import cluster, rank_buckets, story_groups, _outlet_key, must_cover_stories, _story_tokens
 from select_items import select_buckets
 
 KST = timezone(timedelta(hours=9))
@@ -2445,6 +2445,84 @@ def _should_retry_timeout(attempt: int) -> bool:
     return attempt <= 3
 
 
+def _attach_must_cover_sources(issue: dict, snap: dict) -> list[str]:
+    """P40: 최종 attempt 전용 — MUST-COVER 이야기의 분석이 있는데 출처가
+    비어 호 전체가 죽는 경우, 그 이야기의 아이템을 결정적으로 붙인다.
+
+    실측 (2026-11-28 attempt 3): boston-scientific-breach 분석은 있었지만
+    sources가 0개여서 SOURCES-MISSING과 MUST-COVER가 동시에 걸렸다.
+    attach_sources의 P18 빈 출처 복구는 본문-제목 토큰 겹침 ≥2가 조건인데,
+    한글 음차 본문("보스턴 사이언티픽")은 영문 제목 토큰과 겹침이 0이라
+    복구가 닿지 않았다. cluster가 확정한 이야기 소속은 본문 표기와 무관한
+    결정적 근거이므로, 최종 attempt에서만 아래가 모두 성립할 때 붙인다:
+    (a) 커버 안 된 must-cover 이야기 (validate와 같은 판정)
+    (b) 출처가 빈 분석
+    (c) 분석 id 토큰과 이야기 제목 토큰이 2개 이상 겹치고, 그 겹침이
+        후보 중 유일하게 가장 큼 (동점이면 건드리지 않는다)
+    붙이는 출처는 게이트가 요구하는 바로 그 이야기의 아이템뿐이며, 게이트
+    (must_cover_findings·SOURCES-MISSING)는 그대로 둬 수리본을 다시 판정
+    받게 한다. 분석 자체가 없는 이야기는 만들지 않는다 (설계 문서 참조:
+    hidden_files/p40-must-cover-design.md)."""
+    items = (snap or {}).get("items") or []
+    if not items:
+        return []
+    stories = must_cover_findings(issue, items)
+    if not stories:
+        return []
+    by_core = {url_core(str(it.get("url") or "")): it
+               for it in items if it.get("url")}
+    fixed: list[str] = []
+    for st in stories:
+        story_items = [by_core[url_core(u)] for u in st["urls"]
+                       if url_core(u) in by_core]
+        if not story_items:
+            continue
+        stoks = _story_tokens(st["title"])
+        cands = []
+        for a in _list(issue.get("analysis")):
+            if not isinstance(a, dict) or a.get("sources"):
+                continue
+            cands.append((len(_id_tokens(a.get("id")) & stoks), a))
+        cands.sort(key=lambda x: -x[0])
+        if not cands or cands[0][0] < 2:
+            continue
+        if len(cands) > 1 and cands[1][0] >= cands[0][0]:
+            continue  # 유일한 최강 일치가 아니면 건드리지 않는다
+        a = cands[0][1]
+        # 도메인 쿼터(QUOTA-001) 배려: 지금 호에서 적게 쓰인 도메인부터,
+        # 가능하면 서로 다른 도메인으로 최대 2개.
+        dom_count: dict[str, int] = {}
+        for x in _list(issue.get("analysis")):
+            if isinstance(x, dict):
+                for s in x.get("sources") or []:
+                    if isinstance(s, dict):
+                        d = extract_domain(str(
+                            s.get("origin_url") or s.get("url") or ""))
+                        if d:
+                            dom_count[d] = dom_count.get(d, 0) + 1
+
+        def _dom(it: dict) -> str:
+            return extract_domain(str(it.get("origin_url")
+                                      or it.get("url") or ""))
+
+        ordered = sorted(story_items, key=lambda it: dom_count.get(_dom(it), 0))
+        picked: list[dict] = []
+        seen_dom: set[str] = set()
+        for it in ordered:
+            if len(picked) >= 2:
+                break
+            d = _dom(it)
+            if d in seen_dom and len(ordered) > len(picked) + 1:
+                continue
+            seen_dom.add(d)
+            picked.append(it)
+        a["sources"] = [source_entry(it) for it in picked]
+        fixed.append(_text(a.get("id")))
+        print(f"[draft] must-cover source attach: '{a.get('id')}' <- "
+              f"{[str(it.get('title') or '')[:40] for it in picked]}")
+    return fixed
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--collected", type=Path, required=True)
@@ -2627,10 +2705,14 @@ def main() -> int:
         # 수치 게이트가 환산된 표기로 대조하게 한다. 크기는 보존된다.)
         issue = convert_issue_units(issue)
         issue = attach_sources(issue, snap, ref_table=ref_table)
+        # P40: 최종 attempt 전용 — MUST-COVER 이야기의 분석이 있는데 출처가
+        # 비어 있으면 그 이야기의 아이템을 결정적으로 붙인다 (본문 수리의
+        # 근거 확보보다 먼저). 게이트는 그대로 둔다.
         # P38: 최종 attempt 전용 본문 수리 — P27 불릿 병합 뒤에도 BODY-TOTAL
         # (600자)에 못 미치는 분석을 근거 기반 LLM 수리 1회로 늘린다.
         # 게이트 자체는 건드리지 않고, validate가 수리본을 그대로 판정한다.
         if _final:
+            _attach_must_cover_sources(issue, snap)
             _repair_short_bodies(
                 issue, snap,
                 lambda user: chat(url, key, model, user,
@@ -2689,7 +2771,7 @@ def main() -> int:
 # 닿아 ImportError가 나고 fallback(복합수 전개 없음)이 쓰인다. draft는
 # validate 이름을 함수 안에서만 쓰므로, 이 import를 파일 끝으로 옮겨
 # NUM_RE·normalize_num_text 정의가 먼저 끝나게 한다.
-from validate import KINDS, check, url_core, extract_domain
+from validate import KINDS, check, url_core, extract_domain, must_cover_findings
 
 
 if __name__ == "__main__":
