@@ -2546,6 +2546,39 @@ def check_depth(issue: dict, collected_by_url: dict | None = None, *, monitor: b
     return errors, warnings
 
 
+# P39 (발행 실패 진단 건 2): 구조화 항목의 심각도. sidecar의 errors에는
+# 발행 차단(hard) 게이트와 피드백 전용(warn) 코드가 섞여 있어, P37 실패
+# 리포트가 WARN까지 "실패 게이트"로 합산해 원인을 오독하게 했다
+# (11/28 진단에서 SRC-ORPHAN이 첫 의심 대상이 된 것이 그 사례).
+# 판정의 단일 소스는 validate이므로, 여기서 severity를 확정해 sidecar에
+# 싣고 run.py 리포트가 그대로 나눠 표기한다.
+_WARN_ONLY_CODES = {
+    "SRC-REL-001", "SRC-REL-101",  # 보류(hold) — 수동 검토 대상
+    "SRC-TOPIC", "SRC-ORPHAN-001",  # 출처 정합 경고 (P32)
+    "SOURCES-THIN",                 # 출처 보충 피드백 전용 (P22)
+    "TERM-001", "TRANS-001", "HEAD-001",  # 말투 교정 경고 (P33)
+}
+
+
+def _annotate_severity(entries: list[dict], *, is_final: bool,
+                       monitor: bool) -> list[dict]:
+    """구조화 에러 항목에 severity(hard|warn)를 붙인다.
+
+    BODY-TOTAL만 문맥 의존이다: 최종 attempt(또는 monitor)에서는 500자
+    이상이면 경고로 완화되고(check_quality의 2단계 게이트와 동일 기준),
+    그 외에는 hard. 나머지는 코드로 고정된다."""
+    for e in entries:
+        code = e.get("code")
+        if code in _WARN_ONLY_CODES:
+            e["severity"] = "warn"
+        elif code == "BODY-TOTAL":
+            e["severity"] = ("warn" if (monitor or (is_final
+                             and (e.get("length") or 0) >= 500)) else "hard")
+        else:
+            e["severity"] = "hard"
+    return entries
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("files", nargs="+", type=Path)
@@ -2611,7 +2644,11 @@ def main() -> int:
                     "file": str(f),
                     "date": issue.get("date"),
                     "failed": bool(bag),
-                    "errors": collect_structured_errors(issue, collected_by_url),
+                    "errors": _annotate_severity(
+                        collect_structured_errors(issue, collected_by_url),
+                        is_final=(args.monitor or args.attempt is None
+                                  or args.attempt >= args.attempts_total),
+                        monitor=args.monitor),
                 }
                 args.json_out.parent.mkdir(parents=True, exist_ok=True)
                 args.json_out.write_text(

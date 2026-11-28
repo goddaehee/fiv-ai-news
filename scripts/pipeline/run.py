@@ -88,15 +88,18 @@ def _render_failure_md(rep: dict) -> str:
         f"- 시작: {rep.get('started_at')} (슬롯 {sch.get('started_slot')}, {delay_txt})",
         f"- 실패 확정: {rep.get('failed_at')} (실행 {rep.get('elapsed_min')}분)",
         f"- 실패 게이트: {', '.join(rep.get('failed_gates') or []) or '없음(게이트 외 실패)'}",
+        f"- 경고·피드백 게이트: {', '.join(rep.get('warn_gates') or []) or '없음'}",
         f"- 복구: {rec_txt}",
         "",
         "## 시도별",
     ]
     for r in rep.get("attempts") or []:
         gates = ", ".join(r.get("failed_gates") or []) or "-"
+        warn = ", ".join(r.get("warn_gates") or [])
         lines.append(
             f"- attempt {r.get('attempt')}: draft rc={r.get('draft_rc')}, "
-            f"validate rc={r.get('validate_rc')}, 게이트: {gates}")
+            f"validate rc={r.get('validate_rc')}, 게이트: {gates}"
+            + (f" (경고: {warn})" if warn else ""))
     return "\n".join(lines) + "\n"
 
 
@@ -112,13 +115,25 @@ def write_failure_report(pipe_dir, date: str, started_at: datetime, stage: str,
             r = dict(row)
             att = r.get("attempt")
             if gates_by_attempt and att in gates_by_attempt:
-                r["failed_gates"] = gates_by_attempt[att]
+                # P39: hard/warn 분리 표기. dict({"hard","warn"})가 새 형식,
+                # 구 형식(리스트)은 전부 hard로 본다.
+                g = gates_by_attempt[att]
+                if isinstance(g, dict):
+                    r["failed_gates"] = list(g.get("hard") or [])
+                    r["warn_gates"] = list(g.get("warn") or [])
+                else:
+                    r["failed_gates"] = list(g or [])
+                    r["warn_gates"] = []
             attempt_rows.append(r)
         failed_gates: list[str] = []
+        warn_gates: list[str] = []
         for r in attempt_rows:
             for g in r.get("failed_gates") or []:
                 if g not in failed_gates:
                     failed_gates.append(g)
+            for g in r.get("warn_gates") or []:
+                if g not in warn_gates:
+                    warn_gates.append(g)
         rep = {
             "date": date,
             "started_at": started_at.isoformat(timespec="seconds"),
@@ -134,6 +149,7 @@ def write_failure_report(pipe_dir, date: str, started_at: datetime, stage: str,
             "elapsed_min": round((now - started_at).total_seconds() / 60, 1),
             "attempts": attempt_rows,
             "failed_gates": failed_gates,
+            "warn_gates": warn_gates,
             "recovery": {
                 "status": "awaiting_retry",
                 "note": "같은 날 재시도 슬롯(08:30 KST) 등 후속 실행에서 "
@@ -340,7 +356,9 @@ def main() -> int:
 
     # P37: attempt별 실패 게이트 수집 (실패 리포트용). validate stdout의
     # 게이트 코드 + sidecar 구조화 코드를 합집합으로 모은다.
-    validate_gates: dict[int, list[str]] = {}
+    # P39: hard(발행 차단)와 warn(경고·피드백)을 나눠 모은다 — stdout의
+    # 실패 줄은 hard, sidecar 코드는 validate가 실은 severity로 가른다.
+    validate_gates: dict[int, dict] = {}
 
     def run_validate(json_out: Path | None = None, attempt: int | None = None) -> int:
         vcmd = [
@@ -369,17 +387,24 @@ def main() -> int:
         if proc.stderr:
             print(proc.stderr, end="", file=sys.stderr)
         if attempt is not None:
-            codes = parse_gate_codes(proc.stdout or "")
+            hard = parse_gate_codes(proc.stdout or "")
+            warn: list[str] = []
             if json_out is not None and Path(json_out).exists():
                 try:
                     rep = json.loads(Path(json_out).read_text(encoding="utf-8"))
                     for e in rep.get("errors") or []:
                         c = e.get("code")
-                        if c and c not in codes:
-                            codes.append(c)
+                        if not c:
+                            continue
+                        # P39: severity가 없는 구 sidecar는 hard로 본다.
+                        if e.get("severity") == "warn":
+                            if c not in warn and c not in hard:
+                                warn.append(c)
+                        elif c not in hard:
+                            hard.append(c)
                 except Exception:
                     pass
-            validate_gates[attempt] = codes
+            validate_gates[attempt] = {"hard": hard, "warn": warn}
         return proc.returncode
 
     # 재시도: 나쁜 LLM 샘플 한 번에 하루치가 날아가지 않게 최대 3회 시도.
