@@ -2247,6 +2247,106 @@ def _repair_missing_summaries(issue: dict, snap: dict, chat_fn) -> bool:
     return fixed == len(missing)
 
 
+REPAIR_BODY_PROMPT = """당신은 '5분 AI 뉴스' 편집 보조입니다. 최종 시도에서 본문이 짧은 분석만 골라, 근거에 있는 사실만으로 본문을 늘립니다.
+
+규칙:
+- 각 분석의 body를 합계 620자 이상으로 늘립니다. 문단은 2~3개, 한 문단은 80자 이상으로 쓰고, 모든 문단은 완전한 문장으로 끝냅니다.
+- 없는 사실을 지어내지 않습니다. 숫자는 현재 본문·불릿에 이미 있는 표기만 그대로 쓰고, 새 숫자를 만들지 않습니다.
+- 덧붙이는 내용은 배경·맥락·측정 조건·비교처럼 근거에서 확인되는 것으로만 씁니다. 편집 메모 투("칸에 적으면" 등)는 쓰지 않습니다.
+- 출력은 JSON 객체 하나만: {"bodies": {"<id>": ["<문단1>", "<문단2>", ...], ...}}"""
+
+
+def _num_surfaces(text: str) -> set[str]:
+    """수치 표면 집합 (NUM_RE + validate와 공유하는 정규화). 수리 가드용."""
+    return {m.group(0).strip()
+            for m in NUM_RE.finditer(normalize_num_text(text or ""))}
+
+
+def _body_total(a: dict) -> int:
+    """validate BODY-TOTAL과 같은 잣대: 문단을 공백으로 이은 전체 길이."""
+    body = a.get("body", "")
+    return len(" ".join(body)) if isinstance(body, list) else len(str(body))
+
+
+def _repair_short_bodies(issue: dict, snap: dict, chat_fn) -> int:
+    """P38: 최종 attempt 전용 본문 길이 수리. 채택한 분석 수를 돌려준다.
+
+    실측 (2026-11-26~28, 발행 실패 진단): 실패 9 attempt 중 8개가
+    BODY-TOTAL(본문 381~589자, 목표 600자)에서 걸렸고, 피드백이 주입돼도
+    attempt 2에서 악화되는 사례가 있었다. P27 불릿 병합(결정적 확장)이
+    최종 attempt에 이미 동작하지만 불릿이 소진되면 526~579자에서 멈춘다
+    (11/28 attempt 3 실측). 게이트를 낮추는 대신, 최종 attempt에서만
+    길이 미달 분석을 골라 근거 기반 LLM 수리 호출 1회로 본문을 늘린다 —
+    P18 summary 수리(버리기 전에 수리)와 같은 선례. 수리 결과는 결정적
+    가드(길이 증가·문단 80자 이상·완결 문장·신규 수치 금지)를 전부 통과한
+    분석만 채택하고, 발행 여부는 기존 validate 게이트가 그대로 판정한다.
+    수치 가드는 보수적으로 건다: 인용 출처 요약에만 있는 수치는 허용
+    집합에 넣지 않는다 — 게이트(P26/P27 확장)가 통과시킬 수치라도 수리
+    단계에서는 기존 본문·불릿·시사점에 있는 표기만 인정한다."""
+    targets = [a for a in _list(issue.get("analysis"))
+               if isinstance(a, dict) and isinstance(a.get("body"), list)
+               and 0 < _body_total(a) < 600]
+    if not targets:
+        return 0
+    items = (snap or {}).get("items") or []
+    by_core = {url_core(str(it.get("url") or "")): it
+               for it in items if it.get("url")}
+    req = []
+    for a in targets:
+        ev: list[str] = []
+        for s in a.get("sources") or []:
+            if isinstance(s, dict):
+                it = by_core.get(url_core(str(s.get("url") or "")))
+                if it is not None and it.get("summary"):
+                    ev.append(f"인용 출처 요약({it.get('source')}): "
+                              f"{str(it['summary'])[:300]}")
+        req.append({
+            "id": _text(a.get("id")),
+            "title": _text(a.get("title")),
+            "body": [_text(x) for x in _list(a.get("body")) if _text(x)],
+            "bullets": [_text(x) for x in _list(a.get("bullets")) if _text(x)],
+            "takeaway": _text(a.get("takeaway")),
+            "deficit": 600 - _body_total(a),
+            "evidence": ev[:3],
+        })
+    try:
+        raw = chat_fn(json.dumps({"analyses": req}, ensure_ascii=False))
+        obj = extract_json(raw)
+    except Exception as e:
+        print(f"[draft] body repair call failed: {e}", file=sys.stderr)
+        return 0
+    bodies = obj.get("bodies") if isinstance(obj, dict) else None
+    if not isinstance(bodies, dict):
+        return 0
+    fixed = 0
+    for a in targets:
+        cand = bodies.get(_text(a.get("id")))
+        if not isinstance(cand, list):
+            continue
+        paras = [_text(x) for x in cand if _text(x)]
+        if not paras or len(paras) > 6:
+            continue
+        # 짧은 완결 문단은 thicken의 병합 규칙으로 정리한 뒤에 판정한다.
+        paras = thicken_body(paras, [], final_attempt=False)
+        if len(" ".join(paras)) <= _body_total(a):
+            continue
+        if any(len(p) < 80 for p in paras):
+            continue
+        if any(not _para_complete(p) for p in paras):
+            continue
+        allowed: set[str] = set()
+        for t in ([_text(a.get("takeaway"))]
+                  + [_text(x) for x in _list(a.get("body"))]
+                  + [_text(x) for x in _list(a.get("bullets"))]):
+            allowed |= _num_surfaces(t)
+        if not _num_surfaces(" ".join(paras)) <= allowed:
+            continue
+        a["body"] = paras
+        fixed += 1
+    print(f"[draft] body repair: {fixed}/{len(targets)} fixed")
+    return fixed
+
+
 def skeleton(snap: dict) -> dict:
     date = snap["date"]
     ranked = rank_buckets(cluster(snap["items"]))
@@ -2333,6 +2433,9 @@ def skeleton(snap: dict) -> dict:
 # 최대 소모 + 검증 실패 4연속)은 약 1,950초로 30분 예산을 넘을 수
 # 있다 — 재리뷰에서 확인된 관찰 사항으로, 현실 경로에서는 도달하지
 # 않는다. 수리 호출은 attempt당 최대 2회, 각 min(_to, 120)초.
+# P38: 최종 attempt에 본문 수리(_repair_short_bodies) 1회가 더해진다 —
+# 현실적 최악은 약 1,350초로 여전히 예산 안이고, 병리적 최악은 기존과
+# 같은 성격의 관찰 사항으로 남는다 (수리 호출도 min(_to, 120)초 상한).
 _ATTEMPT_TIMEOUTS = {1: 300, 2: 240, 3: 180, 4: 120}
 
 
@@ -2524,6 +2627,16 @@ def main() -> int:
         # 수치 게이트가 환산된 표기로 대조하게 한다. 크기는 보존된다.)
         issue = convert_issue_units(issue)
         issue = attach_sources(issue, snap, ref_table=ref_table)
+        # P38: 최종 attempt 전용 본문 수리 — P27 불릿 병합 뒤에도 BODY-TOTAL
+        # (600자)에 못 미치는 분석을 근거 기반 LLM 수리 1회로 늘린다.
+        # 게이트 자체는 건드리지 않고, validate가 수리본을 그대로 판정한다.
+        if _final:
+            _repair_short_bodies(
+                issue, snap,
+                lambda user: chat(url, key, model, user,
+                                  system=REPAIR_BODY_PROMPT,
+                                  temperature=args.temperature,
+                                  timeout=min(_to, 120)))
         issue["draft"] = True
     else:
         print("no API key — writing skeleton for the editor")
