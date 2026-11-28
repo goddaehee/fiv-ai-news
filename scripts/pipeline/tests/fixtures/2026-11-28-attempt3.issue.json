@@ -1,0 +1,386 @@
+{
+  "date": "2026-11-28",
+  "title": "11월 28일 AI·보안 데일리: 미 공군 클라우드 침해와 앤스로픽 IPO 첫 주",
+  "heroline": "공공·의료 유출이 잇달아 확인된 날",
+  "dek": "미 공군 클라우드 원 침해 보도, 한국포스트 113,000명 유출, 앤스로픽 공개가 위 첫 주 마감 등 주요 소식을 정리했습니다.",
+  "tag": "AI 데일리 브리핑",
+  "briefMin": 3,
+  "readMin": 12,
+  "briefing": [
+    {
+      "id": "usaf-cloud-one-breach",
+      "headline": "미 공군 클라우드 원 침해 보도, 업데이트 중단",
+      "summary": "공군 통합 클라우드 플랫폼에 침입이 있었다고 로이터가 단독 보도했습니다. 침해 범위는 아직 미확정입니다."
+    },
+    {
+      "id": "anthropic-ipo-first-week",
+      "headline": "앤스로픽 IPO 첫 주, 공개가 위 마감",
+      "summary": "블룸버그에 따르면 상장 첫 주를 거래 시작가 위에서 마쳤습니다. 등락은 컸던 한 주였습니다."
+    },
+    {
+      "id": "korea-post-breach",
+      "headline": "한국포스트 유출, 최소 113,000명 영향",
+      "summary": "한국포스트가 고객 정보 유출을 공식 확인했습니다. 규모는 최소치 기준입니다."
+    },
+    {
+      "id": "boston-scientific-breach",
+      "headline": "보스턴 사이언티픽 의료 정보 유출 보도",
+      "summary": "개인 정보와 의료 정보가 노출됐다는 새 유출 사례가 보도됐습니다. 규모 수치는 미공개입니다."
+    },
+    {
+      "id": "gpt62-usage-limits",
+      "headline": "GPT-6.2 사용 한도 도달 40% 빨라짐",
+      "summary": "집계 버그를 고치면서 같은 사용량으로도 한도에 더 빨리 도달합니다. 요금 변경은 아닙니다."
+    },
+    {
+      "id": "nvidia-sea-pause",
+      "headline": "엔비디아 동남아 서버 출하 일시 중단",
+      "summary": "수출 통제 압박 속에 말레이시아·싱가포르·태국·인도네시아행 출하가 멈췄습니다. 재개 시점은 미확정입니다."
+    },
+    {
+      "id": "manchester-ai-grant",
+      "headline": "맨체스터대 인공지능 교육 지원금 500만 달러",
+      "summary": "고등교육 인공지능 활용 사업에 쓰이는 지원금입니다. 집행 세부는 미확정입니다."
+    },
+    {
+      "id": "openai-apple-countersuit",
+      "headline": "OpenAI, 애플 상대 영업비밀 반소",
+      "summary": "영업비밀 침해와 협력사 접근 차단을 이유로 소송을 제기했습니다. 분쟁의 전말은 재판에서 가려질 예정입니다."
+    }
+  ],
+  "keywords": [
+    "미 공군 클라우드 원",
+    "앤스로픽 IPO",
+    "한국포스트 유출",
+    "GPT-6.2",
+    "엔비디아 수출통제",
+    "의료정보 유출"
+  ],
+  "mainEvent": "미 공군 클라우드 플랫폼 침해 보도",
+  "keynums": [
+    {
+      "val": "113,000명",
+      "lab": "한국포스트 유출 영향 고객(최소)",
+      "sub": "기관 확인"
+    },
+    {
+      "val": "40%",
+      "lab": "GPT-6.2 한도 도달 속도 증가",
+      "sub": "OpenAI 발표"
+    },
+    {
+      "val": "500만 달러",
+      "lab": "맨체스터대 인공지능 지원금",
+      "sub": "발표 금액"
+    }
+  ],
+  "timeline": [
+    {
+      "t": "11/27 05:03",
+      "d": "엔비디아 동남아 출하 중단 보도"
+    },
+    {
+      "t": "11/27 06:06",
+      "d": "GPT-6.2 집계 버그 수정 안내"
+    },
+    {
+      "t": "11/28 00:09",
+      "d": "미 공군 클라우드 원 침해 보도 확산"
+    },
+    {
+      "t": "11/28 05:56",
+      "d": "로이터 단독 보도"
+    },
+    {
+      "t": "11/28 10:43",
+      "d": "앤스로픽 첫 주 마감 보도"
+    },
+    {
+      "t": "11/28 11:13",
+      "d": "한국포스트 유출 확인 보도"
+    }
+  ],
+  "intro": "11월 28일 토요일 발행. 미 공군 클라우드 침해 보도와 한국포스트·의료 분야 유출 확인이 같은 주말에 겹치며 공공·민간을 가리지 않은 데이터 사고 소식이 이어졌습니다. 앤스로픽의 IPO 첫 주 마감과 OpenAI·애플 소송 공방도 눈에 띕니다.",
+  "analysis": [
+    {
+      "id": "usaf-cloud-one-breach",
+      "n": 1,
+      "title": "1. 미 공군 클라우드 원 침해 보도, 업데이트 중단·이전 보류",
+      "bullets": [
+        "로이터 단독 보도 후 다수 매체가 교차 보도",
+        "업데이트 차단, 다른 환경 이전 일시 중단",
+        "침해 범위는 미확정, 공식 조사 대기"
+      ],
+      "body": [
+        "미국 공군이 운영하는 대표 클라우드 플랫폼 클라우드 원에 침입이 있었다는 보도가 나왔습니다. 로이터가 단독으로 보도했고, 가디언과 블리핑컴퓨터 등 여러 매체가 같은 내용을 전했습니다. 클라우드 원은 공군 산하 기관들이 함께 쓰는 통합 컴퓨팅 환경으로, 각 기관이 따로 서버를 두지 않고 이 플랫폼 위에서 시스템을 돌리는 구조입니다. 보도에 따르면 업데이트는 차단되고 다른 환경으로의 이전 작업은 일시 중단됐으며, 침입 범위는 아직 파악되지 않았습니다.",
+        "이번 사건은 미국 정부 기관을 겨냥한 일련의 사이버 공격 흐름 속에 자리 잡습니다. 블리핑컴퓨터는 최근 연방수사국과 중앙정보국, 재무부 등 미국 정부 기관을 강타한 공격 물결의 연장선에 있다고 짚었습니다. 여러 기관이 공유하는 환경이 뚫리면 개별 기관 단위의 침해와 달리 영향이 동시에 여러 조직으로 퍼질 수 있다는 점에서 우려가 큽니다. 통제 구간과 데이터 구간 중 어디가 노출됐는지에 따라 피해 성격 자체가 달라질 수 있습니다.",
+        "다만 지금 알려진 내용은 언론 보도에 기반한 것이고, 침입 경로와 유출 여부, 피해 규모는 공식적으로 확인되지 않았습니다. 공군 측의 공개 발표도 아직 이어지지 않은 상황이라, 실제 피해 범위는 앞으로 나올 조사 결과에서 판단해야 합니다. 보안 전문가들은 통제 구간과 데이터 구간이 어디까지 노출됐는지를 향후 확인 포인트로 꼽고 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "공유 클라우드라는 구조 자체가 침해의 파급 폭을 좌우하는 지점입니다. 미 정부 클라우드를 참조하는 프로젝트라면 업데이트 중단과 이전 보류 공지부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Google News Security",
+          "url": "https://www.reuters.com/world/hackers-breach-us-air-force-flagship-cloud-one-computing-platform-2026-11-27/",
+          "kind": "news",
+          "origin_url": "https://www.reuters.com"
+        },
+        {
+          "handle": "Google News Security",
+          "url": "https://www.theguardian.com/technology/2026/nov/27/hackers-breach-us-air-force-cloud-computing",
+          "kind": "news",
+          "origin_url": "https://www.theguardian.com"
+        },
+        {
+          "handle": "Google News Security",
+          "url": "https://securityaffairs.com/204136/security/air-force-cloud-one-breach-updates-blocked-migration-paused-scope-unknown.html",
+          "kind": "news",
+          "origin_url": "https://securityaffairs.com"
+        },
+        {
+          "handle": "Google News Security",
+          "url": "https://federalnewsnetwork.com/air-force/2026/11/hackers-breach-air-forces-cloud-one-computing-environment/",
+          "kind": "news",
+          "origin_url": "https://federalnewsnetwork.com"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-ipo-first-week",
+      "n": 2,
+      "title": "2. 앤스로픽, 상장 첫 주 공개가 위 마감",
+      "bullets": [
+        "상장 첫 주 공개가 위 종가 마감",
+        "첫 주 등락 폭 컸다는 점은 변동성 신호",
+        "나스닥 100·S&P 500 편입 여부가 다음 쟁점"
+      ],
+      "body": [
+        "앤스로픽이 기업공개 이후 첫 주를 거래 시작가 위에서 마쳤습니다. 블룸버그에 따르면 이 회사 주식은 상장 첫 주 동안 등락을 거듭한 끝에 금요일 상승 마감했고, 공개가를 유지하는 흐름으로 주간 거래를 끝냈습니다. 이 회사는 클로드로 불리는 대화형 인공지능 모델을 만드는 회사로, 최근 미국 기술주 시장의 주목을 받아 왔습니다.",
+        "금요일 상승의 배경으로 매체들은 기관 투자자의 평가와 월가 애널리스트 의견을 함께 전했습니다. 다만 첫 주가 오르내린 폭이 컸다는 점은, 짧은 기간의 주가가 회사 가치를 온전히 반영하지 못할 수 있음을 보여줍니다. 상장 초기 주가는 유통 물량과 수급 변화에 크게 흔들리는 경우가 많아, 이번 한 주의 흐름만으로 중장기 평가를 정하기는 이릅니다.",
+        "시장의 관심은 이제 지수 편입 여부로 옮겨가고 있습니다. 일부 매체는 앤스로픽 주식이 나스닥 100이나 S&P 500 같은 대형 지수에 언제 들어갈지를 쟁점으로 다룹니다. 지수에 편입되면 지수를 따르는 펀드의 자동 매수가 이어질 수 있어, 편입 시점 자체가 주가에 영향을 미칠 수 있습니다. 다만 편입 일정은 아직 확정된 바가 없어 미확정 상태로 봐야 합니다."
+      ],
+      "extra": "",
+      "takeaway": "첫 주 종가 흐름에서 읽히는 의미는 수급이 공개가 위에서 안정을 찾았다는 점입니다. 지수 편입 일정은 미확정이므로 편입 발표를 비교 기준으로 삼으면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://www.bloomberg.com/news/newsletters/2026-11-27/anthropic-ends-week-above-ipo-price-evening-briefing-americas",
+          "kind": "news",
+          "origin_url": "https://www.bloomberg.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://www.bloomberg.com/news/articles/2026-11-27/anthropic-shares-jump-after-volatile-first-week-since-record-ipo",
+          "kind": "news",
+          "origin_url": "https://www.bloomberg.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://finance.yahoo.com/technology/ai/articles/anthropic-shares-jump-volatile-first-170808947.html",
+          "kind": "news",
+          "origin_url": "https://finance.yahoo.com"
+        },
+        {
+          "handle": "Anthropic GNews",
+          "url": "https://www.investors.com/news/technology/anthropic-stock-rally-ipo-price-reversal/",
+          "kind": "news",
+          "origin_url": "https://www.investors.com"
+        }
+      ]
+    },
+    {
+      "id": "korea-post-breach",
+      "n": 3,
+      "title": "3. 한국포스트 고객 정보 유출, 최소 113,000명 영향",
+      "bullets": [
+        "최소 113,000명 고객 정보 유출 확인",
+        "기관 공식 확인, 유출 항목 세부는 미상세",
+        "2차 피해인 위장 연락 주의 필요"
+      ],
+      "body": [
+        "한국의 우정사업 본부인 한국포스트가 고객 정보 유출을 공식 확인했습니다. 코리아헤럴드 보도에 따르면 최소 113,000명의 고객이 이번 유출의 영향을 받았습니다. 유출 사실 자체는 기관이 확인한 값이고, 최소라는 표현이 붙은 만큼 실제 규모는 이보다 커질 가능성이 열려 있습니다.",
+        "유출 항목에 대한 세부 내역은 보도 요약에 모두 담겨 있지 않습니다. 다만 113,000명이라는 규모는 단일 기관 단위 유출로는 작지 않은 숫자이고, 우체국 서비스를 쓰는 일반 이용자가 직접 영향권에 들어간다는 점이 이번 사건의 특징입니다. 우편에 더해 금융 업무를 함께 수행하는 기관의 성격상 피해가 다른 영역으로 확대되지 않는지 지켜볼 필요가 있습니다.",
+        "영향을 받았는지 여부는 기관이 안내하는 공지와 공식 통지 채널로 확인할 수 있습니다. 대규모 유출 사건에서는 이후 보이스피싱 같은 2차 피해를 노린 접근이 따라오는 경우가 많아, 안내 전화를 가장한 연락에는 주의가 필요합니다. 공식 통지가 오기 전 지금 단계에서는 기관 공지를 기준으로 움직이는 것이 안전합니다.",
+        "2차 피해인 위장 연락 주의 필요"
+      ],
+      "extra": "",
+      "takeaway": "113,000명이라는 최소 규모가 2차 피해 대비의 중요성을 키운 대목입니다. 한국포스트의 공지 채널을 체크리스트에 넣어 두시면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Google News Security",
+          "url": "https://www.koreaherald.com/article/10952405",
+          "kind": "news",
+          "origin_url": "https://www.koreaherald.com"
+        },
+        {
+          "handle": "Google News Security",
+          "url": "https://www.euronews.com/2026/11/27/denmark-arrests-teenager-over-data-breach-affecting-11000-people",
+          "kind": "news",
+          "origin_url": "https://www.euronews.com"
+        },
+        {
+          "handle": "Google News Security",
+          "url": "https://cybernews.com/security/barclays-us-data-breach/",
+          "kind": "news",
+          "origin_url": "https://cybernews.com"
+        },
+        {
+          "handle": "Google News Security",
+          "url": "https://www.sgieurope.com/e-commerce/decathlon-france-confirms-customer-data-breach/124447.article",
+          "kind": "news",
+          "origin_url": "https://www.sgieurope.com"
+        }
+      ]
+    },
+    {
+      "id": "boston-scientific-breach",
+      "n": 4,
+      "title": "4. 보스턴 사이언티픽, 개인·의료 정보 노출 유출 보도",
+      "bullets": [
+        "개인 정보와 의료 정보 노출 보도",
+        "이 회사 관련 최근 유출의 새 사례",
+        "규모·경위 수치는 미공개"
+      ],
+      "body": [
+        "의료기기 회사 보스턴 사이언티픽의 새로운 데이터 유출 사건이 보도됐습니다. 유출로 개인 정보와 의료 정보가 노출됐다는 내용이며, 이는 이 회사와 관련해 최근 알려진 또 다른 유출 사례로 소개됐습니다. 의료 정보에는 건강 상태와 진료 이력이 담겨 있어, 일반 개인 정보와 달리 노출됐을 때 피해 양상이 더 민감해질 수 있습니다.",
+        "의료 분야 유출은 최근 이어지는 데이터 침해 사태 가운데 하나로 자리 잡습니다. 같은 주 미국 공군 클라우드 플랫폼 침해와 한국포스트 유출 등 공공 부문 사건이 잇달아 확인된 가운데, 의료·민간 부문에서도 유출 통지가 이어지고 있습니다. 보도 시점 기준으로 유출 규모와 침해 경위에 대한 구체적 수치는 공개되지 않았습니다.",
+        "해당 회사의 고객이라면 회사가 보내는 공식 통지를 기준으로 자기 여부를 확인해야 합니다. 유출 통지 이후에는 의료 정보를 악용한 위장 전화와 사기 메시지가 늘어나는 경우가 많아, 모르는 연락처의 개인정보 확인 요구는 조심하는 편이 안전합니다. 자신이 영향권인지는 공식 발표 전까지 미확정으로 두고 지켜보는 것이 맞습니다."
+      ],
+      "extra": "",
+      "takeaway": "의료 정보 노출은 일반 유출과 피해 양상이 다른 점이 중요해진 이유입니다. 공식 통지가 오기 전 지금은 안내 채널만 확인하면 됩니다.",
+      "tags": [],
+      "sources": []
+    },
+    {
+      "id": "gpt62-usage-limits",
+      "n": 5,
+      "title": "5. GPT-6.2, 집계 버그 수정으로 한도 도달 40% 빨라짐",
+      "bullets": [
+        "집계 버그 수정으로 한도 도달 40% 가속",
+        "요금 정책 변경은 아님, 집계 정상화",
+        "헤비 유저 중심 체감, 외부 검증 없음"
+      ],
+      "body": [
+        "OpenAI가 GPT-6.2 아스트라 모델의 사용량 집계 버그를 고쳤다고 밝혔습니다. 블리핑컴퓨터에 따르면 이전까지 버그 때문에 사용량이 실제보다 낮게 집계됐고, 수정 이후에는 같은 사용 패턴이라도 사용 한도에 도달하는 속도가 이전보다 40% 빨라집니다. 즉 모델이 빨라지거나 요금이 오른 것이 아니라, 잘못 집계되던 부분이 바로잡힌 결과입니다.",
+        "회사는 이를 버그 수정으로 설명했고, 새로운 과금 정책 변경과는 구분됩니다. 사용자 입장에서는 결과적으로 이용 가능량이 줄어든 것처럼 체감될 수 있어, 한도를 꽉 채워 쓰는 이용자에게는 실질적인 이용 제한 강화로 읽힐 수 있습니다. 측정 조건은 회사의 집계 방식을 기준으로 하며, 사용량이 적은 이용자는 차이를 체감하지 못할 수 있습니다.",
+        "한도를 다 쓰는 사용자라면 이번 변화를 계기로 자기 사용 패턴을 점검해 볼 시점입니다. 집계가 정상화된 뒤에는 이전과 같은 쓰임새로도 한도 도달이 빨라지므로, 반복 작업을 자동화 도구에 맡기는 경우라면 호출량을 줄이거나 요금제 조정을 검토하는 편이 낫습니다. 버그 수정이 원인이라는 설명은 회사 발표에 따른 것으로, 외부 독립 검증은 아직 없습니다."
+      ],
+      "extra": "",
+      "takeaway": "한도 도달이 40% 빨라진 것이 무거운 이용자에게 체감될 변화입니다. 반복 호출이 많은 자동화 업무부터 사용량을 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-warns-gpt-62-astra-will-hit-usage-limits-40-percent-faster-because-it-fixed-a-bug/",
+          "kind": "news"
+        },
+        {
+          "handle": "Hugging Face",
+          "url": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+          "kind": "doc"
+        }
+      ]
+    },
+    {
+      "id": "nvidia-sea-pause",
+      "n": 6,
+      "title": "6. 엔비디아, 동남아 4개국 서버 출하 일시 중단",
+      "bullets": [
+        "말레이시아·싱가포르·태국·인도네시아행 출하 중단",
+        "대중국 우회 수출 차단 목적",
+        "재개 시점은 협의 결과에 따라 미확정"
+      ],
+      "body": [
+        "엔비디아가 동남아시아행 서버 출하를 일시 중단했습니다. 테크크런치 보도에 따르면 회사는 말레이시아와 싱가포르, 태국, 인도네시아로 향하는 서버 출하를 제조 파트너사들에 멈추도록 통보했습니다. 배경은 미국이 인공지능 반도체가 중국에 흘러들어가지 않도록 수출 통제 압박을 강화하는 흐름입니다.",
+        "동남아가 지목된 까닭은 이 지역이 중국으로 이어지는 우회 경로로 쓰일 가능성 때문입니다. 반도체는 물리적으로 옮겨지는 물건이라, 최종 목적지가 아니라 경유지에서 통제를 우회하는 시도가 반복적으로 문제가 되어 왔습니다. 출하가 멈추면 해당 국가들의 인공지능 데이터센터 구축 일정에 영향이 갈 수 있고, 클라우드 사업자의 공급 계획에도 차질이 생길 수 있습니다.",
+        "중단이 얼마나 이어질지는 아직 확정되지 않았습니다. 미 정부와의 협의 결과에 따라 재개 시점이 달라질 수 있어, 해당 국가에서 데이터센터를 운영하거나 계획 중인 사업자는 공급 일정을 다시 잡아야 합니다. 동남아 시장에서 서버를 조달하는 입장에서는 대체 공급처와 계약 조건의 유연성을 확인해 둘 필요가 있습니다."
+      ],
+      "extra": "",
+      "takeaway": "수출 통제의 그물이 최종 목적지가 아니라 경유지까지 넓어진 것이 바뀐 대목입니다. 동남아 조달 계약의 지연 조항부터 확인하면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/26/nvidia-hits-pause-on-chip-shipments-to-southeast-asia/",
+          "kind": "news"
+        }
+      ]
+    },
+    {
+      "id": "manchester-ai-grant",
+      "n": 7,
+      "title": "7. 맨체스터대, 인공지능 고등교육 지원금 500만 달러 수주",
+      "bullets": [
+        "맨체스터대에 500만 달러 지원금",
+        "고등교육 인공지능 활용 사업 대상",
+        "집행 항목·기간은 미확정"
+      ],
+      "body": [
+        "영국 맨체스터 대학교가 고등교육 분야 인공지능 활용을 위한 500만 달러 규모의 지원금을 받았습니다. 여러 매체가 같은 내용을 전했으며, 지원금은 고등교육에서 인공지능을 활용하는 사업에 쓰입니다. 대학 단위의 인공지능 전용 지원금으로는 눈에 띄는 규모입니다.",
+        "지원 성격은 교육 기관에 대한 외부 지원이고, 대학은 이를 받아 교육과 연구에서 인공지능 도구를 도입하는 데 활용할 수 있습니다. 금액 표기는 달러 기준이며, 구체적인 집행 항목과 집행 기간은 발표 요약에 모두 담겨 있지 않아 미확정입니다. 고등교육 분야에서 인공지능 도입이 늘고 있는 흐름 속에 이런 규모의 지원이 이어지면, 다른 대학들에도 비슷한 재원 마련의 선례가 될 수 있습니다.",
+        "지원금의 실질적 효과는 사용처가 공개돼야 판단할 수 있습니다. 교육 기술 예산을 세우는 대학 쪽에서는 이 사례를 참고해 외부 지원 공모를 함께 검토해 볼 만합니다. 다만 단일 대학에 대한 지원이 곧바로 교육 전반의 변화로 이어진다고 보기는 이르고, 향후 성과 발표를 지켜보는 순서가 필요합니다."
+      ],
+      "extra": "",
+      "takeaway": "교육 분야 재원이 달라진 지점이라 관련 부서 예산 편성에 미칠 영향이 큽니다. 외부 지원 공모 조건을 예산안에 반영해 두면 됩니다.",
+      "tags": [],
+      "sources": [
+        {
+          "handle": "Google News AI",
+          "url": "https://www.lsbr.uk/news/manchester-university-receives-5-million-artificial-intelligence-in-higher-education-grant",
+          "kind": "news",
+          "origin_url": "https://www.lsbr.uk"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://www.inkfreenews.com/2026/11/27/manchester-university-receives-5-million-artificial-intelligence-in-higher-education-grant/",
+          "kind": "news",
+          "origin_url": "https://www.inkfreenews.com"
+        },
+        {
+          "handle": "Google News AI",
+          "url": "https://www.lutontoday.co.uk/your-world/university-of-bedfordshire-appoints-two-new-professors-in-artificial-intelligence-and-higher-education-9377935",
+          "kind": "news",
+          "origin_url": "https://www.lutontoday.co.uk"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "shift": "공공·의료 유출 확인이 같은 날 겹친 흐름",
+    "grow": "교육 AI 재원과 IPO 수급의 안정 신호",
+    "caution": "침해 범위 미확정 사건이 많아 결론 유보 필요",
+    "heat": "미 공군 클라우드 침해 보도가 하루 최대 화제"
+  },
+  "tips": [
+    {
+      "title": "유출 통지 이후의 위장 연락 대비",
+      "body": "대규모 유출이 확인된 기관의 이용자는 공식 통지 전까지 모르는 연락처의 개인정보 확인 요구를 의심하는 편이 안전합니다. 기관 공지 채널에서 나온 안내만 따르면 피해를 줄일 수 있습니다.",
+      "via": "The Korea Herald"
+    },
+    {
+      "title": "한도 집계 변화 대응",
+      "body": "사용량 집계 방식이 바뀌면 이전과 같은 쓰임새로도 한도 도달이 빨라질 수 있습니다. 반복 작업 자동화의 호출량을 점검해 두면 갑작스러운 이용 제한을 피할 수 있습니다.",
+      "via": "BleepingComputer"
+    },
+    {
+      "title": "조달 계약의 지연 조항 점검",
+      "body": "수출 통제로 출하가 멈추는 상황에서는 공급 지연을 계약에 명시해 두는 것이 중요합니다. 대체 공급처를 미리 확보해 두면 일정 리스크를 줄일 수 있습니다.",
+      "via": "TechCrunch"
+    },
+    {
+      "title": "교육 AI 외부 지원 공모 정보 수집",
+      "body": "대학 단위 인공지능 지원 사례가 나오면 비슷한 공모가 이어질 가능성이 있습니다. 담당 부서가 공모 조건을 미리 정리해 두면 대응이 빨라집니다.",
+      "via": "LSBR"
+    },
+    {
+      "title": "공유 클라우드 의존도 점검",
+      "body": "여러 조직이 함께 쓰는 클라우드 환경의 침해 소식이 나오면 의존도가 높은 시스템부터 영향을 점검하는 순서가 필요합니다. 대체 환경과 복구 절차를 문서로 남겨 두면 도움이 됩니다.",
+      "via": "Reuters"
+    }
+  ],
+  "method": "수치는 각 회사의 발표 화면과 공식 문서, 주요 매체 보도에서 가져왔습니다. 자체 측정 벤치마크와 개인 사용량 화면의 값은 본문에 그 사실을 함께 적었으며, 이 리포트는 외부 독립 검증 전입니다.",
+  "draft": true
+}
